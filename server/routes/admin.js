@@ -4,6 +4,7 @@ var adminController = require('../Controllers/adminController')
 
 // localhost:4000/admin
 
+// Property types
 //localhost:4000/admin/getPropertyTypes
 router.get("/getPropertyTypes", adminController.getPropertyTypes);
 
@@ -19,35 +20,37 @@ router.delete("/deletePropertyType/:type_id", adminController.deletePropertyType
 
 
 
+//SUBTYPE
+
+//localhost:4000/admin/getPropertySubTypes/subtype_type_id
+router.get("/getPropertySubTypes/:subtype_type_id", adminController.getPropertySubTypes);
+
+
+//localhost:4000/admin/createPropertySubType/:subtype_type_id
+router.post("/createPropertySubType/:subtype_type_id", adminController.createPropertySubType);
+
+
+//localhost:4000/admin/editPropertySubType/subtype_id
+router.put("/editPropertySubType/:subtype_id", adminController.editPropertySubType);
+
+
+//localhost:4000/admin/deletePropertySubType/:subtype_id
+router.delete("/deletePropertySubType/:subtype_id", adminController.deletePropertySubType);
 
 
 
+// Kitchen types
+//localhost:4000/admin/getKitchenTypes
+router.get("/getKitchenTypes", adminController.getKitchenTypes);
 
+//localhost:4000/admin/createKitchenType
+router.post("/createKitchenType", adminController.createKitchenType);
 
+//localhost:4000/admin/editKitchenType/:kitchen_id
+router.put("/editKitchenType/:kitchen_id", adminController.editKitchenType);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//localhost:4000/admin/deleteKitchenType/:kitchen_id
+router.delete("/deleteKitchenType/:kitchen_id", adminController.deleteKitchenType);
 
 
 
@@ -65,6 +68,7 @@ router.put("/editPropertyFeature/:feature_id", adminController.editPropertyFeatu
 
 //localhost:4000/admin/deletePropertyFeature/:feature_id
 router.delete("/deletePropertyFeature/:feature_id", adminController.deletePropertyFeature);
+
 
 
 module.exports = router;
