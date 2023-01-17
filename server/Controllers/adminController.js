@@ -64,6 +64,71 @@ class adminController {
             console.log(result);
         });
     }
+    
+    //crea un subtipo
+     createPropertySubType = (req, res) => {
+
+        let {subtype_type_id} = req.params;
+
+        let {subtype_name} = req.body;
+
+        let sql = `INSERT INTO subtype (subtype_type_id,subtype_name ) VALUES (${subtype_type_id}, ${subtype_name})`;
+
+
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+      
+      //mostrar todos los subtipos
+      getPropertySubTypes = (req, res) =>{
+        let {subtype_type_id} = req.params;
+        let sql =`SELECT * FROM subtype WHERE subtype_type_id = ${subtype_type_id}`;
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+        
+       //editar un  subtipo
+       editPropertySubType = (req, res) => {
+        let {subtype_id} = req.params;
+        let {subtype_name} = req.body;
+
+        let sql =`UPDATE subtype SET subtype_name = ${subtype_name} WHERE subtype_id = ${subtype_id}`;
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+       }
+       
+       //borra un  subtipo
+       deletePropertySubType = (req, res) => {
+        let {subtype_id} = req.params;
+
+        let sql =`DELETE FROM subtype WHERE subtype_id = ${subtype_id}`;
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+    }
+        
+
 
     // CRUD Kitchen
 
@@ -86,7 +151,6 @@ class adminController {
 
         let sql =`INSERT INTO kitchen (kitchen_name) VALUES (${kitchen_name})`;
         console.log(sql);
-
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
@@ -103,7 +167,6 @@ class adminController {
         let {kitchen_name} = req.body;
 
         let sql =`UPDATE kitchen SET kitchen_name = ${kitchen_name} where kitchen_id = ${kitchen_id}`;
-
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
@@ -112,14 +175,13 @@ class adminController {
             res.status(200).json(result);
             console.log(result);
         });
-    }
-    
+    };
+
     //borra un tipo de cocina
     deleteKitchenType = (req, res) => {
         let {kitchen_id} = req.params;
 
         let sql =`DELETE FROM kitchen where kitchen_id = ${kitchen_id}`;
-
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
@@ -128,8 +190,8 @@ class adminController {
             res.status(200).json(result);
             console.log(result);
         });
-    }
-
+        
+        
 }
 
 module.exports = new adminController();
