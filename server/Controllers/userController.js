@@ -1,4 +1,7 @@
 const connection = require("../config/db.js");
 
-class userController {}
+class userController {
+
+
+}
 module.exports = new userController();
