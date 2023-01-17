@@ -4,6 +4,7 @@ var adminController = require('../Controllers/adminController')
 
 // localhost:4000/admin
 
+// Property types
 //localhost:4000/admin/getPropertyTypes
 router.get("/getPropertyTypes", adminController.getPropertyTypes);
 
@@ -33,6 +34,23 @@ router.put("/editPropertySubType/:subtype_id", adminController.editPropertySubTy
 
 //localhost:4000/admin/deletePropertySubType/:subtype_id
 router.delete("/deletePropertySubType/:subtype_id", adminController.deletePropertySubType);
+
+
+
+// Kitchen types
+//localhost:4000/admin/getKitchenTypes
+router.get("/getKitchenTypes", adminController.getKitchenTypes);
+
+//localhost:4000/admin/createKitchenType
+router.post("/createKitchenType", adminController.createKitchenType);
+
+//localhost:4000/admin/editKitchenType/:kitchen_id
+router.put("/editKitchenType/:kitchen_id", adminController.editKitchenType);
+
+//localhost:4000/admin/deleteKitchenType/:kitchen_id
+router.delete("/deleteKitchenType/:kitchen_id", adminController.deleteKitchenType);
+
+
 
 
 
