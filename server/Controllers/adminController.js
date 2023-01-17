@@ -130,7 +130,7 @@ class adminController {
         
 
 
-    // CRUD Kitchen
+ // CRUD Kitchen
 
     //trae la info de todos los tipos de cocina
     getKitchenTypes = (req, res) =>{
@@ -145,7 +145,8 @@ class adminController {
         });
     };
 
-    //crea un tipo de cocina
+
+  //crea un tipo de cocina
     createKitchenType = (req, res) => {
         let {kitchen_name} = req.body;
 
@@ -157,41 +158,127 @@ class adminController {
                 
             }
             res.status(200).json(result);
-            console.log(result);
+
+            
         });
     }
 
-    //edita un tipo de cocina
+ //edita un tipo de cocina
     editKitchenType = (req, res) => {
         let {kitchen_id} = req.params;
         let {kitchen_name} = req.body;
 
         let sql =`UPDATE kitchen SET kitchen_name = ${kitchen_name} where kitchen_id = ${kitchen_id}`;
+
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});    
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+    }
+    
+    
+    //borra un tipo de cocina
+    deleteKitchenType = (req, res) => {
+        let {kitchen_id} = req.params;
+
+        let sql =`DELETE FROM kitchen where kitchen_id = ${kitchen_id}`;
+
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
                 
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+// CONSEGUIR LA INFO DE TODOS LOS FEATURES EXISTENTES
+
+    getPropertyFeatures = (req, res) =>{
+        let sql ="SELECT * FROM feature";
+
+     connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});    
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+        }
+
+
+
+//CREAR UN NUEVO FEATURE NO EXISTENTE
+
+    createPropertyFeatures = (req, res) => {
+        let {feature_name} = req.body;
+
+        let sql =`INSERT INTO type (type_name) VALUES (${feature_name})`;
+
+        connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});    
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+  }
+
+    //EDITAR UN FEATURE YA EXISTENTE
+
+    editPropertyFeature = (req, res) =>{
+        let {feature_id} = req.params;
+        let {feature_name} = req.body;
+
+        let sql =`UPDATE type SET type_name = ${feature_name} where type_id = ${feature_id}`;
+          connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});    
+            }
+            res.status(200).json(result);
+            console.log(result);
+        });
+    }
+
+   
+
+
+// BORRAR UN FEATURE YA EXISTENTE.
+
+    deletePropertyFeature = (req, res) =>{
+        let {feature_id} = req.params
+        console.log(req.params.feature_id);
+
+        let sql =`DELETE FROM feature where feature_id = ${feature_id}`;
+        console.log(sql);
+          connection.query(sql, (error, result)=>{
+            if (error){
+                res.status(400).json({error});    
             }
             res.status(200).json(result);
             console.log(result);
         });
     };
 
-    //borra un tipo de cocina
-    deleteKitchenType = (req, res) => {
-        let {kitchen_id} = req.params;
-
-        let sql =`DELETE FROM kitchen where kitchen_id = ${kitchen_id}`;
-        connection.query(sql, (error, result)=>{
-            if (error){
-                res.status(400).json({error});
-                
-            }
-            res.status(200).json(result);
-            console.log(result);
-        });
-        
-        
 }
+
+
+
+
 
 module.exports = new adminController();

@@ -18,6 +18,8 @@ router.put("/editPropertyType/:type_id", adminController.editPropertyType);
 router.delete("/deletePropertyType/:type_id", adminController.deletePropertyType);
 
 
+
+
 //SUBTYPE
 
 //localhost:4000/admin/getPropertySubTypes/subtype_type_id
@@ -51,6 +53,21 @@ router.put("/editKitchenType/:kitchen_id", adminController.editKitchenType);
 router.delete("/deleteKitchenType/:kitchen_id", adminController.deleteKitchenType);
 
 
+
+
+////features
+//localhost:4000/admin/getPropertyFeatures
+router.get("/getPropertyFeatures", adminController.getPropertyFeatures
+);
+
+//localhost:4000/admin/createPropertyFeatures
+router.post("/createPropertyFeatures", adminController.createPropertyFeatures);
+
+//localhost:4000/admin/editPropertyFeature/:feature_id
+router.put("/editPropertyFeature/:feature_id", adminController.editPropertyFeature);
+
+//localhost:4000/admin/deletePropertyFeature/:feature_id
+router.delete("/deletePropertyFeature/:feature_id", adminController.deletePropertyFeature);
 
 
 
