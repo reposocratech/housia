@@ -83,6 +83,7 @@ class adminController {
             res.status(200).json(result);
             console.log(result);
         });
+    }
       
       //mostrar todos los subtipos
       getPropertySubTypes = (req, res) =>{
@@ -96,6 +97,7 @@ class adminController {
             res.status(200).json(result);
             console.log(result);
         });
+    }
         
        //editar un  subtipo
        editPropertySubType = (req, res) => {
@@ -276,6 +278,7 @@ class adminController {
     };
 
 }
+     
 
 
 
