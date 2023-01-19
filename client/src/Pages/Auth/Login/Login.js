@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios';
+import { AppContext } from '../../../Context/AppContext';
+import { saveLocalStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
 const initialState = {
     email: "",
@@ -8,7 +10,7 @@ const initialState = {
 
   export const Login = () => {
     const [login, setLogin] = useState(initialState);
-    const [isLogged, setIsLogged] = useState(false);
+    const {isLogged, setIsLogged} = useContext(AppContext);
     const [messageError1, setMessageError1] = useState("");
 
     const handleChange = (e)=>{
@@ -23,7 +25,9 @@ const initialState = {
           axios
           .post('http://localhost:4000/users/login', login)
           .then((res) => {
-            console.log(res.data);
+            console.log(res.data.token);
+            const token = res.data.token;
+            saveLocalStorageUser(token);
             setIsLogged(true);
           })
           .catch((error) => {
@@ -55,7 +59,7 @@ const initialState = {
     </div>
     <button onClick={handleLogin}>Login</button>
     {messageError1}
-    {isLogged && <p>Usuario logueado: {isLogged}</p>}
+    {/* {isLogged && <p>Usuario logueado</p>} */}
      </>
     )
   }
