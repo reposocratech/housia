@@ -93,7 +93,7 @@ CREATE TABLE property (
 	property_name VARCHAR(150) NOT NULL,
 	property_is_for_sale BOOLEAN DEFAULT FALSE,
     property_user_id INT UNSIGNED NOT NULL, 
-    property_kitchen_id TINYINT UNSIGNED NOT NULL DEFAULT 1,
+    property_kitchen_id TINYINT UNSIGNED NOT NULL DEFAULT 0,
     CONSTRAINT fk_bbq FOREIGN KEY (property_kitchen_id)
     REFERENCES kitchen(kitchen_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_owner_id FOREIGN KEY (property_user_id)
