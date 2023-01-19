@@ -1,0 +1,131 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const initialValue = {
+    property_total_meters: "",
+    property_built_meters: "",
+    property_built_year: "",
+    property_rooms: "",
+    property_bathrooms:"",
+    property_garage: ""
+}
+
+export const AddProperty2 = () => {
+const [kitchen, setKitchen] = useState();
+const [proper, setProper] = useState(initialValue);
+
+    useEffect(() => {
+        axios
+        .get("http://localhost:4000/property/allKitchens")
+        .then((res) => {
+         setKitchen(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [])
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setProper({...proper, [name]:value})
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios
+            .post()
+            .then((res) => {
+                console.log(res, "RES")
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
+
+
+    
+
+  return (
+    <div>
+    <h2>Añadir Propiedad</h2>
+    <h3>Características de la propiedad</h3>
+    <p>Estos valores son de gran importancia para el analisis automatico de rendimiento de la inversión</p>
+    <form>
+    <p>Superficie util</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    value={proper.property_total_meters}
+    name="property_total_meters"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Superficie construida</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    value={proper.property_built_meters}
+    name="property_built_meters"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Año de construccion</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    min="1500"
+    max="3000"
+    value={proper.property_built_year}
+    name="property_built_year"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Habitaciones</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    value={proper.property_rooms}
+    name="property_rooms"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Baños</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    value={proper.property_bathrooms}
+    name="property_bathrooms"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Garage</p>
+    <input
+    placeholder='0'
+    autoComplete='off'
+    type="number"
+    value={proper.property_garage}
+    name="property_garage"
+    onChange={handleChange}
+    />
+    <hr/>
+    <p>Tipo de cocina</p>
+    <select>
+    {kitchen?.map((tipo, i)=>{
+        return(
+            <option key={i}>{tipo.kitchen_name}</option>
+        )
+    })}
+    </select>
+
+    <button type='submit' onClick={handleSubmit}>Siguiente</button>
+    </form>
+    
+    </div>
+  )
+}
