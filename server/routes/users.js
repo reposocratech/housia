@@ -36,6 +36,10 @@ router.post("/createRent/:property_id", userController.createRent);
 //localhost:4000/users/editRent/:rent_id
 router.put("/editRent/:rent_id", userController.editRent);
 
+//Trae todas las propiedades de un usuario con su foto principal
+//localhost:4000/users/getAllProperty/:user_id
+router.get("/getAllProperty/:user_id", userController.getAllProperty);
+
 
 
 module.exports = router;

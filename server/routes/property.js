@@ -41,6 +41,9 @@ router.put("/uncheckSale/:property_user_id/:property_id", propertyController.unc
 //muestra todas la propiedades de descubre
 router.get("/descubre", propertyController.showAllDescubre);
 
+//Trae todas las fotos de una propiedad
+//localhost:4000/property/getImagesProperty/:property_id
+router.get("/getImagesProperty/:property_id", propertyController.getImagesProperty);
 
 
 
