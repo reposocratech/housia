@@ -9,3 +9,5 @@ export const AppProvider = (props) => {
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
 }
+
+//a borrar
