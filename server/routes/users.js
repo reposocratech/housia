@@ -1,26 +1,40 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../Controllers/userController')
-const multer = require("../middleware/multer");
 const multerSingle = require("../middleware/multerSingle");
 
 
 //localhost:4000/users
 
-//-Trae la imagenes  de una propiedad
-//localhost:4000/users/imgOneProperty/:image_property_id 
-router.get("/imgOneProperty/:image_property_id", userController.imgOneProperty);
 
-//localhost:4000/users/addImgs/:image_property_id
-router.post("/addImgs/:image_property_id", multer("property") , userController.addImgs);
+//-- CREATE USER
+//localhost:4000/users/createUser
+router.post("/createUser", userController.createUser);
 
-//localhost:4000/users/deletePhoto/:image_id
- router.delete("/deletePhoto/:image_id", userController.deletePhoto);
+//-- LOGIN USER
+//localhost:4000/users/login
+router.post("/login", userController.loginUser)
 
+//-- ONE USER 
+//localhost:4000/users/:user_id
+router.get("/:user_id", userController.selectOneUser)
 
- //localhost:4000/users/mainImage/:image_id
-router.put("/mainImage/:image_id", userController.mainImage);
- 
+//-- TRAE LA INFO DE UN USER (EDITAR U OTROS)
+////localhost:4000/users/editUser/:user_id
+router.get("/editUser/:user_id", userController.showOneUser)
+
+//-- EDIT USER (meter info nueva)
+//localhost:4000/users/editUser/:user_id
+router.put("/editUser/:user_id", userController.editOneUser)
+//----------------------LINEA PARA AÑADIR MULTER A LA RUTA
+//router.put("/editUser/:user_id", multerSingle("user"), userController.editOneUser)
+
+////rent
+//localhost:4000/users/createRent/:property_id
+router.post("/createRent/:property_id", userController.createRent);
+
+//localhost:4000/users/editRent/:rent_id
+router.put("/editRent/:rent_id", userController.editRent);
 
 
 
