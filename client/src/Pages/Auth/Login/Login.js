@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import { AppContext } from '../../../Context/AppContext';
 import { saveLocalStorageUser } from '../../../Utils/localStorage/localStorageUser';
+import './login.scss';
 
 const initialState = {
     email: "",
@@ -38,29 +39,29 @@ const initialState = {
     }
 
     return (
-     <>
+     <div className='login-container'>
        <h1>Bienvenido de nuevo a Housia</h1>
        <h2>Login</h2>
-       <div>
-       <input
-              placeholder='email'
+       <div className='login-form'>
+          <input
+              placeholder='Correo electrónico'
               autoComplete='off'
               value={login?.email}
               onChange={handleChange}
               name='email'
           />
           <input
-              placeholder='password'
+              placeholder='contraseña'
               autoComplete='off'
               value={login?.password}
               onChange={handleChange}
               name='password'
-        />
-    </div>
-    <button onClick={handleLogin}>Login</button>
-    {messageError1}
-    {/* {isLogged && <p>Usuario logueado</p>} */}
-     </>
+           />
+           <p>¿Has olvidado la contraseña?</p>
+        <button className='login-boton' onClick={handleLogin}>Iniciar Sesión</button>
+        {messageError1}
+        </div>
+     </div>
     )
   }
   
