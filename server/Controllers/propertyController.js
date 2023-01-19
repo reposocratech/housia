@@ -87,6 +87,16 @@ class propertyController {
              error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
           });
     };
+
+    ///Trae todas las imágenes de una propiedad
+    getImagesProperty = (req, res) => {
+        let {property_id} = req.params;
+
+        let sql = `SELECT * FROM image WHERE property_id = ${property_id} AND image_is_deleted = 0`;
+        connection.query(sql, (error, result) => {
+            error ? res.status(400).json({ error }) : res.status(200).json(result);
+          });
+    };
 }
 
 module.exports = new propertyController();
