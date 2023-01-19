@@ -154,7 +154,11 @@ editOneUser =(req, res)=>{
 
     let userId = req.params.user_id;
 
-    const { name, lastname, phone, dni, promotional_code, birth_date } = JSON.parse(req.body.register)
+    // ESTO es por si lo pasamos como JSON REGISTER
+    // const { name, lastname, phone, dni, promotional_code, birth_date } = JSON.parse(req.body.register)
+
+
+    let { name, lastname, phone, dni, promotional_code, birth_date } = req.body
 
     // eliminamos espacios en blanco previos o posteriores al dato a rescatar
     name = name.trim()
