@@ -10,6 +10,7 @@ import './NavBarUser.scss';
 
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
+  console.log(user);
 
   const navigate= useNavigate();
 
@@ -28,6 +29,9 @@ export const NavBarUser = () => {
             <Nav.Link as={Link} to='/'>Home</Nav.Link>
             
           </Nav>
+          {user?.type !== 2 && <>
+              <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
+            </>} 
 
           {!isLogged ? (
               <div>

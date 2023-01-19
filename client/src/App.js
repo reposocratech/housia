@@ -3,8 +3,6 @@ import './App.css';
 import { AppRoutes } from './Routes/AppRoutes';
 import { AppProvider } from './Context/AppContext';
 
-
-
 function App() {
   return (
     <div>
