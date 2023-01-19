@@ -5,6 +5,7 @@ var adminController = require('../Controllers/adminController')
 // localhost:4000/admin
 
 // Property types
+
 //localhost:4000/admin/getPropertyTypes
 router.get("/getPropertyTypes", adminController.getPropertyTypes);
 
@@ -19,16 +20,13 @@ router.delete("/deletePropertyType/:type_id", adminController.deletePropertyType
 
 
 
-
 //SUBTYPE
 
 //localhost:4000/admin/getPropertySubTypes/subtype_type_id
 router.get("/getPropertySubTypes/:subtype_type_id", adminController.getPropertySubTypes);
 
-
 //localhost:4000/admin/createPropertySubType/:subtype_type_id
 router.post("/createPropertySubType/:subtype_type_id", adminController.createPropertySubType);
-
 
 //localhost:4000/admin/editPropertySubType/subtype_id
 router.put("/editPropertySubType/:subtype_id", adminController.editPropertySubType);
@@ -38,8 +36,8 @@ router.put("/editPropertySubType/:subtype_id", adminController.editPropertySubTy
 router.delete("/deletePropertySubType/:subtype_id", adminController.deletePropertySubType);
 
 
-
 // Kitchen types
+
 //localhost:4000/admin/getKitchenTypes
 router.get("/getKitchenTypes", adminController.getKitchenTypes);
 
@@ -55,7 +53,8 @@ router.delete("/deleteKitchenType/:kitchen_id", adminController.deleteKitchenTyp
 
 
 
-////features
+//features
+
 //localhost:4000/admin/getPropertyFeatures
 router.get("/getPropertyFeatures", adminController.getPropertyFeatures
 );
@@ -69,6 +68,8 @@ router.put("/editPropertyFeature/:feature_id", adminController.editPropertyFeatu
 //localhost:4000/admin/deletePropertyFeature/:feature_id
 router.delete("/deletePropertyFeature/:feature_id", adminController.deletePropertyFeature);
 
-
+//Borra de manera lógica un ACTIVO(propiedad)
+//localhost:4000/admin/logicDeletedAdminProperty/:property_id
+router.delete("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
 
 module.exports = router;
