@@ -2,6 +2,7 @@ const connection = require("../config/db.js");
 
 
 class adminController {
+<<<<<<< HEAD
 
 
     //Borra de manera logica un ACTIVO (inmueble)
@@ -24,6 +25,9 @@ class adminController {
 
 
     // CRUD Property
+=======
+    // CRUD Property Type 
+>>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
     //Trae los tipos de propiedades
     getPropertyTypes = (req, res) =>{
         let sql ="SELECT * FROM type "
@@ -58,7 +62,7 @@ class adminController {
         let {type_id} = req.params;
         let {type_name} = req.body;
 
-        let sql =`UPDATE type SET type_name = ${type_name} where type_id = ${type_id}`;
+        let sql =`UPDATE type SET type_name = '${type_name}' where type_id = ${type_id}`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -125,7 +129,7 @@ class adminController {
         let {subtype_id} = req.params;
         let {subtype_name} = req.body;
 
-        let sql =`UPDATE subtype SET subtype_name = ${subtype_name} WHERE subtype_id = ${subtype_id}`;
+        let sql =`UPDATE subtype SET subtype_name = '${subtype_name}' WHERE subtype_id = ${subtype_id}`;
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
@@ -157,7 +161,7 @@ class adminController {
 
     //trae la info de todos los tipos de cocina
     getKitchenTypes = (req, res) =>{
-        let sql ="SELECT * FROM kitchen "
+        let sql ="SELECT * FROM kitchen"
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
@@ -181,8 +185,6 @@ class adminController {
                 
             }
             res.status(200).json(result);
-
-            
         });
     }
 
@@ -191,7 +193,7 @@ class adminController {
         let {kitchen_id} = req.params;
         let {kitchen_name} = req.body;
 
-        let sql =`UPDATE kitchen SET kitchen_name = ${kitchen_name} where kitchen_id = ${kitchen_id}`;
+        let sql =`UPDATE kitchen SET kitchen_name = '${kitchen_name}' where kitchen_id = ${kitchen_id}`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -219,16 +221,6 @@ class adminController {
         });
 
     }
-
-
-
-
-
-
-
-
-
-
 
 // CONSEGUIR LA INFO DE TODOS LOS FEATURES EXISTENTES
 
@@ -268,7 +260,7 @@ class adminController {
         let {feature_id} = req.params;
         let {feature_name} = req.body;
 
-        let sql =`UPDATE type SET type_name = ${feature_name} where type_id = ${feature_id}`;
+        let sql =`UPDATE type SET type_name = '${feature_name}' where type_id = ${feature_id}`;
           connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});    
@@ -279,8 +271,6 @@ class adminController {
     }
 
    
-
-
 // BORRAR UN FEATURE YA EXISTENTE.
 
     deletePropertyFeature = (req, res) =>{
@@ -297,6 +287,27 @@ class adminController {
             console.log(result);
         });
     };
+
+
+    //Borra de manera logica un ACTIVO (inmueble)
+    //localhost:4000/admin/logicDeletedAdminProperty/:property_id
+    logicDeletedAdminProperty = (req, res) =>{
+
+        let {property_id} = req.params;
+
+        let sql = `UPDATE property SET property_is_admin_deleted = true WHERE property_id = ${property_id}`
+
+        connection.query(sql, (errorAD, result) =>{
+            if(errorAD){
+                res.status(400).json({errorAD})
+                }
+
+            res.status(200).json(result);
+        })
+
+    }
+
+   
 
 }
      
