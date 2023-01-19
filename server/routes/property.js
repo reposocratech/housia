@@ -27,5 +27,7 @@ router.put("/checkSale/:property_user_id/:property_id", propertyController.check
 router.put("/uncheckSale/:property_user_id/:property_id", propertyController.uncheckSale);
 
 
+//muestra todas la propiedades de descubre
+router.get("/descubre", propertyController.showAllDescubre);
 
 module.exports = router;

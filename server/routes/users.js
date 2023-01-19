@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const userController = require('../Controllers/userController');
-<<<<<<< HEAD
+
 
 
 
@@ -34,13 +34,8 @@ router.put("/editUser/:user_id", userController.editOneUser)
 
 
 
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-=======
 
 /* GET users listing. */
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
 
 //-- CREATE USER
 //localhost:4000/users/createUser
