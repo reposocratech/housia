@@ -117,7 +117,6 @@ class propertyController {
           });
     };
 
-   
   
   //Método get descubre
     showAllDescubre = (req, res) =>{
