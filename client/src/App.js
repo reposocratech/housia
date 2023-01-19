@@ -1,23 +1,17 @@
 import './App.css';
-import { AddPropertyForm1 } from './Components/AddPropertyForm/AddPropertyForm1';
-import { Login } from './Pages/Auth/Login/Login';
-import { Register } from './Pages/Auth/Register/Register';
-import { EditUser } from './Pages/User/EditUser';
-
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import { AppRoutes } from './Routes/AppRoutes';
+import { AppProvider } from './Context/AppContext';
 
 
 
 function App() {
-
   return (
-    <>
-  <Login/>
-  <Register/>
-  <EditUser/>
-  <AddPropertyForm1/>
-    </>
-
+    <div>
+      <AppProvider>
+          <AppRoutes/>
+      </AppProvider>
+    </div>
   );
 }
 

@@ -87,6 +87,15 @@ class propertyController {
              error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
           });
     };
+
+    showAllDescubre = (req, res) =>{
+
+        let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
+
+        connection.query(sql, (error, result)=>{
+            error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+    }
 }
 
 module.exports = new propertyController();
