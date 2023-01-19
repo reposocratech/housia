@@ -5,66 +5,6 @@ const jwt = require("jsonwebtoken");
 class userController {
 
 //--    CREAR USUARIO
-<<<<<<< HEAD
-//localhost:4000/users/createUser
-
-createUser = (req, res) =>{
-    const { name, lastname, email, password, promotional_code} = req.body;
-    console.log(promotional_code, "esto es el promotional code")
-
-    let rondasSeguridad = 8;
-
-    let sqlBcrypt = ``;
-    if(promotional_code != ""){
-        sqlBcrypt = `INSERT INTO user (user_name, user_lastname, user_code, user_email, user_password) VALUES ('${name}','${lastname}','${promotional_code}', '${email}', '${password}')`;
-    } else {
-        sqlBcrypt = `INSERT INTO user (user_name, user_lastname, user_email, user_password) VALUES ('${name}','${lastname}', '${email}', '${password}')`;
-            }
-
-    connection.query(sqlBcrypt, (error, loginResult)=>{
-        console.log(error);
-
-        error ? res.status(500).json("Ha habido un error en register") 
-        : res.status(200).json(loginResult); 
-
-        console.log(loginResult);
-    })
-
-    //TODO LO RELATIVO A BCRYPT CUANDO LO INTEGREMOS
-
-    // bcrypt.generarEncript(rondasSeguridad, function(errorBcryp, rondasSeguridad) {
-    //     bcrypt.hash(password, rondasSeguridad, function (err, hash){
-
-    //         let sqlBcrypt = "";
-
-    //         if(promotional_code != ""){
-    //              sqlBcrypt = `INSERT INTO user (user_name, user_lastname, user_code, user_email, user_password) VALUES ('${name}','${lastname}','${promotional_code}', '${email}' '${hash}')`;
-    //         } else {
-    //              sqlBcrypt = `INSERT INTO user (user_name, user_lastname, user_email, user_password) VALUES ('${name}','${lastname}', '${email}', '${hash}')`;
-    //         }
-
-    //         connection.query(sqlBcrypt, (error, loginResult) =>{
-    //             console.log(error);
-    //         error
-    //          ? res.status(500).json( "ha habido un error" )
-    //          : res.status(200).json(loginResult);
-    //         });
-    //     }); 
-    // });
-}
-
-
-// LOGIN USER
-//localhost:4000/users/login 
-
-loginUser =(req, res)=>{
-
-    let {email, password} = req.body;
-
-    let sql = `SELECT * FROM user WHERE user_email = '${email}' and user_is_deleted = false`;
-
-    connection.query(sql, (error, result) =>{
-=======
 //localhost:4000/user/createUser
 
 createUser = (req, res) =>{
@@ -101,7 +41,6 @@ loginUser =(req, res)=>{
 
     connection.query(sql, (error, result) =>{
 
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
         if(error) return res.status(404).json(error);
 
         if(!result || !result.length){
@@ -110,39 +49,6 @@ loginUser =(req, res)=>{
 
             //METODO PARA BCRYPT CUANDO LO IMPLEMENTEMOS
 
-<<<<<<< HEAD
-            // const [user] = result;
-            // const hash = user.user_password;
-
-            // const userId = user.user_id;
-
-
-            // bcrypt.compare(password, hash, (error, response) => {
-            //     if (error) throw error;
-            //     //si las contraseñas coinciden
-            //     if (response === true) {
-            //       const token = jwt.sign(
-            //         {
-            //           user: {
-            //             email: user.user_email,
-            //             name: user.user_name,
-            //             lastname: user.user_lastname,
-            //             id: userId,
-            //             type: user.user_type
-            //           },
-            //         },
-            //         process.env.SECRET,
-            //         { expiresIn: "7d" }
-            //       );
-            //       res.status(200).json({ token });
-            //       //si las contraseñas coinciden
-            //     } else {
-            //       res.status(401).json("Usuario y contraseña incorrectos");
-            //     }
-            //   });
-
-            res.status(200).json(result)
-=======
             const [user] = result;
             const hash = user.user_password;
 
@@ -177,21 +83,14 @@ loginUser =(req, res)=>{
                   
                 }
               });
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
         }
 
     })
 
 }
 
-<<<<<<< HEAD
-
-// GET DE UN SOLO USER (devuelve los datos de un usuario tras loguearse)
-//localhost:4000/users/:id
-=======
 // GET DE UN SOLO USER (devuelve los datos de un usuario tras loguearse)
 //localhost:4000/users/:user_id
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
 selectOneUser =(req, res)=>{
 
     const userId = req.params.user_id;
@@ -215,10 +114,7 @@ selectOneUser =(req, res)=>{
 };
 
 // FORMULARIO EDITAR USER
-<<<<<<< HEAD
-=======
 //localhost:4000/users/editUser/:userId
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
 showOneUser = (req, res) =>{
      
     let userId = req.params.user_id
@@ -237,22 +133,13 @@ showOneUser = (req, res) =>{
 // EDITAR UN USUARIO (metodo put)
 //localhost:4000/users/editUser/:userId
 editOneUser =(req, res)=>{
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
     let userId = req.params.user_id;
 
     // ESTO es por si lo pasamos como JSON REGISTER
     // const { name, lastname, phone, dni, promotional_code, birth_date } = JSON.parse(req.body.register)
 
 
-<<<<<<< HEAD
-    let { name, lastname, phone, dni, promotional_code, birth_date } = req.body
-=======
     let { name, lastname, phone, dni, promotional_code, birth_date } = req.body;
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
 
     // eliminamos espacios en blanco previos o posteriores al dato a rescatar
     name = name.trim()
@@ -280,8 +167,6 @@ editOneUser =(req, res)=>{
 
 };
 
-<<<<<<< HEAD
-=======
 //CREAR ALQUILER
 
 createRent = (req, res) => {
@@ -319,7 +204,6 @@ editRent = (req, res) => {
     });
 };
 
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
 
 
 

@@ -2,32 +2,7 @@ const connection = require("../config/db.js");
 
 
 class adminController {
-<<<<<<< HEAD
-
-
-    //Borra de manera logica un ACTIVO (inmueble)
-    //localhost:4000/admin/logicDeletedAdminProperty/:property_id
-    logicDeletedAdminProperty = (req, res) =>{
-
-        let {property_id} = req.params;
-
-        let sql = `UPDATE property SET property_is_admin_deleted = true WHERE property_id = ${property_id}`
-
-        connection.query(sql, (errorAD, result) =>{
-            if(errorAD){
-                res.status(400).json({errorAD})
-                }
-
-            res.status(200).json(result);
-        })
-
-    }
-
-
-    // CRUD Property
-=======
     // CRUD Property Type 
->>>>>>> 88292833a8f1102111f60dd9b35cde94c23c822e
     //Trae los tipos de propiedades
     getPropertyTypes = (req, res) =>{
         let sql ="SELECT * FROM type "
