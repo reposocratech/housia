@@ -11,6 +11,7 @@ export const AddProperty1 = () => {
     const [typeId, setTypeId] = useState(1);
     const [subTypeId, setSubTypeId] = useState(1);
     const [nameProperty, setNameProperty] = useState(initialValue);
+    const [property, setProperty] = useState();
 
 
     useEffect(() => {
@@ -59,13 +60,14 @@ const handleSubmit = (e) => {
         .post(`http://localhost:4000/property/createProperty/1/${subTypeId}`,nameProperty )
         .then((res) => {
             console.log(res, "RESSSSSSSS");
+            setProperty(res.data[0])
         })
         .catch((err) => {
             console.log(err);
         });
 }
 
-console.log(typeId, subTypeId,  "eqeEWQDw")
+console.log(property,  "eqeEWQDw")
 
     
     

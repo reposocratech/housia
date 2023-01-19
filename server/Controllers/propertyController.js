@@ -167,6 +167,30 @@ class propertyController {
   }
 
 
+  addBasicFeaturesToProperty = (req, res) => {
+
+    let {property_kitchen_id, property_id} = req.params;
+    let { property_total_meters, property_built_meters, property_built_year, property_rooms, property_bathrooms, property_garage} = req.body;
+
+    let sql = `UPDATE property SET property_total_meters = ${property_total_meters},
+     property_built_meters = ${property_built_meters}, property_built_year = ${property_built_year},
+      property_rooms = ${property_rooms}, property_bathrooms = ${property_bathrooms},
+       property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
+        WHERE property_id = ${property_id}`;
+
+    connection.query(sql, (error, result)=>{
+      if (error) throw error;
+
+      let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
+
+      connection.query(sqlProperty, (err, resultProperty) => {
+          if(err) throw err;
+          res.status(200).json(resultProperty);
+      })
+  });
+  }
+
+
 
 
 

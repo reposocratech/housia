@@ -12,7 +12,8 @@ const initialValue = {
 
 export const AddProperty2 = () => {
 const [kitchen, setKitchen] = useState();
-const [proper, setProper] = useState(initialValue);
+const [property, setProperty] = useState(initialValue);
+const [kitchenId, setKitchenId] = useState(1);
 
     useEffect(() => {
         axios
@@ -27,25 +28,29 @@ const [proper, setProper] = useState(initialValue);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setProper({...proper, [name]:value})
+        setProperty({...property, [name]:value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .post()
+            .put(`http://localhost:4000/property/addBasicFeaturesToProperty/1/${kitchenId}`, property)
             .then((res) => {
-                console.log(res, "RES")
+                console.log(res, "RESSSSSSSSSSSSSSSSSS")
+                setProperty(res.data[0])
             })
             .catch((err) => {
                 console.log(err);
             });
     }
 
+    const handleKitchenId = (e) => {
+        setKitchenId(e.target.value);
+       }
 
 
-    
-
+    console.log(kitchenId, "ID KITCHEN")
+    console.log(property, "PROPERTY")
   return (
     <div>
     <h2>Añadir Propiedad</h2>
@@ -57,7 +62,7 @@ const [proper, setProper] = useState(initialValue);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={proper.property_total_meters}
+    value={property.property_total_meters}
     name="property_total_meters"
     onChange={handleChange}
     />
@@ -67,7 +72,7 @@ const [proper, setProper] = useState(initialValue);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={proper.property_built_meters}
+    value={property.property_built_meters}
     name="property_built_meters"
     onChange={handleChange}
     />
@@ -79,7 +84,7 @@ const [proper, setProper] = useState(initialValue);
     type="number"
     min="1500"
     max="3000"
-    value={proper.property_built_year}
+    value={property.property_built_year}
     name="property_built_year"
     onChange={handleChange}
     />
@@ -89,7 +94,7 @@ const [proper, setProper] = useState(initialValue);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={proper.property_rooms}
+    value={property.property_rooms}
     name="property_rooms"
     onChange={handleChange}
     />
@@ -99,7 +104,7 @@ const [proper, setProper] = useState(initialValue);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={proper.property_bathrooms}
+    value={property.property_bathrooms}
     name="property_bathrooms"
     onChange={handleChange}
     />
@@ -109,16 +114,16 @@ const [proper, setProper] = useState(initialValue);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={proper.property_garage}
+    value={property.property_garage}
     name="property_garage"
     onChange={handleChange}
     />
     <hr/>
     <p>Tipo de cocina</p>
-    <select>
+    <select onClick={handleKitchenId}>
     {kitchen?.map((tipo, i)=>{
         return(
-            <option key={i}>{tipo.kitchen_name}</option>
+            <option key={i} value={tipo.kitchen_id}  >{tipo.kitchen_name}</option>
         )
     })}
     </select>

@@ -32,6 +32,9 @@ router.post("/createProperty/:property_user_id/:property_subtype_id", propertyCo
 //localhost:4000/property/allKitchens
 router.get("/allKitchens", propertyController.allKitchens)
 
+//localhost:4000/property/addBasicFeaturesToProperty/:property_kitchen_id
+router.put("/addBasicFeaturesToProperty/:property_id/:property_kitchen_id", propertyController.addBasicFeaturesToProperty);
+
 
 
 
