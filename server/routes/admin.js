@@ -68,8 +68,14 @@ router.put("/editPropertyFeature/:feature_id", adminController.editPropertyFeatu
 //localhost:4000/admin/deletePropertyFeature/:feature_id
 router.delete("/deletePropertyFeature/:feature_id", adminController.deletePropertyFeature);
 
+
+//localhost:4000/admin/logicDeletedAdminProperty/:property_id
+router.delete("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
+
+
 //Borra de manera lógica un ACTIVO(propiedad)
 //localhost:4000/admin/logicDeletedAdminProperty/:property_id
 router.delete("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
+
 
 module.exports = router;

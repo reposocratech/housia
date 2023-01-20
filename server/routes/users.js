@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../Controllers/userController')
-const multerSingle = require("../middleware/multerSingle");
 
 
-//localhost:4000/users
 
+
+
+
+
+/* GET users listing. */
 
 //-- CREATE USER
 //localhost:4000/users/createUser
@@ -35,6 +38,10 @@ router.post("/createRent/:property_id", userController.createRent);
 
 //localhost:4000/users/editRent/:rent_id
 router.put("/editRent/:rent_id", userController.editRent);
+
+//Trae todas las propiedades de un usuario con su foto principal
+//localhost:4000/users/getAllProperty/:user_id
+router.get("/getAllProperty/:user_id", userController.getAllProperty);
 
 
 

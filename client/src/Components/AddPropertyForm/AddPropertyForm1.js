@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppContext } from '../../Context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
-const initialValue = {
-    property_name: ""
-}
 
 export const AddPropertyForm1 = () => {
     const [type, setType] = useState();
     const [subtype, setSubtype] = useState();
     const [typeId, setTypeId] = useState(1);
     const [subTypeId, setSubTypeId] = useState(1);
-    const [nameProperty, setNameProperty] = useState(initialValue);
+    const {property, setProperty, user } = useContext(AppContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios
@@ -28,7 +28,7 @@ export const AddPropertyForm1 = () => {
         axios
         .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
         .then((res) => {
-            console.log(res.data, "aaaaaaaaaaaaaaaaaaaaa")
+           
             setSubtype(res.data);
         })
         .catch((err) => {
@@ -48,24 +48,26 @@ const handleSubTypeId = (e) => {
 
 const handleChange = (e) => {
     const {name, value} = e.target;
-    setNameProperty({...nameProperty, [name]:value})
+    setProperty({...property, [name]:value})
 }
 
 const handleSubmit = (e) => {
     e.preventDefault();
     axios
-        .post(`http://localhost:4000/property/createProperty/1/${subTypeId}`,nameProperty )
+        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
         .then((res) => {
-            console.log(res, "RES")
+            
+            setProperty(res.data[0]);
+            
+            navigate("/addProperty2");
         })
         .catch((err) => {
             console.log(err);
         });
 }
 
-console.log(typeId, subTypeId,  "eqeEWQDw")
 
-    
+
     
   return (
     <div>
@@ -79,7 +81,7 @@ console.log(typeId, subTypeId,  "eqeEWQDw")
         <input
        placeholder='Nombra la propiedad'
        autoComplete='off'
-       value={nameProperty.property_name}
+       value={property?.property_name}
        name="property_name"
        onChange={handleChange}
 
