@@ -11,6 +11,8 @@ import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1
 import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
 import { TestField } from '../Components/TestField/TestField'
+import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
+import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
 
 
 export const AppRoutes = () => {
@@ -34,6 +36,8 @@ export const AppRoutes = () => {
 
                 <Route path='/testField' element={<TestField/>}/>
 
+                <Route path='/adminhome' element={<AdminHome/>}/>
+                <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>
             </Routes>
         </BrowserRouter>
     </div>
