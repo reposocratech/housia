@@ -1,11 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../Controllers/userController')
-const multerSingle = require("../middleware/multerSingle");
 
 
-//localhost:4000/users
 
+
+
+
+
+/* GET users listing. */
 
 //-- CREATE USER
 //localhost:4000/users/createUser

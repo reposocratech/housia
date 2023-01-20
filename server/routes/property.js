@@ -44,5 +44,7 @@ router.get("/descubre", propertyController.showAllDescubre);
 
 
 
+//muestra todas la propiedades de descubre
+router.get("/descubre", propertyController.showAllDescubre);
 
 module.exports = router;

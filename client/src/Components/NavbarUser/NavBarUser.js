@@ -15,6 +15,8 @@ export const NavBarUser = () => {
             <Nav.Link as={Link} to='/'>Home</Nav.Link>
             <Nav.Link as={Link} to='/login'>Login</Nav.Link>
             <Nav.Link as={Link} to='/register'>Register</Nav.Link>
+            <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
+
           </Nav>
         </Container>
       </Navbar>
