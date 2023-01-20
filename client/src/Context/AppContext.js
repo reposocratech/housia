@@ -10,13 +10,15 @@ export const AppProvider = (props) => {
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
-    
+
 
     useEffect(() => {
         const token = localStorageUser();
         if(token){
             let id = jwtDecode(token).user.id;
-            
+            setIsLogged(true);
+
+
         
         axios
         .get(`http://localhost:4000/users/${id}`)
@@ -24,18 +26,21 @@ export const AppProvider = (props) => {
 
             setUser(res.data.resultUser[0]);
             setUserProperties(res.data.resultProperty);
+            
         })
         .catch((error) => {
             console.log('este es el error', error);
         })
         }
-    }, [])
+    }, [isLogged])
     
 
     return (
         <AppContext.Provider value={{
                 user, 
                 setUser, 
+                userProperties, 
+                setUserProperties,
                 isLogged, 
                 setIsLogged,
                 token

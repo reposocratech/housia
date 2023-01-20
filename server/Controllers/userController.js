@@ -206,6 +206,37 @@ editRent = (req, res) => {
     });
 };
 
+//Trae todas las propiedades de un usuario con su foto principal.
+getAllProperty = (req, res) => {
+    let {user_id} = req.params;
+
+    // let sql = `UPDATE image SET image_is_main = 1 WHERE image_title = "imagen_propiedad.jpg"`;
+    
+    let sql2 = `SELECT property.*, image.* FROM user, image, property WHERE user.user_id = property.property_user_id AND property.property_id = image.image_property_id AND user.user_is_deleted = 0 AND user.user_id = ${user_id} AND image.image_is_main = 1 ORDER BY property.property_built_year DESC LIMIT 6`;
+
+    
+    // connection.query(sql, (error, resultImage) => {
+    //     if (error) {
+    //     res.status(400).json({ error });
+    //     }
+    //     connection.query(sql2, (error2, resultProperty) => {
+    //         if (error) {
+    //         res.status(400).json({ error2 });
+    //         }
+    //         res.status(200).json({ resultProperty});
+    //         });
+    //     });
+        connection.query(sql2, (error2, resultProperty) => {
+            if (error2) {
+            res.status(400).json({ error2 });
+            } else{
+            res.status(200).json({ resultProperty});
+            }
+            
+            });
+      
+    };
+
 
 
 
