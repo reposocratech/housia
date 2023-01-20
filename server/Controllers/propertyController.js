@@ -127,6 +127,55 @@ class propertyController {
             error ? res.status(400).json({error}) : res.status(200).json(result);
         })
     }
+
+
+
+    allProvinces = (req, res) => {
+
+      let sql = 'SELECT * FROM province'
+    
+      connection.query(sql, (error, result)=>{
+        error ? res.status(400).json({error}) : res.status(200).json(result);
+      })
+    }
+    
+    
+    
+    
+    
+    
+    allCities = (req, res) => {
+      let {province_id} = req.params;
+      
+      let sql = `SELECT * FROM city WHERE city_province_id = ${province_id} `;
+    
+      connection.query(sql, (error, result) => {
+        error ? res.status(400).json({error}) : res.status(200).json(result);
+      })
+    
+      
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
 
 module.exports = new propertyController();

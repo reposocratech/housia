@@ -5,12 +5,17 @@ import jwtDecode from 'jwt-decode';
 
 export const AppContext = createContext();
 
+
+
 export const AppProvider = (props) => {
     const [user, setUser] = useState({});
+    const [property, setProperty] = useState();
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
-    console.log(token);
+    
+    
+    
 
     useEffect(() => {
         const token = localStorageUser();
@@ -21,9 +26,10 @@ export const AppProvider = (props) => {
         axios
         .get(`http://localhost:4000/users/${id}`)
         .then((res)=> {
-            console.log(res.data);
+            
             setUser(res.data.resultUser[0]);
             setUserProperties(res.data.resultProperty);
+            
         })
         .catch((error) => {
             console.log('este es el error', error);
@@ -31,10 +37,13 @@ export const AppProvider = (props) => {
         }
     }, [])
     
+    
 
     return (
         <AppContext.Provider value={{
-                user, 
+                user,
+                property,
+                setProperty, 
                 setUser, 
                 isLogged, 
                 setIsLogged,
