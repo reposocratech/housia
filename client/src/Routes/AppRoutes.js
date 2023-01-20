@@ -11,6 +11,7 @@ import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1
 import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
 import { TestField } from '../Components/TestField/TestField'
+import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4'
 
 
 export const AppRoutes = () => {
@@ -29,9 +30,8 @@ export const AppRoutes = () => {
 
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
-
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
-
+                <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/testField' element={<TestField/>}/>
 
             </Routes>

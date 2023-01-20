@@ -52,9 +52,24 @@ router.get("/allProvinces", propertyController.allProvinces);
 //localhost:4000/property/allCities/:province_id
 router.get("/allCities/:province_id", propertyController.allCities )
 
-
-
 //muestra todas la propiedades de descubre
 router.get("/descubre", propertyController.showAllDescubre);
+
+//Actualizar DIRECCIÓN PROPIEDAD
+//localhost:4000/property/addPropertyAddress/:property_id/:province_id/:city_id
+router.put("/addPropertyAddress/:property_id/:province_id/:city_id", propertyController.addAddress);
+
+//Mostrar CARACTERÍSTICAS del Inmueble
+//localhost:4000/property/allFeatures
+router.get("/allFeatures", propertyController.allFeatures);
+
+//Guardar Características
+//localhost:4000/property/addFeaturesToProperty/:property_id
+router.post("/addFeaturesToProperty/:property_id", propertyController.addFeaturesToProperty)
+
+//Mostrar Características
+//localhost:4000/property/getPropertyFeatures/:property_id
+router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFeatures)
+
 
 module.exports = router;
