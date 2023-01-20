@@ -7,11 +7,7 @@ import './portafolio.scss';
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
   const {user, isLogged} = useContext(AppContext);
-  console.log(user);
-  console.log(isLogged);
-  console.log(propertyDetails);
-  
-
+ 
   useEffect(() => {
     axios
       .get(`http://localhost:4000/users/getAllProperty/1`)

@@ -10,6 +10,7 @@ export const AppContext = createContext();
 export const AppProvider = (props) => {
     const [user, setUser] = useState({});
     const [property, setProperty] = useState();
+    const [resetUser, setResetUser] = useState(false);
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
@@ -35,7 +36,7 @@ export const AppProvider = (props) => {
             console.log('este es el error', error);
         })
         }
-    }, [isLogged])
+    }, [isLogged, resetUser])
     
     
 
@@ -49,6 +50,8 @@ export const AppProvider = (props) => {
                 setUserProperties,
                 isLogged, 
                 setIsLogged,
+                resetUser,
+                setResetUser,
                 token
                 }}>
             {props.children}
