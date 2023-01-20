@@ -15,6 +15,7 @@ export const AppProvider = (props) => {
         const token = localStorageUser();
         if(token){
             let id = jwtDecode(token).user.id;
+            setIsLogged(true);
         
         axios
         .get(`http://localhost:4000/users/${id}`)
@@ -27,7 +28,7 @@ export const AppProvider = (props) => {
             console.log('este es el error', error);
         })
         }
-    }, [])
+    }, [isLogged])
     
 
     return (

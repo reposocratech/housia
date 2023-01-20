@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import { AppContext } from '../../../Context/AppContext';
+import {useNavigate} from 'react-router-dom'
 import { saveLocalStorageUser } from '../../../Utils/localStorage/localStorageUser';
 import './login.scss';
 
@@ -13,6 +14,7 @@ const initialState = {
     const [login, setLogin] = useState(initialState);
     const {isLogged, setIsLogged} = useContext(AppContext);
     const [messageError1, setMessageError1] = useState("");
+    const navigate = useNavigate();
 
     const handleChange = (e)=>{
         const {name, value} = e.target;
@@ -30,6 +32,7 @@ const initialState = {
             const token = res.data.token;
             saveLocalStorageUser(token);
             setIsLogged(true);
+            navigate('/user/portafolio');
           })
           .catch((error) => {
             setMessageError1("");

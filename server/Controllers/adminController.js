@@ -218,7 +218,7 @@ class adminController {
     createPropertyFeatures = (req, res) => {
         let {feature_name} = req.body;
 
-        let sql =`INSERT INTO type (type_name) VALUES (${feature_name})`;
+        let sql =`INSERT INTO feature (feature_name) VALUES (${feature_name})`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -235,7 +235,7 @@ class adminController {
         let {feature_id} = req.params;
         let {feature_name} = req.body;
 
-        let sql =`UPDATE type SET type_name = '${feature_name}' where type_id = ${feature_id}`;
+        let sql =`UPDATE feature SET feature_name = '${feature_name}' where feature_id = ${feature_id}`;
           connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});    

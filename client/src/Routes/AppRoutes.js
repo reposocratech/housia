@@ -5,6 +5,8 @@ import { Login } from '../Pages/Auth/Login/Login'
 import { Register } from '../Pages/Auth/Register/Register'
 import { NavBarUser } from '../Components/NavbarUser/NavBarUser'
 import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio'
+import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen'
+import { User } from '../Pages/UserDashboard/User/User'
 
 export const AppRoutes = () => {
   return (
@@ -16,6 +18,8 @@ export const AppRoutes = () => {
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
+                <Route path='/user/resumen' element={<Resumen/>}/>
+                <Route path='/user/perfil' element={<User/>}/>
             </Routes>
         </BrowserRouter>
     </div>

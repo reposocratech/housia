@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
+import {Nav, Container, Button} from 'react-bootstrap'
 import Navbar from 'react-bootstrap/Navbar';
 import {Link, useNavigate} from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext';
@@ -11,6 +10,7 @@ import './NavBarUser.scss';
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
   console.log(user);
+  console.log(isLogged);
 
   const navigate= useNavigate();
 
@@ -23,16 +23,23 @@ export const NavBarUser = () => {
 
   return (
    <>
-   <Navbar bg="dark" variant="dark">
-        <Container className='NavBarContainer'>
-          <Nav className="me-auto">
-            <Nav.Link as={Link} to='/'>Home</Nav.Link>
-            
+   <Navbar className='p-0'>
+        <Container fluid className='NavBarContainer'>
+          <Nav>
+            <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png'/></Nav.Link>
           </Nav>
-          {user?.type !== 2 && <>
-              <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
-            </>} 
-
+         
+          {isLogged && user?.user_type === 2 && 
+          <div className='d-flex'>
+          <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
+          <Nav.Link as={Link} to='/user/resumen'>Resúmen</Nav.Link>
+          <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
+          <Nav.Link>Valora</Nav.Link>
+          <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
+          </div>
+          
+          }
+          
           {!isLogged ? (
               <div>
               <button 
@@ -54,21 +61,15 @@ export const NavBarUser = () => {
                   className='avatar-img' 
                   // onClick={()=> navigate('/user')}
                   src={user?.img ? 
-                  `/images/user/${user.img}` : 
-                  '../images/avatarmujer.png'}
+                  `/images/user/${user.user_img}` : 
+                  '../images/avatar.png'}
                   />
-                <button 
-                  className='me-3' 
-                  variant='light' 
-                  // onClick={()=> navigate('/user')}
-                  >
-                  {user?.name}</button> 
-                <button 
+                <Button 
                   className='me-3' 
                   variant="light" 
                   onClick={logOut}
                   >
-                  Log Out</button> 
+                  Log Out</Button> 
               </div>
             )}
 
