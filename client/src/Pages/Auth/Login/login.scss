@@ -1,0 +1,23 @@
+.login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #272739;
+    color: white;
+    font-family: 'Barlow';
+    .login-form{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        input{
+            margin: 10px 0;
+            padding: 5px;
+        }
+        .login-boton{
+            background-color: #26ADB5;
+            padding: 10px;
+            color: white;
+            border: none;
+        }
+    }
+}

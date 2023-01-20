@@ -139,11 +139,7 @@ class propertyController {
       })
     }
     
-    
-    
-    
-    
-    
+  
     allCities = (req, res) => {
       let {province_id} = req.params;
       
@@ -157,17 +153,17 @@ class propertyController {
     
 
 
-
-
-
-
-
-
-
-
-
-
-
+    //Trae todas las fotos de una propiedad
+    //localhost:4000/property/getImagesProperty/:property_id
+    getImagesProperty = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({ error }) : res.status(200).json(result);
+        });
+      }
 
 }
 
