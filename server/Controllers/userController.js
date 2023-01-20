@@ -4,8 +4,10 @@ const jwt = require("jsonwebtoken");
 
 class userController {
 
+
 //--    CREAR USUARIO
 //localhost:4000/user/createUser
+
 
 createUser = (req, res) =>{
     const { name, lastname, email, password, promotional_code} = req.body;

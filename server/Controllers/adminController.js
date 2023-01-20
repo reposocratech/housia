@@ -264,6 +264,10 @@ class adminController {
     };
 
 
+
+
+    
+
     //Borra de manera logica un ACTIVO (inmueble)
     //localhost:4000/admin/logicDeletedAdminProperty/:property_id
     logicDeletedAdminProperty = (req, res) =>{

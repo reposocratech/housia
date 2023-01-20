@@ -23,20 +23,23 @@ export const NavBarUser = () => {
 
   return (
    <>
+
    <Navbar className='p-0'>
         <Container fluid className='NavBarContainer'>
           <Nav>
             <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png'/></Nav.Link>
-          </Nav>
+            <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
+           </Nav>
          
           {isLogged && user?.user_type === 2 && 
-          <div className='d-flex'>
+          <Nav className='d-flex'>
           <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
           <Nav.Link as={Link} to='/user/resumen'>Resúmen</Nav.Link>
           <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
           <Nav.Link>Valora</Nav.Link>
           <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
-          </div>
+ 
+          </Nav>
           
           }
           

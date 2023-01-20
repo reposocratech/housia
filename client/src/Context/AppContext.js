@@ -11,15 +11,19 @@ export const AppProvider = (props) => {
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
 
+
     useEffect(() => {
         const token = localStorageUser();
         if(token){
             let id = jwtDecode(token).user.id;
             setIsLogged(true);
+
+
         
         axios
         .get(`http://localhost:4000/users/${id}`)
         .then((res)=> {
+
             setUser(res.data.resultUser[0]);
             setUserProperties(res.data.resultProperty);
             
