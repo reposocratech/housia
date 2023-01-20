@@ -11,8 +11,12 @@ import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1
 import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
 import { TestField } from '../Components/TestField/TestField'
+
+import { EditUser } from '../Pages/UserDashboard/User/EditUser'
+
 import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
+
 
 
 export const AppRoutes = () => {
@@ -28,6 +32,7 @@ export const AppRoutes = () => {
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
+                <Route path='/user/editUser' element={<EditUser/>}/>
 
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>

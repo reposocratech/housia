@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-around;
     background-color: #272839;
-    color: white;
     img{
         width: 120px;
     }
@@ -10,6 +9,7 @@
         margin: 10px 20px;
         text-decoration: none;
         font-weight: 700;
+        color: white;
     }
     button{
         background-color: #27ADB5;
