@@ -149,7 +149,6 @@ class propertyController {
         error ? res.status(400).json({error}) : res.status(200).json(result);
       })
     
-      
     }
     
 
@@ -165,6 +164,67 @@ class propertyController {
           error ? res.status(400).json({ error }) : res.status(200).json(result);
         });
       }
+
+
+      addAddress = (req, res) => {
+        let {property_id, province_id, city_id} = req.params;
+  
+        let {address_street_name, address_street_number, address_floor, address_gate, address_block, address_stair, address_door, address_postal_code} = req.body;
+  
+        let sql = `INSERT INTO address VALUES (${property_id}, "${address_street_name}", "${address_street_number}", "${address_floor}", "${address_gate}", "${address_block}", "${address_stair}", "${address_door}", "${address_postal_code}", ${province_id}, ${city_id})`;
+  
+        let sqlAddress = `select * from property, address where property.property_id = address.address_property_id and property.property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          if(error) throw error;
+          console.log(result);
+  
+          connection.query(sqlAddress, (errorAddress, resultAddress) => {
+            if(errorAddress) throw errorAddress;
+            res.status(200).json(resultAddress);
+          })
+        })
+      }
+  
+      allFeatures = (req, res) => {
+        let sql = 'SELECT * FROM feature';
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+  
+      addFeaturesToProperty = (req, res) => {
+        let {property_id} = req.params;
+       
+        let features = req.body;
+
+        
+        /* let features = [2,3,1] */
+  
+        features?.map((feature, index) => {
+          let sql = `INSERT INTO feature_property (feature_id, property_id) VALUES ("${feature}", ${property_id})`;
+  
+          connection.query(sql, (error, result) => {
+            if(error) throw error;
+          })
+        })
+  
+        res.status(200).send('features save successfully')
+      }
+  
+      getPropertyFeatures = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT feature_property.feature_id, feature.feature_name FROM feature_property, feature WHERE feature_property.feature_id = feature.feature_id AND feature_property.property_id = ${property_id}`
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+
+
 
 }
 
