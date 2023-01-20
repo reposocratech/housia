@@ -5,8 +5,11 @@ import jwtDecode from 'jwt-decode';
 
 export const AppContext = createContext();
 
+
+
 export const AppProvider = (props) => {
     const [user, setUser] = useState({});
+    const [property, setProperty] = useState();
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
@@ -34,10 +37,13 @@ export const AppProvider = (props) => {
         }
     }, [isLogged])
     
+    
 
     return (
         <AppContext.Provider value={{
-                user, 
+                user,
+                property,
+                setProperty, 
                 setUser, 
                 userProperties, 
                 setUserProperties,

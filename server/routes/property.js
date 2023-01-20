@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var propertyController = require('../Controllers/propertyController')
-const multer = require("../middleware/multer");
-const multerSingle = require("../middleware/multerSingle");
+
 
 
  
@@ -45,6 +44,13 @@ router.get("/descubre", propertyController.showAllDescubre);
 //localhost:4000/property/getImagesProperty/:property_id
 router.get("/getImagesProperty/:property_id", propertyController.getImagesProperty);
 
+//Mostrar TODAS las PROVINCIAS
+//localhost:4000/property/allProvinces
+router.get("/allProvinces", propertyController.allProvinces);
+
+//Mostrar TODAS las CIUDADES según PROVINCIA
+//localhost:4000/property/allCities/:province_id
+router.get("/allCities/:province_id", propertyController.allCities )
 
 
 

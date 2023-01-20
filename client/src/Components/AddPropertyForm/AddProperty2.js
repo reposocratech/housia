@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppContext } from '../../Context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
-const initialValue = {
-    property_total_meters: "",
-    property_built_meters: "",
-    property_built_year: "",
-    property_rooms: "",
-    property_bathrooms:"",
-    property_garage: ""
-}
+
 
 export const AddProperty2 = () => {
 const [kitchen, setKitchen] = useState();
-const [property, setProperty] = useState(initialValue);
 const [kitchenId, setKitchenId] = useState(1);
+const {property, setProperty, user } = useContext(AppContext);
+const navigate = useNavigate();
+
 
     useEffect(() => {
         axios
@@ -34,9 +31,9 @@ const [kitchenId, setKitchenId] = useState(1);
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-            .put(`http://localhost:4000/property/addBasicFeaturesToProperty/1/${kitchenId}`, property)
+            .put(`http://localhost:4000/property/addBasicFeaturesToProperty/${property.property_id}/${kitchenId}`, property)
             .then((res) => {
-                console.log(res, "RESSSSSSSSSSSSSSSSSS")
+                
                 setProperty(res.data[0])
             })
             .catch((err) => {
@@ -49,10 +46,11 @@ const [kitchenId, setKitchenId] = useState(1);
        }
 
 
-    console.log(kitchenId, "ID KITCHEN")
+    
     console.log(property, "PROPERTY")
   return (
     <div>
+        <button onClick={()=>navigate("/addProperty")}>Volver</button>
     <h2>Añadir Propiedad</h2>
     <h3>Características de la propiedad</h3>
     <p>Estos valores son de gran importancia para el analisis automatico de rendimiento de la inversión</p>
@@ -62,7 +60,7 @@ const [kitchenId, setKitchenId] = useState(1);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={property.property_total_meters}
+    value={property?.property_total_meters}
     name="property_total_meters"
     onChange={handleChange}
     />
@@ -72,7 +70,7 @@ const [kitchenId, setKitchenId] = useState(1);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={property.property_built_meters}
+    value={property?.property_built_meters}
     name="property_built_meters"
     onChange={handleChange}
     />
@@ -84,7 +82,7 @@ const [kitchenId, setKitchenId] = useState(1);
     type="number"
     min="1500"
     max="3000"
-    value={property.property_built_year}
+    value={property?.property_built_year}
     name="property_built_year"
     onChange={handleChange}
     />
@@ -94,7 +92,7 @@ const [kitchenId, setKitchenId] = useState(1);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={property.property_rooms}
+    value={property?.property_rooms}
     name="property_rooms"
     onChange={handleChange}
     />
@@ -104,7 +102,7 @@ const [kitchenId, setKitchenId] = useState(1);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={property.property_bathrooms}
+    value={property?.property_bathrooms}
     name="property_bathrooms"
     onChange={handleChange}
     />
@@ -114,7 +112,7 @@ const [kitchenId, setKitchenId] = useState(1);
     placeholder='0'
     autoComplete='off'
     type="number"
-    value={property.property_garage}
+    value={property?.property_garage}
     name="property_garage"
     onChange={handleChange}
     />
@@ -123,7 +121,7 @@ const [kitchenId, setKitchenId] = useState(1);
     <select onClick={handleKitchenId}>
     {kitchen?.map((tipo, i)=>{
         return(
-            <option key={i} value={tipo.kitchen_id}  >{tipo.kitchen_name}</option>
+            <option key={i} value={tipo?.kitchen_id}  >{tipo?.kitchen_name}</option>
         )
     })}
     </select>
