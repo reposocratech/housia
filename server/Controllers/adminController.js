@@ -6,7 +6,7 @@ class adminController {
 
     showAdminAllProperties = (req, res) =>{
 
-        let sql = "SELECT property.property_id, property.property_is_user_deleted, property.property_is_admin_deleted, property.property_built_year, purchase.purchase_buy_price, address.address_street_name, address.address_street_number,  province.province_name, city.city_name  FROM property, purchase, address, province, city WHERE  property.property_id =  address.address_property_id AND property.property_id = purchase.purchase_property_id AND address.address_city_id = city.city_id AND address.address_province_id = province.province_id;";
+        let sql = "SELECT property.property_id, property.property_is_user_deleted, property.property_is_admin_deleted, property.property_built_year, purchase.purchase_buy_price, address.address_street_name, address.address_street_number,  province.province_name, city.city_name  FROM property, purchase, address, province, city WHERE  property.property_id =  address.address_property_id AND property.property_id = purchase.purchase_property_id AND address.address_city_id = city.city_id AND address.address_province_id = province.province_id AND property.property_is_admin_deleted = false;";
 
         connection.query(sql, (error, result)=>{
             if(error){
@@ -302,6 +302,32 @@ class adminController {
 
     }
 
+    //Bloquea para el usuario un Activo (admin lo bloquea)
+    //////localhost:4000/admin/blockProperty/:property_id
+    blockProperty =(req, res)=>{
+        let {property_id} = req.params;
+
+        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = ${property_id}`;
+
+        connection.query(sql, (errorBLOCK, result)=>{
+            if(errorBLOCK){
+                res.status(400).json({errorAD})
+            }
+            res.status(200).json(result);
+        })
+    }
+
+    //DESbloquea para el usuario un Activo (admin lo libera)
+    ////localhost:4000/admin/unBlockProperty/:property_id
+    unblockProperty = (req, res) =>{
+        let {property_id} = req.params;
+
+        let sql = `UPDATE property SET property_is_user_deleted = false WHERE property_id = ${property_id}`;
+
+        connection.query(sql, (error, result)=>{
+            error? res.status(400).json({error}): res.status(200).json(result);
+        })
+    }
    
 
 }

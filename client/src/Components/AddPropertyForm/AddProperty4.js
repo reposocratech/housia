@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {Button, ButtonGroup} from "react-bootstrap";
 import { AppContext } from '../../Context/AppContext';
+import "./styles/stylesAddProperty4.css"
+
 export const AddProperty4 = () => {
 const [featureAll, setFeatureAll] = useState();
 const [features, setFeatures] = useState([]);
@@ -28,7 +30,7 @@ const selecionado = (e) => {
 
     const handleAC = (e) => {
         
-        selecionado();
+        // selecionado();
         if(features.includes(e.target.value) === false){
             setFeatures([...features, e.target.value]);
             
@@ -74,6 +76,29 @@ const selecionado = (e) => {
             
         )
     })}
+        <div className='padre_de_los_checkbox'>
+            
+        { featureAll?.map((feature, i)=>{
+            return(
+                 <div key={i} className='checkbox-container'>
+            <input type="checkbox" 
+            classname="checkbox" 
+            id={`checkbox-${feature.feature_name}`} 
+            onClick={handleAC} 
+            value={feature.feature_id} 
+            />
+
+            <label 
+            for={`checkbox-${feature.feature_name}`} className="label">{feature.feature_name}
+            </label>
+            
+          </div> 
+            )
+
+         
+        })}
+
+    </div>
 
     <button onClick={handleSubmit}>Siguiente</button>
 
