@@ -1,0 +1,49 @@
+.checkbox-container{
+    margin-bottom: 2rem;
+}
+
+.label{
+    background-color: white;
+    color: navy;
+    font-size: 20px;
+    width: 240px;
+    height: 60px;
+    border: 1px solid black;
+    transition: 0.4s;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    
+}
+
+input[type="checkbox"]{
+    visibility: hidden;
+}
+
+/* efecto diafragma
+input[type="checkbox"]:checked + .label{
+    border: 30px solid navy;
+    color: white;
+}
+
+efecto compuerta 
+input[type="checkbox"]:checked + .label{
+    
+    border-left: 120px solid navy;
+    border-right: 120px solid navy;
+    color: white;
+}
+*/
+
+
+/* efecto parpadeo */
+input[type="checkbox"]:checked + .label{
+    
+    border-top: 30px solid navy;
+    border-bottom: 30px solid navy;
+    color: white;
+    outline: 3px solid red;
+    box-sizing: border-box;
+}

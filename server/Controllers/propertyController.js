@@ -28,7 +28,7 @@ class propertyController {
       });
   }
   
-
+// CREAR UN ACTIVO
   createProperty = (req, res) => {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
@@ -50,7 +50,7 @@ class propertyController {
     });
 }
 
-
+//TRAE INFO DE TODAS LA COCINAS
   allKitchens = (req, res) => {
     let sql = 'SELECT * FROM kitchen';
     connection.query(sql, (error, result)=>{
@@ -58,7 +58,7 @@ class propertyController {
     });
   }
 
-
+// MODIFICAR LAS CARACTERISTICAS DE UNA PROPIEDAD
   addBasicFeaturesToProperty = (req, res) => {
 
     let {property_kitchen_id, property_id} = req.params;
@@ -127,7 +127,7 @@ class propertyController {
     }
 
 
-
+//MUESTRA TODAS LAS PROVINCIAS
     allProvinces = (req, res) => {
 
       let sql = 'SELECT * FROM province'
@@ -137,7 +137,7 @@ class propertyController {
       })
     }
     
-  
+  //MUESTRA TODAS LA CIUDADES
     allCities = (req, res) => {
       let {province_id} = req.params;
       
@@ -163,7 +163,7 @@ class propertyController {
         });
       }
 
-
+//CREAR LA DIRECCION DE UNA PROPIEDAD
       addAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
   
@@ -184,6 +184,7 @@ class propertyController {
         })
       }
   
+      //TRAE INFO DE TODAS LAS CARACTERISTICAS DE  LOS ACTIVOS
       allFeatures = (req, res) => {
         let sql = 'SELECT * FROM feature';
         connection.query(sql, (error, result) => {
@@ -191,6 +192,7 @@ class propertyController {
         })
       }
   
+      // AÑADE CARACTERISTICAS A UN ACTIVO
       addFeaturesToProperty = (req, res) => {
         let {property_id} = req.params;
        
@@ -209,7 +211,10 @@ class propertyController {
         res.status(200).send('features save successfully')
       }
   
-      
+
+
+      //TRAE LA INFO DE LAS CARACTERISTICAS DE UN ACTIVO CONCRETO
+
       getPropertyFeatures = (req, res) => {
         let {property_id} = req.params;
   

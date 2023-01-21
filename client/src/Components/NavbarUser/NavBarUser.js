@@ -9,8 +9,8 @@ import './NavBarUser.scss';
 
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
-  console.log(user);
-  console.log(isLogged);
+  // console.log(user);
+  // console.log(isLogged);
   
   const navigate= useNavigate();
 

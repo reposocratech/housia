@@ -2,7 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {Button, Container} from "react-bootstrap";
 import { AppContext } from '../../Context/AppContext';
+
 import {useNavigate} from 'react-router-dom';
+import "./styles/stylesAddProperty4.css"
+
 
 export const AddProperty4 = () => {
 
@@ -28,6 +31,10 @@ export const AddProperty4 = () => {
 
     const handleAC = (e) => {
         
+
+
+        // selecionado();
+
         if(features.includes(e.target.value) === false){
             setFeatures([...features, e.target.value]);
             setIsSelected(true)
@@ -58,15 +65,42 @@ export const AddProperty4 = () => {
     <h2 className='text-center'>Añadir propiedad</h2>
     <h4>Seleccionar caracteristicas</h4>
 {/* <input onClick={handleAC}  value={feature.feature_id} placeholder="" type="checkbox" /> */}
-        {/* <input onClick={handleAC} key={i} value={feature.feature_id}/> */}
-    <div>
-        {featureAll?.map((feature, i)=>{
+
+    {featureAll?.map((feature, i)=>{
+        return(
+            
+            
+            <Button  onClick={handleAC} key={i} /* variant={features.includes(feature.feature_id) ? "dark" : "outline-dark"} */ value={feature.feature_id} >{feature.feature_name}</Button>
+            
+            
+        )
+    })}
+        <div className='padre_de_los_checkbox'>
+            
+        { featureAll?.map((feature, i)=>{
             return(
-                <Button active={isSelected} variant='outline-dark' onClick={handleAC} key={i} value={feature.feature_id}>{feature.feature_name}</Button>
-                )
-            })}
+                 <div key={i} className='checkbox-container'>
+            <input type="checkbox" 
+            classname="checkbox" 
+            id={`checkbox-${feature.feature_name}`} 
+            onClick={handleAC} 
+            value={feature.feature_id} 
+            />
+
+            <label 
+            for={`checkbox-${feature.feature_name}`} className="label">{feature.feature_name}
+            </label>
+            
+          </div> 
+            )
+
+         
+        })}
+
     </div>
-    <Button size='lg' onClick={handleSubmit}>Siguiente</Button>
+
+    <button onClick={handleSubmit}>Siguiente</button>
+
 
             {/* <Form.Group className='d-flex'>
                 <Form.Check onClick={handleAC} key={i} value={feature.feature_id}/>
