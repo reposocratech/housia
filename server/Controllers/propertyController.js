@@ -4,8 +4,6 @@ const connection = require("../config/db.js");
 class propertyController {
 
 
-      ////////////////////////////////////////////////////////////////////////////////////////////////////// 
-    
     /* Mostrar Todos los TIPOS */
     showAllTypes = (req, res) => {
       let sql = 'SELECT * FROM type';
@@ -30,7 +28,7 @@ class propertyController {
       });
   }
   
-
+// CREAR UN ACTIVO
   createProperty = (req, res) => {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
@@ -52,7 +50,7 @@ class propertyController {
     });
 }
 
-
+//TRAE INFO DE TODAS LA COCINAS
   allKitchens = (req, res) => {
     let sql = 'SELECT * FROM kitchen';
     connection.query(sql, (error, result)=>{
@@ -60,7 +58,7 @@ class propertyController {
     });
   }
 
-
+// MODIFICAR LAS CARACTERISTICAS DE UNA PROPIEDAD
   addBasicFeaturesToProperty = (req, res) => {
 
     let {property_kitchen_id, property_id} = req.params;
@@ -69,7 +67,7 @@ class propertyController {
     let sql = `UPDATE property SET property_total_meters = ${property_total_meters},
      property_built_meters = ${property_built_meters}, property_built_year = ${property_built_year},
       property_rooms = ${property_rooms}, property_bathrooms = ${property_bathrooms},
-       property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
+       property_garage = ${property_garage}, property_kitchen_sid = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
     connection.query(sql, (error, result)=>{
@@ -129,7 +127,7 @@ class propertyController {
     }
 
 
-
+//MUESTRA TODAS LAS PROVINCIAS
     allProvinces = (req, res) => {
 
       let sql = 'SELECT * FROM province'
@@ -139,7 +137,7 @@ class propertyController {
       })
     }
     
-  
+  //MUESTRA TODAS LA CIUDADES
     allCities = (req, res) => {
       let {province_id} = req.params;
       
@@ -165,7 +163,7 @@ class propertyController {
         });
       }
 
-
+//CREAR LA DIRECCION DE UNA PROPIEDAD
       addAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
   
@@ -186,6 +184,7 @@ class propertyController {
         })
       }
   
+      //TRAE INFO DE TODAS LAS CARACTERISTICAS DE  LOS ACTIVOS
       allFeatures = (req, res) => {
         let sql = 'SELECT * FROM feature';
         connection.query(sql, (error, result) => {
@@ -193,12 +192,12 @@ class propertyController {
         })
       }
   
+      // AÑADE CARACTERISTICAS A UN ACTIVO
       addFeaturesToProperty = (req, res) => {
         let {property_id} = req.params;
        
         let features = req.body;
 
-        
         /* let features = [2,3,1] */
   
         features?.map((feature, index) => {
@@ -212,6 +211,10 @@ class propertyController {
         res.status(200).send('features save successfully')
       }
   
+
+
+      //TRAE LA INFO DE LAS CARACTERISTICAS DE UN ACTIVO CONCRETO
+
       getPropertyFeatures = (req, res) => {
         let {property_id} = req.params;
   
@@ -221,6 +224,35 @@ class propertyController {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
+
+      //Añade Imágenes a una Propiedad
+      //localhost:4000/property/addImgsProperty/:property_id
+      addImgsProperty = (req, res) => {
+        let {property_id} = req.params;
+
+        let img = [''];
+
+        if(req.files != undefined){
+          img = req.files;
+        }
+
+        img.forEach((img) => {
+          let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+
+          connection.query(sql, (error, result) => {
+            if(error) throw error;
+            console.log(result);
+          })
+        })
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+
+        connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+          errorImgs
+            ? res.status(400).json({error})
+            : res.status(200).json(resultImgs)
+        });
+      };
 
 
 
