@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import {Button, ButtonGroup} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import { AppContext } from '../../Context/AppContext';
-export const AddProperty4 = () => {
-const [featureAll, setFeatureAll] = useState();
-const [features, setFeatures] = useState([]);
-const [click, setClick] = useState(false);
-const {property } = useContext(AppContext);
-const [selected, setSelected] = useState();
+import {useNavigate} from 'react-router-dom';
 
-const selecionado = (e) => {
-    setSelected(e.target.value);
-}
+export const AddProperty4 = () => {
+
+    const navigate = useNavigate();
+
+    const [featureAll, setFeatureAll] = useState();
+    const [features, setFeatures] = useState([]);
+    const {property } = useContext(AppContext);
+    const [isSelected, setIsSelected] = useState(true)
 
 
     useEffect(() => {
@@ -28,55 +28,51 @@ const selecionado = (e) => {
 
     const handleAC = (e) => {
         
-        selecionado();
         if(features.includes(e.target.value) === false){
             setFeatures([...features, e.target.value]);
-            
+            setIsSelected(true)
         }
         else if(features.includes(e.target.value)){
             setFeatures(features.filter(elem => elem !== e.target.value ));
-            
+            setIsSelected(false);
         }
 
     }
 
     const handleSubmit = () => {
-        console.log(features, "FFFFFFFFFF")
         axios
         .post(`http://localhost:4000/property/addFeaturesToProperty/${property?.property_id}`, features)
         .then((res) => {
             console.log(res)
-           
+            navigate('/addPropertyImage')
         })
         .catch((err) => {
             console.log(err);
         });
     }
 
- /*    const onSubmit = (e) => {
-        e.preventDefault();
-      setFeatures(e.target.value)
-    } */
-    console.log(property, "PROPERTY")
-    console.log(features, "eqqwwe")
+ console.log(features, "features")
  
   return (
-    <div>
-    <h2>Añadir propiedad</h2>
-    <h2>Seleccionar caracteristicas</h2>
+    <Container>
+    <h2 className='text-center'>Añadir propiedad</h2>
+    <h4>Seleccionar caracteristicas</h4>
 {/* <input onClick={handleAC}  value={feature.feature_id} placeholder="" type="checkbox" /> */}
-    {featureAll?.map((feature, i)=>{
-        return(
-            
-            
-            <Button  onClick={handleAC} key={i} /* variant={features.includes(feature.feature_id) ? "dark" : "outline-dark"} */ value={feature.feature_id} >{feature.feature_name}</Button>
-            
-            
-        )
-    })}
+        {/* <input onClick={handleAC} key={i} value={feature.feature_id}/> */}
+    <div>
+        {featureAll?.map((feature, i)=>{
+            return(
+                <Button active={isSelected} variant='outline-dark' onClick={handleAC} key={i} value={feature.feature_id}>{feature.feature_name}</Button>
+                )
+            })}
+    </div>
+    <Button size='lg' onClick={handleSubmit}>Siguiente</Button>
 
-    <button onClick={handleSubmit}>Siguiente</button>
-
+            {/* <Form.Group className='d-flex'>
+                <Form.Check onClick={handleAC} key={i} value={feature.feature_id}/>
+                <Form.Label>{feature.feature_name}</Form.Label>
+            </Form.Group> */}
+            
 
 
     {/* <form>
@@ -92,6 +88,6 @@ const selecionado = (e) => {
     </form> */}
     
     
-    </div>
+    </Container>
   )
 }
