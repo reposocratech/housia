@@ -17,7 +17,13 @@ import { EditUser } from '../Pages/UserDashboard/User/EditUser'
 
 import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
+
+import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
+
+
+
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+
 
 
 
@@ -41,6 +47,7 @@ export const AppRoutes = () => {
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/testField' element={<TestField/>}/>
+                <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
 
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>

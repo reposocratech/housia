@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const multer = require('../middleware/multer')
 var propertyController = require('../Controllers/propertyController')
 
 
@@ -70,6 +71,10 @@ router.post("/addFeaturesToProperty/:property_id", propertyController.addFeature
 //Mostrar Características
 //localhost:4000/property/getPropertyFeatures/:property_id
 router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFeatures)
+
+//Añade Imágenes a una Propiedad
+//localhost:4000/property/addImgsProperty/:property_id
+router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty)
 
 
 module.exports = router;
