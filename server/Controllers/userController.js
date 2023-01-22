@@ -2,6 +2,7 @@ const connection = require("../config/db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+
 class userController {
 
 
@@ -97,7 +98,7 @@ selectOneUser =(req, res)=>{
 
     const userId = req.params.user_id;
 
-    let sqlUser = `SELECT * FROM user WHERE user_id = ${userId} and user_is_deleted = false`;
+    let sqlUser = `SELECT user_id, user_name, user_lastname, user_email, user_password, user_creation_date, user_certify_ownership, user_img, user_type, user_is_deleted, user_phone, user_dni, user_acepted_policies, user_code,  date_format(user.user_birth_date, '%Y-%m-%d') as user_birth_date FROM user WHERE user_id = ${userId} and user_is_deleted = false`;
 
     let sqlProperty = `SELECT * from property WHERE property_user_id = ${userId} and property_is_user_deleted = false and property_is_admin_deleted = false`;
 
@@ -136,30 +137,23 @@ showOneUser = (req, res) =>{
 //localhost:4000/users/editUser/:userId
 editOneUser =(req, res)=>{
     let userId = req.params.user_id;
+    console.log(req.body.register);
 
     // ESTO es por si lo pasamos como JSON REGISTER
-    // const { name, lastname, phone, dni, promotional_code, birth_date } = JSON.parse(req.body.register)
-
-
-    let { name, lastname, phone, dni, promotional_code, birth_date } = req.body;
-
-    // eliminamos espacios en blanco previos o posteriores al dato a rescatar
-    name = name.trim()
-    lastname = lastname.trim();
-    phone = phone.trim();
-    dni = dni.trim();
-    promotional_code = promotional_code.trim();
-    birth_date = birth_date.trim()
-
-
+    let { user_name, user_lastname, user_phone, user_dni, user_code, user_birth_date } = JSON.parse(req.body.register)
+    
+   
     let img = "";
+    if(!user_birth_date){
+        user_birth_date = '2000/01/01';
+    }
 
-    let sql = `UPDATE user SET user_name = "${name}", user_lastname = "${lastname}", user_phone = "${phone}", user_dni = "${dni}", user_code = "${promotional_code}", user_birth_date = "${birth_date}" WHERE user_id = ${userId}`;
+    let sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", user_phone = "${user_phone}", user_dni = "${user_dni}", user_code = "${user_code}", user_birth_date = "${user_birth_date}" WHERE user_id = ${userId}`;
 
     if(req.file != undefined){
         img = req.file.filename;
         
-        sql = `UPDATE user SET user_name = "${name}", user_lastname = "${lastname}", user_phone = "${phone}", user_dni = "${dni}", user_code = "${promotional_code}", user_birth_date = "${birth_date}", user_img = ${img} WHERE user_id = ${userId}`
+        sql = `UPDATE user SET user_name = "${user_name}", user_lastname = "${user_lastname}", user_phone = "${user_phone}", user_dni = "${user_dni}", user_code = "${user_code}", user_birth_date = "${user_birth_date}", user_img = "${img}" WHERE user_id = ${userId}`
     }
 
     connection.query(sql, (errorEdit, resultEdit) =>{

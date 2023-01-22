@@ -34,7 +34,8 @@ const navigate = useNavigate();
             .put(`http://localhost:4000/property/addBasicFeaturesToProperty/${property.property_id}/${kitchenId}`, property)
             .then((res) => {
                 
-                setProperty(res.data[0])
+                setProperty(res.data[0]);
+                navigate("/addProperty3");
             })
             .catch((err) => {
                 console.log(err);

@@ -69,13 +69,22 @@ router.put("/editPropertyFeature/:feature_id", adminController.editPropertyFeatu
 router.delete("/deletePropertyFeature/:feature_id", adminController.deletePropertyFeature);
 
 
-//localhost:4000/admin/logicDeletedAdminProperty/:property_id
-router.delete("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
-
-
 //Borra de manera lógica un ACTIVO(propiedad)
 //localhost:4000/admin/logicDeletedAdminProperty/:property_id
-router.delete("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
+router.put("/logicDeletedAdminProperty/:property_id",adminController.logicDeletedAdminProperty);
+
+//Bloquea para el usuario un Activo (admin lo bloquea)
+//localhost:4000/admin/blockProperty/:property_id
+router.put("/blockProperty/:property_id", adminController.blockProperty)
+
+//DESbloquea para el usuario un Activo (admin lo libera)
+//localhost:4000/admin/unBlockProperty/:property_id
+router.put("/unBlockProperty/:property_id", adminController.unblockProperty)
+
+
+//METODO GET para mostrar todos los activos de la plataforma al admin
+////localhost:4000/admin/allProperties
+router.get("/allProperties", adminController.showAdminAllProperties);
 
 
 module.exports = router;

@@ -11,6 +11,20 @@ import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1
 import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
 import { TestField } from '../Components/TestField/TestField'
+import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4'
+
+import { EditUser } from '../Pages/UserDashboard/User/EditUser'
+
+import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
+import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
+
+import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
+
+
+
+import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+
+
 
 
 export const AppRoutes = () => {
@@ -26,13 +40,18 @@ export const AppRoutes = () => {
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
+                <Route path='/user/editUser' element={<EditUser/>}/>
 
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
-
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
-
+                <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/testField' element={<TestField/>}/>
+                <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
+
+                <Route path='/admin' element={<AdminHome/>}/>
+                <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>
+                <Route path='/admin/customFeaturesElem' element={<AdminCustomFeatures/>}/>
 
             </Routes>
         </BrowserRouter>

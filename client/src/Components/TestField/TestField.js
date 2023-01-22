@@ -56,7 +56,7 @@ let control = listaPrueba.filter(elem => elem.price >= range)
 //CON TERNARIAS
 numSelect > 0? control = control.filter(elem=> elem.numOfRooms >= numSelect) : control = control;
 
-box2 !== ""? control = control.filter(elem => elem.cp === box2): control = control
+box2 !== ""? control = control.filter(elem => elem.cp === box2): control = control;
 
 
 
