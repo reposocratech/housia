@@ -9,9 +9,9 @@ import './NavBarUser.scss';
 
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
-  console.log(user);
-  console.log(isLogged);
-
+  // console.log(user);
+  // console.log(isLogged);
+  
   const navigate= useNavigate();
 
   const logOut = ()=>{
@@ -38,7 +38,6 @@ export const NavBarUser = () => {
           <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
           <Nav.Link>Valora</Nav.Link>
           <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
- 
           </Nav>
           
           }
@@ -62,10 +61,8 @@ export const NavBarUser = () => {
               <div>
                 <img 
                   className='avatar-img' 
-                  // onClick={()=> navigate('/user')}
-                  src={user?.img ? 
-                  `/images/user/${user.user_img}` : 
-                  '../images/avatar.png'}
+                  onClick={()=> navigate('/user/perfil')}
+                  src={`/images/user/${user?.user_img}`}
                   />
                 <Button 
                   className='me-3' 

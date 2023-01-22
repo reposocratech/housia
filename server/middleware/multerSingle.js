@@ -6,11 +6,13 @@ function uploadImage(folder) {
     //destination: `./public/images/${folder}`,
 
     filename: function (req, file, callback) {
+      console.log(file);
       callback(null, "Id-" + Date.now() + "-" + file.originalname);
     },
   });
 
   const upload = multer({ storage: storage }).single("file");
+  
 
   return upload;
 }

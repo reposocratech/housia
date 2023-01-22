@@ -1,11 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../Controllers/userController')
-
-
-
-
-
+const multerSingle = require('../middleware/multerSingle')
 
 
 /* GET users listing. */
@@ -28,9 +24,9 @@ router.get("/editUser/:user_id", userController.showOneUser)
 
 //-- EDIT USER (meter info nueva)
 //localhost:4000/users/editUser/:user_id
-router.put("/editUser/:user_id", userController.editOneUser)
+// router.put("/editUser/:user_id", userController.editOneUser)
 //----------------------LINEA PARA AÑADIR MULTER A LA RUTA
-//router.put("/editUser/:user_id", multerSingle("user"), userController.editOneUser)
+router.put("/editUser/:user_id", multerSingle("user"), userController.editOneUser)
 
 ////rent
 //localhost:4000/users/createRent/:property_id

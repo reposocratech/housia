@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const initialState = {
     name: "",
@@ -12,6 +13,8 @@ const initialState = {
 export const Register = () => {
     const [register, setRegister] = useState(initialState);
     const [messageError1, setMessageError1] = useState("");
+
+    const navigate = useNavigate();
 
     const handleChange = (e)=>{
         const {name, value} = e.target;
@@ -26,6 +29,7 @@ export const Register = () => {
           .post('http://localhost:4000/users/createUser', register)
           .then((res) => {
             console.log(res.data);
+            navigate('/login')
           })
           .catch((error) => {
             console.log(error);
