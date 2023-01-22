@@ -230,6 +230,17 @@ getAllProperty = (req, res) => {
       
     };
 
+ //Borra de manera lógica una propiedad
+      //localhost:4000/property/logicDeletedUserProperty/:property_id
+      logicDeletedUserProperty = (req, res) => {
+        let {property_id} = req.params;
+        
+        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = ${property_id}`;
+
+        connection.query(sql, (error, result) => {
+            error ? res.status(400).json({ error }) : res.status(200).json(result);
+          });
+      };
 
 
 

@@ -44,5 +44,9 @@ router.put("/editRent/:rent_id", userController.editRent);
 router.get("/getAllProperty/:user_id", userController.getAllProperty);
 
 
+//Borra de manera lógica una propiedad
+//localhost:4000/property/logicDeletedUserProperty/:property_id
+router.delete("/logicDeletedUserProperty/:property_id",userController.logicDeletedUserProperty);
+
 
 module.exports = router;
