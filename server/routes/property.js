@@ -76,5 +76,21 @@ router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFe
 //localhost:4000/property/addImgsProperty/:property_id
 router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty)
 
+////rent
+//localhost:4000/property/createRent/:property_id
+router.post("/createRent/:property_id", propertyController.createRent);
+
+//localhost:4000/property/editRent/:rent_id
+router.put("/editRent/:rent_id", propertyController.editRent);
+
+//localhost:4000/property/createLoan/:property_id
+router.post("/createLoan/:property_id", propertyController.createLoan);
+
+// //localhost:4000/property/createPurchase/:property_id
+router.post("/createPurchase/:property_id", propertyController.createPurchase);
+
+//localhost:4000/property/getAllPurchaseData/:property_id
+router.get("/getAllPurchaseData/:property_id", propertyController.getAllPurchaseData);
+
 
 module.exports = router;
