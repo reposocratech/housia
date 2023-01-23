@@ -264,6 +264,4 @@ class propertyController {
 
 
 
-
-
 module.exports = new propertyController();
