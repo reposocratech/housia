@@ -299,7 +299,7 @@ editRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
 
-  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = '${rent_renting_price}', rent_expenses = '${rent_expenses}' WHERE rent_id = '${rent_id}'`;
+  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses}WHERE rent_id = ${rent_id}`;
   
   connection.query(sql, (error, result)=>{
       if (error){
@@ -353,6 +353,8 @@ createLoan = (req,res) => {
       console.log('este es el resultado de loan',resultLoan);
  })
 }
+
+
 
 //crear purchase
 createPurchase = (req,res) =>{
