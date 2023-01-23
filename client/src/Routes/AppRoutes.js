@@ -23,6 +23,7 @@ import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage
 
 
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 
 
 
@@ -48,6 +49,7 @@ export const AppRoutes = () => {
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/testField' element={<TestField/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
+                <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
 
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>

@@ -2,8 +2,6 @@ const connection = require("../config/db.js");
 
 
 class propertyController {
-
-
     /* Mostrar Todos los TIPOS */
     showAllTypes = (req, res) => {
       let sql = 'SELECT * FROM type';
@@ -67,7 +65,7 @@ class propertyController {
     let sql = `UPDATE property SET property_total_meters = ${property_total_meters},
      property_built_meters = ${property_built_meters}, property_built_year = ${property_built_year},
       property_rooms = ${property_rooms}, property_bathrooms = ${property_bathrooms},
-       property_garage = ${property_garage}, property_kitchen_sid = ${property_kitchen_id}
+       property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
     connection.query(sql, (error, result)=>{
@@ -254,11 +252,202 @@ class propertyController {
         });
       };
 
+//CREAR ALQUILER
+
+createRent = (req, res) => {
+  let {property_id} = req.params;
+
+  let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
+  console.log(req.body, 'este es el body de create rent');
+  
+  // let sql = `INSERT INTO rent (rent_property_id, rent_renting_date, rent_renting_price, rent_expenses) VALUES (${property_id}, '${rent_renting_date}', ${rent_renting_price}, ${rent_expenses})`;
+
+  let sqlHead = "INSERT INTO rent (rent_property_id";
+  let sqlTail = `VALUES (${property_id} `;
+
+  if(rent_renting_date !== undefined){
+    sqlHead += `, rent_renting_date`;
+    sqlTail += `, '${rent_renting_date}'`
+   };
+   if(rent_renting_price !== undefined){
+    sqlHead += `, rent_renting_price`;
+    sqlTail += `, ${rent_renting_price}`
+   };
+   if(rent_expenses !== undefined){
+    sqlHead += `, rent_expenses`;
+    sqlTail += `, ${rent_expenses}`
+   };
+   sqlTail += ')';
+   sqlHead += ')';
+   let sql = sqlHead + " " + sqlTail;
 
 
+  connection.query(sql, (error, result)=>{
+      if (error){
+          res.status(400).json({error});
+          
+      }
+      res.status(200).json(result);
+      console.log(result, 'este es el resultado de create rent');
+  });
+};
 
+//EDITAR ALQUILER
 
+editRent = (req, res) => {
+  let {rent_id} = req.params;
+
+  let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
+
+  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = '${rent_renting_price}', rent_expenses = '${rent_expenses}' WHERE rent_id = '${rent_id}'`;
+  
+  connection.query(sql, (error, result)=>{
+      if (error){
+          res.status(400).json({error});    
+      }
+      res.status(200).json(result);
+      console.log(result);
+  });
+};
+
+//crear loan
+createLoan = (req,res) => {
+  let {property_id} = req.params;
+
+  let {loan_years, loan_interest_rate,loan_type,loan_value } = req.body;
+
+  console.log('este es el req.body de create loan', req.body);
+  // let sql = `INSERT INTO loan (loan_property_id, loan_years, loan_interest_rate, loan_type, loan_value) VALUES (${property_id}, ${loan_years}, ${loan_interest_rate}, ${loan_type}, ${loan_value})`;
+
+  let sqlHead = "INSERT INTO loan (loan_property_id";
+  let sqlTail = `VALUES (${property_id} `;
+
+  if(loan_years !== undefined){
+    sqlHead += `, loan_years`;
+    sqlTail += `, ${loan_years}`
+   };
+   if(loan_interest_rate !== undefined ){
+    sqlHead += `, loan_interest_rate`;
+    sqlTail += `, ${loan_interest_rate}`
+   };
+   if(loan_type !== undefined){
+    sqlHead += `, loan_type`;
+    sqlTail += `, ${loan_type}`
+   };
+   if(loan_value !== undefined){
+    sqlHead += `, loan_value`;
+    sqlTail += `, ${loan_value}`
+   };
+
+   sqlHead += ')';
+   sqlTail += ')';
+   
+   let sql = sqlHead + " " + sqlTail;
+
+      connection.query(sql, (error, resultLoan)=>{
+      if (error){
+          res.status(400).json({error});
+          console.log(error, 'este es el error de loan');
+      }
+      res.status(200).json(resultLoan);
+      console.log('este es el resultado de loan',resultLoan);
+ })
 }
+
+//crear purchase
+createPurchase = (req,res) =>{
+  let {property_id} = req.params;
+  
+
+  let {purchase_buy_price, purchase_buy_date, purchase_is_new, purchase_furniture_expenses, purchase_reform_expenses,purchase_ownership_percentage, purchase_is_usual, purchase_entry_expenses ,purchase_trading_expenses } = req.body;
+
+ purchase_is_new === 'true' ? true : false;
+
+ console.log('este es el req.body de create purchase', req.body);
+    
+  // let sql = `INSERT INTO purchase (purchase_property_id, purchase_buy_price, purchase_buy_date, purchase_is_new, purchase_furniture_expenses, purchase_reform_expenses,purchase_ownership_percentage, purchase_is_usual, purchase_entry_expenses ,purchase_trading_expenses) VALUES (${property_id}, ${purchase_buy_price}, '${purchase_buy_date}', ${purchase_is_new}, ${purchase_furniture_expenses}, ${purchase_reform_expenses},${purchase_ownership_percentage},${purchase_is_usual},${purchase_entry_expenses}, ${purchase_trading_expenses})`;
+
+
+ let sqlHead = "INSERT INTO purchase (purchase_property_id";
+ let sqlTail = `VALUES (${property_id} ` ;
+
+
+if(purchase_buy_date !== undefined){
+ sqlHead += `, purchase_buy_date`;
+ sqlTail += `, '${purchase_buy_date}'`
+};
+
+if(purchase_buy_price !== undefined){
+  sqlHead += `, purchase_buy_price` 
+  sqlTail += `, ${purchase_buy_price}`
+}
+
+if(purchase_is_new !== undefined){
+  sqlHead += `, purchase_is_new`
+  sqlTail += `, ${purchase_is_new}`
+}
+
+if(purchase_furniture_expenses !== undefined){
+  sqlHead += `, purchase_furniture_expenses`
+  sqlTail += `, ${purchase_furniture_expenses}`
+}
+
+if(purchase_reform_expenses !== undefined){
+  sqlHead += `, purchase_reform_expenses`
+  sqlTail += `, (${purchase_reform_expenses})`
+}
+
+if(purchase_ownership_percentage !== undefined){
+  sqlHead += `, purchase_ownership_percentage`
+  sqlTail += `, ${purchase_ownership_percentage}`
+}
+
+if(purchase_is_usual !== undefined){
+  sqlHead += `, purchase_is_usual`
+  sqlTail += `, ${purchase_is_usual}`
+}
+if(purchase_entry_expenses !== undefined){
+  sqlHead += `, purchase_entry_expenses`
+  sqlTail += `, ${purchase_entry_expenses}`
+}
+if(purchase_trading_expenses !== undefined){
+  sqlHead += `, purchase_trading_expenses`
+  sqlTail += `, ${purchase_trading_expenses}`
+}
+sqlTail += ')';
+sqlHead += ')';
+let sql = sqlHead + " " + sqlTail;
+
+      connection.query(sql, (error, resultPurchase)=>{
+      if (error){
+          // res.status(400).json({error});
+          throw(error);
+          console.log(error, 'este es el error de purchase');
+      }
+      res.status(200).json(resultPurchase);
+      console.log(resultPurchase);
+      })
+}
+//trae todos los datos de purchase, rent y loan
+getAllPurchaseData = (req, res) => {
+  let {property_id} = req.params;
+  
+  let sql = `select * from purchase, rent, loan 
+            where ${property_id} = rent_property_id
+            and ${property_id} = loan_property_id`;
+  
+            connection.query(sql, (error, result)=>{
+              if (error){
+                  res.status(400).json({error});
+                  console.log(error, 'este es el error de getallpurchase');
+              }
+              res.status(200).json(result);
+              console.log(result);
+          })
+}
+}
+
+
 
 
 
