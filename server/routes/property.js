@@ -12,7 +12,7 @@ const { setMainImage } = require('../Controllers/propertyController');
 
 //Ver todos los TIPOS de Inmueble
 //localhost:4000/property/allTypes
-router.get("/allTypes", propertyController.showAllTypes)
+router.get("/allTypes", propertyController.showAllTypes);
 
 
 //Ver todos los SUBTIPOS de Inmueble
@@ -26,18 +26,18 @@ router.post("/createProperty/:property_user_id/:property_subtype_id", propertyCo
 
 //Ver todos los TIPOS de cocina
 //localhost:4000/property/allKitchens
-router.get("/allKitchens", propertyController.allKitchens)
+router.get("/allKitchens", propertyController.allKitchens);
 
 //localhost:4000/property/addBasicFeaturesToProperty/:property_kitchen_id
 router.put("/addBasicFeaturesToProperty/:property_id/:property_kitchen_id", propertyController.addBasicFeaturesToProperty);
 
 
 ////property_is_for_sale
-//localhost:4000/property/checkSale/:property_user_id/:property_id
-router.put("/checkSale/:property_user_id/:property_id", propertyController.checkSale);
+//localhost:4000/property/checkSale/:property_id/:user_id
+router.put("/checkSale/:property_id/:user_id", propertyController.checkSale);
 
-//localhost:4000/property/uncheckSale/:property_user_id/:property_id
-router.put("/uncheckSale/:property_user_id/:property_id", propertyController.uncheckSale);
+//localhost:4000/property/uncheckSale/:property_id/:user_id
+router.put("/uncheckSale/:property_id/:user_id", propertyController.uncheckSale);
 
 //muestra todas la propiedades de descubre
 router.get("/descubre", propertyController.showAllDescubre);
@@ -52,7 +52,7 @@ router.get("/allProvinces", propertyController.allProvinces);
 
 //Mostrar TODAS las CIUDADES según PROVINCIA
 //localhost:4000/property/allCities/:province_id
-router.get("/allCities/:province_id", propertyController.allCities )
+router.get("/allCities/:province_id", propertyController.allCities );
 
 //muestra todas la propiedades de descubre
 router.get("/descubre", propertyController.showAllDescubre);
@@ -67,15 +67,16 @@ router.get("/allFeatures", propertyController.allFeatures);
 
 //Guardar Características
 //localhost:4000/property/addFeaturesToProperty/:property_id
-router.post("/addFeaturesToProperty/:property_id", propertyController.addFeaturesToProperty)
+router.post("/addFeaturesToProperty/:property_id", propertyController.addFeaturesToProperty);
 
 //Mostrar Características
 //localhost:4000/property/getPropertyFeatures/:property_id
-router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFeatures)
+router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFeatures);
 
 //Añade Imágenes a una Propiedad
 //localhost:4000/property/addImgsProperty/:property_id
-router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty)
+router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty);
+
 
 //ELIMINA FOTO de una Propiedad
 //localhost:4000/property/deleteImageProperty/:image_id/:property_id
@@ -88,6 +89,61 @@ router.put('/setMainImage/:image_id/:property_id', propertyController.setMainIma
 //Deshacer Foto Principal de una propiedad
 //localhost:4000/property/unSetMainImage/:image_id/:property_id
 router.put('/unSetMainImage/:image_id/:property_id', propertyController.unSetMainImage);
+
+////rent
+//localhost:4000/property/createRent/:property_id
+router.post("/createRent/:property_id", propertyController.createRent);
+
+//localhost:4000/property/editRent/:rent_id
+router.put("/editRent/:rent_id", propertyController.editRent);
+
+//localhost:4000/property/createLoan/:property_id
+router.post("/createLoan/:property_id", propertyController.createLoan);
+
+// //localhost:4000/property/createPurchase/:property_id
+router.post("/createPurchase/:property_id", propertyController.createPurchase);
+
+//localhost:4000/property/getAllPurchaseData/:property_id
+router.get("/getAllPurchaseData/:property_id", propertyController.getAllPurchaseData);
+
+
+//Trae toda la informacion de UNA propiedad de UN usuario
+//localhost:4000/property/propertyDetails/:user_id/:property_id
+router.get("/propertyDetails/:user_id/:property_id", propertyController.propertyDetails);
+
+//Trae todas la fotos de UNA propiedad de UN usuario
+//localhost:4000/property/propertyDetailsImg/:property_id
+router.get("/propertyDetailsImg/:property_id", propertyController.propertyDetailsImg);
+
+//Trae todas la direccion de UNA propiedad de UN usuario
+//localhost:4000/property/propertyDetailsAddress/:property_id
+router.get("/propertyDetailsAddress/:property_id", propertyController.propertyDetailsAddress);
+
+//Trae todos los datos de compra de UNA propiedad de UN usuario
+//localhost:4000/property/propertyDetailsPurchase/:property_id
+router.get("/propertyDetailsPurchase/:property_id", propertyController.propertyDetailsPurchase);
+
+//Trae la provincia y ciudad de la propiedad de un usuario
+//localhost:4000/property/propertyDetailsProvinceCity/:property_id
+router.get("/propertyDetailsProvinceCity/:property_id", propertyController.propertyDetailsProvinceCity);
+
+//Te muestra el tipo de la propiedad
+//localhost:4000/property/propertyDetailsSubtype/:property_id
+router.get("/propertyDetailsSubtype/:property_id", propertyController.propertyDetailsSubtype);
+
+
+//Te muestra el alquiler de la propiedad
+//localhost:4000/property/propertyDetailsRent/:property_id
+router.get("/propertyDetailsRent/:property_id", propertyController.propertyDetailsRent);
+
+//Te muestra la hipoteca de la propiedad
+//localhost:4000/property/propertyDetailsLoan/:property_id
+router.get("/propertyDetailsLoan/:property_id", propertyController.propertyDetailsLoan);
+
+
+//Te muestra todas las propiedades que están a la venta
+//localhost:4000/property/discover
+router.get("/discover", propertyController.discover);
 
 
 module.exports = router;
