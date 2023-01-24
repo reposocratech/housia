@@ -210,8 +210,11 @@ class propertyController {
           let sql = `INSERT INTO feature_property (feature_id, property_id) VALUES ("${feature}", ${property_id})`;
   
           connection.query(sql, (error, result) => {
+
+
             if (error){
               res.status(400).json(error)}
+
           })
         })
   
@@ -308,6 +311,9 @@ editRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
 
+
+  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id = ${rent_id}`;
+
 console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
 
   if(rent_renting_date.length> 10){
@@ -340,6 +346,7 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
   sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
  }
   
+
 
   
   connection.query(sql, (error, result)=>{
@@ -394,6 +401,8 @@ createLoan = (req,res) => {
       console.log('este es el resultado de loan',resultLoan);
  })
 }
+
+
 
 //crear purchase
 createPurchase = (req,res) =>{
