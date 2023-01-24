@@ -3,12 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../Context/AppContext';
 import { Accordion } from 'react-bootstrap';
 
-
-
-
 export const EditEconomicFeatures = () => {
 
-    
     const [editPurchase, setEditPurchase] = useState();
     const [editLoan, setEditLoan] = useState();
     const [editRent, setEditRent] = useState();
@@ -36,22 +32,14 @@ useEffect(()=>{
 axios
     .get(`http://localhost:4000/property/getAllPurchaseData/${property}`)
     .then((res)=>{
-        
-        
         setEditPurchase(res.data[0]);
         setEditLoan(res.data[0]);
         setEditRent(res.data[0]);
-        
     })
     .catch((error)=> {
         console.log(error)
     })
-
-
-
-
-    
-},[])
+},[property])
  
 const handleSubmitEdit =(e)=>{
     e.preventDefault();

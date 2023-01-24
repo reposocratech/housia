@@ -337,7 +337,7 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
               }
       }
   
- let sql = "";
+ sql = "";
 
  if(rent_renting_date == null){
   sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;

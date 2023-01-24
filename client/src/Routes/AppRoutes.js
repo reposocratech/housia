@@ -16,8 +16,7 @@ import { EditUser } from '../Pages/UserDashboard/User/EditUser'
 import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
 import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
-<<<<<<< HEAD
-=======
+
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
 import { Discover } from '../Pages/Discover/Discover'
@@ -25,10 +24,6 @@ import { Discover } from '../Pages/Discover/Discover'
 import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 
-
-
->>>>>>> 39807487147a6575be6f3a8c2bd0fd2950de592e
-import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 
 

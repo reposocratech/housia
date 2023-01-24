@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 
 
 export const User = () => {
-  const {user, isLogged} = useContext(AppContext);
+  const {user} = useContext(AppContext);
   const navigate = useNavigate();
   console.log(user);
   
@@ -13,7 +13,7 @@ export const User = () => {
     <div>
       <Row>
         <h1>Perfíl</h1>
-        <img className='w-25' src={`../images/user/${user?.user_img}`}/>
+        <img className='w-25' src={`../images/user/${user?.user_img}`} alt='foto_user' />
         <h2>{user?.user_name} {user?.user_lastname}</h2>
         <h3>{user?.user_email}</h3>
       </Row>
