@@ -28,12 +28,6 @@ router.get("/editUser/:user_id", userController.showOneUser)
 //----------------------LINEA PARA AÑADIR MULTER A LA RUTA
 router.put("/editUser/:user_id", multerSingle("user"), userController.editOneUser)
 
-////rent
-//localhost:4000/users/createRent/:property_id
-router.post("/createRent/:property_id", userController.createRent);
-
-//localhost:4000/users/editRent/:rent_id
-router.put("/editRent/:rent_id", userController.editRent);
 
 //Trae todas las propiedades de un usuario con su foto principal
 //localhost:4000/users/getAllProperty/:user_id

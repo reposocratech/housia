@@ -20,6 +20,10 @@ import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/A
 import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
 import { Discover } from '../Pages/Discover/Discover'
 
+import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
+import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
+
+
 
 
 
@@ -45,7 +49,13 @@ export const AppRoutes = () => {
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/testField' element={<TestField/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
+
                 <Route path='/discover' element={<Discover/>}/> 
+
+                <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
+                <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+
+
 
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>

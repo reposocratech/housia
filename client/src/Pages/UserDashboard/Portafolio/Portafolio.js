@@ -7,6 +7,7 @@ import './portafolio.scss';
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
   const {user, isLogged} = useContext(AppContext);
+  console.log(propertyDetails);
  
   useEffect(() => {
     axios
