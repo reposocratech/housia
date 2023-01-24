@@ -23,6 +23,7 @@ import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage
 
 
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 
 
 
@@ -38,9 +39,11 @@ export const AppRoutes = () => {
                 <Route path='/login' element={<Login/>}/>
 
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
+                
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
                 <Route path='/user/editUser' element={<EditUser/>}/>
+                <Route path='/user/summaryInversion' element={<SummaryInversionUser/>}/>
 
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
@@ -52,6 +55,7 @@ export const AppRoutes = () => {
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>
                 <Route path='/admin/customFeaturesElem' element={<AdminCustomFeatures/>}/>
+                
 
             </Routes>
         </BrowserRouter>

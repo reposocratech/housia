@@ -85,10 +85,10 @@ class propertyController {
 
     ///Marca una propiedad como en venta
     checkSale = (req, res) => {
-        let {property_id, property_user_id} = req.params;
+        let {property_id, user_id} = req.params;
 
-        let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}' AND property_user_id = '${property_user_id}'`;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
+        let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
+        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
 
         connection.query(sql, (error, result) => {
             if (error) throw error;
@@ -101,10 +101,10 @@ class propertyController {
 
     ///Deshabilita el marcado en venta
     uncheckSale = (req, res) => {
-        let {property_id, property_user_id} = req.params;
+        let {property_id, user_id} = req.params;
 
-        let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' AND property_user_id = '${property_user_id}'`;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
+        let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
+        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
 
         connection.query(sql, (error, result) => {
             if (error) throw error;
@@ -162,11 +162,7 @@ class propertyController {
           error ? res.status(400).json({ error }) : res.status(200).json(result);
         });
       }
-
-<<<<<<< HEAD
-
-     
-=======
+      
 //CREAR LA DIRECCION DE UNA PROPIEDAD
       addAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
@@ -262,7 +258,6 @@ class propertyController {
 
 
 
->>>>>>> 261eacdc5ef081ec1eafc83311d8c14b33cd99fa
 }
 
 

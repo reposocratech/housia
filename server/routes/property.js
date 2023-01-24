@@ -32,11 +32,11 @@ router.put("/addBasicFeaturesToProperty/:property_id/:property_kitchen_id", prop
 
 
 ////property_is_for_sale
-//localhost:4000/property/checkSale/:property_user_id/:property_id
-router.put("/checkSale/:property_user_id/:property_id", propertyController.checkSale);
+//localhost:4000/property/checkSale/:property_id/:user_id
+router.put("/checkSale/:property_id/:user_id", propertyController.checkSale);
 
-//localhost:4000/property/uncheckSale/:property_user_id/:property_id
-router.put("/uncheckSale/:property_user_id/:property_id", propertyController.uncheckSale);
+//localhost:4000/property/uncheckSale/:property_id/:user_id
+router.put("/uncheckSale/:property_id/:user_id", propertyController.uncheckSale);
 
 //muestra todas la propiedades de descubre
 router.get("/descubre", propertyController.showAllDescubre);
