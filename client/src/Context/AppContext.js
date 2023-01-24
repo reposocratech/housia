@@ -14,30 +14,32 @@ export const AppProvider = (props) => {
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
     const token = localStorageUser(); 
+console.log(user, "+++++++++++");
+
+useEffect(() => {
+    const token = localStorageUser();
+    if(token){
+        let id = jwtDecode(token).user.id;
+        setIsLogged(true);
 
 
-    useEffect(() => {
-        const token = localStorageUser();
-        if(token){
-            let id = jwtDecode(token).user.id;
-            setIsLogged(true);
-
-
-        
-        axios
-        .get(`http://localhost:4000/users/${id}`)
-        .then((res)=> {
-
-            setUser(res.data.resultUser[0]);
-            setUserProperties(res.data.resultProperty);
-            
-        })
-        .catch((error) => {
-            console.log('este es el error', error);
-        })
-        }
-    }, [isLogged, resetUser])
     
+    axios
+    .get(`http://localhost:4000/users/${id}`)
+    .then((res)=> {
+        setUser(res.data.resultUser[0]);
+        setUserProperties(res.data.resultProperty);
+        
+    })
+    .catch((error) => {
+        console.log('este es el error', error);
+    })
+    }
+}, [isLogged, resetUser])
+    
+    
+    console.log(user, "user del context");
+    console.log(isLogged, "logeo del context");
     
 
     return (

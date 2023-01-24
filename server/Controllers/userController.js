@@ -94,22 +94,22 @@ loginUser =(req, res)=>{
 
 // GET DE UN SOLO USER (devuelve los datos de un usuario tras loguearse)
 //localhost:4000/users/:user_id
-selectOneUser =(req, res)=>{
+selectOneUser = (req, res) => {
 
     const userId = req.params.user_id;
-
+console.log(userId, "userId");
     let sqlUser = `SELECT user_id, user_name, user_lastname, user_email, user_password, user_creation_date, user_certify_ownership, user_img, user_type, user_is_deleted, user_phone, user_dni, user_acepted_policies, user_code,  date_format(user.user_birth_date, '%Y-%m-%d') as user_birth_date FROM user WHERE user_id = ${userId} and user_is_deleted = false`;
 
     let sqlProperty = `SELECT * from property WHERE property_user_id = ${userId} and property_is_user_deleted = false and property_is_admin_deleted = false`;
 
     connection.query(sqlUser, (errorUser, resultUser) =>{
-        if(errorUser){
-            res.status(400).json({ errorUser});
-            }
+        if(errorUser) {
+            res.status(400).json({errorUser});
+        }  
         connection.query(sqlProperty, (errorProperty, resultProperty) =>{
             if(errorProperty) {
-                res.status(400).json({ errorProperty });
-                }
+                res.status(400).json({errorProperty});
+            }
             res.status(200).json({ resultUser, resultProperty})
         });
     });
@@ -157,43 +157,151 @@ editOneUser =(req, res)=>{
     }
 
     connection.query(sql, (errorEdit, resultEdit) =>{
+       
         errorEdit ? res.status(400).json({errorEdit}) : res.status(200).json(resultEdit);
     })
 };
 
 
-//Trae todas las propiedades de un usuario con su foto principal.
+///Trae seis propiedades para el portfolio de un usuario con su foto principal.
+//localhost:4000/users/getAllProperty/:user_id
 getAllProperty = (req, res) => {
     let {user_id} = req.params;
 
-    // let sql = `UPDATE image SET image_is_main = 1 WHERE image_title = "imagen_propiedad.jpg"`;
+    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC LIMIT 6`;
+  
     
-    let sql2 = `SELECT property.*, image.* FROM user, image, property WHERE user.user_id = property.property_user_id AND property.property_id = image.image_property_id AND user.user_is_deleted = 0 AND user.user_id = ${user_id} AND image.image_is_main = 1 ORDER BY property.property_built_year DESC LIMIT 6`;
-
-    
-    // connection.query(sql, (error, resultImage) => {
-    //     if (error) {
-    //     res.status(400).json({ error });
-    //     }
-    //     connection.query(sql2, (error2, resultProperty) => {
-    //         if (error) {
-    //         res.status(400).json({ error2 });
-    //         }
-    //         res.status(200).json({ resultProperty});
-    //         });
-    //     });
         connection.query(sql2, (error2, resultProperty) => {
             if (error2) {
             res.status(400).json({ error2 });
-            } else{
-            res.status(200).json({ resultProperty});
             }
-            
+            res.status(200).json({ resultProperty});
             });
-      
+                   
     };
 
+    ///Trae TODAS las propiedades de un usuario
+    //localhost:4000/users/getProperties/:user_id
+    getProperties = (req, res) => {
+        let {user_id} = req.params;
 
+        let sql = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result});
+        }
+       
+        )
+    };
+
+ //Borra de manera lógica una propiedad
+      //localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
+      logicDeletedUserProperty = (req, res) => {
+        let {property_id, user_id} = req.params;
+        console.log(property_id, user_id);
+        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = "${property_id}"`;
+
+        let sql2 = `SELECT * FROM property WHERE property_user_id = ${user_id} AND property_is_user_deleted = false`;
+
+        connection.query(sql, (error, resultDel) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            connection.query(sql2, (err, resultProperty) => {
+                if (err){
+                    res.status(400).json({err});
+                    
+                }
+                res.status(200).json({resultProperty});
+            })
+          });
+      };
+
+      ///Obtener propiedades ALQUILADAS de un usuario
+      //localhost:4000/users/getRentedProperties/:user_id
+      getRentedProperties = (req, res) =>{
+        let {user_id} = req.params;
+
+        let sql = `SELECT * FROM property WHERE property_is_rented = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result})
+          })
+      }
+
+      ///Obtener propiedades VENDIDAS de un usuario
+      //localhost:4000/users/getSoldProperties/:user_id
+      getSoldProperties = (req, res) =>{
+        let {user_id} = req.params;
+
+        let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result})
+          })
+      }
+
+      ///Cuenta todas las propiedades de un usuario
+      //localhost:4000/users/getCountProperties/:user_id
+      getCountProperties = (req, res) => {
+        let {user_id} = req.params;
+
+        let sql = `SELECT * FROM property WHERE property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result})        
+        })
+      }
+
+      ///Trae la suma total del precio de compra de las propiedades de un usuario
+      //localhost:4000/users/getTotalInv/:user_id
+      getTotalInv = (req, res) => {
+        let {user_id} = req.params;
+
+        let sql = `SELECT purchase.purchase_buy_price FROM purchase JOIN property ON purchase.purchase_property_id = property.property_id WHERE property.property_user_id = ${user_id}`;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result})
+        })
+      }
+
+      ///Trae la suma total de los alquileres de las propiedades de un usuario
+      //localhost:4000/users/getMonthlyIncome/:user_id
+      getMonthlyIncome = (req, res) => {
+        let {user_id} = req.params;
+
+        let sql = `SELECT rent.rent_renting_price FROM rent JOIN property ON rent.rent_property_id = property.property_id WHERE property.property_user_id = ${user_id} AND property.property_is_rented = true`;
+
+        connection.query(sql, (error, result) => {
+            if (error){
+                res.status(400).json({error});
+                
+            }
+            res.status(200).json({result})
+        })
+      }
+      
 
 
 }
