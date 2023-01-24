@@ -157,7 +157,6 @@ editOneUser =(req, res)=>{
     }
 
     connection.query(sql, (errorEdit, resultEdit) =>{
-        if (errorEdit) throw errorEdit;
         errorEdit ? res.status(400).json({errorEdit}) : res.status(200).json(resultEdit);
     })
 
