@@ -157,50 +157,11 @@ editOneUser =(req, res)=>{
     }
 
     connection.query(sql, (errorEdit, resultEdit) =>{
-        if(errorEdit) {
-            res.status(400).json({errorEdit});
-        }
+       
         errorEdit ? res.status(400).json({errorEdit}) : res.status(200).json(resultEdit);
     })
-
 };
 
-//CREAR ALQUILER
-
-createRent = (req, res) => {
-    let {property_id} = req.params;
-
-    let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
-
-    let sql = `INSERT INTO rent (rent_property_id, rent_renting_date, rent_renting_price, rent_expenses) VALUES (${property_id}, ${rent_renting_date}, ${rent_renting_price}, ${rent_expenses})`;
-
-    connection.query(sql, (error, result)=>{
-        if (error){
-            res.status(400).json({error});
-            
-        }
-        res.status(200).json(result);
-        console.log(result);
-    });
-};
-
-//EDITAR ALQUILER
-
-editRent = (req, res) => {
-    let {rent_id} = req.params;
-
-    let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
-
-    let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = '${rent_renting_price}', rent_expenses = '${rent_expenses}' WHERE rent_id = '${rent_id}'`;
-    
-    connection.query(sql, (error, result)=>{
-        if (error){
-            res.status(400).json({error});    
-        }
-        res.status(200).json(result);
-        console.log(result);
-    });
-};
 
 ///Trae seis propiedades para el portfolio de un usuario con su foto principal.
 //localhost:4000/users/getAllProperty/:user_id

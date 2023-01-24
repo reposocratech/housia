@@ -8,12 +8,16 @@ import './portafolio.scss';
 
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
+
    const {user} = useContext(AppContext);
   const navigate = useNavigate();
   // console.log(user);
   // console.log(isLogged);
   // console.log(propertyDetails);
   console.log(user, "user del portfolio");
+
+
+ 
 
   useEffect(() => {
     
