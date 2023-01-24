@@ -1,82 +1,152 @@
-import React, {useState, useContext} from 'react'
-import { Accordion, Button} from 'react-bootstrap'
-import './AddEconomicFeatures.scss'
+import axios from 'axios'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../Context/AppContext';
-import axios from 'axios';
-
-export const AddEconomicFeatures = () => {
-    const [rent, setRent] = useState();
-    const [loan, setLoan] = useState();
-    const [purchase, setPurchase] = useState();
-    const [isUsual, setIsUsual] = useState(false);
-   
-
-    const {property } = useContext(AppContext);
-    console.log(property);
-    // console.log(purchase);
-    // console.log(loan);
-    // console.log(rent);
+import { Accordion } from 'react-bootstrap';
 
 
-    let property_id = property?.property_id;
-   
 
-    const handleChangePurchase = (e) => {
-        const {name, value} = e.target;
-        console.log(e);
-        setPurchase({...purchase, [name]:value})  
-    }
+
+export const EditEconomicFeatures = () => {
+
     
-    const handleChangeLoan = (e) => {
-        const {name, value} = e.target;
-        setLoan({...loan, [name]:value})
+    const [editPurchase, setEditPurchase] = useState();
+    const [editLoan, setEditLoan] = useState();
+    const [editRent, setEditRent] = useState();
+    const [checkboxState, setCheckboxState] = useState(false)
+   
+
+    let {property} = useContext(AppContext);
+ property = 9;
+
+ let fechaCompra = ""
+ if(editPurchase?.purchase_buy_date !== undefined){
+     fechaCompra = editPurchase?.purchase_buy_date.slice(0, 10)
+ }
+ ;
+
+ let fechaAlquiler = "";
+ if( editRent?.rent_renting_date !== null ){
+fechaAlquiler = editRent?.rent_renting_date.slice(0, 10);
+ }
+ 
+ 
+
+useEffect(()=>{
+
+axios
+    .get(`http://localhost:4000/property/getAllPurchaseData/${property}`)
+    .then((res)=>{
+        
+        
+        setEditPurchase(res.data[0]);
+        setEditLoan(res.data[0]);
+        setEditRent(res.data[0]);
+        
+    })
+    .catch((error)=> {
+        console.log(error)
+    })
+
+
+
+
+    
+},[])
+ 
+const handleSubmitEdit =(e)=>{
+    e.preventDefault();
+
+
+    //axios del RENT
+    let rentId = editRent.rent_id;
+    axios
+    .put(`http://localhost:4000/property/editRent/${rentId}`, editRent)
+    .then((res)=>{
+        console.log("respuesta correcta")
+        //FALTA NAVIGATE A PROPERTY_ID;
+
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+    
+
+} 
+    
+const handleRadioLoanType =(e) =>{
+    const {value} = e.target
+
+    if(value === "1"){
+
+        setEditLoan({...editLoan, loan_type:1})
+    } else if(value === "2"){
+
+        setEditLoan({...editLoan, loan_type:2})
+    }
+}
+   
+const handleRadioIsNew = (e) =>{
+        
+    const {value} = e.target
+       
+        if(value=== "true"){ 
+            setEditPurchase({...editPurchase, purchase_is_new:1})
+           
+        } else if(value === "false"){
+            setEditPurchase({...editPurchase, purchase_is_new:0})
+          
+            }
     }
 
-    const handleChangeRent = (e) => {
-        const {name, value} = e.target;
-        console.log(e.target);
-        setRent({...rent, [name]:value})
-    }
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        axios
-            .post(`http://localhost:4000/property/createRent/${property_id}`, rent )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err, 'error de rent');
-            });
-        axios
-            .post(`http://localhost:4000/property/createLoan/${property_id}`, loan )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err, 'error de loan');
-            });
-        axios
-            .post(`http://localhost:4000/property/createPurchase/${property_id}`, purchase )
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err, 'error de purchase');
-            });
+const handleCheckBox = (e) =>{
+        setCheckboxState(!checkboxState)
+        setEditPurchase({...editPurchase, purchase_is_usual: checkboxState? 0: 1})
     }
+    // console.log(checkboxState);
+
+
+const handleChangePurchase = (e) =>{
+        const {name, value} = e.target;
+        console.log(e.target.value, "linea 69")
+        setEditPurchase({...editPurchase, [name]:value})
+        
+    };
+
+        // console.log(editPurchase, "edit purchase");
+    
+    
+const handleChangeRent = (e) =>{
+        const {name, value} = e.target;
+        setEditRent({...editRent, [name]:value})
+        
+    };
+console.log(editRent, "edit rent")
+   
+
+const handleChangeLoan =(e)=>{
+        const {name, value} = e.target;
+        setEditLoan({...editLoan, [name]: value})
+       
+    };
+
+    //  console.log(editLoan, "edit loan")
+  
+
+   
+
 
   return (
     <div>
-        <h1>Características Económicas</h1>
-        <h3>Compra</h3>
+         <h1>Formulario para editar caracteristicas economicas</h1>
+
         <div className='d-flex flex-column'>
         <input
             type='number'
             step='0,01'
             placeholder='Precio de Compra'
             autoComplete='off'
-            value={purchase?.purchase_buy_price}
+            value={editPurchase?.purchase_buy_price}
             name='purchase_buy_price'
             onChange={handleChangePurchase}
         />
@@ -84,29 +154,34 @@ export const AddEconomicFeatures = () => {
         <input
             type='date'
             autoComplete='off'
-            value={purchase?.purchase_buy_date}
+            value={fechaCompra}
             name="purchase_buy_date"
             onChange={handleChangePurchase}
         />
         <div>
+       <div>
             <input type='radio'
                 id='opcion-obra-nueva' 
                 name='purchase_is_new'
-                value='true'
-                onChange={handleChangePurchase}
+                value= 'true'
+                checked = {editPurchase?.purchase_is_new === 1} 
+                onChange={handleRadioIsNew}
                 />
             <label for='opcion-obra-nueva'>Obra Nueva</label>
         </div> 
 
-        <div>
+       <div>
             <input type='radio'
                 id='opcion-segunda-mano' 
                 name='purchase_is_new'
                 value='false'
-                onChange={handleChangePurchase}
+                checked = {editPurchase?.purchase_is_new === 0}
+                onChange={handleRadioIsNew}
                 />
             <label for='opcion-segunda-mano'>Segunda Mano</label>
         </div>
+       </div> 
+       
         <Accordion alwaysOpen>
       <Accordion.Item eventKey="0" className='m-3'>
         <Accordion.Header>Entrada y gastos de compraventa</Accordion.Header>
@@ -115,7 +190,7 @@ export const AddEconomicFeatures = () => {
           <input 
             type='number'
             min='0'
-            value={purchase?.purchase_entry_expenses}
+            value={editPurchase?.purchase_entry_expenses}
             name="purchase_entry_expenses"
             onChange={handleChangePurchase}/>
 
@@ -123,7 +198,7 @@ export const AddEconomicFeatures = () => {
           <input 
            type='number'
            min='0'
-           value={purchase?.purchase_trading_expenses}
+           value={editPurchase?.purchase_trading_expenses}
            name="purchase_trading_expenses"
            onChange={handleChangePurchase}/>
 
@@ -132,10 +207,9 @@ export const AddEconomicFeatures = () => {
             type="checkbox" 
             id="check-is-usual" 
             className='check-is-usual'
-            value={!isUsual}
-            onClick={()=>setIsUsual(!isUsual)}
+            checked = {checkboxState}
             name="purchase_is_usual"
-            onChange={handleChangePurchase}
+            onChange={handleCheckBox}
             />
           <label for="check-is-usual">Usuales</label>
           </div>
@@ -150,7 +224,7 @@ export const AddEconomicFeatures = () => {
                     type='number'
                     min='0'
                     className='m-2'
-                    value={purchase?.purchase_reform_expenses}
+                    value={editPurchase?.purchase_reform_expenses}
                     name="purchase_reform_expenses"
                     onChange={handleChangePurchase}/>
             </div>
@@ -165,7 +239,7 @@ export const AddEconomicFeatures = () => {
                     className='m-2'
                     type='number'
                     min='0'
-                    value={purchase?.purchase_furniture_expenses}
+                    value={editPurchase?.purchase_furniture_expenses}
                     name="purchase_furniture_expenses"
                     onChange={handleChangePurchase}/>
             </div>
@@ -179,7 +253,7 @@ export const AddEconomicFeatures = () => {
                     className='m-2'
                     type='number'
                     min='0'
-                    value={purchase?.purchase_ownership_percentage}
+                    value={editPurchase?.purchase_ownership_percentage}
                     name="purchase_ownership_percentage"
                     onChange={handleChangePurchase}/>
                 <p className='m-0'>%</p>
@@ -193,7 +267,7 @@ export const AddEconomicFeatures = () => {
                 <label>Importe Hipoteca</label>
                 <input 
                     className='m-2'
-                    value={loan?.loan_value}
+                    value={editLoan?.loan_value}
                     name="loan_value"
                     onChange={handleChangeLoan}/>
             </div>
@@ -201,14 +275,16 @@ export const AddEconomicFeatures = () => {
                 id='hipoteca-importe-fijo' 
                 name='loan_type'
                 value='1'
-                onChange={handleChangeLoan}
+                checked = {editLoan?.loan_type === 1} 
+                 onChange={ handleRadioLoanType}
                 />
             <label for='hipoteca-importe-fijo'>Fijo</label>
             <input type='radio'
                id='hipoteca-importe-fijo' 
                name='loan_type'
                value='2'
-               onChange={handleChangeLoan}
+               checked = {editLoan?.loan_type === 2} 
+               onChange={ handleRadioLoanType}
                 />
             <label for='hipoteca-importe-variable'>Variable</label>
             
@@ -216,13 +292,13 @@ export const AddEconomicFeatures = () => {
                 <label>Años</label>
                 <input 
                     className='m-2'
-                    value={loan?.loan_years}
+                    value={editLoan?.loan_years}
                     name="loan_years"
                     onChange={handleChangeLoan}/>
                 <input 
                     className='m-2'
                     placeholder='Interés'
-                    value={loan?.loan_interest_rate}
+                    value={editLoan?.loan_interest_rate}
                     name="loan_interest_rate"
                     onChange={handleChangeLoan}/>
             </div>
@@ -235,7 +311,7 @@ export const AddEconomicFeatures = () => {
                 <label>Precio d alquiler</label>
                 <input 
                     className='m-2'
-                    value={rent?.rent_renting_price}
+                    value={editRent?.rent_renting_price}
                     name="rent_renting_price"
                     onChange={handleChangeRent}/>
             </div>
@@ -243,7 +319,7 @@ export const AddEconomicFeatures = () => {
                 <label>Gastos mensuales</label>
                 <input 
                     className='m-2'
-                    value={rent?.rent_expenses}
+                    value={editRent?.rent_expenses}
                     name="rent_expenses"
                     onChange={handleChangeRent}/>
             </div>
@@ -252,7 +328,7 @@ export const AddEconomicFeatures = () => {
                 <input 
                     type='date' 
                     className='m-2'
-                    value={rent?.rent_renting_date}
+                    value={fechaAlquiler}
                     name="rent_renting_date"
                     onChange={handleChangeRent}/>
             </div>
@@ -260,10 +336,10 @@ export const AddEconomicFeatures = () => {
         </Accordion.Body>
         </Accordion.Item>
         </Accordion>
+        <button onClick={handleSubmitEdit}>Guardar Cambios</button>
         </div>
-        <Button onClick={handleClick}>Guardar</Button>
-        
-        
+
+
     </div>
   )
 }

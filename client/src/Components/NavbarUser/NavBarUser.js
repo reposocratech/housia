@@ -37,7 +37,10 @@ export const NavBarUser = () => {
           <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
           <Nav.Link>Valora</Nav.Link>
           <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
+          <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
+          <Nav.Link as={Link} to='/addEconomicFeatures'>Añadir Caracteristicas Economicas</Nav.Link>
           </Nav>
+          
           
           }
 

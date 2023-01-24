@@ -259,7 +259,6 @@ createRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
   console.log(req.body, 'este es el body de create rent');
-  
   // let sql = `INSERT INTO rent (rent_property_id, rent_renting_date, rent_renting_price, rent_expenses) VALUES (${property_id}, '${rent_renting_date}', ${rent_renting_price}, ${rent_expenses})`;
 
   let sqlHead = "INSERT INTO rent (rent_property_id";
@@ -299,7 +298,39 @@ editRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
 
-  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = '${rent_renting_price}', rent_expenses = '${rent_expenses}' WHERE rent_id = '${rent_id}'`;
+console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
+
+  if(rent_renting_date.length> 10){
+        rent_renting_date = rent_renting_date.slice(0, 10);
+        }
+      if(rent_expenses != null){
+          if(rent_expenses.length == 0){
+              rent_expenses = null;
+              }
+          }
+ 
+
+      if(rent_renting_price !=null){
+          if(rent_renting_price.length == 0){
+            rent_renting_price = null;
+              }
+          }
+
+      if(rent_renting_date != null){
+          if(rent_renting_date.length == 0){
+            rent_renting_date = null;
+              }
+      }
+  
+ let sql = "";
+
+ if(rent_renting_date == null){
+  sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
+ } else {
+  sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
+ }
+  
+
   
   connection.query(sql, (error, result)=>{
       if (error){
@@ -434,7 +465,7 @@ getAllPurchaseData = (req, res) => {
   
   let sql = `select * from purchase, rent, loan 
             where ${property_id} = rent_property_id
-            and ${property_id} = loan_property_id`;
+            and ${property_id} = loan_property_id and ${property_id} = purchase_property_id` ;
   
             connection.query(sql, (error, result)=>{
               if (error){
