@@ -157,7 +157,6 @@ editOneUser =(req, res)=>{
     }
 
     connection.query(sql, (errorEdit, resultEdit) =>{
-       
         errorEdit ? res.status(400).json({errorEdit}) : res.status(200).json(resultEdit);
     })
 };
@@ -187,16 +186,13 @@ getAllProperty = (req, res) => {
 
         let sql = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
 
-        connection.query(sql, (error, result) => {
-            if (error){
-                res.status(400).json({error});
-                
-            }
-            res.status(200).json({result});
-        }
-       
-        )
-    };
+
+    connection.query(sql, (error, result)=>{
+        error ? res.status(400).json({error}) : res.status(200).json(result);
+        console.log(result);
+    });
+};
+
 
  //Borra de manera lógica una propiedad
       //localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
@@ -237,6 +233,7 @@ getAllProperty = (req, res) => {
             res.status(200).json({result})
           })
       }
+
 
       ///Obtener propiedades VENDIDAS de un usuario
       //localhost:4000/users/getSoldProperties/:user_id

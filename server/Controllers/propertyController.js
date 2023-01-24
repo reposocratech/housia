@@ -43,10 +43,10 @@ class propertyController {
         let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
 
         connection.query(sqlProperty, (err, resultProperty) => {
-          if (err){
-            res.status(400).json(err)}
-            res.status(200).json(resultProperty);
-        })
+
+            err ? res.status(400).json({err}) : res.status(200).json(resultProperty);
+            console.log(resultProperty);
+                    })
     });
   }
 
@@ -70,15 +70,16 @@ class propertyController {
        property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
-    connection.query(sql, (error, result)=>{
-      if (error){
-        res.status(400).json(error)}
 
-      let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
+    let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
+
+
+    connection.query(sql, (error, result)=>{
+      if (error) {res.status(400).json({error})}
 
       connection.query(sqlProperty, (err, resultProperty) => {
-        if (err){
-          res.status(400).json(err)}
+
+        if (err){res.status(400).json(err)}
           res.status(200).json(resultProperty);
       })
   });
@@ -93,6 +94,7 @@ class propertyController {
         let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
 
         connection.query(sql, (error, result) => {
+
           if (error){
             res.status(400).json(error)}
             console.log(error);
@@ -183,6 +185,7 @@ class propertyController {
           console.log(result);
   
           connection.query(sqlAddress, (errorAddress, resultAddress) => {
+
             if (errorAddress){
               res.status(400).json(errorAddress)}
             res.status(200).json(resultAddress);
@@ -210,11 +213,8 @@ class propertyController {
           let sql = `INSERT INTO feature_property (feature_id, property_id) VALUES ("${feature}", ${property_id})`;
   
           connection.query(sql, (error, result) => {
-
-
             if (error){
               res.status(400).json(error)}
-
           })
         })
   
@@ -250,6 +250,7 @@ class propertyController {
           let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
 
           connection.query(sql, (error, result) => {
+
             if (error){
               res.status(400).json(error)}
             console.log(result);
@@ -324,9 +325,7 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
               rent_expenses = null;
               }
           }
- 
-
-      if(rent_renting_price !=null){
+    if(rent_renting_price !=null){
           if(rent_renting_price.length == 0){
             rent_renting_price = null;
               }
@@ -345,10 +344,7 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
  } else {
   sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
  }
-  
-
-
-  
+    
   connection.query(sql, (error, result)=>{
       if (error){
           res.status(400).json({error});    
@@ -357,6 +353,70 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
       console.log(result);
   });
 };
+ 
+      //ELIMINA FOTO de una Propiedad
+      //localhost:4000/property/deleteImageProperty/:image_id/:property_id
+      deleteInitialImageProperty = (req, res) => {
+
+        let {image_id, property_id} = req.params;
+
+        let sql = `DELETE FROM image WHERE image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(sql, (error, result) => {
+          if (error) {res.status(400).json({error})}
+          connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+            if (errorImgs) {res.status(400).json({errorImgs})}
+            res.status(200).json(resultImgs);
+          })
+        })
+      }
+
+      //Setear FOTO PRINCIPAL de una propiedad
+      //localhost:4000/property/setMainImage/:image_id/:property_id
+      setMainImage = (req, res) => {
+        let {image_id, property_id} = req.params;
+
+        let unSetMainSql = 'UPDATE image SET image_is_main = false'
+
+        let sql = `UPDATE image SET image_is_main = true WHERE image.image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(unSetMainSql, (errorUnSet, resultUnSet) => {
+          if (errorUnSet) {res.status(400).json({errorUnSet})}
+          connection.query(sql, (error, result) => {
+            if (error) {res.status(400).json({error})}
+            connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+              if (errorImgs) {res.status(400).json({errorImgs})}
+              res.status(200).json(resultImgs);
+            })
+          })
+        })
+      }
+
+      //Deshacer FOTO PRINCIPAL de una propiedad
+      //localhost:4000/property/unSetMainImage/:image_id/:property_id
+
+      unSetMainImage = (req, res) => {
+        let {image_id, property_id} = req.params;
+
+        let sql = `UPDATE image SET image_is_main = false WHERE image.image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(sql, (error, result) => {
+          if (error) {res.status(400).json({error})}
+          connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+            if (errorImgs) {res.status(400).json({errorImgs})}
+            res.status(200).json(resultImgs);
+          })
+        })
+      }
+
+
+
 
 //crear loan
 createLoan = (req,res) => {
