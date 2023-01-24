@@ -11,8 +11,6 @@ export const EditUser = () => {
     const [file, setFile] = useState();
     console.log(user);
   
-    
-
     useEffect(()=> {
         setEditUser(user);
       },[user])

@@ -12,13 +12,25 @@ import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
 import { TestField } from '../Components/TestField/TestField'
 import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4'
-
 import { EditUser } from '../Pages/UserDashboard/User/EditUser'
-
 import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
 import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
+<<<<<<< HEAD
+=======
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
+import { Discover } from '../Pages/Discover/Discover'
+
+import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
+import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
+
+
+
+>>>>>>> 39807487147a6575be6f3a8c2bd0fd2950de592e
+import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
+
 
 export const AppRoutes = () => {
   return (
@@ -31,10 +43,13 @@ export const AppRoutes = () => {
                 <Route path='/login' element={<Login/>}/>
 
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
+                
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
                 <Route path='/user/editUser' element={<EditUser/>}/>
+                <Route path='/user/summaryInversion' element={<SummaryInversionUser/>}/>
 
+                <Route path='/propertyDetails/:property_id' element={<PropertyDetails/>}/>
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
@@ -42,9 +57,17 @@ export const AppRoutes = () => {
                 <Route path='/testField' element={<TestField/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
 
+                <Route path='/discover' element={<Discover/>}/> 
+
+                <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
+                <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+
+
+
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>
                 <Route path='/admin/customFeaturesElem' element={<AdminCustomFeatures/>}/>
+                
 
             </Routes>
         </BrowserRouter>
