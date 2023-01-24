@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {Nav, Container, Button} from 'react-bootstrap'
-import Navbar from 'react-bootstrap/Navbar';
+import {Nav, Navbar, Container, Button} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext';
 import { delLocalStorageUser } from '../../Utils/localStorage/localStorageUser';
@@ -38,8 +37,20 @@ export const NavBarUser = () => {
           <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
           <Nav.Link>Valora</Nav.Link>
           <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
+          <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
+          <Nav.Link as={Link} to='/addEconomicFeatures'>Añadir Caracteristicas Economicas</Nav.Link>
           </Nav>
           
+          
+          }
+
+          {isLogged && user?.user_type === 1 &&
+          <Nav className='d-flex'>
+          <Nav.Link as={Link} to='/admin'>Home</Nav.Link>
+          <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
+          <Nav.Link as={Link} to='/addEconomicFeatures'>Añadir Caracteristicas Economicas</Nav.Link>
+          <Nav.Link as={Link} to='/admin/customFeaturesElem'>Custom features</Nav.Link>
+          </Nav>
           }
           
           {!isLogged ? (

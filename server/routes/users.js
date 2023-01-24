@@ -28,17 +28,38 @@ router.get("/editUser/:user_id", userController.showOneUser)
 //----------------------LINEA PARA AÑADIR MULTER A LA RUTA
 router.put("/editUser/:user_id", multerSingle("user"), userController.editOneUser)
 
-////rent
-//localhost:4000/users/createRent/:property_id
-router.post("/createRent/:property_id", userController.createRent);
 
-//localhost:4000/users/editRent/:rent_id
-router.put("/editRent/:rent_id", userController.editRent);
-
-//Trae todas las propiedades de un usuario con su foto principal
+//Trae seis propiedades para el portfolio de un usuario con su foto principal.
 //localhost:4000/users/getAllProperty/:user_id
 router.get("/getAllProperty/:user_id", userController.getAllProperty);
 
+//Trae TODAS las propiedades de un usuario
+//localhost:4000/users/getProperties/:user_id
+router.get("/getProperties/:user_id", userController.getProperties);
 
+
+//Borra de manera lógica una propiedad
+//localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
+router.put("/logicDeletedUserProperty/:property_id/:user_id",userController.logicDeletedUserProperty);
+
+///Obtener propiedades ALQUILADAS de un usuario
+//localhost:4000/users/getRentedProperties/:user_id
+router.get("/getRentedProperties/:user_id", userController.getRentedProperties);
+
+///Obtener propiedades VENDIDAS de un usuario
+//localhost:4000/users/getSoldProperties/:user_id
+router.get("/getSoldProperties/:user_id", userController.getSoldProperties);
+
+///Cuenta todas las propiedades de un usuario
+//localhost:4000/users/getCountProperties/:user_id
+router.get("/getCountProperties/:user_id", userController.getCountProperties);
+
+///Trae la suma total del precio de compra de las propiedades de un usuario
+//localhost:4000/users/getTotalInv/:user_id
+router.get("/getTotalInv/:user_id", userController.getTotalInv);
+
+///Trae la suma total de los alquileres de las propiedades de un usuario
+//localhost:4000/users/getMonthlyIncome/:user_id
+router.get("/getMonthlyIncome/:user_id", userController.getMonthlyIncome);
 
 module.exports = router;
