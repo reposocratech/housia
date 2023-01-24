@@ -313,10 +313,6 @@ editRent = (req, res) => {
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
 
 
-  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id = ${rent_id}`;
-
-console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
-
   if(rent_renting_date.length> 10){
         rent_renting_date = rent_renting_date.slice(0, 10);
         }
