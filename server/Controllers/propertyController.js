@@ -67,7 +67,7 @@ class propertyController {
     let sql = `UPDATE property SET property_total_meters = ${property_total_meters},
      property_built_meters = ${property_built_meters}, property_built_year = ${property_built_year},
       property_rooms = ${property_rooms}, property_bathrooms = ${property_bathrooms},
-       property_garage = ${property_garage}, property_kitchen_sid = ${property_kitchen_id}
+       property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
     connection.query(sql, (error, result)=>{
@@ -253,6 +253,68 @@ class propertyController {
             : res.status(200).json(resultImgs)
         });
       };
+
+
+      //ELIMINA FOTO de una Propiedad
+      //localhost:4000/property/deleteImageProperty/:image_id/:property_id
+      deleteInitialImageProperty = (req, res) => {
+
+        let {image_id, property_id} = req.params;
+
+        let sql = `DELETE FROM image WHERE image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(sql, (error, result) => {
+          if(error) throw error;
+          connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+            if(errorImgs) throw errorImgs;
+            res.status(200).json(resultImgs);
+          })
+        })
+      }
+
+      //Setear FOTO PRINCIPAL de una propiedad
+      //localhost:4000/property/setMainImage/:image_id/:property_id
+      setMainImage = (req, res) => {
+        let {image_id, property_id} = req.params;
+
+        let unSetMainSql = 'UPDATE image SET image_is_main = false'
+
+        let sql = `UPDATE image SET image_is_main = true WHERE image.image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(unSetMainSql, (errorUnSet, resultUnSet) => {
+          if(errorUnSet) throw errorUnSet;
+          connection.query(sql, (error, result) => {
+            if(error) throw error;
+            connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+              if(errorImgs) throw error;
+              res.status(200).json(resultImgs);
+            })
+          })
+        })
+      }
+
+      //Deshacer FOTO PRINCIPAL de una propiedad
+      //localhost:4000/property/unSetMainImage/:image_id/:property_id
+
+      unSetMainImage = (req, res) => {
+        let {image_id, property_id} = req.params;
+
+        let sql = `UPDATE image SET image_is_main = false WHERE image.image_id = ${image_id}`;
+
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+
+        connection.query(sql, (error, result) => {
+          if(error) throw error;
+          connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
+            if(errorImgs) throw errorImgs;
+            res.status(200).json(resultImgs);
+          })
+        })
+      }
 
 
 

@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const multer = require('../middleware/multer')
-var propertyController = require('../Controllers/propertyController')
+var propertyController = require('../Controllers/propertyController');
+const { setMainImage } = require('../Controllers/propertyController');
 
 
 
@@ -75,6 +76,18 @@ router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFe
 //Añade Imágenes a una Propiedad
 //localhost:4000/property/addImgsProperty/:property_id
 router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty)
+
+//ELIMINA FOTO de una Propiedad
+//localhost:4000/property/deleteImageProperty/:image_id/:property_id
+router.delete('/deleteInitialImageProperty/:image_id/:property_id', propertyController.deleteInitialImageProperty)
+
+//Setear FOTO PRINCIPAL de una propiedad
+//localhost:4000/property/setMainImage/:image_id/:property_id
+router.put('/setMainImage/:image_id/:property_id', propertyController.setMainImage);
+
+//Deshacer Foto Principal de una propiedad
+//localhost:4000/property/unSetMainImage/:image_id/:property_id
+router.put('/unSetMainImage/:image_id/:property_id', propertyController.unSetMainImage);
 
 
 module.exports = router;

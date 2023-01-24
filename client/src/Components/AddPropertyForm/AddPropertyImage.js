@@ -14,6 +14,8 @@ export const AddPropertyImage = () => {
 
   const {property, setProperty} = useContext(AppContext);
 
+  const URL_PROP = 'http://localhost:4000/property';
+
   const changeInput = (e) => {
     //esto es el indice que se le dará a cada imagen, a partir del indice de la ultima foto
     let indexImg;
@@ -59,16 +61,48 @@ export const AddPropertyImage = () => {
   }
 
   function deleteImg(indice) {
-    //console.log("borrar img " + indice);
-
     const newImgs = images.filter(function (element) {
       return element.index !== indice;
     });
-    /* console.log(newImgs); */
     setimages(newImgs);
   }
 
-console.log(imagesToAdd);
+  const handleDeleteImageEdit = (imageId, imagePropertyId) => {
+
+    axios
+      .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
+      .then((res) => {
+        console.log(res.data);
+        setImagesToEdit(res.data);
+        setShowImagesToEdit(true);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        
+      })
+  }
+
+  const handleMainImage = (image) => {
+
+    let url = '';
+
+    if(image.image_is_main === 0){
+      url = `${URL_PROP}/setMainImage/${image.image_id}/1`
+    }
+    else if(image.image_is_main === 1) {
+      url = `${URL_PROP}/unSetMainImage/${image.image_id}/1`
+    }
+
+    axios
+      .put(url)
+      .then((response) => {
+        /* console.log(response.data); */
+        setImagesToEdit(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
 
   const onSubmit = (id) => {
     const newFormData = new FormData();
@@ -90,6 +124,10 @@ console.log(imagesToAdd);
             console.log(error.message);
         })
   }
+
+  console.log(imagesToEdit);
+   
+  
 
   return (
     <Container fluid className="m-4">
@@ -121,25 +159,60 @@ console.log(imagesToAdd);
                         </Col>
                     ))
                 )
-                : (<p>No hay más fotos</p>)
+                : (
+                  imagesToEdit?.map((imgEdit, ind) => {
+                    return (
+                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={ind}>
+                          <div className="content_img">
+                              <Image
+                                  alt="algo"
+                                  src={`/images/property/${imgEdit.image_title}`}
+                                  data-toggle="modal"
+                                  data-target="#ModalPreViewImg"
+                                  className="img-responsive rounded-4"
+                              />
+                              <div className="options">
+                                <div
+                                  onClick ={() => handleMainImage(imgEdit)}
+                                >
+                                  {imgEdit.image_is_main ? 'Principal' : 'Hacer Principal'}
+                                </div>
+                                  <div
+                                      className="delete"
+                                      onClick={() => handleDeleteImageEdit(imgEdit.image_id, imgEdit.image_property_id)}
+                                      >Eliminar
+                                  </div>
+                              </div>
+                          </div>
+                      </Col>
+                    )
+                  })
+                  )
             }
             
         </Row>
 
       <div className="mt-4">
         {/* INPUT IMAGES */}
-        
-        <Button size="lg" as="label" variant="secondary" className="me-3">
-            <span>Seleccionar archivos </span>
-            <input hidden type="file" multiple onChange={changeInput}></input>
-        </Button>
+
+        {!showImagesToEdit && (
+
+          <Button size="lg" as="label" variant="secondary" className="me-3">
+              <span>Seleccionar archivos </span>
+              <input hidden type="file" multiple onChange={changeInput}></input>
+          </Button>
+        )}
 
         <Button 
         size="lg" 
         variant="dark"
-        onClick={() => onSubmit(/* property.property_id */5)}
+        onClick={() => onSubmit(/* property.property_id */1)}
         >Guardar Fotos
         </Button>
+
+        {showImagesToEdit && (
+          <Button>Guardar Todo y Terminar</Button>
+        )}
       </div>
 
     </Container>
