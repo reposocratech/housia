@@ -4,15 +4,17 @@ import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { AppContext } from "../../Context/AppContext";
 
 import "./addimage.css";
+import { ModalSaveProperty } from "./ModalSaveProperty";
 
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
-  const [imagesToAdd, setImagesToAdd] = useState([]);
   const [imagesToEdit, setImagesToEdit] = useState([]);
   const [showImagesToEdit, setShowImagesToEdit] = useState(false);
+  const [showFinalModal, setShowFinalModal] = useState(false);
+  
 
-  const {property, setProperty} = useContext(AppContext);
+  const {property} = useContext(AppContext);
 
   const URL_PROP = 'http://localhost:4000/property';
 
@@ -31,8 +33,12 @@ export const AddPropertyImage = () => {
     let newImgsState = [...images, ...newImgsToState];
     setimages(newImgsState);
 
-    setImagesToAdd(e.target.files);
+    setImagesToEdit(e.target.files);
 };
+
+
+
+
 
   function readmultifiles(e, indexInicial) {
     const files = e.currentTarget.files;
@@ -60,12 +66,6 @@ export const AddPropertyImage = () => {
     return arrayImages;
   }
 
-  function deleteImg(indice) {
-    const newImgs = images.filter(function (element) {
-      return element.index !== indice;
-    });
-    setimages(newImgs);
-  }
 
   const handleDeleteImageEdit = (imageId, imagePropertyId) => {
 
@@ -87,10 +87,10 @@ export const AddPropertyImage = () => {
     let url = '';
 
     if(image.image_is_main === 0){
-      url = `${URL_PROP}/setMainImage/${image.image_id}/1`
+      url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
     }
     else if(image.image_is_main === 1) {
-      url = `${URL_PROP}/unSetMainImage/${image.image_id}/1`
+      url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
     }
 
     axios
@@ -107,8 +107,8 @@ export const AddPropertyImage = () => {
   const onSubmit = (id) => {
     const newFormData = new FormData();
 
-    if(imagesToAdd){
-        for(const image of imagesToAdd) {
+    if(imagesToEdit){
+        for(const image of imagesToEdit) {
             newFormData.append('file', image);
         }
     }
@@ -118,103 +118,116 @@ export const AddPropertyImage = () => {
         .then((res) => {
             console.log(res.data);
             setImagesToEdit(res.data);
+            setimages([]);
             setShowImagesToEdit(true);
-        })
+        })  
         .catch((error) => {
             console.log(error.message);
         })
   }
 
-  console.log(imagesToEdit);
-   
+  const handleFinalSubmit = (id) => {
+    onSubmit(id);
+    setShowFinalModal(true);
+    setImagesToEdit([])
+  }
+
+  /* console.log(images, 'imagenes iniciales elegidas');
+  console.log(imagesToAdd, 'imagenes que voy a guardar');
+  console.log(imagesToEdit, 'imagenes para editar ya guardadas');
+   */
   
 
   return (
+    <>
     <Container fluid className="m-4">
 
-        <h2 className="text-center">Añadir Propiedad</h2>
+      <h2 className="text-center">Añadir Propiedad</h2>
 
-          {/* VIEW IMAGES */}
-        <Row>
-            {!showImagesToEdit 
-                ? (
-                    images.map((imagen) => (
-                        <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
-                            <div className="content_img">
-                                <Image
-                                    alt="algo"
-                                    src={imagen.url}
-                                    data-toggle="modal"
-                                    data-target="#ModalPreViewImg"
-                                    className="img-responsive rounded-4"
-                                />
-                                <div className="options">
-                                    <div
-                                        className="delete"
-                                        onClick={deleteImg.bind(this, imagen.index)}
-                                        >Quitar
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                    ))
-                )
-                : (
-                  imagesToEdit?.map((imgEdit, ind) => {
-                    return (
-                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={ind}>
+        {/* VIEW IMAGES */}
+      <Row>
+          {!showImagesToEdit 
+              ? (
+                  images.map((imagen) => (
+                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
                           <div className="content_img">
                               <Image
                                   alt="algo"
-                                  src={`/images/property/${imgEdit.image_title}`}
+                                  src={imagen.url}
                                   data-toggle="modal"
                                   data-target="#ModalPreViewImg"
                                   className="img-responsive rounded-4"
                               />
-                              <div className="options">
-                                <div
-                                  onClick ={() => handleMainImage(imgEdit)}
-                                >
-                                  {imgEdit.image_is_main ? 'Principal' : 'Hacer Principal'}
-                                </div>
-                                  <div
-                                      className="delete"
-                                      onClick={() => handleDeleteImageEdit(imgEdit.image_id, imgEdit.image_property_id)}
-                                      >Eliminar
-                                  </div>
-                              </div>
                           </div>
                       </Col>
-                    )
-                  })
+                  ))
+              )
+              : (
+                imagesToEdit?.map((imgEdit, ind) => {
+                  return (
+                    <Col className="col-6 col-sm-4 col-lg-3 m-2" key={ind}>
+                        <div className="content_img">
+                            <Image
+                                alt="algo"
+                                src={`/images/property/${imgEdit.image_title}`}
+                                data-toggle="modal"
+                                data-target="#ModalPreViewImg"
+                                className="img-responsive rounded-4"
+                            />
+                            <div className="options">
+                              <div
+                                onClick ={() => handleMainImage(imgEdit)}
+                              >
+                                {imgEdit.image_is_main ? 'Principal' : 'Hacer Principal'}
+                              </div>
+                                <div
+                                    className="delete"
+                                    onClick={() => handleDeleteImageEdit(imgEdit.image_id, imgEdit.image_property_id)}
+                                    >Eliminar
+                                </div>
+                            </div>
+                        </div>
+                    </Col>
                   )
-            }
-            
-        </Row>
+                })
+                )
+          }
+          
+      </Row>
 
       <div className="mt-4">
-        {/* INPUT IMAGES */}
+      {/* INPUT IMAGES */}
 
-        {!showImagesToEdit && (
+      {!showImagesToEdit && (
 
-          <Button size="lg" as="label" variant="secondary" className="me-3">
-              <span>Seleccionar archivos </span>
-              <input hidden type="file" multiple onChange={changeInput}></input>
-          </Button>
-        )}
+        <Button size="lg" as="label" variant="secondary" className="me-3">
+            <span>Seleccionar archivos </span>
+            <input hidden type="file" multiple onChange={changeInput}></input>
+        </Button>
+      )}
 
-        <Button 
+      <Button 
         size="lg" 
         variant="dark"
-        onClick={() => onSubmit(/* property.property_id */1)}
+        onClick={() => onSubmit(property.property_id)}
         >Guardar Fotos
-        </Button>
+      </Button>
 
-        {showImagesToEdit && (
-          <Button>Guardar Todo y Terminar</Button>
-        )}
+      {showImagesToEdit && (
+        <Button 
+          variant="outline-primary"
+          size="lg"
+          className="ms-4"
+          onClick={() => handleFinalSubmit(property.property_id)}
+          >Guardar Todo y Terminar
+        </Button>
+      )}
       </div>
 
-    </Container>
+      </Container>
+      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal}/>
+    
+    </>
+    
   );
 }

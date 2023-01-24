@@ -44,8 +44,9 @@ class propertyController {
         let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
 
         connection.query(sqlProperty, (err, resultProperty) => {
-            if(err) throw err;
-            res.status(200).json(resultProperty);
+            err ? res.status(400).json({err}) : res.status(200).json(resultProperty);
+            console.log(resultProperty);
+            
         })
     });
 }
@@ -70,13 +71,13 @@ class propertyController {
        property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
-    connection.query(sql, (error, result)=>{
-      if (error) throw error;
+    let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
 
-      let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
+    connection.query(sql, (error, result)=>{
+      if (error) {res.status(400).json({error})}
 
       connection.query(sqlProperty, (err, resultProperty) => {
-          if(err) throw err;
+          if(err) {res.status(400).json({err})}
           res.status(200).json(resultProperty);
       })
   });
@@ -91,7 +92,7 @@ class propertyController {
         let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
 
         connection.query(sql, (error, result) => {
-            if (error) throw error;
+            if (error) {res.status(400).json({error})}
             console.log(error);
           });
            connection.query(sql2, (error, resultUsers) => {
@@ -107,7 +108,7 @@ class propertyController {
         let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
 
         connection.query(sql, (error, result) => {
-            if (error) throw error;
+          if (error) {res.status(400).json({error})}
             console.log(error);
           });
            connection.query(sql2, (error, resultUsers) => {
@@ -178,7 +179,7 @@ class propertyController {
           console.log(result);
   
           connection.query(sqlAddress, (errorAddress, resultAddress) => {
-            if(errorAddress) throw errorAddress;
+            if (errorAddress) {res.status(400).json({errorAddress})}
             res.status(200).json(resultAddress);
           })
         })
@@ -204,7 +205,7 @@ class propertyController {
           let sql = `INSERT INTO feature_property (feature_id, property_id) VALUES ("${feature}", ${property_id})`;
   
           connection.query(sql, (error, result) => {
-            if(error) throw error;
+            if(error) if (error) {res.status(400).json({error})};
           })
         })
   
@@ -240,7 +241,7 @@ class propertyController {
           let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
 
           connection.query(sql, (error, result) => {
-            if(error) throw error;
+            if (error) {res.status(400).json({error})};
             console.log(result);
           })
         })
@@ -266,9 +267,9 @@ class propertyController {
         let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
 
         connection.query(sql, (error, result) => {
-          if(error) throw error;
+          if (error) {res.status(400).json({error})}
           connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
-            if(errorImgs) throw errorImgs;
+            if (errorImgs) {res.status(400).json({errorImgs})}
             res.status(200).json(resultImgs);
           })
         })
@@ -286,11 +287,11 @@ class propertyController {
         let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
 
         connection.query(unSetMainSql, (errorUnSet, resultUnSet) => {
-          if(errorUnSet) throw errorUnSet;
+          if (errorUnSet) {res.status(400).json({errorUnSet})}
           connection.query(sql, (error, result) => {
-            if(error) throw error;
+            if (error) {res.status(400).json({error})}
             connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
-              if(errorImgs) throw error;
+              if (errorImgs) {res.status(400).json({errorImgs})}
               res.status(200).json(resultImgs);
             })
           })
@@ -308,9 +309,9 @@ class propertyController {
         let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
 
         connection.query(sql, (error, result) => {
-          if(error) throw error;
+          if (error) {res.status(400).json({error})}
           connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
-            if(errorImgs) throw errorImgs;
+            if (errorImgs) {res.status(400).json({errorImgs})}
             res.status(200).json(resultImgs);
           })
         })
