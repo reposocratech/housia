@@ -19,7 +19,7 @@ class propertyController {
 
       connection.query(sql, (error, result)=>{
           if (error){
-              res.status(400).json({error});
+              res.status(400).json(error);
           }
           res.status(200).json(result);
           console.log(result);
@@ -36,17 +36,19 @@ class propertyController {
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
     connection.query(sql, (error, result)=>{
-        if (error) throw error;
+      if (error){
+        res.status(400).json(error)}
         let property_id = result.insertId;
 
         let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
 
         connection.query(sqlProperty, (err, resultProperty) => {
-            if(err) throw err;
+          if (err){
+            res.status(400).json(err)}
             res.status(200).json(resultProperty);
         })
     });
-}
+  }
 
 //TRAE INFO DE TODAS LA COCINAS
   allKitchens = (req, res) => {
@@ -69,12 +71,14 @@ class propertyController {
         WHERE property_id = ${property_id}`;
 
     connection.query(sql, (error, result)=>{
-      if (error) throw error;
+      if (error){
+        res.status(400).json(error)}
 
       let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
 
       connection.query(sqlProperty, (err, resultProperty) => {
-          if(err) throw err;
+        if (err){
+          res.status(400).json(err)}
           res.status(200).json(resultProperty);
       })
   });
@@ -89,7 +93,8 @@ class propertyController {
         let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
 
         connection.query(sql, (error, result) => {
-            if (error) throw error;
+          if (error){
+            res.status(400).json(error)}
             console.log(error);
           });
            connection.query(sql2, (error, resultUsers) => {
@@ -105,7 +110,8 @@ class propertyController {
         let sql2 = `SELECT * from property WHERE property_user_id = '${property_user_id}'`;
 
         connection.query(sql, (error, result) => {
-            if (error) throw error;
+          if (error){
+            res.status(400).json(error)}
             console.log(error);
           });
            connection.query(sql2, (error, resultUsers) => {
@@ -172,11 +178,13 @@ class propertyController {
         let sqlAddress = `select * from property, address where property.property_id = address.address_property_id and property.property_id = ${property_id} `;
   
         connection.query(sql, (error, result) => {
-          if(error) throw error;
+          if (error){
+            res.status(400).json(error)}
           console.log(result);
   
           connection.query(sqlAddress, (errorAddress, resultAddress) => {
-            if(errorAddress) throw errorAddress;
+            if (errorAddress){
+              res.status(400).json(errorAddress)}
             res.status(200).json(resultAddress);
           })
         })
@@ -202,9 +210,11 @@ class propertyController {
           let sql = `INSERT INTO feature_property (feature_id, property_id) VALUES ("${feature}", ${property_id})`;
   
           connection.query(sql, (error, result) => {
-            if(error){
-              console.log(error);
-            } 
+
+
+            if (error){
+              res.status(400).json(error)}
+
           })
         })
   
@@ -240,7 +250,8 @@ class propertyController {
           let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
 
           connection.query(sql, (error, result) => {
-            if(error) throw error;
+            if (error){
+              res.status(400).json(error)}
             console.log(result);
           })
         })
@@ -261,7 +272,6 @@ createRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
   console.log(req.body, 'este es el body de create rent');
-  
   // let sql = `INSERT INTO rent (rent_property_id, rent_renting_date, rent_renting_price, rent_expenses) VALUES (${property_id}, '${rent_renting_date}', ${rent_renting_price}, ${rent_expenses})`;
 
   let sqlHead = "INSERT INTO rent (rent_property_id";
@@ -301,7 +311,43 @@ editRent = (req, res) => {
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
 
+
   let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id = ${rent_id}`;
+
+console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
+
+  if(rent_renting_date.length> 10){
+        rent_renting_date = rent_renting_date.slice(0, 10);
+        }
+      if(rent_expenses != null){
+          if(rent_expenses.length == 0){
+              rent_expenses = null;
+              }
+          }
+ 
+
+      if(rent_renting_price !=null){
+          if(rent_renting_price.length == 0){
+            rent_renting_price = null;
+              }
+          }
+
+      if(rent_renting_date != null){
+          if(rent_renting_date.length == 0){
+            rent_renting_date = null;
+              }
+      }
+  
+ let sql = "";
+
+ if(rent_renting_date == null){
+  sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
+ } else {
+  sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
+ }
+  
+
+
   
   connection.query(sql, (error, result)=>{
       if (error){
@@ -425,7 +471,8 @@ let sql = sqlHead + " " + sqlTail;
       connection.query(sql, (error, resultPurchase)=>{
       if (error){
           // res.status(400).json({error});
-          throw(error);
+          if (error){
+            res.status(400).json(error)}
           console.log(error, 'este es el error de purchase');
       }
       res.status(200).json(resultPurchase);
@@ -438,7 +485,7 @@ getAllPurchaseData = (req, res) => {
   
   let sql = `select * from purchase, rent, loan 
             where ${property_id} = rent_property_id
-            and ${property_id} = loan_property_id`;
+            and ${property_id} = loan_property_id and ${property_id} = purchase_property_id` ;
   
             connection.query(sql, (error, result)=>{
               if (error){
