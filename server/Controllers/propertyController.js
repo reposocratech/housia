@@ -445,8 +445,7 @@ if(purchase_furniture_expenses !== undefined){
 if(purchase_reform_expenses !== undefined){
   sqlHead += `, purchase_reform_expenses`
   sqlTail += `, (${purchase_reform_expenses})`
-}
-
+}    
 if(purchase_ownership_percentage !== undefined){
   sqlHead += `, purchase_ownership_percentage`
   sqlTail += `, ${purchase_ownership_percentage}`
@@ -468,6 +467,7 @@ sqlTail += ')';
 sqlHead += ')';
 let sql = sqlHead + " " + sqlTail;
 
+
       connection.query(sql, (error, resultPurchase)=>{
       if (error){
           // res.status(400).json({error});
@@ -479,6 +479,7 @@ let sql = sqlHead + " " + sqlTail;
       console.log(resultPurchase);
       })
 }
+  
 //trae todos los datos de purchase, rent y loan
 getAllPurchaseData = (req, res) => {
   let {property_id} = req.params;
@@ -496,7 +497,143 @@ getAllPurchaseData = (req, res) => {
               console.log(result);
           })
 }
+  
+  
+    propertyDetails = (req, res) => {
+        let {property_id, user_id} = req.params;
+  
+        let sql = `SELECT * FROM property WHERE property_user_id = ${user_id} AND property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      
+
+      propertyDetailsImg = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT  * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0 `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      
+
+      propertyDetailsAddress = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT  * FROM address WHERE address_property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      propertyDetailsPurchase = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT  * FROM purchase WHERE purchase_property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      propertyDetailsProvinceCity = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT property.*, address.*, city.city_name, province.province_name
+        FROM property, address, city, province 
+        WHERE  property.property_id = address.address_property_id
+        AND address.address_city_id = city.city_id
+        AND city.city_province_id = province.province_id
+        AND property.property_id = ${property_id}
+        GROUP BY province.province_id
+        HAVING province.province_id = address.address_province_id;`;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      propertyDetailsSubtype = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT subtype.subtype_name FROM property, subtype WHERE property.property_subtype_id = subtype.subtype_id AND property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      
+
+      propertyDetailsRent = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT * FROM rent WHERE rent_property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+      
+
+      propertyDetailsLoan = (req, res) => {
+        let {property_id} = req.params;
+  
+        let sql = `SELECT * FROM loan WHERE loan_property_id = ${property_id} `;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+
+      
+      
+      discover = (req, res) => {
+  
+        let sql = `SELECT property.*, address.*, purchase.*, image.image_title, city.city_name, province.province_name
+        FROM property 
+        LEFT JOIN address
+        ON property.property_id = address.address_property_id 
+        JOIN city
+        ON address.address_city_id = city.city_id
+        JOIN province
+        on city.city_province_id = province.province_id
+        LEFT JOIN purchase 
+        ON property.property_id = purchase.purchase_property_id 
+        JOIN image
+        ON property.property_id = image.image_property_id 
+        WHERE property_is_user_deleted = false
+        AND image.image_is_main = 1
+        group by province.province_id
+        having province.province_id = address.address_province_id;`;
+  
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+  
+  
+  
+  
 }
+
+
+
+
 
 
 
