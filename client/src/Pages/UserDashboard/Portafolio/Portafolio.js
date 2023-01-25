@@ -30,7 +30,7 @@ export const Portafolio = () => {
       .catch((err)=> {
         console.log(err);
       })
-}, [])
+}, [user.user_id])
 
   const delPropertyUser = (propiedad) => {
     

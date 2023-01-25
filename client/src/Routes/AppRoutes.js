@@ -16,6 +16,7 @@ import { EditUser } from '../Pages/UserDashboard/User/EditUser'
 import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
 import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
+
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
 import { Discover } from '../Pages/Discover/Discover'
@@ -24,12 +25,8 @@ import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconom
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 
 
-
-import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
-
-
-
+import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
 
 
 export const AppRoutes = () => {
@@ -61,6 +58,7 @@ export const AppRoutes = () => {
 
                 <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
                 <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+                <Route path='/editProperty/:property_id' element={<EditPropertyForm/>} />
 
 
 

@@ -65,10 +65,6 @@ const handleSubmit = (e) => {
             console.log(err);
         });
 }
-
-
-
-    
   return (
     <div>
         <h2>¿Preparado para conocer el valor 
@@ -84,10 +80,8 @@ const handleSubmit = (e) => {
        value={property?.property_name}
        name="property_name"
        onChange={handleChange}
-
         ></input>
         <hr/>
-
 
         <p>Tipo</p>
         <div>
@@ -99,21 +93,12 @@ const handleSubmit = (e) => {
                     
                 )
             })} */}
-
-
-
-
-
          <select onClick={handleTypeId}>
-            
             {type?.map((tipo, i) => {
                 return(
-                   
                     <option key={i}  value={tipo.type_id}>{tipo.type_name}</option>
-                    
                 )
             })}
-            
         </select> 
 
         </div>
