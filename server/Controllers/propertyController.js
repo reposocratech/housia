@@ -91,7 +91,7 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
 
         connection.query(sql, (error, result) => {
 
@@ -109,7 +109,7 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
 
         connection.query(sql, (error, result) => {
           if (error){

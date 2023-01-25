@@ -4,11 +4,12 @@ import axios from 'axios';
 import {Button, Container} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom'
 import './portafolio.scss';
+import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
+import jwtDecode from 'jwt-decode';
 
 
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
-
    const {user} = useContext(AppContext);
   const navigate = useNavigate();
   // console.log(user);
@@ -16,13 +17,18 @@ export const Portafolio = () => {
   // console.log(propertyDetails);
   console.log(user, "user del portfolio");
 
-
+console.log(propertyDetails);
  
 
   useEffect(() => {
+
+    const token = localStorageUser();
+    if(token){
+        let user_id = jwtDecode(token).user.id;
+       
     
     axios
-      .get(`http://localhost:4000/users/getAllProperty/${user.user_id}`)
+      .get(`http://localhost:4000/users/getAllProperty/${user_id}`)
       .then((res)=>{
         // console.log(res.data);
         setPropertyDetails(res.data.resultProperty);
@@ -30,7 +36,8 @@ export const Portafolio = () => {
       .catch((err)=> {
         console.log(err);
       })
-}, [user.user_id])
+    }
+}, [])
 
   const delPropertyUser = (propiedad) => {
     
@@ -38,7 +45,7 @@ export const Portafolio = () => {
       .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user.user_id}`)
       .then((res) => {
         setPropertyDetails(res.data.resultProperty);
-          // console.log(res.data.resultProperty, "respuesta del axios del delete");
+          console.log(res.data.resultProperty, "respuesta del axios del delete");
       })
       .catch((error)=> {console.log(error);})
   }
