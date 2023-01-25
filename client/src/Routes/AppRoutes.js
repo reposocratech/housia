@@ -1,30 +1,28 @@
 import React from 'react'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import { Home } from '../Pages/UserDashboard/Home/Home';
-import { Login } from '../Pages/Auth/Login/Login';
-import { Register } from '../Pages/Auth/Register/Register';
-import { NavBarUser } from '../Components/NavbarUser/NavBarUser';
-import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio';
-import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen';
-import { User } from '../Pages/UserDashboard/User/User';
-import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1';
-import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2';
-import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3';
-import { TestField } from '../Components/TestField/TestField';
-import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4';
-import { EditUser } from '../Pages/UserDashboard/User/EditUser';
-import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome';
-import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties';
-import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage';
-import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures';
-import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails';
-import { Discover } from '../Pages/Discover/Discover';
-import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures';
-import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures';
-import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser';
-
-
-
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { Home } from '../Pages/UserDashboard/Home/Home'
+import { Login } from '../Pages/Auth/Login/Login'
+import { Register } from '../Pages/Auth/Register/Register'
+import { NavBarUser } from '../Components/NavbarUser/NavBarUser'
+import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio'
+import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen'
+import { User } from '../Pages/UserDashboard/User/User'
+import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1'
+import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
+import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
+import { TestField } from '../Components/TestField/TestField'
+import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4'
+import { EditUser } from '../Pages/UserDashboard/User/EditUser'
+import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
+import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
+import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
+import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
+import { Discover } from '../Pages/Discover/Discover'
+import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
+import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
+import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
+import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
 
 
 export const AppRoutes = () => {
@@ -56,6 +54,7 @@ export const AppRoutes = () => {
 
                 <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
                 <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+                <Route path='/editProperty/:property_id' element={<EditPropertyForm/>} />
 
 
 
