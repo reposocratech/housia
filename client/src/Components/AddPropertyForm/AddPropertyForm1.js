@@ -54,7 +54,7 @@ const handleChange = (e) => {
 const handleSubmit = (e) => {
     e.preventDefault();
     axios
-        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
+        .post(`http://localhost:4000/property/createProperty/${user?.user_id}/${subTypeId}`,property )
         .then((res) => {
             
             setProperty(res.data[0]);

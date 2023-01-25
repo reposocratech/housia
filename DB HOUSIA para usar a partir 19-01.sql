@@ -22,7 +22,7 @@ user_code VARCHAR(50),
 user_birth_date DATE 
 );
 
--- INSERT INTO user (user_name, user_lastname, user_email, user_password) VALUES ("Marcos", "Benítez Rodríguez", "marcos@marcos.com", "campo_basura");
+INSERT INTO user (user_name, user_lastname, user_email, user_password) VALUES ("Marcos", "Benítez Rodríguez", "marcos@marcos.com", "campo_basura");
 select * from user;
 
 CREATE TABLE feature (
