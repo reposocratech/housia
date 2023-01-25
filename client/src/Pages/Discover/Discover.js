@@ -6,7 +6,7 @@ export const Discover = () => {
 
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/discover`)
+        .get(`http://localhost:4000/property/descubre`)
         .then((res) => {
             setDiscover(res.data);
             console.log(res.data, "VENDIDOOOOOOOOOOOOOOOOOOO");
