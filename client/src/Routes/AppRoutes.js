@@ -23,9 +23,6 @@ import { Discover } from '../Pages/Discover/Discover'
 import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 
-
-
-import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 
 
