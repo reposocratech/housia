@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+import jwtDecode from 'jwt-decode';
 
 
 export const AddPropertyForm1 = () => {
@@ -9,6 +11,7 @@ export const AddPropertyForm1 = () => {
     const [subtype, setSubtype] = useState();
     const [typeId, setTypeId] = useState(1);
     const [subTypeId, setSubTypeId] = useState(1);
+
     const {property, setProperty, user } = useContext(AppContext);
     const navigate = useNavigate();
 
@@ -53,17 +56,24 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-        .post(`http://localhost:4000/property/createProperty/${user?.user_id}/${subTypeId}`,property )
-        .then((res) => {
-            
-            setProperty(res.data[0]);
-            
-            navigate("/addProperty2");
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+
+    const token = localStorageUser();
+    if(token) {
+        let user_id = jwtDecode(token).user.id;
+        
+        axios
+            .post(`http://localhost:4000/property/createProperty/${user_id}/${subTypeId}`,property )
+            .then((res) => {
+                
+                setProperty(res.data[0]);
+                
+                navigate("/addProperty2");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
 }
   return (
     <div>
@@ -93,7 +103,7 @@ const handleSubmit = (e) => {
                     
                 )
             })} */}
-         <select onClick={handleTypeId}>
+         <select onChange={handleTypeId}>
             {type?.map((tipo, i) => {
                 return(
                     <option key={i}  value={tipo.type_id}>{tipo.type_name}</option>
@@ -104,7 +114,7 @@ const handleSubmit = (e) => {
         </div>
         <div>
         <p>Tipo de inmueble</p>
-        <select onClick={handleSubTypeId}>
+        <select onChange={handleSubTypeId}>
         
          {subtype?.map((subtipo, i) => {
                 return(

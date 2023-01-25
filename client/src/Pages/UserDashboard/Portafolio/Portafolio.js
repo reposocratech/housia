@@ -21,11 +21,9 @@ console.log(propertyDetails);
  
 
   useEffect(() => {
-
     const token = localStorageUser();
     if(token){
         let user_id = jwtDecode(token).user.id;
-       
     
     axios
       .get(`http://localhost:4000/users/getAllProperty/${user_id}`)
@@ -74,8 +72,8 @@ console.log(propertyDetails);
     axios
     .get(`http://localhost:4000/users/getProperties/${user.user_id}`)
     .then ((res) => {
-      setPropertyDetails(res.data.result)
-      console.log(res.data.result, "respuesta todas las propiedades");
+      setPropertyDetails(res.data)
+      console.log(res.data, "respuesta todas las propiedades");
     })
     .catch((error)=> console.log(error))
   }

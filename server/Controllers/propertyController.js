@@ -31,13 +31,25 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
+    console.log(property_user_id, 'ID DEL USERRRRRRRRRRRRR');
+    
+
     property_name.trim();
+
+    console.log('NOMBRE PROPIEDADDDDDD', property_name);
+    console.log('SUBTIPO PROPIEDADDDDDD', property_subtype_id);
+    
 
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
-    connection.query(sql, (error, result)=>{
-      if (error){
-        res.status(400).json(error)}
+    console.log('SQLLLL', sql);
+    
+
+    connection.query(sql, (error, result) => {
+      if (error){res.status(400).json(error)}
+
+      console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT");
+      
         let property_id = result.insertId;
 
         let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
@@ -246,17 +258,30 @@ class propertyController {
           img = req.files;
         }
 
+        console.log(img);
+        
+        let mainImage = img[0].filename
+
+
+
         img.forEach((img) => {
-          let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+
+          let sql = '';
+
+          if(mainImage == img.filename){
+            sql = `INSERT INTO image (image_title, image_property_id, image_is_main) VALUES('${img.filename}', ${property_id}, true)`
+          }
+          else {
+            sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+          }
 
           connection.query(sql, (error, result) => {
 
             if (error){
               res.status(400).json(error)}
-            console.log(result);
+            })
           })
-        })
-
+          
         let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
 
         connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
