@@ -24,7 +24,9 @@ import { Discover } from '../Pages/Discover/Discover'
 import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 
+
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
+import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
 
 
 export const AppRoutes = () => {
@@ -56,6 +58,7 @@ export const AppRoutes = () => {
 
                 <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
                 <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+                <Route path='/editProperty/:property_id' element={<EditPropertyForm/>} />
 
 
 
