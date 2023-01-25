@@ -119,21 +119,8 @@ class propertyController {
            connection.query(sql2, (error, resultUsers) => {
              error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
           });
-<<<<<<< HEAD
-    }
-    ///Trae todas las imágenes de una propiedad
-    getImagesProperty = (req, res) => {
-        let {property_id} = req.params;
-
-        let sql = `SELECT * FROM image WHERE property_id = ${property_id} AND image_is_deleted = 0`;
-        connection.query(sql, (error, result) => {
-            error ? res.status(400).json({ error }) : res.status(200).json(result);
-          });
-  
-=======
     };
 
->>>>>>> 39807487147a6575be6f3a8c2bd0fd2950de592e
   
   //Método get descubre
     showAllDescubre = (req, res) =>{
@@ -350,7 +337,7 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
               }
       }
   
- let sql = "";
+ sql = "";
 
  if(rent_renting_date == null){
   sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
@@ -431,9 +418,6 @@ console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
 
 
 
-<<<<<<< HEAD
-}
-=======
 //crear loan
 createLoan = (req,res) => {
   let {property_id} = req.params;
@@ -705,7 +689,6 @@ getAllPurchaseData = (req, res) => {
   
   
   
->>>>>>> 39807487147a6575be6f3a8c2bd0fd2950de592e
 }
 
 
