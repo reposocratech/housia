@@ -26,7 +26,7 @@ export const SummaryInversionUser = () => {
         })
         .catch((error)=> {console.log(error);
         })
-    }, [])
+    }, [user_id])
 
     useEffect(() => {
         axios
@@ -39,7 +39,7 @@ export const SummaryInversionUser = () => {
         .catch((error)=> {console.log(error);
         })
            
-        }, [])
+        }, [user_id])
 
     useEffect(() => {
         axios
@@ -52,7 +52,7 @@ export const SummaryInversionUser = () => {
         .catch((error)=> {console.log(error);
         })
               
-    }, [])
+    }, [user_id])
 
     useEffect(() => {
         axios
@@ -66,7 +66,7 @@ export const SummaryInversionUser = () => {
         .catch((error) => {console.log(error);
         })
                      
-    }, [])
+    }, [user_id])
 
     useEffect(() => {
         axios
@@ -80,7 +80,7 @@ export const SummaryInversionUser = () => {
         .catch((error) => {console.log(error);                
         })
                      
-    }, [])
+    }, [user_id])
         
  
     
@@ -94,7 +94,7 @@ export const SummaryInversionUser = () => {
                 <p className='fs-1'>322220€</p>
             </Col>
             <Col>
-                <img src='/images/valoracion_patrimonio.png'/>
+                <img src='/images/valoracion_patrimonio.png' alt='valoracion_patrimonio'/>
             </Col>
         </Row>
         <Row className='mt-5'>
