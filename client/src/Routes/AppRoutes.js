@@ -25,7 +25,7 @@ import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEco
 
 
 
-import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
+
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 
 
