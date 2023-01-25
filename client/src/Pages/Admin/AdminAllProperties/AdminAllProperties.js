@@ -9,7 +9,7 @@ export const AdminAllProperties = () => {
     
     const navigate = useNavigate()
 
-    const  {resetUser, setResetUser, property, setProperty } = useContext(AppContext)
+    const  {resetUser, setResetUser, setProperty } = useContext(AppContext)
 
     const [allProperties, setAllProperties] = useState()
     const [showModalDelete, setShowModalDelete] = useState(false);
