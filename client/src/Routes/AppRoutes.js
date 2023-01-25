@@ -24,10 +24,6 @@ import { Discover } from '../Pages/Discover/Discover'
 import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ebb29245a8d236a37fd5dd34baa7807d7c8921cf
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
 

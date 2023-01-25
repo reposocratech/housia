@@ -12,7 +12,8 @@ export const EditEconomicFeatures = () => {
    
 
     let {property} = useContext(AppContext);
- property = 9;
+    console.log(property)
+//  property = 10;
 
  let fechaCompra = ""
  if(editPurchase?.purchase_buy_date !== undefined){
