@@ -333,7 +333,7 @@ editRent = (req, res) => {
               }
       }
   
- let sql = "";
+ sql = "";
 
  if(rent_renting_date == null){
   sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id =${rent_id}`;
@@ -606,11 +606,13 @@ getAllPurchaseData = (req, res) => {
       propertyDetailsProvinceCity = (req, res) => {
         let {property_id} = req.params;
   
-        let sql = `SELECT property.*, address.*, city.city_name, province.province_name
-        FROM property, address, city, province 
+        let sql = `SELECT property.*, address.*, city.city_name, province.province_name, type.type_id
+        FROM property, address, city, province , type, subtype
         WHERE  property.property_id = address.address_property_id
         AND address.address_city_id = city.city_id
         AND city.city_province_id = province.province_id
+        AND property.property_subtype_id = subtype.subtype_id
+        AND subtype.subtype_type_id = type.type_id
         AND property.property_id = ${property_id}
         GROUP BY province.province_id
         HAVING province.province_id = address.address_province_id;`;
@@ -630,9 +632,6 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-
-
-      
 
       propertyDetailsRent = (req, res) => {
         let {property_id} = req.params;

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import {Nav, Navbar, Container, Button} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext';
@@ -26,7 +26,7 @@ export const NavBarUser = () => {
    <Navbar className='p-0'>
         <Container fluid className='NavBarContainer'>
           <Nav>
-            <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png'/></Nav.Link>
+            <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Nav.Link>
             <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
            </Nav>
          
@@ -74,6 +74,7 @@ export const NavBarUser = () => {
                   className='avatar-img' 
                   onClick={()=> navigate('/user/perfil')}
                   src={`/images/user/${user?.user_img}`}
+                  alt={user?.user_name}
                   />
                 <Button 
                   className='me-3' 

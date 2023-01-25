@@ -25,6 +25,8 @@ export const PropertyDetails = () => {
     const [show, setShow] = useState(false);
     const handleColor = () => setColorSold(!colorSold);
     console.log(user.user_id, "Soy USER ID");
+
+
     const handleSubmit = () => {
     
     axios
@@ -55,7 +57,7 @@ export const PropertyDetails = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [property_id]);
 
     //Imagenes propiedad
     useEffect(() => {
@@ -67,7 +69,7 @@ export const PropertyDetails = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [property_id]);
 
     //Direccion de la propiedad
     useEffect(() => {
@@ -79,7 +81,7 @@ export const PropertyDetails = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [property_id]);
 
     //Datos de compra de la propeidad
     useEffect(() => {
@@ -91,7 +93,7 @@ export const PropertyDetails = () => {
         .catch((err) => {
             console.log(err);
         });
-    }, []);
+    }, [property_id]);
 
         //Trae la provincia y Ciudad de una propiedad 
         useEffect(() => {
@@ -103,7 +105,7 @@ export const PropertyDetails = () => {
             .catch((err) => {
                 console.log(err);
             });
-        }, []);
+        }, [property_id]);
 
         //Trae el tipo 
         useEffect(() => {
@@ -115,7 +117,7 @@ export const PropertyDetails = () => {
             .catch((err) => {
                 console.log(err);
             });
-        }, []);
+        }, [property_id]);
 
 
         
@@ -129,7 +131,7 @@ export const PropertyDetails = () => {
             .catch((err) => {
                 console.log(err);
             });
-        }, []);
+        }, [property_id]);
 
         //Trae la hipoteca
         useEffect(() => {
@@ -141,7 +143,7 @@ export const PropertyDetails = () => {
             .catch((err) => {
                 console.log(err);
             });
-        }, []);
+        }, [property_id]);
         
       
   return (
