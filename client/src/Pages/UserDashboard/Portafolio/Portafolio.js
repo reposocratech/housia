@@ -74,8 +74,8 @@ console.log(propertyDetails);
     axios
     .get(`http://localhost:4000/users/getProperties/${user.user_id}`)
     .then ((res) => {
-      setPropertyDetails(res.data.result)
-      console.log(res.data.result, "respuesta todas las propiedades");
+      setPropertyDetails(res.data)
+      
     })
     .catch((error)=> console.log(error))
   }

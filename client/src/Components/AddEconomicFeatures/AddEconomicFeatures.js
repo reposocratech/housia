@@ -18,8 +18,8 @@ export const AddEconomicFeatures = () => {
     // console.log(rent);
 
 
-    let property_id = property?.property_id;
-   
+    // let property_id = property?.property_id;
+   let property_id = property;
 
     const handleChangePurchase = (e) => {
         const {name, value} = e.target;

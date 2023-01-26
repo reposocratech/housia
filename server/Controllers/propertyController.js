@@ -122,15 +122,53 @@ class propertyController {
     };
 
   
-  //Método get descubre
+  //Método get descubre (ES TEMPORAL POR FALTA DE ARQUITECTURA)
     showAllDescubre = (req, res) =>{
 
-        let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
+        // let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
+
+       let sql = `SELECT property.*, purchase.purchase_buy_price, address.address_city_id, city.city_name, province.province_id, province.province_name, type.type_id, type.type_name, subtype.subtype_name, subtype.subtype_id, kitchen.*
+       from property, purchase, address, city, province, type, subtype, kitchen
+       where property.property_id = address.address_property_id
+       AND address.address_city_id = city.city_id
+       AND subtype.subtype_id = type.type_id
+       AND city.city_id = province.province_id
+       AND property.property_id = purchase.purchase_property_id
+       AND property.property_kitchen_id = kitchen.kitchen_id
+       AND  property.property_is_for_sale = true
+       AND property.property_is_admin_deleted = false
+       AND property.property_is_user_deleted = false
+       group by property.property_id;`
 
         connection.query(sql, (error, result)=>{
             error ? res.status(400).json({error}) : res.status(200).json(result);
+            
         })
     }
+
+//METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
+    discover = (req, res) => {
+  
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
+      property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
+      FROM property, address, city, province, purchase, image
+      where property.property_id = purchase.purchase_property_id 
+      and property.property_id = address.address_property_id 
+      and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id     
+      and city.city_province_id = province.province_id
+      and property.property_id = image.image_property_id 
+      AND  property.property_is_for_sale = true
+      AND property.property_is_admin_deleted = false
+      AND property.property_is_user_deleted = false
+            AND image.image_is_main = 1;`;
+
+      connection.query(sql, (error, result) => {
+        error ? res.status(400).json({error}) : res.status(200).json(result);
+        console.log(result, "esto es el result de descubre")
+      })
+    }
+
+
 
 
 //MUESTRA TODAS LAS PROVINCIAS
@@ -174,6 +212,8 @@ class propertyController {
         let {property_id, province_id, city_id} = req.params;
   
         let {address_street_name, address_street_number, address_floor, address_gate, address_block, address_stair, address_door, address_postal_code} = req.body;
+
+        
   
         let sql = `INSERT INTO address VALUES (${property_id}, "${address_street_name}", "${address_street_number}", "${address_floor}", "${address_gate}", "${address_block}", "${address_stair}", "${address_door}", "${address_postal_code}", ${province_id}, ${city_id})`;
   
@@ -311,9 +351,6 @@ editRent = (req, res) => {
   let {rent_id} = req.params;
 
   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
-
-
-  let sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_id = ${rent_id}`;
 
 console.log("holaa" , rent_renting_date , "no sabemos el tipo que tiene");
 
@@ -661,31 +698,7 @@ getAllPurchaseData = (req, res) => {
 
       
       
-      discover = (req, res) => {
-  
-        let sql = `SELECT property.*, address.*, purchase.*, image.image_title, city.city_name, province.province_name
-        FROM property 
-        LEFT JOIN address
-        ON property.property_id = address.address_property_id 
-        JOIN city
-        ON address.address_city_id = city.city_id
-        JOIN province
-        on city.city_province_id = province.province_id
-        LEFT JOIN purchase 
-        ON property.property_id = purchase.purchase_property_id 
-        JOIN image
-        ON property.property_id = image.image_property_id 
-        WHERE property_is_user_deleted = false
-        AND image.image_is_main = 1
-        group by province.province_id
-        having province.province_id = address.address_province_id;`;
-  
-        connection.query(sql, (error, result) => {
-          error ? res.status(400).json({error}) : res.status(200).json(result);
-        })
-      }
-  
-  
+
   
   
 }
