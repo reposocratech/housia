@@ -43,7 +43,9 @@ export const Discover = () => {
         //Activos en venta
         axios
         .get(`http://localhost:4000/property/descubre`)
+
         // .get(`http://localhost:4000/property/discover`) esta a acabar siendo la buena
+
         .then((res) => {
 
             setDiscover(res.data);
