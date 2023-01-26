@@ -17,7 +17,11 @@ export const EditPropertyForm = () => {
     const [city, setCity] = useState();
     const [provinceId, setProvinceId] = useState(1);
     const [cityId, setCityId] = useState();
+    const [features, setFeatures] = useState([])
+    const [featuresSelected, setFeaturesSelected] = useState([]);
+    const [featuresProperty, setFeaturesProperty] = useState([]);
 
+    const [prueba, setPrueba] = useState([]);
     const {property, setProperty} = useContext(AppContext);
 
     const {property_id} = useParams();
@@ -50,6 +54,7 @@ export const EditPropertyForm = () => {
         setTypeId(e.target.value);
         // setTypeId(id);
     }
+    
     
     const handleSubTypeId = (e) => {
      setSubTypeId(e.target.value);
@@ -112,30 +117,98 @@ export const EditPropertyForm = () => {
                 
             })
     }, [property_id])
-    
-  /* const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm(); */
+
+    useEffect(() => {
+        axios
+        .get(`http://localhost:4000/property/allFeatures`)
+        .then((res) => {
+            setFeatures(res.data);
+                        
+            let array = res.data.map((ele, ind) => {
+                return { ...ele, checked: false}
+            })
+
+            setPrueba(array);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+    }, [])
+
+    useEffect(()=> {
+        axios
+            .get(`http://localhost:4000/property/getPropertyFeatures/${property?.property_id}`)
+            .then((res) => {
+                setFeaturesProperty(res.data)
+                let arrayProv = [];
+
+                for(let i = 0; i < res.data.length; i++){
+                    arrayProv.push(res.data[i].feature_id)
+                }
+                
+                setFeaturesSelected(arrayProv)
+
+                otherFeature(res.data);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
+    }, [property?.property_id])
 
   const handleChange = (e) =>{
     const {name, value} = e.target;
     setProperty({...property, [name]:value});
   }
 
-  /* const onSubmit = (values) => {
-    console.log(values);
-    setProperty(values)
-  }; */
+  const insertFeaturesToArray = (e) => {
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(property);
+    let featId = Number(e.target.name);
+
+    if(featuresSelected.includes(featId) === false){
+        setFeaturesSelected([...featuresSelected, featId]);
+    }
+    else if(featuresSelected.includes(featId)){
+        setFeaturesSelected(featuresSelected.filter(elem => elem !== featId));
+    }
   }
 
-  console.log(property, 'PROPERTY DESPUES VALIDACIÓN');
+  const handleCheck = (e) => {
+    
+    let arrayPrueba = [...prueba]
+    
+    setPrueba(arrayPrueba.map((elem) => {
+        if(elem.feature_id === Number(e.target.name)){
+            return{ ...elem, checked: !elem.checked } 
+        }
+        else{
+            return elem
+        }
+    }))
+    
+    insertFeaturesToArray(e) ;
+  }
   
+  
+  console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
+  
+  const otherFeature = (featuresProperty) => {
+
+      let prueba2 = [...prueba];
+      
+      featuresProperty.forEach((featureProp) => {
+        prueba2.map((ele, ind) => {
+            if(ele.feature_id === featureProp.feature_id) {
+                ele.checked = true;
+            }
+        })
+    })
+    setPrueba(prueba2)
+}
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(property);
+    }
 
   return (
     <Container fluid>
@@ -152,22 +225,12 @@ export const EditPropertyForm = () => {
                         name="property_name"
                         value={property?.property_name}
                         onChange={handleChange}
-                        /* {...register("property_name", {
-                            required: {value: true, message: 'Introduce un nombre'},
-                            minLength: {value: 5, message: 'Escribe al menos 5 caracteres'},
-                            maxLength: {value: 150, message: 'Máximo 150 caracteres'}
-                        })} */
                     />
-                    {/* {errors.property_name && 
-                        <div className='text-danger'>
-                            {errors.property_name.message}
-                        </div>}
- */}
 
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select onClick={handleTypeId}>
+                            <Form.Select onChange={handleChange} name="type_id" value={property?.type_id}>
                                 {type?.map((typ, ind) => {
                                     return(
                                         <option key={ind} value={typ.type_id}>{typ.type_name}</option>
@@ -349,23 +412,29 @@ export const EditPropertyForm = () => {
                         <Form.Group as={Col} md='3'>
                             <Form.Label>Baños</Form.Label>
                             <Form.Control 
-                            autoComplete="off"  
-                            type="text"
-                            name="property_bathrooms"
-                            onChange={handleChange}
-                            value={property?.property_bathrooms === "undefined" ? 0 : property?.property_bathrooms}
+                                autoComplete="off"  
+                                type="text"
+                                name="property_bathrooms"
+                                onChange={handleChange}
+                                value={property?.property_bathrooms === "undefined" ? 0 : property?.property_bathrooms}
                             />
                         </Form.Group>
                         <Form.Group as={Col} md='3'>
                             <Form.Label>Garaje</Form.Label>
-                            <Form.Control autoComplete="off"  type="text" />
+                            <Form.Control 
+                                autoComplete="off"  
+                                type="text" 
+                                name="property_garage"
+                                onChange={handleChange}
+                                value={property?.property_garage === "undefined" ? 0 : property?.property_garage}
+                            />
                         </Form.Group>
                     </Row> 
                     <Row>
                         <Form.Group as={Col} md='6'>
                             <Form.Group>
                                 <Form.Label>Tipo de Cocina</Form.Label>
-                                <Form.Select onClick={handleKitchenId}>
+                                <Form.Select onClick={handleKitchenId} value={property?.property_kitchen_id}>
                                     {kitchen?.map((kit, ind) => {
                                         return(
                                             <option key={ind} value={kit.kitchen_id}>{kit.kitchen_name}</option>
@@ -375,6 +444,22 @@ export const EditPropertyForm = () => {
                             </Form.Group>
                         </Form.Group>
 
+                    </Row>
+                    <Row className="d-flex mt-4">
+                        {prueba?.map((feature, index) => {
+                            return(
+                                <Col md={3} key={index}>
+                                    <Button
+                                        /* size='lg' */
+                                        className="rounded rounded-4 mb-3"
+                                        variant={feature?.checked ? 'info' : 'outline-info'}
+                                        onClick={handleCheck}
+                                        name={feature?.feature_id}
+                                        >{feature?.feature_name}
+                                    </Button>
+                                </Col>
+                            )
+                        })}
                     </Row>
                 </Col>
             </Row>
@@ -388,31 +473,6 @@ export const EditPropertyForm = () => {
     
     </Container>
 
-
-      /* <h2>Introducir Artículo</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-                       
-        <input {...register("firstName", { required: true })} aria-invalid={errors.firstName ? "true" : "false"}  />
-        {errors.firstName?.type === 'required' && <p role="alert">First name is required</p>}
-
-        <input {...register("lastName", { pattern: /^[A-Za-z]+$/i })} />
-
-        <input 
-        {...register("mail", { required: "Email Address is required" })} 
-        aria-invalid={errors.mail ? "true" : "false"} 
-        />
-        {errors.mail && <p role="alert">{errors.mail?.message}</p>}
-
-        <input  defaultValue="0" type="number" {...register("age", { min: 18, max: 99 })} />
-        
-        <select {...register("gender")}>
-            <option value="female">female</option>
-            <option value="male">male</option>
-            <option value="other">other</option>
-        </select>
-        
-        <input type="submit" />
-        </form> */
     
   );
 };
