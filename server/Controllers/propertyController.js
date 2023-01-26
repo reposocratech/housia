@@ -127,11 +127,14 @@ class propertyController {
 
         // let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
 
-       let sql = `SELECT property.*, purchase.purchase_buy_price, address.address_city_id, city.city_name
-       from property, purchase, address, city 
+       let sql = `SELECT property.*, purchase.purchase_buy_price, address.address_city_id, city.city_name, province.province_id, province.province_name, type.type_id, type.type_name, subtype.subtype_name, subtype.subtype_id, kitchen.*
+       from property, purchase, address, city, province, type, subtype, kitchen
        where property.property_id = address.address_property_id
        AND address.address_city_id = city.city_id
+       AND subtype.subtype_id = type.type_id
+       AND city.city_id = province.province_id
        AND property.property_id = purchase.purchase_property_id
+       AND property.property_kitchen_id = kitchen.kitchen_id
        AND  property.property_is_for_sale = true
        AND property.property_is_admin_deleted = false
        AND property.property_is_user_deleted = false

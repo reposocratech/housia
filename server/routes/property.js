@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const multer = require('../middleware/multer')
 var propertyController = require('../Controllers/propertyController');
-const { setMainImage } = require('../Controllers/propertyController');
+
 
 
 
