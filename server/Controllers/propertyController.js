@@ -31,6 +31,8 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
+    /* console.log(property_subtype_id, 'SUBTYPEEEEEE'); */
+    
 
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
@@ -305,8 +307,6 @@ class propertyController {
         console.log(img);
         
         let mainImage = img[0].filename
-
-
 
         img.forEach((img) => {
 

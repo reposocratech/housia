@@ -188,8 +188,7 @@ export const EditPropertyForm = () => {
     insertFeaturesToArray(e) ;
   }
   
-  
-  console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
+  /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
   
   const otherFeature = (featuresProperty) => {
 
@@ -207,7 +206,9 @@ export const EditPropertyForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(property);
+        console.log('PROPIEDAD EN EDICIÓN', property);
+        console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
+        
     }
 
   return (
@@ -466,8 +467,8 @@ export const EditPropertyForm = () => {
 
             
             
-            <Button variant="primary" type="submit">
-            Submit
+            <Button size="lg" variant="secondary" type="submit">
+                GUARDAR
             </Button>
         </Form>
     
