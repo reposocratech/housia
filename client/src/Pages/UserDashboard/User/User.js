@@ -15,8 +15,7 @@ export const User = () => {
     axios
         .get(`http://localhost:4000/property/favUser/2`)
         .then((res) => {
-            setFav(res.data)
-            console.log(res.data, "EEEEEEEEEEEEEE")              
+            setFav(res.data)             
         })
         .catch((err) => {
             console.log(err);

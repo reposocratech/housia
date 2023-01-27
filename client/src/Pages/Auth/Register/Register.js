@@ -98,7 +98,7 @@ export const Register = () => {
           {...register('password', {
             required: {value: true, message:'introduce una contraseña'},
             pattern: {
-              value: /^(?=\w*\d)(?=\w*[a-z])\S{8,16}$/, 
+              value: /^(?=\w*\d)(?=\w*[a-z])\S{7,16}$/, 
               message: 'La contraseña debe tener al menos 6 caracteres y un dígito' }
           })}
       />

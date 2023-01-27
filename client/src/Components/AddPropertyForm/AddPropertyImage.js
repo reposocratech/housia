@@ -1,3 +1,5 @@
+
+
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
@@ -9,36 +11,29 @@ import { ModalSaveProperty } from "./ModalSaveProperty";
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
-  const [imagesToEdit, setImagesToEdit] = useState([]);
-  const [showImagesToEdit, setShowImagesToEdit] = useState(false);
-  const [showFinalModal, setShowFinalModal] = useState(false);
   
+  const [showFinalModal, setShowFinalModal] = useState(false);
+  const [showSelectButton, setShowSelectButton] = useState(true);
 
   const {property, setProperty} = useContext(AppContext);
- 
 
   const URL_PROP = 'http://localhost:4000/property';
 
   const changeInput = (e) => {
-    //esto es el indice que se le dará a cada imagen, a partir del indice de la ultima foto
-    let indexImg;
+    
+    let newImgsToState = readmultifiles(e);
 
-    //aquí evaluamos si ya hay imagenes antes de este input, para saber en dónde debe empezar el index del proximo array
-    if (images.length > 0) {
-      indexImg = images[images.length - 1].index + 1;
-    } else {
-      indexImg = 0;
-    }
+    let newImgs = [...images]
 
-    let newImgsToState = readmultifiles(e, indexImg);
-    let newImgsState = [...images, ...newImgsToState];
-    setimages(newImgsState);
+    newImgsToState.map((img) => {
+      newImgs.push(img)
+    })
 
-    setImagesToEdit(e.target.files);
+    setimages(newImgs)
 };
 
-  function readmultifiles(e, indexInicial) {
-    const files = e.currentTarget.files;
+  function readmultifiles(e) {
+    const files = e.target.files;
 
     //el array con las imagenes nuevas
     const arrayImages = [];
@@ -48,24 +43,27 @@ export const AddPropertyImage = () => {
 
       let url = URL.createObjectURL(file);
 
-      //console.log(file);
       arrayImages.push({
-        index: indexInicial,
-        name: file.name,
         url,
         file
       });
 
-      indexInicial++;
     });
 
     //despues de haber concluido el ciclo retornamos las nuevas imagenes
     return arrayImages;
   }
 
+  console.log(images, 'IMGANESSSSSS');
+  
 
-  const handleDeleteImageEdit = (imageId, imagePropertyId) => {
+  const handleDeleteImage = (name) => {
+      const newArrImgs = images.filter((img) => img.file.name !== name);
+      setimages(newArrImgs)
+  }
 
+
+  /* const handleDeleteImageEdit = (imageId, imagePropertyId) => {
     axios
       .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
       .then((res) => {
@@ -77,63 +75,47 @@ export const AddPropertyImage = () => {
         console.log(error.message);
         
       })
-  }
+  } */
 
+  /* 
   const handleMainImage = (image) => {
-
     let url = '';
-
     if(image.image_is_main === 0){
       url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
     }
     else if(image.image_is_main === 1) {
       url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
     }
-
     axios
       .put(url)
       .then((response) => {
-        /* console.log(response.data); */
         setImagesToEdit(response.data);
       })
       .catch((error) => {
         console.log(error);
       })
-  }
+  } */
 
   const onSubmit = (id) => {
     const newFormData = new FormData();
 
-    if(imagesToEdit){
-        for(const image of imagesToEdit) {
-            newFormData.append('file', image);
+    if(images){
+        for(const image of images) {
+            newFormData.append('file', image.file);
         }
     }
 
     axios
-        .put(`http://localhost:4000/property/addImgsProperty/${id}`, newFormData)
+        .put(`${URL_PROP}/addImgsProperty/${id}`, newFormData)
         .then((res) => {
             console.log(res.data);
-            setImagesToEdit(res.data);
-            setimages([]);
-            setShowImagesToEdit(true);
+            setShowFinalModal(true);
+            setShowSelectButton(false);
         })  
         .catch((error) => {
             console.log(error.message);
         })
   }
-
-  const handleFinalSubmit = (id) => {
-    onSubmit(id);
-    setShowFinalModal(true);
-    setImagesToEdit([]);
-  }
-
-  /* console.log(images, 'imagenes iniciales elegidas');
-  console.log(imagesToAdd, 'imagenes que voy a guardar');
-  console.log(imagesToEdit, 'imagenes para editar ya guardadas');
-   */
-  
 
   return (
     <>
@@ -143,76 +125,53 @@ export const AddPropertyImage = () => {
 
         {/* VIEW IMAGES */}
       <Row>
-          {!showImagesToEdit 
-              ? (
-                  images.map((imagen) => (
-                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
-                          <div className="content_img">
-                              <Image
-                                  alt="algo"
-                                  src={imagen.url}
-                                  data-toggle="modal"
-                                  data-target="#ModalPreViewImg"
-                                  className="img-responsive rounded-4"
-                              />
-                          </div>
-                      </Col>
-                  ))
-              )
-              : (
-                imagesToEdit?.map((imgEdit, ind) => {
-                  return (
-                    <Col className="col-6 col-sm-4 col-lg-3 m-2" key={ind}>
-                        <div className="content_img">
-                            <Image
-                                alt="algo"
-                                src={`/images/property/${imgEdit.image_title}`}
-                                data-toggle="modal"
-                                data-target="#ModalPreViewImg"
-                                className="img-responsive rounded-4"
-                            />
-                        </div>
-                    </Col>
-                  )
-                })
-                )
-          }
-          
+        {images?.map((imagen) => (
+            <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
+                <div className="content_img">
+                    <Image
+                        alt='property image'
+                        src={imagen.url}
+                        data-toggle="modal"
+                        data-target="#ModalPreViewImg"
+                        className="img-responsive rounded-4"
+                    />
+                  <div  className="options delete">
+                    <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
+                  </div>
+                </div>
+            </Col>
+          ))
+        }
       </Row>
 
       <div className="mt-4">
       {/* INPUT IMAGES */}
 
-      {!showImagesToEdit && (
-
+      {showSelectButton && (
         <Button size="lg" as="label" variant="secondary" className="me-3">
             <span>Seleccionar archivos </span>
             <input hidden type="file" multiple onChange={changeInput}></input>
         </Button>
       )}
+      
 
-      <Button 
-        size="lg" 
-        variant="dark"
-        onClick={() => onSubmit(property.property_id)}
-        >Guardar Fotos
-      </Button>
-
-      {showImagesToEdit && (
+      {images.length > 0 && (
         <Button 
-          variant="outline-primary"
-          size="lg"
-          className="ms-4"
-          onClick={() => handleFinalSubmit(property.property_id)}
-          >Guardar Todo y Terminar
+          size="lg" 
+          variant="dark"
+          onClick={() => onSubmit(property.property_id)}
+          >Guardar Y Terminar
         </Button>
       )}
       </div>
 
       </Container>
-      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal} property_id={property.property_id}/>
-    
-    </>
-    
+      <ModalSaveProperty 
+          setShowSelectButton={setShowSelectButton} 
+          setimages={setimages} 
+          showFinalModal={showFinalModal} 
+          setShowFinalModal={setShowFinalModal} 
+          property_id={property.property_id}/>
+      </>
   );
 }
