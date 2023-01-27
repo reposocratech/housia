@@ -4,6 +4,9 @@ import {useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../../../Context/AppContext';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
+import { Carousel, Container, Row } from 'react-bootstrap';
+import './PropertyDetails.scss';
+
 
 //cambiar el user id, esta hardcodeado
 //cambiar los navigate a la pagina editar detalles y editar detalles economicos
@@ -147,32 +150,75 @@ export const PropertyDetails = () => {
         
       
   return (
-    //TRAER TODA LA INFO DE UNA PROPIEDAD
-    <div>
-        <h1>{propertyDetails[0]?.property_name}</h1>
+    <Container fluid                    className='portafolio-container'>
+         <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
+    <Row>
+    {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
+    <div className='col-6 infoAllProperty'>
+       
 
-        {/* CARRUSEL IMAGENES  */}
-        {imagenes?.map((imagen, i)=> {
-            return(
-                <img key={i} src='' alt={imagen?.image_title} />
-            )
-        })}
-        <h2>{detailsPurchase[0]?.purchase_buy_price}€</h2>
-        <h6>Calle {address[0]?.address_street_name}, {address[0]?.address_postal_code}, {provinceCity[0]?.province_name}</h6>
-        <p>12%</p>
-        <p>Tipo</p>
-        <p>{type[0]?.subtype_name}</p>
-        <p>Año</p>
-        <p>{propertyDetails[0]?.property_built_year}</p>
-        <p>Tamaño</p>
-        <p>{propertyDetails[0]?.property_total_meters} m2</p>
-        <Button variant="primary" onClick={()=>navigate("/home")}>Editar detalles</Button>
-        <Button variant="warning"  onClick={handleShow}>
+        {/* CARRUSEL IMAGENES  */}    
+        <div className="mt-5 carrusel">
+
+        <div className='transparent'>
+            <div  className='perTrans'>12%</div>
+            <h2 className='turquoise'>{detailsPurchase[0]?.purchase_buy_price}€</h2>
+            
+            </div>
+
+            <Carousel>
+            {imagenes?.map((imagen, i)=>{return(
+    
+              <Carousel.Item className="contCarrusel imgCarrusel" key={i}>
+               
+                <div className="contenedorImagen d-flex justify-content-center" >
+                    
+                <img
+                  className="d-block justify-content-center"
+                  src={`/images/property/${imagen?.image_title}`}
+                  alt={imagen?.image_title} 
+                />
+                </div>
+              
+              </Carousel.Item>
+    
+            )})
+              
+              } 
+            </Carousel>
+          </div>
+          <div className='col-3 info'>
+            <div className='icono'>
+                <div><img src='/images/property/home.png'/></div>
+                <div> <p>Tipo</p><p>{type[0]?.subtype_name}</p></div>
+            </div>
+            <div className='icono'>
+                <div><img src='/images/property/date.png'/></div>
+                <div><p>Año</p><p>{propertyDetails[0]?.property_built_year}</p></div>
+            </div>
+            <div className='icono'>
+                <div><img src='/images/property/size.png'/></div>
+                <div> <p>Tamaño</p><p>{propertyDetails[0]?.property_total_meters}m2</p></div>
+            </div>
+          </div>
+          </div>
+
+          <div className='direction'>
+            <img src='/images/property/location.png'/>
+            <h6>{address[0]?.address_street_name}, {address[0]?.address_postal_code}, {provinceCity[0]?.province_name}</h6>
+        </div>  
+
+
+        <div className='buttons'>
+        <Button className='button' onClick={()=>navigate("/home")}>Editar detalles</Button>
+        <Button className='button'  onClick={handleShow}>
             Vender propiedad
             </Button>
-
-            <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
+           
+                               
+       
+            <Modal className='modal' show={show} onHide={handleClose}>
+            <Modal.Header  closeButton>
              <Modal.Title>¿Estas seguro que deseas vender la propiedad?</Modal.Title>
             </Modal.Header>
            
@@ -185,26 +231,60 @@ export const PropertyDetails = () => {
             </Button>
             </Modal.Footer>
             </Modal>
-        <hr/>
-        <h4>Informacion</h4>
-        <p>Valor de mercado</p>
-        <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
-        <p>Ingresos</p>
-        <p>0%</p>
-        <p>+0,0%</p>
-        <p>Costes</p>
-        <p>1.200€</p>
-        <p>+12,6%</p>
-        <p>Beneficios</p>
-        <p>26.400€</p>
-        <p>-4%</p>
+            </div>
+
+            <h4>Informacion</h4>
+
+        <div className='infoGrafica'>
+            <div className='col-3 percenteges'>
+                <div className='percent'>
+                    <p>Ingresos</p>
+                    <p>0%</p>
+                    <p>+0,0%</p>
+                </div>
+                <div className='percent'>
+                    <p>Costes</p>
+                    <p>1.200€</p>
+                    <p>+12,6%</p>
+                </div>
+                <div className='percent'>
+                    <p>Beneficios</p>
+                    <p>26.400€</p>
+                    <p>-4%</p>
+                </div>
+            </div>
+            <div className='col_6 graph'>
+                <p>Valor de mercado</p>
+                <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
+                <img src='/images/property/grafica.jpg'></img>
+            </div>
+        </div>     
+
+        <div className='limits'>
+            <p>Limites</p>
+            <div className='limit'> 
+                <p>Takes Profit</p>
+                <div></div>
+                <div>50.000€</div>
+            </div>
+
+            <div className='limit'>
+                <p>Stop Loss</p>
+                <div></div>
+                <div>20.000€</div>
+            </div>              
+         </div>       
+              
+          </Row>
+
+        
+       
+       
+       
+        
+        
         <br/>
-        <p>Limites</p>
-        <p>Takes Profit</p>
-        <p>50.000€</p>
-        <p>Stop Loss</p>
-        <p>Takes Profit</p>
-        <p>20.000€</p>
+       
         <hr/>
         <h2>Resumen de la inversion</h2>
         <div>
@@ -293,6 +373,9 @@ export const PropertyDetails = () => {
         </div>
         <h2>Boost Invest</h2>
         <p>BoostInvest analiza la oferta de la zona para ofrecerte ideas para rentabilizar tu inversión inmobiliaria. Precios medios de alquiler, coster de reforma... y, si lo deseas, te conecta con profesionales para que te gestionen el alquiler del inmueble</p>
-    </div>
+    
+
+    </Container>
   )
+  
 }

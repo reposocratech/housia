@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-around;
     background-color: #272839;
+    border-bottom: 1px solid white;
     img{
         width: 120px;
     }
@@ -11,8 +12,11 @@
         font-weight: 700;
         color: white;
     }
+    a:hover {
+        color: rgb(48,162,185);
+    }
     button{
-        background-color: #27ADB5;
+        background-color: rgb(48,162,185);
         border: none;
         color: white;
         font-weight: 700;

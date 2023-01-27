@@ -4,26 +4,28 @@
     color: white;
     height: 100%;
     text-align: center;
-    padding-top: 3%;
+    padding: 3% 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     
-    .turquesa {
-        color: rgb(29, 194, 178);
+    .turquoise {
+        color: rgb(48,162,185);
     }
     .image {
         background-image: url("../../../../public/images/property/imagenfondo.png");
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
-        width: 30vw;
-        height: 30vh;
+        width: 600px;
+        height: 280px;
         border-radius: 10px;
-        .beneficio {
+        box-shadow: 0px 0px 10px black;
+        margin-top: 2%;
+        .benefit {
             width: 55%;
             height: 100%;
-            background-color: rgba(39, 40, 57, 0.694);
+            background-color: rgba(39, 40, 57, 0.788);
             color: white;
             display: flex;
             flex-direction: column;
@@ -39,27 +41,154 @@
             }                       
         }
     }
-    .botones {
-        width: 30vw;
+    .buttons {
+        width: 600px;
         display: flex;
-        justify-content: space-around;
+        justify-content:space-around;
         margin: 3%;
-        .boton {
+        .button {
             width: 40%;
             background-color: rgb(61,62,77);
             border: none;
         }
+        .button:hover {
+            background-color: rgb(48,162,185);
+        }
 
     }
-    .propiedad {
-        width: 20vw;
-        margin: 5%;
-        background-color: gray;
-        .borrar {
-            background-color: red;
-        }
-        .venta {
-            background-color: green;
-        }
+    .properties {
+        display: flex;
+        justify-content: center;
+        margin: 2% 0;
+        
     }
+    .property {
+       width: 98%;
+        background-color: rgb(17,24,39);
+        border: none;
+        border-radius: 10px;
+        border-top-right-radius: 10px !important;
+        display: flex;
+        
+        
+        .imageMain {
+            width: 40%;
+            height:100%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+           
+            img {
+                width: 100%;
+                height: 100%;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                object-fit: cover;
+                object-position: center;
+            }
+            img:hover {
+                cursor: pointer;
+            }
+          
+            
+        }
+        .all {
+            width: 60%;
+        }
+        .infoProperty {
+            width: 100%;
+            text-align: left;
+            padding-left: 7%;
+            padding-top: 3%;
+            background-color: rgb(17,24,39);
+            border: none;
+            color: white;
+            border-radius: 10px;
+            h5 {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0;
+                .sold {
+                    background-color: rgb(52,168,83);
+                    padding: 0 2%;
+                    margin-right: 5%;
+                    border-radius: 5px;
+                }
+                .nosold {
+                    display: none;
+                }
+                
+            }
+           .location {
+            color: invert($color: #767070);
+           }
+            p {
+                margin-bottom: 0.5rem;
+            }
+            .address {
+                color: rgb(177,181,195);
+               
+            }
+            
+        }
+        .del_sale {
+           padding: 5% 8% 5% 5%;
+           
+           width: 100%;
+            .sale {
+                background-color: rgb(48,162,185);
+                border: 1px solid white;
+                width: 100%;
+                height: 20%;
+                margin: 2%;
+                border: none;
+               
+                
+            }
+            .sale:hover {
+                background-color: rgb(65, 193, 219);
+                
+            }
+            .delete {
+                background-color: rgb(61,62,77);
+                border: 1px solid white;
+                width: 100%;
+                height: 20%;
+                margin: 2%;
+                border: none;
+            }
+            .delete:hover {
+                background-color: rgb(141, 36, 36);
+            }
+        }
+       
+    }
+   
+
+}
+
+
+@media (max-width: 769px ){
+   .portafolio-container {
+    .image {
+        width: 410px;
+        height: 200px;
+       }
+       .buttons {
+        width: 410px;
+       }
+   }
+   
+}
+
+
+
+@media (max-width: 391px){
+    .portafolio-container {
+        .image {
+            width: 200px;
+           }
+           .buttons {
+            width: 200px;
+           }
+       }
 }

@@ -189,7 +189,7 @@ getAllProperty = (req, res) => {
 
     connection.query(sql, (error, result)=>{
         error ? res.status(400).json({error}) : res.status(200).json(result);
-        console.log(result);
+        console.log(result, "todas las propiedades");
     });
 };
 

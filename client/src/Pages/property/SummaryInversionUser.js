@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { AppContext } from '../../Context/AppContext';
+import './summaryInv.scss';
 
 
 

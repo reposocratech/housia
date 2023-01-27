@@ -1,0 +1,134 @@
+.portafolio-container{
+    font-family: Barlow;
+    background-color: #272839;
+    color: white;
+    height: 100%;
+    text-align: center;
+    padding: 3% 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    .title {
+        color: rgb(48,162,185);
+    }
+    .infoAllProperty{
+        display: flex;
+        align-items: center;
+        
+        .carrusel{
+            width: 600px;
+            height: 280px;
+            margin-left: 25%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px black;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            
+            
+            .transparent{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-end;
+                position: absolute;
+                z-index: 2;
+                width: 55%;
+                height: 285px;
+                background-color: rgba(39, 40, 57, 0.788);
+                h2 {
+                    margin-right: 3%;
+                }
+                .perTrans{
+                    background-color: rgb(0,192,118);
+                    margin-right: 3%;
+                    width: 15%;
+                    border-radius: 8px;
+                }
+            }
+            img{
+                width: 600px;
+                height: 280px;
+                border-radius: 10px;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+        .info{
+            // margin-top: 15%;
+           .icono{
+            display: flex;
+            align-items: center;
+            margin: 5%;
+            img{
+                background-color: rgb(61,62,77);
+                border-radius: 10px;
+               
+            }
+            p{
+                margin: 0;
+                margin-left: 15%;
+            }           
+            
+           }
+        }
+       
+    }
+    .direction{
+        display: flex;
+        img{
+            width: 20px;
+            height: 20px;            
+            margin-right: 0.5%;
+            margin-left: 9%;
+        }
+    }
+    .buttons {
+        width: 600px;
+        display: flex;
+        justify-content:space-around;
+        margin: 3%;
+        .button {
+            width: 40%;
+            background-color: rgb(61,62,77);
+            border: none;
+        }
+        .button:hover {
+            background-color: rgb(48,162,185);
+        }
+        .modal{
+            background-color: rgb(61,62,77) !important;
+            color: white;
+        }
+
+    }
+    .infoGrafica{
+        display: flex;
+        .percenteges{
+            .percent{
+                border: 1px solid white;
+                border-radius: 10px;
+                margin: 5%;
+                p{
+                    margin: 0;
+                }
+            }
+        }
+    }
+    .limits{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: left;
+        .limit{
+            display: flex;
+        }
+    }
+   
+    
+}
+
