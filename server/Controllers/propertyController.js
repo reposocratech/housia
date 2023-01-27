@@ -304,7 +304,7 @@ class propertyController {
           img = req.files;
         }
 
-        console.log(img);
+        console.log(img, 'imagenes q recibo');
         
         let mainImage = img[0].filename
 
@@ -462,7 +462,7 @@ editPurchase = (req,res) => {
 
   for(const [field, value] of Object.entries(req.body)){
     
-    if(field == "purchase_buy_date"){
+    if(field == "purchase_buy_date" && value != null){
      sql = `UPDATE purchase SET ${field} = date_format('${value}', '%Y-%m-%d')  WHERE purchase_property_id = ${property_id}`;
      connection.query(sql, (error, result)=>{
       if (error){
@@ -478,7 +478,7 @@ editPurchase = (req,res) => {
         } 
       });
     } 
-    if(field == "rent_renting_date"){
+    if(field == "rent_renting_date" && value != null){
       sql = `UPDATE rent SET ${field} = date_format('${value}', '%Y-%m-%d') WHERE rent_property_id = ${property_id}`;
       connection.query(sql, (error, result)=>{
        if (error){

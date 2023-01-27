@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 import { useParams } from "react-router-dom";
+import Select from 'react-select';
 import { AppContext } from "../../Context/AppContext";
 
 export const EditPropertyForm = () => {
@@ -26,6 +27,13 @@ export const EditPropertyForm = () => {
 
     const {property_id} = useParams();
     
+
+    // let nombreTipo = type[(property?.type_id) -1 ].type_name;
+    
+    // let nombreSubTipo = Number(subtype[(property?.property_subtype_id) -1 ] .subtype_name);
+
+    
+
     useEffect(() => {
         axios
         .get("http://localhost:4000/property/allTypes")
@@ -104,6 +112,8 @@ export const EditPropertyForm = () => {
     const handleCityId = (e) => {
         setCityId(e.target.value);
     }
+
+  
 
     useEffect(() => {
         axios
@@ -187,8 +197,7 @@ export const EditPropertyForm = () => {
     
     insertFeaturesToArray(e) ;
   }
-  
-  /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
+
   
   const otherFeature = (featuresProperty) => {
 
@@ -211,6 +220,7 @@ export const EditPropertyForm = () => {
         
     }
 
+
   return (
     <Container fluid>
         <h2 className="text-center mb-3">Editar Propiedad</h2>
@@ -231,7 +241,8 @@ export const EditPropertyForm = () => {
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select onChange={handleChange} name="type_id" value={property?.type_id}>
+                            <Form.Select onChange={handleTypeId}>
+                                {/* <option value={property?.type_id}>{nombreTipo}</option> */}
                                 {type?.map((typ, ind) => {
                                     return(
                                         <option key={ind} value={typ.type_id}>{typ.type_name}</option>
@@ -241,7 +252,9 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>SubTipo</Form.Label>
-                            <Form.Select onClick={handleSubTypeId}>
+                            <Form.Select onChange={handleSubTypeId}
+                            >
+                            {/* <option value={property?.property_subtype_id}>{}</option> */}
                                 {subtype?.map((subtyp, ind) => {
                                     return(
                                         <option key={ind} value={subtyp.subtype_id}>{subtyp.subtype_name}</option>
@@ -277,7 +290,8 @@ export const EditPropertyForm = () => {
 
                         <Form.Group as={Col} md='9'>
                             <Form.Label>Provincia</Form.Label>
-                            <Form.Select onClick={handleProvinceId}>
+                            <Form.Select onChange={handleProvinceId}>
+                                <option value={property?.address_province_id}>{property?.province_name}</option>
                                 {province?.map((prov, ind) =>{
                                     return(
                                         <option
@@ -305,7 +319,8 @@ export const EditPropertyForm = () => {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Ciudad</Form.Label>
-                        <Form.Select onClick={handleCityId}>
+                        <Form.Select onChange={handleCityId}>
+                        <option value={property?.address_city_id}>{property?.city_name}</option>
                             {city?.map((cit, ind) =>{
                                 return(
                                     <option key={ind} value={cit.city_id}>{cit.city_name}</option>
