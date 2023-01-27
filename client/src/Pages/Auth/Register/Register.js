@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import "./StyleRegister.scss";
+
 
 const initialState = {
     name: "",
@@ -35,7 +37,7 @@ export const Register = () => {
       }
 
   return (
-    <>
+    <div className='fondoAzul'>
     <h2>Registro</h2>
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
@@ -111,6 +113,6 @@ export const Register = () => {
     <button type='submit'>Crear cuenta</button>
     </form>
     
-    </>
+    </div>
   )
 }
