@@ -22,12 +22,13 @@ export const PropertyDetails = () => {
     const [rent, setRent] = useState([]);
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
-    const {user } = useContext(AppContext);
+    const {user, property, setProperty } = useContext(AppContext);
     let { property_id } = useParams();
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const handleColor = () => setColorSold(!colorSold);
     console.log(user.user_id, "Soy USER ID");
+    console.log(property_id, 'soy property_id');
 
 
     const handleSubmit = () => {
@@ -148,6 +149,13 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
         
+        //carga el property id en navigate para editar detalles economicos
+       const travelToEditEconomicFeatures = ()=>{
+
+            setProperty(property_id)
+            navigate("/addEconomicFeatures")
+        }
+
       
   return (
     <Container fluid                    className='portafolio-container'>
@@ -346,7 +354,12 @@ export const PropertyDetails = () => {
             <p>1.500€</p>
             <p>Venta</p>
             <p>232.000€</p>
-            <Button variant="primary" onClick={()=>navigate("/home")}>Editar detalles conomicos</Button>
+
+            <Button 
+                variant="primary" 
+                onClick={()=>navigate(`/editEconomicFeatures/${property_id}`)}
+                >Editar detalles conomicos</Button>
+
 
             <Button variant="warning"  onClick={handleShow}>
             Vender propiedad

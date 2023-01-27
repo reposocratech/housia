@@ -14,7 +14,8 @@ export const AddPropertyImage = () => {
   const [showFinalModal, setShowFinalModal] = useState(false);
   
 
-  const {property} = useContext(AppContext);
+  const {property, setProperty} = useContext(AppContext);
+ 
 
   const URL_PROP = 'http://localhost:4000/property';
 
@@ -35,10 +36,6 @@ export const AddPropertyImage = () => {
 
     setImagesToEdit(e.target.files);
 };
-
-
-
-
 
   function readmultifiles(e, indexInicial) {
     const files = e.currentTarget.files;
@@ -129,7 +126,7 @@ export const AddPropertyImage = () => {
   const handleFinalSubmit = (id) => {
     onSubmit(id);
     setShowFinalModal(true);
-    setImagesToEdit([])
+    setImagesToEdit([]);
   }
 
   /* console.log(images, 'imagenes iniciales elegidas');
@@ -174,18 +171,6 @@ export const AddPropertyImage = () => {
                                 data-target="#ModalPreViewImg"
                                 className="img-responsive rounded-4"
                             />
-                            <div className="options">
-                              <div
-                                onClick ={() => handleMainImage(imgEdit)}
-                              >
-                                {imgEdit.image_is_main ? 'Principal' : 'Hacer Principal'}
-                              </div>
-                                <div
-                                    className="delete"
-                                    onClick={() => handleDeleteImageEdit(imgEdit.image_id, imgEdit.image_property_id)}
-                                    >Eliminar
-                                </div>
-                            </div>
                         </div>
                     </Col>
                   )
@@ -225,7 +210,7 @@ export const AddPropertyImage = () => {
       </div>
 
       </Container>
-      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal}/>
+      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal} property_id={property.property_id}/>
     
     </>
     

@@ -1,64 +1,81 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../Context/AppContext';
+import React, {  useEffect, useState } from 'react'
 import { Accordion } from 'react-bootstrap';
+import {useParams} from 'react-router-dom';
 
 export const EditEconomicFeatures = () => {
-
     const [editPurchase, setEditPurchase] = useState();
     const [editLoan, setEditLoan] = useState();
     const [editRent, setEditRent] = useState();
     const [checkboxState, setCheckboxState] = useState(false)
    
+    let {property_id} = useParams(); 
+    
 
-    let {property} = useContext(AppContext);
- property = 9;
 
- let fechaCompra = ""
- if(editPurchase?.purchase_buy_date !== undefined){
-     fechaCompra = editPurchase?.purchase_buy_date.slice(0, 10)
- }
- ;
+    useEffect(()=>{
+        axios
+        .get(`http://localhost:4000/property/getAllPurchaseData/${property_id}`)
+        .then((res)=>{
+            setEditPurchase(res.data[0]);
+            setEditLoan(res.data[0]);
+            setEditRent(res.data[0]);
+        })
+        .catch((error)=> {
+            console.log(error)
+        })
+        },[property_id])
 
- let fechaAlquiler = "";
- if( editRent?.rent_renting_date !== null ){
-fechaAlquiler = editRent?.rent_renting_date.slice(0, 10);
- }
+
+        // let fechaCompra = "";
+        // if(!editPurchase?.purchase_buy_date){
+        // console.log('entra fecha de compra');
+        //  fechaCompra = editPurchase?.purchase_buy_date;
+        // };
+
+        // let fechaAlquiler = "";
+        // if(!editRent?.rent_renting_date){
+        // console.log('entra fecha de alquiler');
+        // fechaAlquiler = editPurchase?.rent_renting_date;
+        // };
  
- 
 
-useEffect(()=>{
-
-axios
-    .get(`http://localhost:4000/property/getAllPurchaseData/${property}`)
-    .then((res)=>{
-        setEditPurchase(res.data[0]);
-        setEditLoan(res.data[0]);
-        setEditRent(res.data[0]);
-    })
-    .catch((error)=> {
-        console.log(error)
-    })
-},[property])
  
-const handleSubmitEdit =(e)=>{
+    const handleSubmitEdit =(e)=>{
     e.preventDefault();
 
-
     //axios del RENT
-    let rentId = editRent.rent_id;
+    // axios
+    // .put(`http://localhost:4000/property/editRent/${property_id}`, editRent)
+    // .then((res)=>{
+    //     console.log("respuesta correcta")
+    //     //FALTA NAVIGATE A PROPERTY_ID;
+
+    // })
+    // .catch((error)=>{
+    //     console.log(error)
+    // })
+
+    //axios del LOAN
+    // axios
+    // .put(`http://localhost:4000/property/editLoan/${property_id}`, editLoan)
+    // .then((res)=>{
+    //     console.log("respuesta correcta")
+    // })
+    // .catch((error)=>{
+    //     console.log(error)
+    // })
+
+    // //axios del PURCHASE
     axios
-    .put(`http://localhost:4000/property/editRent/${rentId}`, editRent)
+    .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
-        //FALTA NAVIGATE A PROPERTY_ID;
-
     })
     .catch((error)=>{
         console.log(error)
     })
-    
-
+    console.log(editPurchase);
 } 
     
 const handleRadioLoanType =(e) =>{
@@ -66,23 +83,19 @@ const handleRadioLoanType =(e) =>{
 
     if(value === "1"){
 
-        setEditLoan({...editLoan, loan_type:1})
+        setEditPurchase({...editPurchase, loan_type:1})
     } else if(value === "2"){
 
-        setEditLoan({...editLoan, loan_type:2})
+        setEditPurchase({...editPurchase, loan_type:2})
     }
 }
    
 const handleRadioIsNew = (e) =>{
-        
     const {value} = e.target
-       
         if(value=== "true"){ 
             setEditPurchase({...editPurchase, purchase_is_new:1})
-           
         } else if(value === "false"){
             setEditPurchase({...editPurchase, purchase_is_new:0})
-          
             }
     }
 
@@ -90,38 +103,32 @@ const handleRadioIsNew = (e) =>{
 const handleCheckBox = (e) =>{
         setCheckboxState(!checkboxState)
         setEditPurchase({...editPurchase, purchase_is_usual: checkboxState? 0: 1})
-    }
-    // console.log(checkboxState);
-
+}
 
 const handleChangePurchase = (e) =>{
-        const {name, value} = e.target;
-        console.log(e.target.value, "linea 69")
+        let {name, value} = e.target;
+        if (name === 'purchase_ownership_percentage'){
+            if(value >100){
+                value = 100;
+            } 
+            if(value < 0){
+                value = 0;
+            }
+        }
         setEditPurchase({...editPurchase, [name]:value})
-        
     };
 
-        // console.log(editPurchase, "edit purchase");
-    
-    
-const handleChangeRent = (e) =>{
-        const {name, value} = e.target;
-        setEditRent({...editRent, [name]:value})
+// const handleChangeRent = (e) =>{
+//         const {name, value} = e.target;
+//         setEditRent({...editRent, [name]:value})
         
-    };
-console.log(editRent, "edit rent")
-   
+//     };
 
-const handleChangeLoan =(e)=>{
-        const {name, value} = e.target;
-        setEditLoan({...editLoan, [name]: value})
+// const handleChangeLoan =(e)=>{
+//         const {name, value} = e.target;
+//         setEditLoan({...editLoan, [name]: value})
        
-    };
-
-    //  console.log(editLoan, "edit loan")
-  
-
-   
+//     };
 
 
   return (
@@ -142,7 +149,7 @@ const handleChangeLoan =(e)=>{
         <input
             type='date'
             autoComplete='off'
-            value={fechaCompra}
+            value={(editPurchase?.purchase_buy_date)}
             name="purchase_buy_date"
             onChange={handleChangePurchase}
         />
@@ -195,7 +202,7 @@ const handleChangeLoan =(e)=>{
             type="checkbox" 
             id="check-is-usual" 
             className='check-is-usual'
-            checked = {checkboxState}
+            checked = {editPurchase?.purchase_is_usual}
             name="purchase_is_usual"
             onChange={handleCheckBox}
             />
@@ -240,7 +247,6 @@ const handleChangeLoan =(e)=>{
                 <input 
                     className='m-2'
                     type='number'
-                    min='0'
                     value={editPurchase?.purchase_ownership_percentage}
                     name="purchase_ownership_percentage"
                     onChange={handleChangePurchase}/>
@@ -255,15 +261,15 @@ const handleChangeLoan =(e)=>{
                 <label>Importe Hipoteca</label>
                 <input 
                     className='m-2'
-                    value={editLoan?.loan_value}
+                    value={editPurchase?.loan_value}
                     name="loan_value"
-                    onChange={handleChangeLoan}/>
+                    onChange={handleChangePurchase}/>
             </div>
             <input type='radio'
                 id='hipoteca-importe-fijo' 
                 name='loan_type'
                 value='1'
-                checked = {editLoan?.loan_type === 1} 
+                checked = {editPurchase?.loan_type === 1} 
                  onChange={ handleRadioLoanType}
                 />
             <label for='hipoteca-importe-fijo'>Fijo</label>
@@ -271,7 +277,7 @@ const handleChangeLoan =(e)=>{
                id='hipoteca-importe-fijo' 
                name='loan_type'
                value='2'
-               checked = {editLoan?.loan_type === 2} 
+               checked = {editPurchase?.loan_type === 2} 
                onChange={ handleRadioLoanType}
                 />
             <label for='hipoteca-importe-variable'>Variable</label>
@@ -280,15 +286,15 @@ const handleChangeLoan =(e)=>{
                 <label>Años</label>
                 <input 
                     className='m-2'
-                    value={editLoan?.loan_years}
+                    value={editPurchase?.loan_years}
                     name="loan_years"
-                    onChange={handleChangeLoan}/>
+                    onChange={handleChangePurchase}/>
                 <input 
                     className='m-2'
                     placeholder='Interés'
-                    value={editLoan?.loan_interest_rate}
+                    value={editPurchase?.loan_interest_rate}
                     name="loan_interest_rate"
-                    onChange={handleChangeLoan}/>
+                    onChange={handleChangePurchase}/>
             </div>
         </Accordion.Body>
       </Accordion.Item>
@@ -299,26 +305,26 @@ const handleChangeLoan =(e)=>{
                 <label>Precio d alquiler</label>
                 <input 
                     className='m-2'
-                    value={editRent?.rent_renting_price}
+                    value={editPurchase?.rent_renting_price}
                     name="rent_renting_price"
-                    onChange={handleChangeRent}/>
+                    onChange={handleChangePurchase}/>
             </div>
             <div className='d-flex flex-column flex-start'>
                 <label>Gastos mensuales</label>
                 <input 
                     className='m-2'
-                    value={editRent?.rent_expenses}
+                    value={editPurchase?.rent_expenses}
                     name="rent_expenses"
-                    onChange={handleChangeRent}/>
+                    onChange={handleChangePurchase}/>
             </div>
             <div className='d-flex align-items-center'>
                 <label>Desde</label>
                 <input 
                     type='date' 
                     className='m-2'
-                    value={fechaAlquiler}
+                    value={editPurchase?.rent_renting_date}
                     name="rent_renting_date"
-                    onChange={handleChangeRent}/>
+                    onChange={handleChangePurchase}/>
             </div>
             
         </Accordion.Body>
