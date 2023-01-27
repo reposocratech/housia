@@ -122,7 +122,7 @@ console.log(discover, "DISCOVER")
         } 
 
         }
-=======
+
 
     const cleanFilters = () =>{
         handleBothFilterBuiltMeters(0);

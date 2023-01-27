@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {Nav, Navbar, Container, Button} from 'react-bootstrap'
+import {Nav, Navbar, Container, Button, NavDropdown} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext';
 import { delLocalStorageUser } from '../../Utils/localStorage/localStorageUser';
@@ -34,10 +34,7 @@ export const NavBarUser = () => {
           <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
           <Nav.Link as={Link} to='/user/resumen'>Resúmen</Nav.Link>
           <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
-          <Nav.Link>Valora</Nav.Link>
-          <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
           <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
-          <Nav.Link as={Link} to='/addEconomicFeatures'>Añadir Caracteristicas Economicas</Nav.Link>
           </Nav>
           
           
@@ -47,7 +44,6 @@ export const NavBarUser = () => {
           <Nav className='d-flex'>
           <Nav.Link as={Link} to='/admin'>Home</Nav.Link>
           <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
-          <Nav.Link as={Link} to='/addEconomicFeatures'>Añadir Caracteristicas Economicas</Nav.Link>
           <Nav.Link as={Link} to='/admin/customFeaturesElem'>Custom features</Nav.Link>
           </Nav>
           }
@@ -75,6 +71,21 @@ export const NavBarUser = () => {
                   src={`/images/user/${user?.user_img}`}
                   alt={user?.user_name}
                   />
+                  <Nav>
+                  <NavDropdown
+                  id="nav-dropdown-dark-example"
+                  title="Dropdown"
+                  menuVariant="dark"
+                  >
+                  <NavDropdown.Item as={Link} to='/user/perfil'>Perfíl</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to='/user/editUser'>
+                  Editar perfil
+                  </NavDropdown.Item>  
+                  <NavDropdown.Item href="#action/3.3">
+                  Favoritos
+                  </NavDropdown.Item>  
+                  </NavDropdown>
+                  </Nav>
                 <Button 
                   className='me-3' 
                   variant="light" 

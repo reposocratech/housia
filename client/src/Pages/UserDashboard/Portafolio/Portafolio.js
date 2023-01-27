@@ -7,19 +7,15 @@ import jwtDecode from 'jwt-decode';
 import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
-import jwtDecode from 'jwt-decode';
-
 
 
 export const Portafolio = () => {
 
   const [propertyDetails, setPropertyDetails] = useState();
-
+  console.log(propertyDetails);
 
    const {user, setIsLogged} = useContext(AppContext);
    const navigate = useNavigate();
-
-
 
   useEffect(() => {
     const token = localStorageUser();

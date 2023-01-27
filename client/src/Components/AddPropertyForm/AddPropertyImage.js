@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { AppContext } from "../../Context/AppContext";
 
@@ -10,7 +10,7 @@ export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
   const [imagesToEdit, setImagesToEdit] = useState([]);
-  const [showImagesToEdit, setShowImagesToEdit] = useState(false);
+  // const [showImagesToEdit, setShowImagesToEdit] = useState(false);
   const [showFinalModal, setShowFinalModal] = useState(false);
   
 
@@ -19,7 +19,9 @@ export const AddPropertyImage = () => {
 
   const URL_PROP = 'http://localhost:4000/property';
 
+  
   const changeInput = (e) => {
+    
     //esto es el indice que se le dará a cada imagen, a partir del indice de la ultima foto
     let indexImg;
 
@@ -34,15 +36,18 @@ export const AddPropertyImage = () => {
     let newImgsState = [...images, ...newImgsToState];
     setimages(newImgsState);
 
+
     setImagesToEdit(e.target.files);
+   
+   
 };
 
   function readmultifiles(e, indexInicial) {
     const files = e.currentTarget.files;
 
     //el array con las imagenes nuevas
-    const arrayImages = [];
-
+    const arrayImages = [images];
+    console.log(arrayImages, 'array');
     Object.keys(files).forEach((i) => {
       const file = files[i];
 
@@ -62,6 +67,8 @@ export const AddPropertyImage = () => {
     //despues de haber concluido el ciclo retornamos las nuevas imagenes
     return arrayImages;
   }
+  console.log(images, 'imagenes');
+
 
 
   const handleDeleteImageEdit = (imageId, imagePropertyId) => {
@@ -71,7 +78,7 @@ export const AddPropertyImage = () => {
       .then((res) => {
         console.log(res.data);
         setImagesToEdit(res.data);
-        setShowImagesToEdit(true);
+        // setShowImagesToEdit(true);
       })
       .catch((error) => {
         console.log(error.message);
@@ -109,18 +116,18 @@ export const AddPropertyImage = () => {
             newFormData.append('file', image);
         }
     }
-
-    axios
-        .put(`http://localhost:4000/property/addImgsProperty/${id}`, newFormData)
-        .then((res) => {
-            console.log(res.data);
-            setImagesToEdit(res.data);
-            setimages([]);
-            setShowImagesToEdit(true);
-        })  
-        .catch((error) => {
-            console.log(error.message);
-        })
+    console.log(imagesToEdit);
+    // axios
+    //     .put(`http://localhost:4000/property/addImgsProperty/${id}`, newFormData)
+    //     .then((res) => {
+    //         console.log(res.data);
+    //         setImagesToEdit(res.data);
+    //         setimages([]);
+    //         // setShowImagesToEdit(true);
+    //     })  
+    //     .catch((error) => {
+    //         console.log(error.message);
+    //     })
   }
 
   const handleFinalSubmit = (id) => {
@@ -143,10 +150,11 @@ export const AddPropertyImage = () => {
 
         {/* VIEW IMAGES */}
       <Row>
-          {!showImagesToEdit 
-              ? (
-                  images.map((imagen) => (
-                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
+          {/* {!showImagesToEdit  */}
+              {/* ? ( */}
+              
+                 { images.map((imagen, i) => (
+                      <Col className="col-6 col-sm-4 col-lg-3 m-2" key={i}>
                           <div className="content_img">
                               <Image
                                   alt="algo"
@@ -157,9 +165,9 @@ export const AddPropertyImage = () => {
                               />
                           </div>
                       </Col>
-                  ))
-              )
-              : (
+                  ))}
+              {/* ) */}
+              {/* : (
                 imagesToEdit?.map((imgEdit, ind) => {
                   return (
                     <Col className="col-6 col-sm-4 col-lg-3 m-2" key={ind}>
@@ -175,30 +183,30 @@ export const AddPropertyImage = () => {
                     </Col>
                   )
                 })
-                )
-          }
+                ) */}
+          {/* } */}
           
       </Row>
 
       <div className="mt-4">
       {/* INPUT IMAGES */}
 
-      {!showImagesToEdit && (
+      {/* {!showImagesToEdit && ( */}
 
         <Button size="lg" as="label" variant="secondary" className="me-3">
             <span>Seleccionar archivos </span>
             <input hidden type="file" multiple onChange={changeInput}></input>
         </Button>
-      )}
+      {/* )} */}
 
-      <Button 
+      {/* <Button 
         size="lg" 
         variant="dark"
         onClick={() => onSubmit(property.property_id)}
         >Guardar Fotos
-      </Button>
+      </Button> */}
 
-      {showImagesToEdit && (
+      {/* {showImagesToEdit && ( */}
         <Button 
           variant="outline-primary"
           size="lg"
@@ -206,7 +214,8 @@ export const AddPropertyImage = () => {
           onClick={() => handleFinalSubmit(property.property_id)}
           >Guardar Todo y Terminar
         </Button>
-      )}
+      {/* ) */}
+      {/* // } */}
       </div>
 
       </Container>
