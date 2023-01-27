@@ -676,16 +676,54 @@ getAllPurchaseData = (req, res) => {
         WHERE property_is_user_deleted = false
         AND image.image_is_main = 1
         group by province.province_id
-        having province.province_id = address.address_province_id;`;
+        having province.province_id = address.address_province_id`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
   
+      
+      fav = (req, res) => {
+    let {user_id, property_id} = req.params;
+        console.log(user_id, property_id, "SOMOS LOS ID")
+    let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
   
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+      
+      unfav = (req, res) => {
+        let {user_id, property_id} = req.params;
+        
+        let sql = `DELETE FROM favourite WHERE favourite_user_id = ${user_id} AND  favourite_property_id = ${property_id}`;
+      
+            connection.query(sql, (error, result) => {
+              error ? res.status(400).json({error}) : res.status(200).json(result);
+            })
+          }
+
+
+
+        favUser = (req, res) => {
+        let {user_id} = req.params;
+        console.log("Hola")
+        let sql = `SELECT property.*, image.image_title 
+        FROM property, favourite, image 
+        WHERE favourite.favourite_property_id = property.property_id
+         AND image.image_property_id = property.property_id 
+         AND image.image_is_main = 1 
+         AND favourite.favourite_user_id = ${user_id}`;
+          
+         connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+           })
+        }      
   
-  
+
+
 }
 
 

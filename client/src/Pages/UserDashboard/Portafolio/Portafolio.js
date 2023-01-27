@@ -14,8 +14,6 @@ export const Portafolio = () => {
   // console.log(user);
   // console.log(isLogged);
   // console.log(propertyDetails);
-  console.log(user, "user del portfolio");
-
 
  
 
@@ -35,7 +33,7 @@ export const Portafolio = () => {
   const delPropertyUser = (propiedad) => {
     
     axios
-      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user.user_id}`)
+      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user?.user_id}`)
       .then((res) => {
         setPropertyDetails(res.data.resultProperty);
           // console.log(res.data.resultProperty, "respuesta del axios del delete");
