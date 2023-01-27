@@ -96,16 +96,23 @@ router.put('/unSetMainImage/:image_id/:property_id', propertyController.unSetMai
 
 ////rent
 //localhost:4000/property/createRent/:property_id
-router.post("/createRent/:property_id", propertyController.createRent);
+// router.post("/createRent/:property_id", propertyController.createRent);
 
-//localhost:4000/property/editRent/:rent_id
-router.put("/editRent/:rent_id", propertyController.editRent);
+//localhost:4000/property/editRent/:property_id
+// router.put("/editRent/:property_id", propertyController.editRent);
 
 //localhost:4000/property/createLoan/:property_id
-router.post("/createLoan/:property_id", propertyController.createLoan);
+// router.post("/createLoan/:property_id", propertyController.createLoan);
+
+//localhost:4000/property/editLoan/:property_id
+// router.put("/editLoan/:property_id", propertyController.editLoan);
 
 // //localhost:4000/property/createPurchase/:property_id
-router.post("/createPurchase/:property_id", propertyController.createPurchase);
+// router.post("/createPurchase/:property_id", propertyController.createPurchase);
+
+//localhost:4000/property/editPurchase/:property_id
+router.put("/editPurchase/:property_id", propertyController.editPurchase);
+
 
 //localhost:4000/property/getAllPurchaseData/:property_id
 router.get("/getAllPurchaseData/:property_id", propertyController.getAllPurchaseData);
@@ -149,5 +156,16 @@ router.get("/propertyDetailsLoan/:property_id", propertyController.propertyDetai
 //localhost:4000/property/discover
 router.get("/discover", propertyController.discover);
 
+//Añadir una propiedad a favoritos
+//localhost:4000/property/fav/:user_id/:property_id
+router.post("/fav/:user_id/:property_id", propertyController.fav);
+
+//Quitar una propiedad a favoritos
+//localhost:4000/property/unfav/:user_id/:property_id
+router.delete("/unfav/:user_id/:property_id", propertyController.unfav);
+
+//Trae los favoritos de un usuario
+//localhost:4000/property/favUser/:user_id
+router.get("/favUser/:user_id", propertyController.favUser);
 
 module.exports = router;

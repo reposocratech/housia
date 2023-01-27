@@ -30,10 +30,6 @@ export const AddProperty4 = () => {
     }, [])
 
     const handleAC = (e) => {
-        
-
-
-        // selecionado();
 
         if(features.includes(e.target.value) === false){
             setFeatures([...features, e.target.value]);
@@ -43,7 +39,6 @@ export const AddProperty4 = () => {
             setFeatures(features.filter(elem => elem !== e.target.value ));
             setIsSelected(false);
         }
-
     }
 
     const handleSubmit = () => {
@@ -80,22 +75,20 @@ export const AddProperty4 = () => {
         { featureAll?.map((feature, i)=>{
             return(
                  <div key={i} className='checkbox-container'>
-            <input type="checkbox" 
-            classname="checkbox" 
-            id={`checkbox-${feature.feature_name}`} 
-            onClick={handleAC} 
-            value={feature.feature_id} 
-            />
+                    <input 
+                        type="checkbox" 
+                        classname="checkbox" 
+                        id={`checkbox-${feature.feature_name}`} 
+                        onClick={handleAC} 
+                        value={feature.feature_id} 
+                    />
 
-            <label 
-            for={`checkbox-${feature.feature_name}`} className="label">{feature.feature_name}
-            </label>
-            
-          </div> 
-            )
-
-         
-        })}
+                    <label 
+                        for={`checkbox-${feature.feature_name}`} 
+                        className="label">{feature.feature_name}
+                    </label>
+                </div> 
+        )})}
 
     </div>
 
