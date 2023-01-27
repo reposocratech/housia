@@ -12,6 +12,7 @@ export const EditEconomicFeatures = () => {
     let {property_id} = useParams(); 
     
 
+
     useEffect(()=>{
         axios
         .get(`http://localhost:4000/property/getAllPurchaseData/${property_id}`)
@@ -24,6 +25,7 @@ export const EditEconomicFeatures = () => {
             console.log(error)
         })
         },[property_id])
+
 
         // let fechaCompra = "";
         // if(!editPurchase?.purchase_buy_date){

@@ -16,7 +16,7 @@ export const AppProvider = (props) => {
     const [subTypeId, setSubTypeId] = useState(1);
     const [typeId, setTypeId] = useState(1);
     const token = localStorageUser(); 
- 
+
 useEffect(() => {
     const token = localStorageUser();
     if(token){
@@ -35,8 +35,6 @@ useEffect(() => {
     })
     }
 }, [isLogged, resetUser])
-    
-    
 
     return (
         <AppContext.Provider value={{

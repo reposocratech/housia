@@ -37,10 +37,6 @@ export const AddPropertyImage = () => {
     setImagesToEdit(e.target.files);
 };
 
-
-
-
-
   function readmultifiles(e, indexInicial) {
     const files = e.currentTarget.files;
 
@@ -175,18 +171,6 @@ export const AddPropertyImage = () => {
                                 data-target="#ModalPreViewImg"
                                 className="img-responsive rounded-4"
                             />
-                            <div className="options">
-                              <div
-                                onClick ={() => handleMainImage(imgEdit)}
-                              >
-                                {imgEdit.image_is_main ? 'Principal' : 'Hacer Principal'}
-                              </div>
-                                <div
-                                    className="delete"
-                                    onClick={() => handleDeleteImageEdit(imgEdit.image_id, imgEdit.image_property_id)}
-                                    >Eliminar
-                                </div>
-                            </div>
                         </div>
                     </Col>
                   )

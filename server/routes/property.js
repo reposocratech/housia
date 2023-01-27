@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const multer = require('../middleware/multer')
 var propertyController = require('../Controllers/propertyController');
-const { setMainImage } = require('../Controllers/propertyController');
+
 
 
 
@@ -28,6 +28,7 @@ router.post("/createProperty/:property_user_id/:property_subtype_id", propertyCo
 //localhost:4000/property/allKitchens
 router.get("/allKitchens", propertyController.allKitchens);
 
+//Añadir un tipo de cocina a una propiedad
 //localhost:4000/property/addBasicFeaturesToProperty/:property_kitchen_id
 router.put("/addBasicFeaturesToProperty/:property_id/:property_kitchen_id", propertyController.addBasicFeaturesToProperty);
 
@@ -36,10 +37,13 @@ router.put("/addBasicFeaturesToProperty/:property_id/:property_kitchen_id", prop
 //localhost:4000/property/checkSale/:property_id/:user_id
 router.put("/checkSale/:property_id/:user_id", propertyController.checkSale);
 
+//quitar una propiedad de venta
 //localhost:4000/property/uncheckSale/:property_id/:user_id
 router.put("/uncheckSale/:property_id/:user_id", propertyController.uncheckSale);
 
+
 //muestra todas la propiedades de descubre
+//localhost:4000/property/descubre
 router.get("/descubre", propertyController.showAllDescubre);
 
 //Trae todas las fotos de una propiedad
@@ -152,5 +156,16 @@ router.get("/propertyDetailsLoan/:property_id", propertyController.propertyDetai
 //localhost:4000/property/discover
 router.get("/discover", propertyController.discover);
 
+//Añadir una propiedad a favoritos
+//localhost:4000/property/fav/:user_id/:property_id
+router.post("/fav/:user_id/:property_id", propertyController.fav);
+
+//Quitar una propiedad a favoritos
+//localhost:4000/property/unfav/:user_id/:property_id
+router.delete("/unfav/:user_id/:property_id", propertyController.unfav);
+
+//Trae los favoritos de un usuario
+//localhost:4000/property/favUser/:user_id
+router.get("/favUser/:user_id", propertyController.favUser);
 
 module.exports = router;

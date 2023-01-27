@@ -7,23 +7,30 @@ import jwtDecode from 'jwt-decode';
 import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
+import jwtDecode from 'jwt-decode';
+
+
 
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
 
+
    const {user, setIsLogged} = useContext(AppContext);
    const navigate = useNavigate();
+
  
 
   useEffect(() => {
     const token = localStorageUser();
     if(token){
+
     let id = jwtDecode(token).user.id;
     setIsLogged(true);
     console.log(id);
     
     axios
       .get(`http://localhost:4000/users/getAllProperty/${id}`)
+
       .then((res)=>{
         setPropertyDetails(res.data.resultProperty);
       })
@@ -37,10 +44,10 @@ export const Portafolio = () => {
   const delPropertyUser = (propiedad) => {
     
     axios
-      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user.user_id}`)
+      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user?.user_id}`)
       .then((res) => {
         setPropertyDetails(res.data.resultProperty);
-          // console.log(res.data.resultProperty, "respuesta del axios del delete");
+          console.log(res.data.resultProperty, "respuesta del axios del delete");
       })
       .catch((error)=> {console.log(error);})
   }
@@ -69,7 +76,7 @@ export const Portafolio = () => {
     .get(`http://localhost:4000/users/getProperties/${user.user_id}`)
     .then ((res) => {
       setPropertyDetails(res.data)
-      console.log(res.data.result, "respuesta todas las propiedades");
+
     })
     .catch((error)=> console.log(error))
   }

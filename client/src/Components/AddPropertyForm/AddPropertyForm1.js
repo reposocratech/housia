@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+import jwtDecode from 'jwt-decode';
 
 const initialValue = {
     property_name: "",
@@ -12,12 +14,14 @@ const initialValue = {
 export const AddPropertyForm1 = () => {
     const [type, setType] = useState();
     const [subtype, setSubtype] = useState();
+
     
     const [message, setMessage] = useState("");
 
     const [newPropertyData, setNewPropertyData] = useState(initialValue);
 
     const { property, setProperty, user, typeId, setTypeId, subTypeId, setSubTypeId } = useContext(AppContext);
+
 
     const navigate = useNavigate();
 
@@ -70,6 +74,7 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
+
     if(!newPropertyData.property_name){
         setMessage("Introduce un nombre para tu propiedad");
     } else {
@@ -84,6 +89,26 @@ const handleSubmit = (e) => {
             console.log(err);
         });
     }
+
+
+   /* const token = localStorageUser();
+    if(token) {
+        let user_id = jwtDecode(token).user.id;
+        
+        axios
+            .post(`http://localhost:4000/property/createProperty/${user_id}/${subTypeId}`,property )
+            .then((res) => {
+                
+                setProperty(res.data[0]);
+                
+                navigate("/addProperty2");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+  */
+
 }
   return (
 
@@ -107,6 +132,7 @@ const handleSubmit = (e) => {
 
         <p>Tipo</p>
         <div>
+
          <select onChange={handleTypeId}>
             {type?.map((tipo, i) => {
                 return(

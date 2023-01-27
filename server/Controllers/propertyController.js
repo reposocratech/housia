@@ -31,11 +31,17 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
+
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
-    connection.query(sql, (error, result)=>{
-      if (error){
-        res.status(400).json(error)}
+    console.log('SQLLLL', sql);
+    
+
+    connection.query(sql, (error, result) => {
+      if (error){res.status(400).json(error)}
+
+      console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT");
+      
         let property_id = result.insertId;
 
         let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
@@ -101,7 +107,7 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
 
         connection.query(sql, (error, result) => {
 
@@ -119,7 +125,7 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
-        let sql2 = `SELECT * from property WHERE property_user_id = '${user_id}'AND property_is_user_deleted = 0`;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
 
         connection.query(sql, (error, result) => {
           if (error){
@@ -132,15 +138,53 @@ class propertyController {
     };
 
   
-  //Método get descubre
+  //Método get descubre (ES TEMPORAL POR FALTA DE ARQUITECTURA)
     showAllDescubre = (req, res) =>{
 
-        let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
+        // let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
+
+       let sql = `SELECT property.*, purchase.purchase_buy_price, address.address_city_id, city.city_name, province.province_id, province.province_name, type.type_id, type.type_name, subtype.subtype_name, subtype.subtype_id, kitchen.*
+       from property, purchase, address, city, province, type, subtype, kitchen
+       where property.property_id = address.address_property_id
+       AND address.address_city_id = city.city_id
+       AND subtype.subtype_id = type.type_id
+       AND city.city_id = province.province_id
+       AND property.property_id = purchase.purchase_property_id
+       AND property.property_kitchen_id = kitchen.kitchen_id
+       AND  property.property_is_for_sale = true
+       AND property.property_is_admin_deleted = false
+       AND property.property_is_user_deleted = false
+       group by property.property_id;`
 
         connection.query(sql, (error, result)=>{
             error ? res.status(400).json({error}) : res.status(200).json(result);
+            
         })
     }
+
+//METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
+    discover = (req, res) => {
+  
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
+      property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
+      FROM property, address, city, province, purchase, image
+      where property.property_id = purchase.purchase_property_id 
+      and property.property_id = address.address_property_id 
+      and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id     
+      and city.city_province_id = province.province_id
+      and property.property_id = image.image_property_id 
+      AND  property.property_is_for_sale = true
+      AND property.property_is_admin_deleted = false
+      AND property.property_is_user_deleted = false
+            AND image.image_is_main = 1;`;
+
+      connection.query(sql, (error, result) => {
+        error ? res.status(400).json({error}) : res.status(200).json(result);
+        console.log(result, "esto es el result de descubre")
+      })
+    }
+
+
 
 
 //MUESTRA TODAS LAS PROVINCIAS
@@ -184,6 +228,8 @@ class propertyController {
         let {property_id, province_id, city_id} = req.params;
   
         let {address_street_name, address_street_number, address_floor, address_gate, address_block, address_stair, address_door, address_postal_code} = req.body;
+
+        
   
         let sql = `INSERT INTO address VALUES (${property_id}, "${address_street_name}", "${address_street_number}", "${address_floor}", "${address_gate}", "${address_block}", "${address_stair}", "${address_door}", "${address_postal_code}", ${province_id}, ${city_id})`;
   
@@ -256,17 +302,30 @@ class propertyController {
           img = req.files;
         }
 
+        console.log(img);
+        
+        let mainImage = img[0].filename
+
+
+
         img.forEach((img) => {
-          let sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+
+          let sql = '';
+
+          if(mainImage == img.filename){
+            sql = `INSERT INTO image (image_title, image_property_id, image_is_main) VALUES('${img.filename}', ${property_id}, true)`
+          }
+          else {
+            sql = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+          }
 
           connection.query(sql, (error, result) => {
 
             if (error){
               res.status(400).json(error)}
-            console.log(result);
+            })
           })
-        })
-
+          
         let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
 
         connection.query(sqlImagesProperty, (errorImgs, resultImgs) => {
@@ -470,6 +529,8 @@ editPurchase = (req,res) => {
   // }else {
   //   sql = `UPDATE purchase SET purchase_buy_price = ${purchase_buy_price},purchase_buy_date = '${purchase_buy_date}', purchase_is_new = ${purchase_is_new}, purchase_furniture_expenses = ${purchase_furniture_expenses}, purchase_reform_expenses = ${purchase_reform_expenses},purchase_ownership_percentage = ${purchase_ownership_percentage}, purchase_is_usual = ${purchase_is_usual},  purchase_entry_expenses = ${purchase_entry_expenses}, purchase_trading_expenses = ${purchase_trading_expenses} WHERE purchase_property_id = ${property_id}`;
   // }
+
+
 
 }
 
@@ -782,6 +843,7 @@ getAllPurchaseData = (req, res) => {
 
       
       
+
       discover = (req, res) => {
   
         let sql = `SELECT property.*, address.*, purchase.*, image.image_title, city.city_name, province.province_name
@@ -799,16 +861,55 @@ getAllPurchaseData = (req, res) => {
         WHERE property_is_user_deleted = false
         AND image.image_is_main = 1
         group by province.province_id
-        having province.province_id = address.address_province_id;`;
+        having province.province_id = address.address_province_id`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
   
+      
+      fav = (req, res) => {
+    let {user_id, property_id} = req.params;
+        console.log(user_id, property_id, "SOMOS LOS ID")
+    let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
   
+        connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+        })
+      }
+
+      
+      unfav = (req, res) => {
+        let {user_id, property_id} = req.params;
+        
+        let sql = `DELETE FROM favourite WHERE favourite_user_id = ${user_id} AND  favourite_property_id = ${property_id}`;
+      
+            connection.query(sql, (error, result) => {
+              error ? res.status(400).json({error}) : res.status(200).json(result);
+            })
+          }
+
+
+
+        favUser = (req, res) => {
+        let {user_id} = req.params;
+        console.log("Hola")
+        let sql = `SELECT property.*, image.image_title 
+        FROM property, favourite, image 
+        WHERE favourite.favourite_property_id = property.property_id
+         AND image.image_property_id = property.property_id 
+         AND image.image_is_main = 1 
+         AND favourite.favourite_user_id = ${user_id}`;
+          
+         connection.query(sql, (error, result) => {
+          error ? res.status(400).json({error}) : res.status(200).json(result);
+           })
+        }      
+
   
-  
+
+
 }
 
 
