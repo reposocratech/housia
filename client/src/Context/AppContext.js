@@ -9,27 +9,26 @@ export const AppContext = createContext();
 
 export const AppProvider = (props) => {
     const [user, setUser] = useState([]);
-    const [property, setProperty] = useState();
+    const [property, setProperty] = useState({});
     const [resetUser, setResetUser] = useState(false);
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
+    const [subTypeId, setSubTypeId] = useState(1);
+    const [typeId, setTypeId] = useState(1);
     const token = localStorageUser(); 
-    console.log(user, "+++++++++++");
-
+ 
 useEffect(() => {
     const token = localStorageUser();
     if(token){
         let id = jwtDecode(token).user.id;
         setIsLogged(true);
 
-
-    
     axios
     .get(`http://localhost:4000/users/${id}`)
     .then((res)=> {
+        console.log(res.data);
         setUser(res.data.resultUser[0]);
         setUserProperties(res.data.resultProperty);
-        
     })
     .catch((error) => {
         console.log('este es el error', error);
@@ -37,9 +36,6 @@ useEffect(() => {
     }
 }, [isLogged, resetUser])
     
-    
-    console.log(user, "user del context");
-    console.log(isLogged, "logeo del context");
     
 
     return (
@@ -54,6 +50,10 @@ useEffect(() => {
                 setIsLogged,
                 resetUser,
                 setResetUser,
+                typeId,
+                setTypeId,
+                subTypeId, 
+                setSubTypeId,
                 token
                 }}>
             {props.children}

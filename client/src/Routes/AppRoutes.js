@@ -57,7 +57,7 @@ export const AppRoutes = () => {
                 <Route path='/discover' element={<Discover/>}/> 
 
                 <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
-                <Route path='/editEconomicFeatures' element={<EditEconomicFeatures/>}/>
+                <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
                 <Route path='/editProperty/:property_id' element={<EditPropertyForm/>} />
 
 

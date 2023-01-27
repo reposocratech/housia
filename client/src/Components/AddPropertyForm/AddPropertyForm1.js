@@ -3,15 +3,31 @@ import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
+const initialValue = {
+    property_name: "",
+    type_id: "",
+    subtype_id: ""
+}
 
 export const AddPropertyForm1 = () => {
     const [type, setType] = useState();
     const [subtype, setSubtype] = useState();
-    const [typeId, setTypeId] = useState(1);
-    const [subTypeId, setSubTypeId] = useState(1);
-    const {property, setProperty, user } = useContext(AppContext);
+    
+    const [message, setMessage] = useState("");
+
+    const [newPropertyData, setNewPropertyData] = useState(initialValue);
+
+    const { property, setProperty, user, typeId, setTypeId, subTypeId, setSubTypeId } = useContext(AppContext);
+
     const navigate = useNavigate();
 
+    console.log(typeId, 'type id');
+    console.log(subTypeId, 'subtype id');
+
+    useEffect(() => {
+        setProperty("");
+    }, [])
+    
     useEffect(() => {
         axios
         .get("http://localhost:4000/property/allTypes")
@@ -28,7 +44,6 @@ export const AddPropertyForm1 = () => {
         axios
         .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
         .then((res) => {
-           
             setSubtype(res.data);
         })
         .catch((err) => {
@@ -38,7 +53,6 @@ export const AddPropertyForm1 = () => {
 
 const handleTypeId = (e) =>{
     setTypeId(e.target.value);
-    // setTypeId(id);
 }
 
 const handleSubTypeId = (e) => {
@@ -48,52 +62,52 @@ const handleSubTypeId = (e) => {
 
 const handleChange = (e) => {
     const {name, value} = e.target;
-    setProperty({...property, [name]:value})
+    // setProperty({...property, [name]:value});
+    setNewPropertyData({...newPropertyData, [name]:value});
+    setMessage("");
+
 }
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    axios
+    if(!newPropertyData.property_name){
+        setMessage("Introduce un nombre para tu propiedad");
+    } else {
+        axios
         .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
         .then((res) => {
-            
-            setProperty(res.data[0]);
-            
+            setProperty(res.data.resultProperty[0]);
+            // console.log(res.data.resultProperty[0]);
             navigate("/addProperty2");
         })
         .catch((err) => {
             console.log(err);
         });
+    }
 }
   return (
+
     <div>
         <h2>¿Preparado para conocer el valor 
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
         mediante AI</h3>
         <p>Elije un nombre para tu propiedad</p>
+        
         <form>
-
         <input
        placeholder='Nombra la propiedad'
        autoComplete='off'
-       value={property?.property_name}
+       value={newPropertyData?.property_name}
        name="property_name"
        onChange={handleChange}
         ></input>
+        <div style={{ color: "red" }}>{message}</div>
         <hr/>
 
         <p>Tipo</p>
         <div>
-            
-        {/* {type?.map((tipo, i) => {
-                return(
-                   
-                    <button onClick={()=>handleTypeId(tipo.type_id)} key={i}>{tipo.type_name}</button>
-                    
-                )
-            })} */}
-         <select onClick={handleTypeId}>
+         <select onChange={handleTypeId}>
             {type?.map((tipo, i) => {
                 return(
                     <option key={i}  value={tipo.type_id}>{tipo.type_name}</option>
@@ -104,20 +118,24 @@ const handleSubmit = (e) => {
         </div>
         <div>
         <p>Tipo de inmueble</p>
-        <select onClick={handleSubTypeId}>
+        <select onChange={handleSubTypeId}>
         
          {subtype?.map((subtipo, i) => {
                 return(
-                   
                     <option key={i} value={subtipo.subtype_id} >{subtipo?.subtype_name}</option>
-                    
                 )
             })}  
         </select>
         </div>
         <hr/>
-        <button type='submit' onClick={handleSubmit}>Añadir propiedad</button>
+        <button 
+            type='submit' 
+            onClick={handleSubmit}
+            >Añadir propiedad</button>
         </form>
     </div>
+   
+    
+    
   )
 }

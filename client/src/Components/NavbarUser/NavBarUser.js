@@ -8,9 +8,8 @@ import './NavBarUser.scss';
 
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
-  console.log(user);
-  console.log(isLogged);
   
+
   const navigate= useNavigate();
 
   const logOut = ()=>{
@@ -34,7 +33,7 @@ export const NavBarUser = () => {
           <Nav className='d-flex'>
           <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
           <Nav.Link as={Link} to='/user/resumen'>Resúmen</Nav.Link>
-          <Nav.Link as={Link} to='/descubre'>Descubre</Nav.Link>
+          <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
           <Nav.Link>Valora</Nav.Link>
           <Nav.Link as={Link} to='/user/perfil'>Perfíl</Nav.Link>
           <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
