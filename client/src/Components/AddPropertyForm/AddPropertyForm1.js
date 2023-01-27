@@ -26,8 +26,8 @@ export const AddPropertyForm1 = () => {
 
     const navigate = useNavigate();
 
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    /* console.log(typeId, 'type id');
+    console.log(subTypeId, 'subtype id'); */
 
     useEffect(() => {
         setProperty("");
@@ -60,12 +60,12 @@ export const AddPropertyForm1 = () => {
 
 const handleTypeId = (e) =>{
     setTypeId(e.target.value);
+
 }
 
 const handleSubTypeId = (e) => {
  setSubTypeId(e.target.value);
 }
-
 
 const handleChange = (e) => {
     const {name, value} = e.target;
@@ -96,7 +96,6 @@ const handleSubmit = (e) => {
             console.log(err);
         });
     }
-
 
    /* const token = localStorageUser();
     if(token) {

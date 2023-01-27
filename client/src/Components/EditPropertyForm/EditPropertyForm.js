@@ -215,7 +215,9 @@ export const EditPropertyForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(property);
+        console.log('PROPIEDAD EN EDICIÓN', property);
+        console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
+        
     }
 
 
@@ -480,8 +482,8 @@ export const EditPropertyForm = () => {
 
             
             
-            <Button variant="primary" type="submit">
-            Submit
+            <Button size="lg" variant="secondary" type="submit">
+                GUARDAR
             </Button>
         </Form>
     

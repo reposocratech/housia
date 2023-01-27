@@ -14,9 +14,9 @@ export const AddProperty3 = () => {
 
     const { register, formState:{errors}, handleSubmit } = useForm();
     
-    console.log(property);
+    /* console.log(property);
     console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    console.log(subTypeId, 'subtype id'); */
 
     // const handleChange = (e) => {
     //     const {name, value} = e.target;
