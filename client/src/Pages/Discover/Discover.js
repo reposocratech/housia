@@ -437,11 +437,7 @@ export const Discover = () => {
                 </select>
             
             }
-       
-        
         </div>
-
-        
 
         <div>
         {filterList?.map((property, i) => {
