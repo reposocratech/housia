@@ -73,6 +73,7 @@ console.log(propertyDetails);
     .get(`http://localhost:4000/users/getProperties/${user.user_id}`)
     .then ((res) => {
       setPropertyDetails(res.data)
+
       console.log(res.data, "respuesta todas las propiedades");
     })
     .catch((error)=> console.log(error))

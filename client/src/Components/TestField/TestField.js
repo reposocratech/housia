@@ -43,7 +43,7 @@ const [box2, setBox2] = useState("");
 const [range, setRange] = useState(0)
 
 //filtros precio // numero hab // codigo postal
-let control = listaPrueba.filter(elem => elem.price >= range)
+
 
 //CON IF
 // if(numSelect > 0){
@@ -53,20 +53,22 @@ let control = listaPrueba.filter(elem => elem.price >= range)
 //     control = control.filter(elem => elem.cp === box2)
 // }
 
-//CON TERNARIAS
+
+
+
+
+
+
+
 numSelect > 0? control = control.filter(elem=> elem.numOfRooms >= numSelect) : control = control;
-
-box2 !== ""? control = control.filter(elem => elem.cp === box2): control = control;
-
-
-
-
 //input tipo selec
 const handleNumSelect =(e)=>{
         setNumSelect(e.target.value)}
  //problema, se setean string, si queremos usarlos para numeros, tenemos que pasarlos antes de incorporarlos al filter 
- // si el value es un string porque me lo coge como numero, (es un error o lo convierte solo??)  
-
+ // si el value es un string porque me lo coge como numero, (es un error o lo convierte solo??) 
+ 
+ 
+box2 !== ""? control = control.filter(elem => elem.cp === box2): control = control;
 //input tipo checkbox
 // const handleBoXA =(e)=>{setBox1(e.target.value)}
 // const handleBoXB =(e)=>{ setBox1(e.target.value)}
@@ -84,6 +86,9 @@ const handleBoXD =(e)=>{
 //-- si queremos hacer campos excluyentes tenemos que usar inputs de tipo radio.
 // y de esos tendriamos que poner uno por defecto que fuera ninguno, ya siempre se quedan marcados cuando se marcan.
 
+
+//CON TERNARIAS
+let control = listaPrueba.filter(elem => elem.price >= range)
 //input tipo range
 const handleRanger =(e)=>{
     setRange(e.target.value)

@@ -19,7 +19,7 @@ export const PropertyDetails = () => {
     const [rent, setRent] = useState([]);
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
-    const {user } = useContext(AppContext);
+    const {user, property, setProperty } = useContext(AppContext);
     let { property_id } = useParams();
     const navigate = useNavigate();
     const [show, setShow] = useState(false);
@@ -145,6 +145,13 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
         
+        //carga el property id en navigate para editar detalles economicos
+       const travelToEditEconomicFeatures = ()=>{
+
+            setProperty(property_id)
+            navigate("/addEconomicFeatures")
+        }
+
       
   return (
     //TRAER TODA LA INFO DE UNA PROPIEDAD
@@ -266,7 +273,7 @@ export const PropertyDetails = () => {
             <p>1.500€</p>
             <p>Venta</p>
             <p>232.000€</p>
-            <Button variant="primary" onClick={()=>navigate("/home")}>Editar detalles conomicos</Button>
+            <Button variant="primary" onClick={travelToEditEconomicFeatures}>Editar detalles conomicos</Button>
 
             <Button variant="warning"  onClick={handleShow}>
             Vender propiedad
