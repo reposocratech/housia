@@ -26,7 +26,6 @@ export const NavBarUser = () => {
         <Container fluid className='NavBarContainer'>
           <Nav>
             <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Nav.Link>
-            <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
            </Nav>
          
           {isLogged && user?.user_type === 2 && 

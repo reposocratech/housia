@@ -462,7 +462,7 @@ editPurchase = (req,res) => {
 
   for(const [field, value] of Object.entries(req.body)){
     
-    if(field == "purchase_buy_date"){
+    if(field == "purchase_buy_date" && value){
      sql = `UPDATE purchase SET ${field} = date_format('${value}', '%Y-%m-%d')  WHERE purchase_property_id = ${property_id}`;
      connection.query(sql, (error, result)=>{
       if (error){
@@ -478,7 +478,7 @@ editPurchase = (req,res) => {
         } 
       });
     } 
-    if(field == "rent_renting_date"){
+    if(field == "rent_renting_date" && value){
       sql = `UPDATE rent SET ${field} = date_format('${value}', '%Y-%m-%d') WHERE rent_property_id = ${property_id}`;
       connection.query(sql, (error, result)=>{
        if (error){
@@ -846,22 +846,22 @@ getAllPurchaseData = (req, res) => {
 
       discover = (req, res) => {
   
-        let sql = `SELECT property.*, address.*, purchase.*, image.image_title, city.city_name, province.province_name
-        FROM property 
-        LEFT JOIN address
-        ON property.property_id = address.address_property_id 
-        JOIN city
-        ON address.address_city_id = city.city_id
-        JOIN province
-        on city.city_province_id = province.province_id
-        LEFT JOIN purchase 
-        ON property.property_id = purchase.purchase_property_id 
-        JOIN image
-        ON property.property_id = image.image_property_id 
-        WHERE property_is_user_deleted = false
-        AND image.image_is_main = 1
-        group by province.province_id
-        having province.province_id = address.address_province_id`;
+        let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
+        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, 
+        image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
+        FROM property, address, city, province, purchase, image, type, subtype, kitchen
+        where property.property_id = purchase.purchase_property_id 
+        AND property.property_subtype_id = subtype.subtype_id
+        AND subtype.subtype_type_id = type.type_id
+        AND property.property_kitchen_id = kitchen.kitchen_id
+        and property.property_id = address.address_property_id 
+        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
+        and city.city_province_id = province.province_id
+        and property.property_id = image.image_property_id 
+        AND  property.property_is_for_sale = true
+        AND property.property_is_admin_deleted = false
+        AND property.property_is_user_deleted = false
+              AND image.image_is_main = 1;`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
@@ -908,6 +908,17 @@ getAllPurchaseData = (req, res) => {
         }      
 
   
+
+        //SACA TODAS LA ENTRADAS DE FEATURES_PROPERTY PARA FILTRAR EN DESCUBRE.
+        //localhost:4000/property/discover/allpropertywithfeature
+        getAllFeature_Property = (req, res) =>{
+          let sql = 'select * from feature_property ORDER BY property_id;'
+
+          connection.query(sql, (error, result)=>{
+            error ? res.status(400).json({error}) : res.status(200).json(result);
+          })
+        }
+
 
 
 }

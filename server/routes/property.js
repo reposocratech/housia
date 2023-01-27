@@ -58,8 +58,6 @@ router.get("/allProvinces", propertyController.allProvinces);
 //localhost:4000/property/allCities/:province_id
 router.get("/allCities/:province_id", propertyController.allCities );
 
-//muestra todas la propiedades de descubre
-router.get("/descubre", propertyController.showAllDescubre);
 
 //Actualizar DIRECCIÓN PROPIEDAD
 //localhost:4000/property/addPropertyAddress/:property_id/:province_id/:city_id
@@ -167,5 +165,10 @@ router.delete("/unfav/:user_id/:property_id", propertyController.unfav);
 //Trae los favoritos de un usuario
 //localhost:4000/property/favUser/:user_id
 router.get("/favUser/:user_id", propertyController.favUser);
+
+//saca todas la entradas de features_property para filtrar descubre
+//localhost:4000/property/discover/allpropertywithfeature
+router.get('/discover/allpropertywithfeature', propertyController.getAllFeature_Property);
+
 
 module.exports = router;

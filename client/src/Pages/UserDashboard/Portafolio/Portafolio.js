@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode';
 import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
-import jwtDecode from 'jwt-decode';
+
 
 
 
