@@ -371,11 +371,11 @@ export const EditPropertyForm = () => {
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Superficie Útil</Form.Label>
                             <Form.Control 
-                            autoComplete="off"  
-                            type="text" 
-                            name="property_total_meters"
-                            onChange={handleChange}
-                            value={property?.property_total_meters}
+                                autoComplete="off"  
+                                type="text" 
+                                name="property_total_meters"
+                                onChange={handleChange}
+                                value={property?.property_total_meters}
                             />
                         </Form.Group>
                         <Form.Group as={Col} md='6'>
@@ -394,19 +394,19 @@ export const EditPropertyForm = () => {
                         <Form.Group className="mb-3" as={Col} md='3'>
                             <Form.Label>Año Construcción</Form.Label>
                             <Form.Control 
-                            autoComplete="off"  
-                            type="text"
-                            value={property?.property_built_year}
+                                autoComplete="off"  
+                                type="text"
+                                value={property?.property_built_year}
                             />
                         </Form.Group>
                         <Form.Group as={Col} md='3'>
                             <Form.Label>Habitaciones</Form.Label>
                             <Form.Control 
-                            autoComplete="off"  
-                            type="text"
-                            name="property_rooms"
-                            onChange={handleChange}
-                            value={property?.property_rooms === "undefined" ? 0 : property?.property_rooms}
+                                autoComplete="off"  
+                                type="text"
+                                name="property_rooms"
+                                onChange={handleChange}
+                                value={property?.property_rooms === "undefined" ? 0 : property?.property_rooms}
                             />
                         </Form.Group>
                         <Form.Group as={Col} md='3'>
