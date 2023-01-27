@@ -10,10 +10,9 @@
 
 .options {
     position:absolute;
-    top: 95%;
+    top: 90%;
+    left: 79%;
     width: 60%;
-    display: flex;
-    justify-content: space-between;
     color: white;
     margin-bottom: 2rem;
     padding-right: 5%;

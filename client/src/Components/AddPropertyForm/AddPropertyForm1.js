@@ -25,8 +25,8 @@ export const AddPropertyForm1 = () => {
 
     const navigate = useNavigate();
 
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    /* console.log(typeId, 'type id');
+    console.log(subTypeId, 'subtype id'); */
 
     useEffect(() => {
         setProperty("");
@@ -57,19 +57,18 @@ export const AddPropertyForm1 = () => {
 
 const handleTypeId = (e) =>{
     setTypeId(e.target.value);
+
 }
 
 const handleSubTypeId = (e) => {
  setSubTypeId(e.target.value);
 }
 
-
 const handleChange = (e) => {
     const {name, value} = e.target;
     // setProperty({...property, [name]:value});
     setNewPropertyData({...newPropertyData, [name]:value});
     setMessage("");
-
 }
 
 const handleSubmit = (e) => {
@@ -79,7 +78,7 @@ const handleSubmit = (e) => {
         setMessage("Introduce un nombre para tu propiedad");
     } else {
         axios
-        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
+        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,newPropertyData )
         .then((res) => {
             setProperty(res.data.resultProperty[0]);
             // console.log(res.data.resultProperty[0]);
@@ -89,7 +88,6 @@ const handleSubmit = (e) => {
             console.log(err);
         });
     }
-
 
    /* const token = localStorageUser();
     if(token) {

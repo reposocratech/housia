@@ -10,9 +10,9 @@ const [kitchenId, setKitchenId] = useState(1);
 const {property, setProperty,  typeId, subTypeId } = useContext(AppContext);
 const navigate = useNavigate();
 
-console.log(property);
+/* console.log(property);
 console.log(typeId, 'type id');
-console.log(subTypeId, 'subtype id');
+console.log(subTypeId, 'subtype id'); */
 
     useEffect(() => {
         axios
