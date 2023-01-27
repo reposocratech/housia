@@ -14,12 +14,10 @@ import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 export const Portafolio = () => {
 
   const [propertyDetails, setPropertyDetails] = useState();
-
+  console.log(propertyDetails);
 
    const {user, setIsLogged} = useContext(AppContext);
    const navigate = useNavigate();
-
-
 
   useEffect(() => {
     const token = localStorageUser();

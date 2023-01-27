@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import "./StyleRegister.scss";
+
 
 const initialState = {
     name: "",
@@ -35,7 +37,7 @@ export const Register = () => {
       }
 
   return (
-    <>
+    <div className='fondoAzul'>
     <h2>Registro</h2>
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
@@ -98,7 +100,7 @@ export const Register = () => {
           {...register('password', {
             required: {value: true, message:'introduce una contraseña'},
             pattern: {
-              value: /^(?=\w*\d)(?=\w*[a-z])\S{8,16}$/, 
+              value: /^(?=\w*\d)(?=\w*[a-z])\S{7,16}$/, 
               message: 'La contraseña debe tener al menos 6 caracteres y un dígito' }
           })}
       />
@@ -111,6 +113,6 @@ export const Register = () => {
     <button type='submit'>Crear cuenta</button>
     </form>
     
-    </>
+    </div>
   )
 }

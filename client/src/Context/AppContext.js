@@ -13,8 +13,8 @@ export const AppProvider = (props) => {
     const [resetUser, setResetUser] = useState(false);
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
-    const [subTypeId, setSubTypeId] = useState(1);
-    const [typeId, setTypeId] = useState(1);
+    const [subTypeId, setSubTypeId] = useState(-1);
+    const [typeId, setTypeId] = useState(-1);
     const token = localStorageUser(); 
 
 useEffect(() => {
