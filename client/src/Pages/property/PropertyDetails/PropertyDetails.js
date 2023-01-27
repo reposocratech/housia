@@ -25,6 +25,7 @@ export const PropertyDetails = () => {
     const [show, setShow] = useState(false);
     const handleColor = () => setColorSold(!colorSold);
     console.log(user.user_id, "Soy USER ID");
+    console.log(property_id, 'soy property_id');
 
 
     const handleSubmit = () => {
@@ -273,7 +274,12 @@ export const PropertyDetails = () => {
             <p>1.500€</p>
             <p>Venta</p>
             <p>232.000€</p>
-            <Button variant="primary" onClick={travelToEditEconomicFeatures}>Editar detalles conomicos</Button>
+
+            <Button 
+                variant="primary" 
+                onClick={()=>navigate(`/editEconomicFeatures/${property_id}`)}
+                >Editar detalles conomicos</Button>
+
 
             <Button variant="warning"  onClick={handleShow}>
             Vender propiedad

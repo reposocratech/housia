@@ -14,7 +14,8 @@ export const AddPropertyImage = () => {
   const [showFinalModal, setShowFinalModal] = useState(false);
   
 
-  const {property} = useContext(AppContext);
+  const {property, setProperty} = useContext(AppContext);
+ 
 
   const URL_PROP = 'http://localhost:4000/property';
 
@@ -125,7 +126,7 @@ export const AddPropertyImage = () => {
   const handleFinalSubmit = (id) => {
     onSubmit(id);
     setShowFinalModal(true);
-    setImagesToEdit([])
+    setImagesToEdit([]);
   }
 
   /* console.log(images, 'imagenes iniciales elegidas');
@@ -209,7 +210,7 @@ export const AddPropertyImage = () => {
       </div>
 
       </Container>
-      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal}/>
+      <ModalSaveProperty showFinalModal={showFinalModal} setShowFinalModal={setShowFinalModal} property_id={property.property_id}/>
     
     </>
     

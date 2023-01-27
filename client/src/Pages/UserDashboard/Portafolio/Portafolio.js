@@ -1,38 +1,37 @@
 import React, { useContext, useEffect, useState}  from 'react';
 import { AppContext } from '../../../Context/AppContext';
 import axios from 'axios';
-import {Button, Container} from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
+import {Button, Container} from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
+
 import jwtDecode from 'jwt-decode';
+
 
 
 export const Portafolio = () => {
   const [propertyDetails, setPropertyDetails] = useState();
-   const {user} = useContext(AppContext);
-  const navigate = useNavigate();
-  // console.log(user);
-  // console.log(isLogged);
-  // console.log(propertyDetails);
 
 
-
-  console.log(user, "user del portfolio");
-
-console.log(propertyDetails);
+   const {user, setIsLogged} = useContext(AppContext);
+   const navigate = useNavigate();
 
  
 
   useEffect(() => {
     const token = localStorageUser();
     if(token){
-        let user_id = jwtDecode(token).user.id;
+
+    let id = jwtDecode(token).user.id;
+    setIsLogged(true);
+    console.log(id);
     
     axios
-      .get(`http://localhost:4000/users/getAllProperty/${user_id}`)
+      .get(`http://localhost:4000/users/getAllProperty/${id}`)
+
       .then((res)=>{
-        // console.log(res.data);
         setPropertyDetails(res.data.resultProperty);
       })
       .catch((err)=> {
@@ -40,6 +39,7 @@ console.log(propertyDetails);
       })
     }
 }, [])
+
 
   const delPropertyUser = (propiedad) => {
     
@@ -60,17 +60,16 @@ console.log(propertyDetails);
     
     if(isSold === 1){
       url=`http://localhost:4000/property/uncheckSale/${idProperty}/${user.user_id}`
-  }else if (isSold === 0) {
-    url = `http://localhost:4000/property/checkSale/${idProperty}/${user.user_id}`
-  }
-  axios
-  .put(url)
-  .then((res)=>{
+    }else if (isSold === 0) {
+      url = `http://localhost:4000/property/checkSale/${idProperty}/${user.user_id}`
+    }
+    axios
+    .put(url)
+    .then((res)=>{
       setPropertyDetails(res.data)
-      // console.log(res);
-  })
-  .catch((Err)=>console.log(Err))
-  }
+    })
+    .catch((Err)=>console.log(Err))
+    }
 
   const handleAllProperties = () => {
     axios
@@ -78,12 +77,11 @@ console.log(propertyDetails);
     .then ((res) => {
       setPropertyDetails(res.data)
 
-      console.log(res.data, "respuesta todas las propiedades");
     })
     .catch((error)=> console.log(error))
   }
 
-console.log(propertyDetails);
+
   return (
     <Container fluid className='portafolio-container'>
       <h1 className='turquesa'>PORTAFOLIO</h1>
