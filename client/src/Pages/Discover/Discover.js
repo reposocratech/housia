@@ -4,6 +4,7 @@ import axios from "axios";
 
 export const Discover = () => {
     const [discover, setDiscover] = useState([]);
+    const [fav, setFav] = useState(false);
     const [typeInDB, setTypeInDB] = useState([]);
     const [subTypeInDB, setSubTypeInDB] = useState([]);
     const [kitchenInDB, setKitchenInDB] = useState([]);
@@ -38,6 +39,7 @@ export const Discover = () => {
     const [filterProvince, setFilterProvince] = useState(-1)
     //Ciudades
     const [filterCity, setFilterCity] = useState(-1)
+
 
     useEffect(() => {
         //Activos en venta
@@ -89,6 +91,36 @@ export const Discover = () => {
 
 
     }, [])
+
+console.log(discover, "DISCOVER")
+    
+        const handleFav = (user_id, property_id) => {
+        setFav(!fav);
+        if(fav === false){
+            axios
+            .post(`http://localhost:4000/property/fav/${user_id}/${property_id}`)
+            .then((res) => {
+                console.log("Insertado")
+               
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
+
+        if(fav === true){
+            axios
+            .delete(`http://localhost:4000/property/unfav/${user_id}/${property_id}`)
+            .then((res) => {
+                console.log("Eliminado")
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        } 
+
+        }
+=======
 
     const cleanFilters = () =>{
         handleBothFilterBuiltMeters(0);
@@ -318,6 +350,7 @@ export const Discover = () => {
     }
     
 
+
   return (
     <div>
         <h1>Descubre</h1>
@@ -451,6 +484,11 @@ export const Discover = () => {
                 <div key={i} style={{border:"2px solid red"}}>
                 <img src={property?.image_title} alt=""></img>
                 <h3>{property?.property_name}</h3>
+
+                <p>{property?.province_name} {property?.city_name} (Spain)</p>
+                <p>Precio: {property?.purchase_buy_price}</p>
+                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
+
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
@@ -462,6 +500,7 @@ export const Discover = () => {
                 <p>Numero de baño/s: {property?.property_bathrooms}</p>
                 <p>Tipo de Cocina Actual: {property?.kitchen_name}</p>
                 <p>Plaza/s de aparcamiento: {property?.property_garage}</p>
+
                 </div>
             )
         })}

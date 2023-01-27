@@ -149,5 +149,16 @@ router.get("/propertyDetailsLoan/:property_id", propertyController.propertyDetai
 //localhost:4000/property/discover
 router.get("/discover", propertyController.discover);
 
+//Añadir una propiedad a favoritos
+//localhost:4000/property/fav/:user_id/:property_id
+router.post("/fav/:user_id/:property_id", propertyController.fav);
+
+//Quitar una propiedad a favoritos
+//localhost:4000/property/unfav/:user_id/:property_id
+router.delete("/unfav/:user_id/:property_id", propertyController.unfav);
+
+//Trae los favoritos de un usuario
+//localhost:4000/property/favUser/:user_id
+router.get("/favUser/:user_id", propertyController.favUser);
 
 module.exports = router;
