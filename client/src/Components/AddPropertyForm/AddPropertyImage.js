@@ -61,21 +61,6 @@ export const AddPropertyImage = () => {
   }
 
 
-  /* const handleDeleteImageEdit = (imageId, imagePropertyId) => {
-
-    axios
-      .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
-      .then((res) => {
-        console.log(res.data);
-        setImagesToEdit(res.data);
-        setShowImagesToEdit(true);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        
-      })
-  } */
-
   /* 
   const handleMainImage = (image) => {
 

@@ -81,6 +81,10 @@ router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFe
 //localhost:4000/property/addImgsProperty/:property_id
 router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty);
 
+//Actualizar Fotos Propiedad
+//localhost:4000/property/updateImagesProperty/:property_id
+router.post('/updateImagesProperty/:property_id', multer("property"), propertyController.updateImagesProperty)
+
 
 //ELIMINA FOTO de una Propiedad
 //localhost:4000/property/deleteImageProperty/:image_id/:property_id

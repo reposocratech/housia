@@ -335,6 +335,56 @@ class propertyController {
         });
       };
 
+      //Editar Fotos Propiedad
+      //localhost:4000/property/updateImagesProperty/:property_id
+      updateImagesProperty = (req, res) => {
+        let {property_id} = req.params;
+        let imgs = [''];
+        let mainImage = '';
+
+        if(req.files != undefined){
+          imgs = req.files;
+          mainImage = imgs[0].filename
+        }
+  
+        /* console.log(property_id, 'ID DE LA PROPIEDAD')*/
+        console.log(imgs, 'IMÁGENES QUE VOY A INSERTAR');
+
+        let sqlDeleteImg = `UPDATE image SET image_is_deleted = true, image_is_main = false WHERE image_property_id = ${property_id}`
+
+        connection.query(sqlDeleteImg, (errorDeleteImg, resultDeleteImg) => {
+          errorDeleteImg && res.status(400).json({errorDeleteImg})
+
+          console.log('IMAGEN PRINCIPAL', mainImage);
+         /*  console.log('IMÁGENES QUE VOY A INSERTAR', imgs); */
+
+          imgs.forEach((img) => {
+          
+            let sqlInsert = '';
+          
+            if(mainImage == img.filename){
+              sqlInsert = `INSERT INTO image (image_title, image_property_id, image_is_main) VALUES('${img.filename}', ${property_id}, true)`
+            }
+            else {
+              sqlInsert = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+            }
+
+            connection.query(sqlInsert, (errorInsert, resultInsert) => {
+              errorInsert && res.status(400).json({errorInsert})
+            })
+          })
+          
+          let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+
+          connection.query(sqlSelect, (errorSelect, resultSelect) => {
+            errorSelect 
+                ? res.status(400).json({errorSelect})
+                : res.status(200).json({resultSelect})
+          })
+        })
+      }
+    
+
 //CREAR ALQUILER
 
 // createRent = (req, res) => {

@@ -26,7 +26,7 @@ useEffect(() => {
     axios
     .get(`http://localhost:4000/users/${id}`)
     .then((res)=> {
-        console.log(res.data);
+        /* console.log(res.data); */
         setUser(res.data.resultUser[0]);
         setUserProperties(res.data.resultProperty);
     })
