@@ -3,6 +3,8 @@ import { Accordion, Button} from 'react-bootstrap'
 import './AddEconomicFeatures.scss'
 import { AppContext } from '../../Context/AppContext';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+
 
 export const AddEconomicFeatures = () => {
     const [rent, setRent] = useState();
@@ -10,16 +12,16 @@ export const AddEconomicFeatures = () => {
     const [purchase, setPurchase] = useState();
     const [isUsual, setIsUsual] = useState(false);
    
+    console.log(purchase , 'datos de purchase');
+    console.log(loan, 'datos de loan');
+    console.log(rent, 'datos de rent');
+
+    const navigate = useNavigate();
 
     const {property } = useContext(AppContext);
-    console.log(property);
-    // console.log(purchase);
-    // console.log(loan);
-    // console.log(rent);
 
-
-    let property_id = property?.property_id;
-   
+    // let property_id = property?.property_id;
+   let property_id = property;
 
     const handleChangePurchase = (e) => {
         const {name, value} = e.target;
@@ -64,6 +66,8 @@ export const AddEconomicFeatures = () => {
             .catch((err) => {
                 console.log(err, 'error de purchase');
             });
+            
+            navigate('/user/portafolio');
     }
 
   return (

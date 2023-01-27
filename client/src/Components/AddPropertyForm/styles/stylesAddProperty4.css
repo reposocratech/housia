@@ -47,3 +47,19 @@ input[type="checkbox"]:checked + .label{
     outline: 3px solid red;
     box-sizing: border-box;
 }
+
+
+.unchecked {
+    background-color: red;
+    color: navy;
+    font-size: 20px;
+    width: 240px;
+    height: 60px;
+    border: 1px solid black;
+    transition: 0.4s;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

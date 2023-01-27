@@ -1,44 +1,54 @@
 import React, { useContext, useEffect, useState}  from 'react';
 import { AppContext } from '../../../Context/AppContext';
 import axios from 'axios';
-import {Button, Container} from 'react-bootstrap'
-import {useNavigate} from 'react-router-dom'
+import {Button, Container} from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import './portafolio.scss';
+import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
+
+import jwtDecode from 'jwt-decode';
+
 
 
 export const Portafolio = () => {
+
   const [propertyDetails, setPropertyDetails] = useState();
 
-   const {user} = useContext(AppContext);
-  const navigate = useNavigate();
-  // console.log(user);
-  // console.log(isLogged);
-  // console.log(propertyDetails);
-  console.log(user, "user del portfolio");
+
+   const {user, setIsLogged} = useContext(AppContext);
+   const navigate = useNavigate();
 
 
- 
 
   useEffect(() => {
+    const token = localStorageUser();
+    if(token){
+
+    let id = jwtDecode(token).user.id;
+    setIsLogged(true);
+    console.log(id);
     
     axios
-      .get(`http://localhost:4000/users/getAllProperty/${user.user_id}`)
+      .get(`http://localhost:4000/users/getAllProperty/${id}`)
+
       .then((res)=>{
-        // console.log(res.data);
         setPropertyDetails(res.data.resultProperty);
       })
       .catch((err)=> {
         console.log(err);
       })
-}, [user.user_id])
+    }
+}, [])
+
 
   const delPropertyUser = (propiedad) => {
     
     axios
-      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user.user_id}`)
+      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user?.user_id}`)
       .then((res) => {
         setPropertyDetails(res.data.resultProperty);
-          // console.log(res.data.resultProperty, "respuesta del axios del delete");
+          console.log(res.data.resultProperty, "respuesta del axios del delete");
       })
       .catch((error)=> {console.log(error);})
   }
@@ -51,67 +61,89 @@ export const Portafolio = () => {
     
     if(isSold === 1){
       url=`http://localhost:4000/property/uncheckSale/${idProperty}/${user.user_id}`
-  }else if (isSold === 0) {
-    url = `http://localhost:4000/property/checkSale/${idProperty}/${user.user_id}`
-  }
-  axios
-  .put(url)
-  .then((res)=>{
+
+    }else if (isSold === 0) {
+      url = `http://localhost:4000/property/checkSale/${idProperty}/${user.user_id}`
+    }
+    axios
+    .put(url)
+    .then((res)=>{
+
       setPropertyDetails(res.data)
-      // console.log(res);
-  })
-  .catch((Err)=>console.log(Err))
-  }
+    })
+    .catch((Err)=>console.log(Err))
+    }
 
   const handleAllProperties = () => {
+    const token = localStorageUser();
+    if(token){
+        let user_id = jwtDecode(token).user.id;
+       
     axios
-    .get(`http://localhost:4000/users/getProperties/${user.user_id}`)
+    .get(`http://localhost:4000/users/getProperties/${user_id}`)
     .then ((res) => {
-      setPropertyDetails(res.data.result)
-      console.log(res.data.result, "respuesta todas las propiedades");
+      setPropertyDetails(res.data)
+
     })
     .catch((error)=> console.log(error))
   }
+  }
 
-console.log(propertyDetails);
+
   return (
     <Container fluid className='portafolio-container'>
-      <h1 className='turquesa'>PORTAFOLIO</h1>
+      <h1 className='turquoise'>PORTAFOLIO</h1>
 
       <div className='image'>
-        <div className='beneficio'>
+        <div className='benefit'>
           <h4>Beneficio</h4>
-          <h1 className='turquesa'>312.220 €</h1>
-          <div className='total'><span>Total</span><span className='turquesa'>+32%</span></div>
-          <div className='monthly'><span>Monthly</span><span className='turquesa'>+32%</span></div>
+          <h1 className='turquoise'>312.220 €</h1>
+          <div className='total'><span>Total</span><span className='turquoise'>+32%</span></div>
+          <div className='monthly'><span>Monthly</span><span className='turquoise'>+32%</span></div>
         </div>
       </div>
 
-      <div className='botones'>
-      <Button className='boton' onClick={handleAllProperties}>Ver todas mis propiedades</Button>
-      <Button className='boton' onClick={()=>navigate(`/addProperty`)}>Añadir propiedad</Button>
+      <div className='buttons'>
+      <Button className='button' onClick={handleAllProperties}>Ver todas mis propiedades</Button>
+      <Button className='button' onClick={()=>navigate(`/addProperty`)}>Añadir propiedad</Button>
       </div>
       <div className='row'>
         {propertyDetails?.map((prop, index)=> {
             return(
 
-              <div className='col-4' key={index}>
-              <Button onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='propiedad' key={prop.property_id}>
-                  <p>{prop?.property_name}</p>
+              <div className='col-12 col-sm-6 col-lg-4 properties' key={index}>
+              <div  className='property' key={prop.property_id}>
+
+                <div onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'><img src='/images/property/Id-1674320379687-descarga (1).jpeg'/></div>
+
+              <div className='all'>
+                <button onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'>
+                  <h5>{prop?.property_name}
+                  <div className={prop.property_is_for_sale === 0 ? "nosold " : "sold " }>En Venta</div></h5>
                   <p>
-                    <span>{prop.address_street_name} </span>
-                    <span>{prop.address_street_number}</span>
+                    <img className='location' src='/images/property/location.png'/>
+                    <span className='address'> {prop.address_street_name} </span>
+                    <span className='address'>{prop.address_street_number}</span>
                     </p>
-                    <p>{prop.purchase_buy_price} €</p>
-                  
-                  </Button>
-              <div >
+                    <h5 className='turquoise'>{prop.purchase_buy_price} €</h5>
+                </button>
+
+                <div className='del_sale'>
+                     
                   <Button 
-                    onClick={()=>delPropertyUser(prop)} className='borrar'
-                    >Borrar</Button>
-    
-                  <Button onClick={()=>handleSold(prop.property_id, prop.property_is_for_sale)} className='venta'>{prop.property_is_for_sale === 0 ? "Poner en venta" : "quitar de la venta"}</Button>
+                  onClick={()=>handleSold(prop.property_id, prop.property_is_for_sale)} 
+                  className= "sale">
+                    {prop.property_is_for_sale === 0 ? "Poner en venta" : "Quitar de la venta"}
+                  </Button>
+
+                  <Button 
+                    onClick={()=>delPropertyUser(prop)} className='delete'
+                    > Borrar
+                    </Button>
               </div>
+              </div>
+                  </div>
+             
               </div>
             )
           })
