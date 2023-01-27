@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {  useEffect, useState } from 'react'
 import { Accordion } from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 export const EditEconomicFeatures = () => {
     const [editPurchase, setEditPurchase] = useState();
@@ -10,6 +11,7 @@ export const EditEconomicFeatures = () => {
     const [checkboxState, setCheckboxState] = useState(false)
    
     let {property_id} = useParams(); 
+    const navigate= useNavigate();
     
 
 
@@ -76,6 +78,7 @@ export const EditEconomicFeatures = () => {
         console.log(error)
     })
     console.log(editPurchase);
+    navigate('/user/portafolio');
 } 
     
 const handleRadioLoanType =(e) =>{

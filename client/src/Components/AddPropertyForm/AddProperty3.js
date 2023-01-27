@@ -14,9 +14,9 @@ export const AddProperty3 = () => {
 
     const { register, formState:{errors}, handleSubmit } = useForm();
     
-    console.log(property);
+    /* console.log(property);
     console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    console.log(subTypeId, 'subtype id'); */
 
     // const handleChange = (e) => {
     //     const {name, value} = e.target;
@@ -100,7 +100,8 @@ export const AddProperty3 = () => {
             name="address_street_number"
             // onChange={handleChange}
             {...register('address_street_number', {
-                required: {value: true, message:'Campo obligatorio'}
+                required: {value: true, message:'Campo obligatorio'},
+                maxLength: {value: 5, message: 'El número no puede tener más de 5 dígitos'}
               })}
         />
         {errors.address_street_number && 
@@ -139,7 +140,8 @@ export const AddProperty3 = () => {
             name="address_postal_code"
             // onChange={handleChange}
             {...register('address_postal_code', {
-                required: {value: true, message:'Campo obligatorio'}
+                required: {value: true, message:'Campo obligatorio'},
+                maxLength: {value: 5, message: 'El código postal no puede tener más de 5 dígitos'}
               })}
         />
         {errors.address_postal_code && 

@@ -17,6 +17,7 @@ export const AddPropertyForm1 = () => {
 
     
     const [message, setMessage] = useState("");
+    const [message2, setMessage2] = useState("");
 
     const [newPropertyData, setNewPropertyData] = useState(initialValue);
 
@@ -25,8 +26,8 @@ export const AddPropertyForm1 = () => {
 
     const navigate = useNavigate();
 
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    /* console.log(typeId, 'type id');
+    console.log(subTypeId, 'subtype id'); */
 
     useEffect(() => {
         setProperty("");
@@ -49,6 +50,8 @@ export const AddPropertyForm1 = () => {
         .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
         .then((res) => {
             setSubtype(res.data);
+            setMessage('');
+            setMessage2('');
         })
         .catch((err) => {
             console.log(err);
@@ -57,39 +60,42 @@ export const AddPropertyForm1 = () => {
 
 const handleTypeId = (e) =>{
     setTypeId(e.target.value);
+
 }
 
 const handleSubTypeId = (e) => {
  setSubTypeId(e.target.value);
 }
 
-
 const handleChange = (e) => {
     const {name, value} = e.target;
     // setProperty({...property, [name]:value});
     setNewPropertyData({...newPropertyData, [name]:value});
     setMessage("");
-
 }
 
 const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(!newPropertyData.property_name){
+    if(!newPropertyData.property_name) {
         setMessage("Introduce un nombre para tu propiedad");
-    } else {
+        setMessage2("");
+    } else if( typeId === -1 || subTypeId === -1) {
+        setMessage2("Elige un tipo de propiedad");
+        setMessage("");
+    } 
+    else {
         axios
-        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
+        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,newPropertyData )
         .then((res) => {
             setProperty(res.data.resultProperty[0]);
             // console.log(res.data.resultProperty[0]);
-            navigate("/addProperty2");
+            navigate("/addProperty2", {replace:true});
         })
         .catch((err) => {
             console.log(err);
         });
     }
-
 
    /* const token = localStorageUser();
     if(token) {
@@ -134,6 +140,9 @@ const handleSubmit = (e) => {
         <div>
 
          <select onChange={handleTypeId}>
+            <option value={-1}>
+                Tipo
+            </option>
             {type?.map((tipo, i) => {
                 return(
                     <option key={i}  value={tipo.type_id}>{tipo.type_name}</option>
@@ -145,7 +154,9 @@ const handleSubmit = (e) => {
         <div>
         <p>Tipo de inmueble</p>
         <select onChange={handleSubTypeId}>
-        
+        <option value={-1}>
+                Subtipo
+            </option>
          {subtype?.map((subtipo, i) => {
                 return(
                     <option key={i} value={subtipo.subtype_id} >{subtipo?.subtype_name}</option>
@@ -153,6 +164,7 @@ const handleSubmit = (e) => {
             })}  
         </select>
         </div>
+        <div style={{ color: "red" }}>{message2}</div>
         <hr/>
         <button 
             type='submit' 
