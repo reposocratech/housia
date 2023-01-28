@@ -28,6 +28,7 @@ export const NavBarUser = () => {
           <Nav className='d-flex justify-content-evenly'>
           <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
 
+
           {isLogged && user?.user_type === 2 && 
             <Nav className='d-flex'>
             <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
