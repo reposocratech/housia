@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState} from 'react'
-import { AppContext } from '../../../Context/AppContext';import {Container, Row, Col, Button} from 'react-bootstrap';
+import { AppContext } from '../../../Context/AppContext';
+import { Row, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import './user.scss';
 
 export const EditUser = () => {
     const { user, setUser, resetUser, setResetUser } = useContext(AppContext);
@@ -36,7 +38,7 @@ export const EditUser = () => {
           .put(`http://localhost:4000/users/editUser/${user.user_id}`, newFormData)
           .then((res)=>{
             setUser(editUser);
-            // navigate('/user');
+            navigate('/user/perfil');
             setResetUser(!resetUser)
           })
           .catch((error)=>{
@@ -46,17 +48,23 @@ export const EditUser = () => {
 
     
   return (
-    <div>
-        <h1>Editar perfil</h1>
-        <Container fluid>
-        <Row>
-        <Col md={4}>
-          <form
+    <div className='perfil-usuario'>
+      <section className='perfil-datos'>
+      <h1>Editar Perfíl</h1>
+      <img className='perfil-imagen' src={`../images/user/${user?.user_img}`} alt='foto_user' />
+      </section>
+
+      <section className='perfil-extras'>
+      <form
             encType='multipart/form-data'
-            className='d-flex flex-column'>
-          <div>
+            >
+        <Row className='justify-content-center m-0'>
+        
+        <Col className='perfil-editar' xs={10} sm={5} lg={4}>
+          
+          <label>Nombre</label>
           <input
-                className='m-2'
+                className='perfil-input'
                 placeholder='name'
                 autoComplete='off'
                 required
@@ -64,8 +72,9 @@ export const EditUser = () => {
                 onChange={handleChange}
                 name='user_name'
             />
+            <label>Apellido</label>
             <input
-                className='m-2'
+                className='perfil-input'
                 placeholder='lastname'
                 autoComplete='off'
                 required
@@ -73,8 +82,9 @@ export const EditUser = () => {
                 onChange={handleChange}
                 name='user_lastname'
             />
+            <label>Teléfono</label>
             <input
-                className='m-2'
+                className='perfil-input'
                 placeholder='telefono'
                 autoComplete='off'
                 required
@@ -82,8 +92,12 @@ export const EditUser = () => {
                 onChange={handleChange}
                 name='user_phone'
             />
+          </Col>
+
+          <Col className='columna perfil-editar' xs={10} sm={5} lg={4}>
+            <label>Dni</label>
             <input
-                className='m-2'
+                className='perfil-input'
                 placeholder='dni'
                 autoComplete='off'
                 required
@@ -91,9 +105,10 @@ export const EditUser = () => {
                 onChange={handleChange}
                 name='user_dni'
             />
+            <label>Fecha de nacimiento</label>
             <input
                 type ='date'
-                className='m-2'
+                className='perfil-input'
                 placeholder='fecha de nacimiento'
                 autoComplete='off'
                 required
@@ -101,22 +116,33 @@ export const EditUser = () => {
                 onChange={handleChange}
                 name='user_birth_date'
             />
+             <label>Imágen de perfíl</label>
             <input
               type='file'
-              className='m-2'
+              className='perfil-input'
               autoComplete='off'
               onChange={handleFile}
             />
-             <div>
-              <Button className='m-2' onClick={onSubmit} >Guardar cambios</Button>
-              <Button className='m-2' onClick={()=> navigate(-1)}>Cancelar cambios</Button>
-            </div>
-            </div>
-          </form>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+        </Row>
+          <div className='editar-perfil-botones'>
+              <Button onClick={onSubmit} >Guardar</Button>
+          </div>
+        </form>
+      </section>
+      </div>
+      
+          
+          
+            
+           
+             
+        
+      
+       
+ 
 
-    </div>
+
+  
   )
 }

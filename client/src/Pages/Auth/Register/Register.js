@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import '../Login/login.scss';
 
 const initialState = {
     name: "",
@@ -35,10 +36,12 @@ export const Register = () => {
       }
 
   return (
-    <>
-    <h2>Registro</h2>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <div className='login-container'>
+      <div className='login-form-container'>
+    <h1>REGISTRO</h1>
+    <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
       <input
+          className='input-login'
           type='text'
           placeholder='name'
           autoComplete='off'
@@ -54,6 +57,7 @@ export const Register = () => {
             </div>
           }
       <input
+          className='input-login'
           type='text'
           placeholder='lastname'
           autoComplete='off'
@@ -69,6 +73,7 @@ export const Register = () => {
             </div>
           }
       <input
+          className='input-login'
           type='email'
           placeholder='email@email.com'
           autoComplete='off'
@@ -84,6 +89,7 @@ export const Register = () => {
             </div>
           }
       <input
+          className='input-login'
           placeholder='code'
           autoComplete='off'
           name='promotional_code'
@@ -91,6 +97,7 @@ export const Register = () => {
           )}
       />
       <input
+          className='input-login'
           type='password'
           placeholder='password'
           autoComplete='off'
@@ -98,7 +105,7 @@ export const Register = () => {
           {...register('password', {
             required: {value: true, message:'introduce una contraseña'},
             pattern: {
-              value: /^(?=\w*\d)(?=\w*[a-z])\S{7,16}$/, 
+              value: /^(?=\w*\d)(?=\w*[a-z])\S{6,16}$/, 
               message: 'La contraseña debe tener al menos 6 caracteres y un dígito' }
           })}
       />
@@ -108,9 +115,10 @@ export const Register = () => {
             </div>
           }
     <div style={{ color: "red" }}>{messageError}</div>
-    <button type='submit'>Crear cuenta</button>
+    <button className='login-boton' type='submit'>Crear cuenta</button>
     </form>
-    
-    </>
+    <p>Ya tienes cuenta? <span onClick={()=> navigate('/login')}>INICIA SESIÓN</span></p>
+    </div>
+    </div>
   )
-}
+} 
