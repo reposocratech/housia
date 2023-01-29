@@ -61,7 +61,7 @@ console.log(subTypeId, 'subtype id'); */
             placeholder='0'
             autoComplete='off'
             type="number"
-            value={property?.property_total_meters}
+            value={property?.property_total_meters === 0 ? '' : property?.property_total_meters}
             name="property_total_meters"
             onChange={handleChange}
         />
@@ -71,7 +71,7 @@ console.log(subTypeId, 'subtype id'); */
             placeholder='0'
             autoComplete='off'
             type="number"
-            value={property?.property_built_meters}
+            value={property?.property_built_meters === 0 ? '' : property?.property_built_meters}
             name="property_built_meters"
             onChange={handleChange}
         />
@@ -86,7 +86,7 @@ console.log(subTypeId, 'subtype id'); */
             type="number"
             min="1500"
             max="3000"
-            value={property?.property_built_year}
+            value={property?.property_built_year === 0 ? '' : property?.property_built_year}
             name="property_built_year"
             onChange={handleChange}
         />
@@ -100,7 +100,7 @@ console.log(subTypeId, 'subtype id'); */
             placeholder='0'
             autoComplete='off'
             type="number"
-            value={property?.property_rooms}
+            value={property?.property_rooms === 0 ? '' : property?.property_rooms}
             name="property_rooms"
             onChange={handleChange}
         />
@@ -113,7 +113,7 @@ console.log(subTypeId, 'subtype id'); */
             placeholder='0'
             autoComplete='off'
             type="number"
-            value={property?.property_bathrooms}
+            value={property?.property_bathrooms === 0 ? '' : property?.property_bathrooms }
             name="property_bathrooms"
             onChange={handleChange}
         />
@@ -125,7 +125,7 @@ console.log(subTypeId, 'subtype id'); */
             placeholder='0'
             autoComplete='off'
             type="number"
-            value={property?.property_garage}
+            value={property?.property_garage === 0 ? '' : property?.property_garage}
             name="property_garage"
             onChange={handleChange}
         />

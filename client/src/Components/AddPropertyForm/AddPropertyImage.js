@@ -1,3 +1,5 @@
+
+
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
@@ -59,29 +61,6 @@ export const AddPropertyImage = () => {
       const newArrImgs = images.filter((img) => img.file.name !== name);
       setimages(newArrImgs)
   }
-
-
-  /* 
-  const handleMainImage = (image) => {
-
-    let url = '';
-
-    if(image.image_is_main === 0){
-      url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
-    }
-    else if(image.image_is_main === 1) {
-      url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
-    }
-
-    axios
-      .put(url)
-      .then((response) => {
-        setImagesToEdit(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  } */
 
   const onSubmit = (id) => {
     const newFormData = new FormData();

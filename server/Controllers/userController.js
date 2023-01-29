@@ -167,7 +167,7 @@ editOneUser =(req, res)=>{
 getAllProperty = (req, res) => {
     let {user_id} = req.params;
 
-    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC LIMIT 6`;
+    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_id DESC LIMIT 6`;
   
     
         connection.query(sql2, (error2, resultProperty) => {

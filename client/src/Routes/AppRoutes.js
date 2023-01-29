@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { Home } from '../Pages/UserDashboard/Home/Home'
 import { Login } from '../Pages/Auth/Login/Login'
@@ -24,11 +24,18 @@ import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEco
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
 
+import { AppContext } from '../Context/AppContext'
+import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
+
 export const AppRoutes = () => {
+  const {user, setUser, isLogged} = useContext(AppContext);
+  
   return (
     <div>
         <BrowserRouter>
-        <NavBarUser/>
+        {isLogged && <NavBarUser/>}
+        {!isLogged && <NavBarLogin/>}
+        
             <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/register' element={<Register/>}/>
