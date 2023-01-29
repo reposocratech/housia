@@ -2,7 +2,12 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+
 import '../Login/login.scss';
+
+import "./StyleRegister.scss";
+
+
 
 const initialState = {
     name: "",
@@ -36,10 +41,16 @@ export const Register = () => {
       }
 
   return (
+
     <div className='login-container'>
       <div className='login-form-container'>
     <h1>REGISTRO</h1>
     <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
+
+    <div className='fondoAzul'>
+    <h2>Registro</h2>
+    <form onSubmit={handleSubmit(onSubmit)}>
+
       <input
           className='input-login'
           type='text'
@@ -117,8 +128,12 @@ export const Register = () => {
     <div style={{ color: "red" }}>{messageError}</div>
     <button className='login-boton' type='submit'>Crear cuenta</button>
     </form>
+
     <p>Ya tienes cuenta? <span onClick={()=> navigate('/login')}>INICIA SESIÓN</span></p>
     </div>
+
+    
+
     </div>
   )
 } 

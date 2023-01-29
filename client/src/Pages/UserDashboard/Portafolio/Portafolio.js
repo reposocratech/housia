@@ -9,6 +9,8 @@ import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
 
 
+
+
 export const Portafolio = () => {
 
   const [propertyDetails, setPropertyDetails] = useState();
