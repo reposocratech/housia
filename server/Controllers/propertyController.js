@@ -1,4 +1,5 @@
 const connection = require("../config/db.js");
+const fs = require('fs').promises;
 
 
 class propertyController {
@@ -37,6 +38,8 @@ class propertyController {
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
     console.log('SQLLLL', sql);
+
+    
     
 
     connection.query(sql, (error, result) => {
@@ -278,6 +281,28 @@ class propertyController {
   
         res.status(200).send('features save successfully')
       }
+
+      //EDITAR CARACTERÍSTICAS DE UN INMUEBLE
+      editFeaturesProperty = (req, res) => {
+        let {property_id} = req.params;
+        let features = req.body;
+
+        let sqlDelete = `DELETE FROM feature_property WHERE property_id = ${property_id}`;
+
+        connection.query(sqlDelete, (errorDel, resultDel) => {
+          errorDel && res.status(400).json({errorDel});
+
+          features?.map((feature, ind) => {
+            let sqlIns = `INSERT INTO feature_property (feature_id, property_id) VALUES(${feature}, ${property_id})`;
+
+            connection.query(sqlIns, (errorIns, resultIns) => {
+              errorIns && res.status(400).json({errorIns})
+            })
+          })
+
+          res.status(200).send('features saved succesfully');
+        })
+      }
   
 
 
@@ -304,7 +329,9 @@ class propertyController {
           img = req.files;
         }
 
-        console.log(img, 'imagenes q recibo');
+
+        /* console.log(img); */
+
         
         let mainImage = img[0].filename
 
@@ -334,6 +361,97 @@ class propertyController {
             : res.status(200).json(resultImgs)
         });
       };
+
+      //Editar Fotos Propiedad
+      //localhost:4000/property/updateImagesProperty/:property_id
+      updateImagesProperty = (req, res) => {
+        let {property_id} = req.params;
+        let imgs = [''];
+        let mainImage = '';
+
+        if(req.files != undefined){
+          imgs = req.files;
+          mainImage = imgs[0].filename
+        }
+
+
+        let sqlDeleteImg = `UPDATE image SET image_is_deleted = true, image_is_main = false WHERE image_property_id = ${property_id}`
+
+        connection.query(sqlDeleteImg, (errorDeleteImg, resultDeleteImg) => {
+          errorDeleteImg && res.status(400).json({errorDeleteImg})
+
+          /* console.log('IMAGEN PRINCIPAL', mainImage); */
+         /*  console.log('IMÁGENES QUE VOY A INSERTAR', imgs); */
+
+          imgs.forEach((img) => {
+          
+            let sqlInsert = '';
+          
+            if(mainImage == img.filename){
+              sqlInsert = `INSERT INTO image (image_title, image_property_id, image_is_main) VALUES('${img.filename}', ${property_id}, true)`
+            }
+            else {
+              sqlInsert = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+            }
+
+            connection.query(sqlInsert, (errorInsert, resultInsert) => {
+              errorInsert && res.status(400).json({errorInsert})
+            })
+          })
+          
+          let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+
+          connection.query(sqlSelect, (errorSelect, resultSelect) => {
+            errorSelect 
+                ? res.status(400).json({errorSelect})
+                : res.status(200).json({resultSelect})
+          })
+        })
+      }
+
+
+      addOneImage = (req, res) => {
+        let {property_id} = req.params;
+        let images = [''];
+
+        if(req.files != undefined){
+          images = req.files;
+        }
+
+        /* console.log('IMAGENES PARA GUARDAR', images); */
+        
+
+        images.forEach((img) =>{
+          let sqlAdd = `INSERT INTO image (image_title, image_property_id) VALUES ('${img.filename}', ${property_id})`
+
+          connection.query(sqlAdd, (errorAdd, resultAdd) => {
+            errorAdd && res.status(400).json({errorAdd})
+          })
+        })
+
+        let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+
+        connection.query(sqlSelect, (errorSelect, resultSelect) => {
+          errorSelect 
+              ? res.status(400).json({errorSelect})
+              : res.status(200).json({resultSelect})
+        })
+      }
+
+      //Elimina una Foto del EditForm
+      //localhost:4000/property/delImg/:image_id
+      delImg = (req, res) => {
+        const {image_id} = req.params;
+        console.log('ID DE LA FOTO A QUITAR',image_id);
+        
+
+        let sqlDeleteImg = `UPDATE image SET image_is_deleted = true, image_is_main = false WHERE image_id = ${image_id}`
+        connection.query(sqlDeleteImg, (errorDel, resultDel) => {
+          errorDel ? res.status(400).json({errorDel}) : res.status(200).json(resultDel) 
+        } )
+      }
+
+    
 
 //CREAR ALQUILER
 
@@ -511,7 +629,7 @@ editPurchase = (req,res) => {
   
   }
   res.status(200).send('insert correctos');
-  console.log('correctos');
+  /* console.log('correctos'); */
   
   
 
@@ -565,11 +683,11 @@ editPurchase = (req,res) => {
       setMainImage = (req, res) => {
         let {image_id, property_id} = req.params;
 
-        let unSetMainSql = 'UPDATE image SET image_is_main = false'
+        let unSetMainSql = `UPDATE image SET image_is_main = false WHERE image_property_id = ${property_id}`
 
         let sql = `UPDATE image SET image_is_main = true WHERE image.image_id = ${image_id}`;
 
-        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id} and image_is_deleted = false`;
 
         connection.query(unSetMainSql, (errorUnSet, resultUnSet) => {
           if (errorUnSet) {res.status(400).json({errorUnSet})}
