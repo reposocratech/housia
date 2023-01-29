@@ -1,0 +1,11 @@
+.portafolio-container {
+  font-family: Barlow;
+  background-color: #272839;
+  color: white;
+  height: 100%;
+  text-align: center;
+  padding: 3% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}/*# sourceMappingURL=summaryInv.css.map */

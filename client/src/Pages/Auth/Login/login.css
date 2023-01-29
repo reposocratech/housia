@@ -1,0 +1,69 @@
+.login-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(34deg, rgb(0, 20, 70) 0%, rgb(14, 95, 125) 49%, rgb(36, 204, 195) 100%);
+  color: white;
+  font-family: "Barlow";
+}
+.login-container .login-form-container {
+  margin-top: 200px;
+  text-align: center;
+  width: 300px;
+}
+.login-container .login-form-container h1 {
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.login-container .login-form-container .login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.login-container .login-form-container .login-form .input-login {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid #00ACB5;
+  border-radius: 12px;
+  color: white;
+}
+.login-container .login-form-container .login-form ::-moz-placeholder {
+  color: rgba(226, 225, 225, 0.936);
+}
+.login-container .login-form-container .login-form :-ms-input-placeholder {
+  color: rgba(226, 225, 225, 0.936);
+}
+.login-container .login-form-container .login-form ::placeholder {
+  color: rgba(226, 225, 225, 0.936);
+}
+.login-container .login-form-container .login-form :focus {
+  outline: 1px solid #4cecf5;
+  border: 1px solid #4cecf5;
+}
+.login-container .login-form-container .login-form .icono {
+  position: relative;
+  left: 250px;
+  bottom: 45px;
+  cursor: pointer;
+  width: 30px;
+}
+.login-container .login-form-container .login-form .login-boton {
+  background-color: #26ADB5;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 12px;
+}
+.login-container .login-form-container .login-form .login-boton:hover {
+  background-color: rgba(38, 174, 181, 0.2470588235);
+  transition: 0.5s;
+}
+.login-container .login-form-container p {
+  margin-top: 10px;
+}
+.login-container .login-form-container p span {
+  color: #26ADB5;
+  cursor: pointer;
+}/*# sourceMappingURL=login.css.map */

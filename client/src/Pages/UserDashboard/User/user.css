@@ -1,0 +1,112 @@
+.perfil-usuario {
+  background-color: #272839;
+  height: 100vh;
+  color: white;
+}
+.perfil-usuario .perfil-datos {
+  padding-top: 80px;
+  text-align: center;
+}
+.perfil-usuario .perfil-datos h1 {
+  color: rgb(3, 255, 247);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+.perfil-usuario .perfil-datos .perfil-imagen {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.perfil-usuario .perfil-datos h2, .perfil-usuario .perfil-datos p {
+  margin-top: 10px;
+}
+.perfil-usuario .perfil-datos h5 {
+  color: gray;
+  font-weight: lighter;
+  letter-spacing: 0.5px;
+}
+.perfil-usuario .perfil-extras {
+  margin-top: 50px;
+}
+.perfil-usuario .perfil-extras .fila {
+  display: flex;
+  justify-content: center;
+}
+.perfil-usuario .perfil-extras h2 {
+  color: gray;
+  margin: 20px 0;
+}
+.perfil-usuario .perfil-extras .perfil-opcion {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  width: 100%;
+  cursor: pointer;
+}
+.perfil-usuario .perfil-extras .perfil-opcion .icono {
+  color: rgb(3, 255, 247);
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.perfil-usuario .perfil-extras .perfil-opcion .toggle {
+  background-color: transparent;
+  border: none;
+}
+.perfil-usuario .perfil-extras .perfil-opcion p {
+  margin: 0;
+}
+.perfil-usuario .perfil-editar {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.perfil-usuario .perfil-editar label {
+  margin-left: 5px;
+}
+.perfil-usuario .perfil-editar .perfil-input {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+  color: white;
+  font-weight: lighter;
+  border: none;
+  margin: 5px 0;
+}
+.perfil-usuario .perfil-editar ::-moz-placeholder {
+  color: white;
+}
+.perfil-usuario .perfil-editar :-ms-input-placeholder {
+  color: white;
+}
+.perfil-usuario .perfil-editar ::placeholder {
+  color: white;
+}
+.perfil-usuario .perfil-editar :focus {
+  outline: 1px solid #4cecf5;
+  border: 1px solid #4cecf5;
+}
+.perfil-usuario .editar-perfil-botones {
+  display: flex;
+  justify-content: center;
+}
+.perfil-usuario .editar-perfil-botones button {
+  background-color: #26ADB5;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  margin: 0 10px;
+  width: 40%;
+  margin-top: 10px;
+}
+.perfil-usuario .editar-perfil-botones button:hover {
+  background-color: rgba(38, 174, 181, 0.2470588235);
+  transition: 0.5s;
+}/*# sourceMappingURL=user.css.map */
