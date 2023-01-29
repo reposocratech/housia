@@ -29,56 +29,19 @@ export const EditEconomicFeatures = () => {
         },[property_id])
 
 
-        // let fechaCompra = "";
-        // if(!editPurchase?.purchase_buy_date){
-        // console.log('entra fecha de compra');
-        //  fechaCompra = editPurchase?.purchase_buy_date;
-        // };
-
-        // let fechaAlquiler = "";
-        // if(!editRent?.rent_renting_date){
-        // console.log('entra fecha de alquiler');
-        // fechaAlquiler = editPurchase?.rent_renting_date;
-        // };
- 
-
- 
     const handleSubmitEdit =(e)=>{
     e.preventDefault();
 
-    //axios del RENT
-    // axios
-    // .put(`http://localhost:4000/property/editRent/${property_id}`, editRent)
-    // .then((res)=>{
-    //     console.log("respuesta correcta")
-    //     //FALTA NAVIGATE A PROPERTY_ID;
-
-    // })
-    // .catch((error)=>{
-    //     console.log(error)
-    // })
-
-    //axios del LOAN
-    // axios
-    // .put(`http://localhost:4000/property/editLoan/${property_id}`, editLoan)
-    // .then((res)=>{
-    //     console.log("respuesta correcta")
-    // })
-    // .catch((error)=>{
-    //     console.log(error)
-    // })
-
-    // //axios del PURCHASE
     axios
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
+        navigate(`/propertyDetails/${property_id}`);
     })
     .catch((error)=>{
         console.log(error)
     })
     console.log(editPurchase);
-    navigate('/user/portafolio');
 } 
     
 const handleRadioLoanType =(e) =>{
@@ -121,22 +84,10 @@ const handleChangePurchase = (e) =>{
         setEditPurchase({...editPurchase, [name]:value})
     };
 
-// const handleChangeRent = (e) =>{
-//         const {name, value} = e.target;
-//         setEditRent({...editRent, [name]:value})
-        
-//     };
-
-// const handleChangeLoan =(e)=>{
-//         const {name, value} = e.target;
-//         setEditLoan({...editLoan, [name]: value})
-       
-//     };
-
 
   return (
     <div>
-         <h1>Formulario para editar caracteristicas economicas</h1>
+         <h1>Formulario Caracteristicas Economicas</h1>
 
         <div className='d-flex flex-column'>
         <input
