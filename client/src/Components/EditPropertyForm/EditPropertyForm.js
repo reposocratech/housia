@@ -1,10 +1,14 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 import { useParams } from "react-router-dom";
 import Select from 'react-select';
 import { AppContext } from "../../Context/AppContext";
+
+import './editProperty.css'
+import { ModalAddImage } from "./ModalAddImage";
+
 
 export const EditPropertyForm = () => {
 
@@ -21,11 +25,16 @@ export const EditPropertyForm = () => {
     const [features, setFeatures] = useState([])
     const [featuresSelected, setFeaturesSelected] = useState([]);
     const [featuresProperty, setFeaturesProperty] = useState([]);
+    const [imagesProperty, setImagesProperty] = useState([]);
+    const [showAddImage, setShowAddImage] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
     const {property, setProperty} = useContext(AppContext);
 
     const {property_id} = useParams();
+
+    const URL_PROP = 'http://localhost:4000/property';
+
     
 
     // let nombreTipo = type[(property?.type_id) -1 ].type_name;
@@ -147,7 +156,7 @@ export const EditPropertyForm = () => {
 
     useEffect(()=> {
         axios
-            .get(`http://localhost:4000/property/getPropertyFeatures/${property?.property_id}`)
+            .get(`${URL_PROP}/getPropertyFeatures/${property?.property_id}`)
             .then((res) => {
                 setFeaturesProperty(res.data)
                 let arrayProv = [];
@@ -165,6 +174,49 @@ export const EditPropertyForm = () => {
             })
     }, [property?.property_id])
 
+    useEffect(() =>{
+        axios
+            .get(`${URL_PROP}/getImagesProperty/${property?.property_id}`)
+            .then((res) => {
+                /* console.log(res.data); */
+                setImagesProperty(res.data);
+            })
+            .catch((error) => {
+                console.log(error.message);
+            })
+
+    }, [property?.property_id])
+    
+
+    /* console.log('IMAGES PARA GUARDAR', imagesProperty); */
+
+    const handleDeleteImage = (id) => {
+        const newArrImgs = imagesProperty?.filter((img) => img.image_id !== id );
+
+        axios
+            .put(`${URL_PROP}/delImg/${id}`)
+            .then((res) => {
+                /* console.log('RES DEL DELETE PHOTO EN EDIT', res); */
+                setImagesProperty(newArrImgs);
+            })
+            .catch((error) => {
+                console.log(error.message);
+                
+            })
+    }
+
+    const handleSetMain = (id) => {
+        axios
+            .put(`${URL_PROP}/setMainImage/${id}/${property.property_id}`)
+            .then((res) => {
+                /* console.log('RES DEL SETMAIN', res.data); */
+                setImagesProperty(res.data)
+            })
+            .catch((error) => {
+                console.log('ERROR DEL SETmAIN', error);
+            })
+    }
+
   const handleChange = (e) =>{
     const {name, value} = e.target;
     setProperty({...property, [name]:value});
@@ -174,10 +226,10 @@ export const EditPropertyForm = () => {
 
     let featId = Number(e.target.name);
 
-    if(featuresSelected.includes(featId) === false){
+    if(featuresSelected?.includes(featId) === false){
         setFeaturesSelected([...featuresSelected, featId]);
     }
-    else if(featuresSelected.includes(featId)){
+    else if(featuresSelected?.includes(featId)){
         setFeaturesSelected(featuresSelected.filter(elem => elem !== featId));
     }
   }
@@ -197,14 +249,13 @@ export const EditPropertyForm = () => {
     
     insertFeaturesToArray(e) ;
   }
-
   
   const otherFeature = (featuresProperty) => {
 
       let prueba2 = [...prueba];
       
-      featuresProperty.forEach((featureProp) => {
-        prueba2.map((ele, ind) => {
+      featuresProperty?.forEach((featureProp) => {
+        prueba2?.map((ele, ind) => {
             if(ele.feature_id === featureProp.feature_id) {
                 ele.checked = true;
             }
@@ -212,12 +263,33 @@ export const EditPropertyForm = () => {
     })
     setPrueba(prueba2)
 }
+    
 
+    const saveFeaturesFromEdit = (id) => {
+        if(featuresSelected){
+            axios
+                .post(`http://localhost:4000/property/editFeaturesProperty/${id}`, featuresSelected)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    }
+
+    const saveEditedProperty = () => {
+
+    }
+
+     console.log('PROPIEDAD EN EDICIÓN', property);
+    /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
+    /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
+    
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log('PROPIEDAD EN EDICIÓN', property);
-        console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
-        
+
+        saveFeaturesFromEdit(property?.property_id);
     }
 
 
@@ -459,14 +531,12 @@ export const EditPropertyForm = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Form.Group>
-
                     </Row>
                     <Row className="d-flex mt-4">
                         {prueba?.map((feature, index) => {
                             return(
                                 <Col md={3} key={index}>
                                     <Button
-                                        /* size='lg' */
                                         className="rounded rounded-4 mb-3"
                                         variant={feature?.checked ? 'info' : 'outline-info'}
                                         onClick={handleCheck}
@@ -477,15 +547,60 @@ export const EditPropertyForm = () => {
                             )
                         })}
                     </Row>
+                    <Row>
+                        {imagesProperty?.map((img, ind) => {
+                            return(
+                                <Col md={3} key={ind}>
+                                    <div className="editImage">
+                                        <Image
+                                            style={{width: '100%'}}
+                                            src={`/images/property/${img.image_title}`}
+                                            className='rounded'
+                                            alt='image property'
+                                        />
+                                        {(imagesProperty?.length > 1 && img.image_is_main  === 0) && (
+
+                                            <div className="options">
+                                                <div 
+                                                    onClick={() => handleSetMain(img.image_id)}
+                                                    className='buttonMain'
+                                                    >
+                                                    Hacer Principal
+                                                </div>
+                                                <div
+                                                    onClick={() => handleDeleteImage(img.image_id)}
+                                                    className="buttonDelete"
+                                                    >Quitar
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </Col> 
+                            )
+                        })}
+                        <div className="mt-3">
+                            <Button
+                                variant="info"
+                                size="sm"
+                                onClick={() => setShowAddImage(true)}
+                            >
+                                Añadir Foto
+                            </Button>
+                        </div>
+                    </Row>
                 </Col>
             </Row>
 
-            
-            
             <Button size="lg" variant="secondary" type="submit">
                 GUARDAR
             </Button>
         </Form>
+        <ModalAddImage 
+            property={property} 
+            setImagesProperty={setImagesProperty} 
+            showAddImage={showAddImage} 
+            setShowAddImage={setShowAddImage}
+        />
     
     </Container>
 

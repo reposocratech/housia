@@ -48,43 +48,42 @@ const initialState = {
 
     return (
      <div className='login-container'>
-       <h1>Bienvenido de nuevo a Housia</h1>
-       <h2>Login</h2>
+      <div className='login-form-container'>
+      <h1>HOUSIA LOGIN</h1>
        <div className='login-form'>
           <input
+              className='input-login'
               placeholder='Correo electrónico'
               autoComplete='off'
               value={login?.email}
               onChange={handleChange}
               name='email'
           />
-          <div>
-          <input
+           <input className='input-login'
               type={showPassword ? 'text' : 'password'}
               placeholder='contraseña'
               autoComplete='off'
               value={login?.password}
               onChange={handleChange}
-              name='password'
-           />
-           <div onClick={()=>setshowPassword(!showPassword)}>
+              name='password'>
+          
+           </input>
+           <div className='icono' onClick={()=>setshowPassword(!showPassword)}>
             {showPassword ? <span class="material-icons-round">
                   visibility
             </span> :
               <span class="material-icons-round">
               visibility_off
-        </span>} 
-           </div>
-    
+            </span>} 
           </div>
-          
            <div style={{ color: "red" }}>{message}</div>
            <div style={{ color: "red" }}>{messageError}</div>
-
            <p>¿Has olvidado la contraseña?</p>
            <button className='login-boton' onClick={handleLogin}>Iniciar Sesión</button>
-        
         </div>
+        <p>¿Aún no tienes cuenta? <span onClick={()=> navigate('/register')}>REGISTRATE</span></p>
+      </div>
+       
      </div>
     )
   }
