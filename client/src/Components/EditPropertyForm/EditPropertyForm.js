@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 import './editProperty.css'
+import { ModalAddImage } from "./ModalAddImage";
 
 
 export const EditPropertyForm = () => {
@@ -24,6 +25,7 @@ export const EditPropertyForm = () => {
     const [featuresSelected, setFeaturesSelected] = useState([]);
     const [featuresProperty, setFeaturesProperty] = useState([]);
     const [imagesProperty, setImagesProperty] = useState([]);
+    const [showAddImage, setShowAddImage] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
     const {property, setProperty} = useContext(AppContext);
@@ -144,7 +146,7 @@ export const EditPropertyForm = () => {
 
     useEffect(()=> {
         axios
-            .get(`http://localhost:4000/property/getPropertyFeatures/${property?.property_id}`)
+            .get(`${URL_PROP}/getPropertyFeatures/${property?.property_id}`)
             .then((res) => {
                 setFeaturesProperty(res.data)
                 let arrayProv = [];
@@ -164,53 +166,45 @@ export const EditPropertyForm = () => {
 
     useEffect(() =>{
         axios
-            .get(`http://localhost:4000/property/getImagesProperty/${property?.property_id}`)
+            .get(`${URL_PROP}/getImagesProperty/${property?.property_id}`)
             .then((res) => {
                 /* console.log(res.data); */
-                let arrayImgs = res.data.map((ele, ind) => {
-                    return { ...ele, id: Date.now() + '-' + ind }
-                })
-                
-                setImagesProperty(arrayImgs);
+                setImagesProperty(res.data);
             })
             .catch((error) => {
                 console.log(error.message);
             })
 
     }, [property?.property_id])
-
-    const handleImgs = (e) => {
-        let newImgsToState = readmultifiles(e);
-        let newImgs = [...imagesProperty];
-        newImgsToState.map((img) => {
-            newImgs.push(img)
-        })
-        setImagesProperty(newImgs);
-    }
-
-    const readmultifiles = (e) => {
-        const files = e.target.files;
-        const arrayImages = [];
-
-        Object.keys(files).forEach((i) => {
-            const file = files[i];
-            let url = URL.createObjectURL(file);
-
-            arrayImages.push({
-                id: Date.now(),
-                url, 
-                file
-            })
-        });
-
-        return arrayImages;
-    }
+    
 
     /* console.log('IMAGES PARA GUARDAR', imagesProperty); */
 
     const handleDeleteImage = (id) => {
-        const newArrImgs = imagesProperty?.filter((img) => img.id !== id );
-        setImagesProperty(newArrImgs);
+        const newArrImgs = imagesProperty?.filter((img) => img.image_id !== id );
+
+        axios
+            .put(`${URL_PROP}/delImg/${id}`)
+            .then((res) => {
+                /* console.log('RES DEL DELETE PHOTO EN EDIT', res); */
+                setImagesProperty(newArrImgs);
+            })
+            .catch((error) => {
+                console.log(error.message);
+                
+            })
+    }
+
+    const handleSetMain = (id) => {
+        axios
+            .put(`${URL_PROP}/setMainImage/${id}/${property.property_id}`)
+            .then((res) => {
+                /* console.log('RES DEL SETMAIN', res.data); */
+                setImagesProperty(res.data)
+            })
+            .catch((error) => {
+                console.log('ERROR DEL SETmAIN', error);
+            })
     }
 
   const handleChange = (e) =>{
@@ -259,38 +253,33 @@ export const EditPropertyForm = () => {
     })
     setPrueba(prueba2)
 }
+    
 
-    const saveImagesFromEdit = (id) =>{
-        const newFormData = new FormData();
-
-        if(imagesProperty){
-            for(const image of imagesProperty){
-                if(image.file){
-                    newFormData.append('file', image.file)
-                }
-                else {
-                    newFormData.append('file', new File([image], 'image.jpeg', {type: image.type}) )
-                }
-            }
+    const saveFeaturesFromEdit = (id) => {
+        if(featuresSelected){
+            axios
+                .post(`http://localhost:4000/property/editFeaturesProperty/${id}`, featuresSelected)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
-
-        axios
-        .post(`${URL_PROP}/updateImagesProperty/${id}`, newFormData)
-        .then((res) => {
-            console.log(res.data);
-        })  
-        .catch((error) => {
-            console.log(error.message);
-        })
     }
 
+    const saveEditedProperty = () => {
+
+    }
+
+     console.log('PROPIEDAD EN EDICIÓN', property);
+    /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
+    /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
+    
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log('PROPIEDAD EN EDICIÓN', property);
-        console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO');
-        console.log(imagesProperty, 'IMÁGENES PARA SUBIR');
 
-        saveImagesFromEdit(property?.property_id);
+        saveFeaturesFromEdit(property?.property_id);
     }
 
   return (
@@ -549,33 +538,37 @@ export const EditPropertyForm = () => {
                                     <div className="editImage">
                                         <Image
                                             style={{width: '100%'}}
-                                            src={img.image_title ? `/images/property/${img.image_title}` : img.url}
+                                            src={`/images/property/${img.image_title}`}
                                             className='rounded'
                                             alt='image property'
                                         />
-                                        {imagesProperty?.length > 1 && (
-                                            <div
-                                                onClick={() => handleDeleteImage(img.id)}
-                                                className="buttonDelete"
-                                                >Quitar
+                                        {(imagesProperty?.length > 1 && img.image_is_main  === 0) && (
+
+                                            <div className="options">
+                                                <div 
+                                                    onClick={() => handleSetMain(img.image_id)}
+                                                    className='buttonMain'
+                                                    >
+                                                    Hacer Principal
+                                                </div>
+                                                <div
+                                                    onClick={() => handleDeleteImage(img.image_id)}
+                                                    className="buttonDelete"
+                                                    >Quitar
+                                                </div>
                                             </div>
                                         )}
                                     </div>
-                                </Col>
+                                </Col> 
                             )
                         })}
                         <div className="mt-3">
                             <Button
-                                size="sm"
-                                as="label"
                                 variant="info"
+                                size="sm"
+                                onClick={() => setShowAddImage(true)}
                             >
-                                <span>Añadir foto</span>
-                                <input
-                                    hidden
-                                    type='file'
-                                    onChange={handleImgs}
-                                />
+                                Añadir Foto
                             </Button>
                         </div>
                     </Row>
@@ -586,6 +579,12 @@ export const EditPropertyForm = () => {
                 GUARDAR
             </Button>
         </Form>
+        <ModalAddImage 
+            property={property} 
+            setImagesProperty={setImagesProperty} 
+            showAddImage={showAddImage} 
+            setShowAddImage={setShowAddImage}
+        />
     
     </Container>
 

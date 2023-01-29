@@ -9,18 +9,25 @@
     justify-content: flex-end;
 }
 
-
-
-.buttonDelete {
+.options {
     position:absolute;
-    top: 85%;
-    left: 70%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    width: 100%;
+    left: 0%;
+    padding: 0;
+    padding-left: 2%;
+    padding-right: 2%;
     color: white;
-    font-size: 0.9rem;
+    margin: 0;
 }
 
-.buttonDelete:hover {
-    background-color: transparent;
-    color:red;
+
+.buttonDelete:hover, .buttonMain:hover {
+    color: #30a2b9;
     cursor: pointer;
 }
+
+
+
