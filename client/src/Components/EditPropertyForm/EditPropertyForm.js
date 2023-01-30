@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 
 import { useNavigate, useParams } from "react-router-dom";
-import Select from 'react-select';
+
 
 import { AppContext } from "../../Context/AppContext";
 

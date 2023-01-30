@@ -19,7 +19,7 @@ import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
 import { PropertyDetails } from '../Pages/property/PropertyDetails/PropertyDetails'
 import { Discover } from '../Pages/Discover/Discover'
-// import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
+import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconomicFeatures'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
