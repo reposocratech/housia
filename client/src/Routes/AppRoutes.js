@@ -23,6 +23,7 @@ import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconom
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
+import { Footer } from '../Components/Footer/Footer'
 
 export const AppRoutes = () => {
   return (
@@ -60,6 +61,7 @@ export const AppRoutes = () => {
                 <Route path='/admin/customFeaturesElem' element={<AdminCustomFeatures/>}/>
 
             </Routes>
+            <Footer/>
         </BrowserRouter>
     </div>
   )
