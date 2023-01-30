@@ -46,11 +46,7 @@ export const Register = () => {
       <div className='login-form-container'>
     <h1>REGISTRO</h1>
     <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
-
-    <div className='fondoAzul'>
     <h2>Registro</h2>
-    <form onSubmit={handleSubmit(onSubmit)}>
-
       <input
           className='input-login'
           type='text'

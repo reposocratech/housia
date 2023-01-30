@@ -1,21 +1,23 @@
-.content_img {
+/* .content_img {
     position: relative;
-    width: 100%;
-    height: 100%;
-    /* background-color: #1f1f1f; */
+    width: 28vw;
+    height: 20vw;
+    /* background-color: #1f1f1f; 
     border: 1px solid white;
     display: flex;
     justify-content: flex-end;
+    margin: 70px 0px 0px 30px;
 }
 
 .options {
     position:absolute;
     top: 90%;
     left: 79%;
-    width: 60%;
+    width: 1vw;
     color: white;
     margin-bottom: 2rem;
     padding-right: 5%;
+
 }
 
 .options .main:hover, .options .delete:hover {
@@ -23,8 +25,8 @@
 }
 
 .img-responsive {
-    height: 100%;
     width: 100%;
     object-fit: cover;
     object-position: center;
 }
+ */

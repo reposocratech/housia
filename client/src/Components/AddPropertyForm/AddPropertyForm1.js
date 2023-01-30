@@ -4,6 +4,9 @@ import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import jwtDecode from 'jwt-decode';
+import { Container} from 'react-bootstrap';
+import "./AddProperty1.scss";
+
 
 const initialValue = {
     property_name: "",
@@ -75,7 +78,6 @@ const handleChange = (e) => {
 }
 
 const handleSubmit = (e) => {
-    e.preventDefault();
 
     if(!newPropertyData.property_name) {
         setMessage("Introduce un nombre para tu propiedad");
@@ -118,14 +120,16 @@ const handleSubmit = (e) => {
 }
   return (
 
-    <div>
+    <Container fluid className='fondoAdd1'>
+        <div className='row '>
+            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
         <h2>¿Preparado para conocer el valor 
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
         mediante AI</h3>
         <p>Elije un nombre para tu propiedad</p>
         
-        <form>
+        
         <input
        placeholder='Nombra la propiedad'
        autoComplete='off'
@@ -134,14 +138,14 @@ const handleSubmit = (e) => {
        onChange={handleChange}
         ></input>
         <div style={{ color: "red" }}>{message}</div>
-        <hr/>
+        <br/>
 
         <p>Tipo</p>
         <div>
 
          <select onChange={handleTypeId}>
             <option value={-1}>
-                Tipo
+                Seleccionar
             </option>
             {type?.map((tipo, i) => {
                 return(
@@ -155,7 +159,7 @@ const handleSubmit = (e) => {
         <p>Tipo de inmueble</p>
         <select onChange={handleSubTypeId}>
         <option value={-1}>
-                Subtipo
+                Seleccionar
             </option>
          {subtype?.map((subtipo, i) => {
                 return(
@@ -164,14 +168,22 @@ const handleSubmit = (e) => {
             })}  
         </select>
         </div>
-        <div style={{ color: "red" }}>{message2}</div>
-        <hr/>
+        <div style={{ color: "white" }}>{message2}</div>
+        <br/>
+        </div>
+        
+        <div className='col-6 padre2Add1'>
+         <img src='./images/user/Captura.png' alt="ForSale.png" />
+         <br/>
         <button 
             type='submit' 
             onClick={handleSubmit}
             >Añadir propiedad</button>
-        </form>
-    </div>
+        
+            
+         </div>
+         </div>
+    </Container>
    
     
     

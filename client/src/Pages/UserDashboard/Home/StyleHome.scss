@@ -6,7 +6,8 @@
     height: 94vh;
 
     .colInfo{
-       padding: 60px 0px 0px 230px;
+        margin-bottom: 50px;
+       padding: 170px 0px 0px 230px;
        .pInfo{
         font-size: 20px;
         font-weight: bold;
@@ -50,9 +51,9 @@
        }
     }
     .imageInfo{
-        margin: 60px 0px 0px 100px;
+        margin: 170px 0px 0px 100px;
         img{
-            width: 430px;
+            width: 460px;
         }
     }
     .dos{
@@ -89,18 +90,21 @@
     .fondoHome{
         height: 100%;
         .colInfo{    
-            padding:10vw 10vw 5vw 20vw ;         
+            padding:20vw 10vw 5vw 20vw ;         
            .tamInfo{
             width: 90%;
            }  
         } 
     }
-    .imageInfo{
-        img{
+    .divcol6{
         display: none;
-        }
-        
-    }
+    .imageInfo{
+    img{
+    display: none;
+    } 
+    } 
+   
+}  
        
 }
 
@@ -109,7 +113,7 @@
     .fondoHome{
         height: 100%;
         .colInfo{
-           padding:5vw 10vw 5vw 20vw ;       
+           padding:170px 10vw 60px 23vw ;       
            .botInfo{
             padding: 10px 20px; 
            }
@@ -119,15 +123,13 @@
            .tamInfo{
             width: 90%;
            }  
-        }    
-        .imageInfo{
-        img{
-        display: none;
-        }
+        }   
+        .divcol6{
+            display: none;
     }     
-    .dos{
+    .dos{ 
     .footerInfo{
-        padding: 20px 100px 40px 70px;   
+        padding: 50px 300px 300px 100px;   
     }
     } 
     }
@@ -138,27 +140,27 @@
 @media (max-width: 391px ){
     .fondoHome{
         .colInfo{
-           padding:5vw 10vw 5vw 20vw ;       
+            padding:140px 0vw 0px 10vw ;    
            .botInfo{
-            padding: 10px 20px; 
+            padding: 10px 10px; 
            }
-           .botInfoA{
-            padding: 10px 20px;
+           .pInfo{
+            font-size: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
            }
            .tamInfo{
-            font-size: 40px;
-            width: 100%;
-            padding:0px ;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 35px;
            }  
-        }    
-        .imageInfo{
-        img{
-        display: none;
-        }
-    }     
+           .soonBoton{      
+            padding: 5px 40px;
+           }
+        }             
     .dos{
     .footerInfo{
-        padding: 20px 100px 40px 70px;   
+        padding: 10px 25px;   
     }
     } 
     }
