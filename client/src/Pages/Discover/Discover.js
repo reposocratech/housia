@@ -160,8 +160,9 @@ export const Discover = () => {
         setCityInDb([])
         setShowFeatures(false);
         setPropertiesWithFeatures([])
+        setFeaturesSelected([])
         setFilterIsNew(-1);
-
+        setPropertiesWithFeaturesSelect([])
     }
 
     const handleIsNew = (seleccion) =>{
@@ -339,40 +340,69 @@ export const Discover = () => {
 
     const handleFeaturesSelected =(featureId)=>{
         if(featuresSelected.includes(featureId)=== false){
+            let prueba = [...featuresSelected, featureId];
+
             setFeaturesSelected([...featuresSelected, featureId]);
-            setPropertiesWithFeaturesSelect(bucleParaFiltrarPropiedadesKTienenLosFeatures(featuresSelected, propertiesWithFeatures));
+            setPropertiesWithFeaturesSelect(bucleParaFiltrarPropiedadesKTienenLosFeatures(prueba, propertiesWithFeatures));
         }
         else{
+            let prueba = featuresSelected.filter(elem => elem !== featureId);
             setFeaturesSelected(featuresSelected.filter(elem => elem !== featureId));
-            setPropertiesWithFeaturesSelect( bucleParaFiltrarPropiedadesKTienenLosFeatures(featuresSelected, propertiesWithFeatures));
+            setPropertiesWithFeaturesSelect( bucleParaFiltrarPropiedadesKTienenLosFeatures(prueba, propertiesWithFeatures));
         }
     }
 
 
-    //  const nuevoArrai = propertiesWithFeatures.filter(elem => elem.feature_id ===  )
+    
     const bucleParaFiltrarPropiedadesKTienenLosFeatures =(featuresSelected, propertiesWithFeatures)=>{
-        let restantes = []
+
+        
+        let restantes = [];
         for(let i = 0; i< propertiesWithFeatures.length; i++){
             
+        if(i === propertiesWithFeatures.length){
+          
+        }
             for(let j = 0; j< featuresSelected.length; j++){
-                //  console.log(propertiesWithFeatures[i].feature_id, "la I", featuresSelected[j], "LA J");
+                
+            
                 if(featuresSelected[j] === propertiesWithFeatures[i].feature_id){
-                     restantes = [...restantes, propertiesWithFeatures[i]]
-                    }   
-                }
+                     restantes = [...restantes, propertiesWithFeatures[i].property_id]
+                    }
+                }  
             }
             
-            // setPropertiesWithFeaturesSelect(restantes)
+
+        let doll = -1;
+        let resultadoFinal = []
+       
+            //para poder filtrar aquellos que si tengan caracteristicas y ver si tienen todas la necesarias o no
+        for(let i = 0; i< restantes.length; i++){
+            doll = restantes[i];
+          
+            //usamos prueba para extraer el primer index del activo a comprobar
+           let prueba = restantes.findIndex(elem => elem === doll)
+            
+            
+           //no quiero meter por duplicado entradas, cuando entra una vez se prohibe la entrada
+            if(resultadoFinal.includes(doll) === false){
+                
+               
+                // si la distancia entre las entradas es igual al numero de extras seleccionados, significa que los tiene todos. 
+                if((restantes.lastIndexOf(doll)+1) - prueba === featuresSelected.length){
+                    
+                    
+                    resultadoFinal = [...resultadoFinal, doll]
+
+                    }
+                }
+
+            }
+           restantes = resultadoFinal;
             return restantes
         }
 
-        let vacio = [];
-        featuresSelected.forEach((extra)=>{
-            return(
-                vacio = propertiesWithFeatures.filter(elem => Number(elem.feature_id) === Number(extra))
-            )
-        })
-        console.log(vacio, "prueba de vacio");
+        
     
 
     // console.log(typeInDB, "estos son los tipos");
@@ -381,7 +411,7 @@ export const Discover = () => {
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
-    // console.log(propertiesWithFeatures);
+    // console.log(propertiesWithFeatures, "los 48");
     console.log(featuresSelected, "BOTONES PULSADOS");
     console.log(propertiesWithFeaturesSelect, "COINCIDENCIAS");
 
@@ -437,7 +467,27 @@ export const Discover = () => {
         filterList = filterList.filter(elem => elem.purchase_is_new === Number(filterIsNew))
     }
     
+    //FILTRO PARA FEATURES 
+    if(propertiesWithFeaturesSelect.length > 0){
 
+        let contenedor = [];
+        let caja = [];
+    propertiesWithFeaturesSelect.map((elem)=>{
+       
+        if(caja[0] !== undefined){
+             contenedor = [...contenedor, caja[0]];
+        
+        }
+       
+        return(
+           caja = filterList.filter(casa => casa.property_id === elem)
+        ) 
+         
+    })
+    filterList = contenedor;
+    } 
+       
+    
 
   return (
     <div>

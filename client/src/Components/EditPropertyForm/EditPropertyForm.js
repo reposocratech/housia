@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 import { useParams } from "react-router-dom";
-import Select from 'react-select';
+
 import { AppContext } from "../../Context/AppContext";
 
 export const EditPropertyForm = () => {
