@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
+import { AppContext } from '../../Context/AppContext';
 
 
 export const Discover = () => {
@@ -19,7 +20,8 @@ export const Discover = () => {
     const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([])
     const [featuresSelected, setFeaturesSelected] = useState([])
     const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([])
-
+    const {user} = useContext(AppContext);
+    console.log(user.user_id, "USERRRRRRRRRRRR");
     //estados de filtros
     //PRECIO
     const [priceFilterMin, setPriceFilterMin] = useState(0);
@@ -115,11 +117,11 @@ export const Discover = () => {
 
 
     
-        const handleFav = (user_id, property_id) => {
+        const handleFav = (property_id) => {
         setFav(!fav);
         if(fav === false){
             axios
-            .post(`http://localhost:4000/property/fav/${user_id}/${property_id}`)
+            .post(`http://localhost:4000/property/fav/${user?.user_id}/${property_id}`)
             .then((res) => {
                 console.log("Insertado")
                
@@ -131,7 +133,7 @@ export const Discover = () => {
 
         if(fav === true){
             axios
-            .delete(`http://localhost:4000/property/unfav/${user_id}/${property_id}`)
+            .delete(`http://localhost:4000/property/unfav/${user?.user_id}/${property_id}`)
             .then((res) => {
                 console.log("Eliminado")
             })
@@ -593,7 +595,8 @@ export const Discover = () => {
                
 
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
-                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
+
+                <span onClick={()=>handleFav(property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
                 <p>Año de construccion: {property?.property_built_year} </p>

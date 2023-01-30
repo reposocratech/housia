@@ -167,7 +167,7 @@ class propertyController {
 //METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
     discover = (req, res) => {
   
-      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_is_for_sale, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
       property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
       FROM property, address, city, province, purchase, image
       where property.property_id = purchase.purchase_property_id 
@@ -853,7 +853,7 @@ getAllPurchaseData = (req, res) => {
       discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
-        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, 
+        property.property_garage, property.property_kitchen_id, address.*,property.property_is_for_sale, purchase.purchase_buy_price, purchase.purchase_is_new, 
         image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
         FROM property, address, city, province, purchase, image, type, subtype, kitchen
         where property.property_id = purchase.purchase_property_id 
