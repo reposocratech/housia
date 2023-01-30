@@ -22,7 +22,7 @@ export const Home = () => {
         <button className='soonBoton'>Soon</button> 
       </div> 
       </div>
-      <div className="col-6  ">
+      <div className="col-6 divcol6 ">
         <div className='imageInfo'>
            <img className='' src='../images/user/mock20.png' alt='mock20.png'/>
         </div>

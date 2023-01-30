@@ -1,0 +1,68 @@
+.NavBarContainer {
+  background-color: #272839 !important;
+  border-bottom: 1px solid white;
+}
+.NavBarContainer img {
+  width: 120px;
+}
+.NavBarContainer a {
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+.NavBarContainer a:hover {
+  color: rgb(48, 162, 185);
+}
+.NavBarContainer button {
+  background-color: rgb(48, 162, 185);
+  border: none;
+  color: white;
+  font-weight: 700;
+}
+.NavBarContainer .avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+.NavBarContainer .dropdown-perfil div {
+  background-color: #272839 !important;
+  margin-top: 12px;
+}
+.NavBarContainer .dropdown-perfil div .dropdown-item:active {
+  background-color: #272839 !important;
+}
+
+.NavBarContainerLogin {
+  background-color: transparent;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  top: 10px;
+  border-bottom: 1px solid white;
+}
+.NavBarContainerLogin a {
+  margin: 10px 20px;
+  text-decoration: none;
+  font-weight: 700;
+  color: white;
+}
+.NavBarContainerLogin a:hover {
+  color: rgb(48, 162, 185);
+}
+.NavBarContainerLogin img {
+  width: 120px;
+}
+.NavBarContainerLogin button {
+  background-color: rgb(48, 162, 185);
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+.NavBarContainerLogin button:hover {
+  background-color: rgba(37, 130, 148, 0.952);
+  transition: 0.5s;
+}/*# sourceMappingURL=NavBarUser.css.map */
