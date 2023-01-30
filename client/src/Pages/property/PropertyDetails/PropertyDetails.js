@@ -29,6 +29,7 @@ export const PropertyDetails = () => {
     let { property_id } = useParams();
 
     const navigate = useNavigate();
+    const URL_PROP = 'http://localhost:4000/property';
 
     const handleColor = () => setColorSold(!colorSold);
     const handleClose = () => setShow(false);
@@ -40,11 +41,11 @@ export const PropertyDetails = () => {
     const handleSubmit = () => {
     
     axios
-    .put(`http://localhost:4000/property/checkSale/${user.user_id}/${property_id}`)
+    .put(`${URL_PROP}/checkSale/${user.user_id}/${property_id}`)
     .then((res) => {
         setShow(false);
-        console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO");
         navigate("/home") //navigate al descubre
+        /* console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO"); */
     })
     .catch((err) => {
         console.log(err);
@@ -57,7 +58,7 @@ export const PropertyDetails = () => {
     useEffect(() => {
         
         axios
-        .get(`http://localhost:4000/property/propertyDetails/2/${property_id}`)
+        .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
         .then((res) => {
            setPropertyDetails(res.data);
         })
@@ -69,7 +70,7 @@ export const PropertyDetails = () => {
     //Imagenes propiedad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsImg/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsImg/${property_id}`)
         .then((res) => {
            setImagenes(res.data);
         })
@@ -81,7 +82,7 @@ export const PropertyDetails = () => {
     //Direccion de la propiedad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsAddress/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsAddress/${property_id}`)
         .then((res) => {
            setAddress(res.data);
         })
@@ -93,7 +94,7 @@ export const PropertyDetails = () => {
     //Datos de compra de la propeidad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsPurchase/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsPurchase/${property_id}`)
         .then((res) => {
            setDetailsPurchase(res.data);
         })
@@ -105,7 +106,7 @@ export const PropertyDetails = () => {
         //Trae la provincia y Ciudad de una propiedad 
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsProvinceCity/${property_id}`)
             .then((res) => {
                 setProvinceCity(res.data);
             })
@@ -117,7 +118,7 @@ export const PropertyDetails = () => {
         //Trae el tipo 
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsSubtype/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsSubtype/${property_id}`)
             .then((res) => {
                 setType(res.data);
             })
@@ -126,12 +127,11 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
 
-
         
         //Trae el alquiler
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsRent/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsRent/${property_id}`)
             .then((res) => {
                 setRent(res.data);
             })
@@ -143,7 +143,7 @@ export const PropertyDetails = () => {
         //Trae la hipoteca
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsLoan/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsLoan/${property_id}`)
             .then((res) => {
                 setLoan(res.data);
             })
@@ -152,16 +152,11 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
         
-        //carga el property id en navigate para editar detalles economicos
-       /* const travelToEditEconomicFeatures = ()=>{
-
-            setProperty(property_id)
-            navigate("/addEconomicFeatures")
-        } */
+        
 
       
   return (
-    <Container fluid                    className='portafolio-container'>
+    <Container fluid className='portafolio-container'>
          <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
     <Row>
     {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
@@ -221,7 +216,7 @@ export const PropertyDetails = () => {
 
 
         <div className='buttons'>
-        <Button className='button' onClick={()=>navigate(`/editProperty/${property_id}`)}>Editar detalles</Button>
+        <Button className='button' onClick={()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)}>Editar detalles</Button>
         <Button className='button'  onClick={handleShow}>
             Vender propiedad
             </Button>
@@ -288,13 +283,7 @@ export const PropertyDetails = () => {
               
           </Row>
 
-        
-       
-       
-       
-        
-        
-        <br/>
+       <br/>
        
         <hr/>
         <h2>Resumen de la inversion</h2>

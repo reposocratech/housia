@@ -243,9 +243,9 @@ class propertyController {
       editPropertyAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
 
-        /* console.log('PROPIEDAD', property_id, 'PROVINCIA', province_id, 'CIUDAD', city_id);
+        /* console.log('PROPIEDAD', property_id, 'PROVINCIA', province_id, 'CIUDAD', city_id);*/
         
-        console.log('REQ.BODY DE LA EDIDCIÓN DE LA DIRECCIÓN', req.body); */
+        console.log('REQ.BODY DE LA EDIDCIÓN DE LA DIRECCIÓN', req.body);
 
         let sql = 'select * from property';
 
@@ -258,6 +258,10 @@ class propertyController {
           if(field.startsWith('address') && field != 'address_property_id' && value){
             sql = `UPDATE address SET ${field} = '${value}' WHERE address_property_id = ${property_id}`
           }
+
+          /* else if(field == 'type_id'){
+
+          } */
 
           /* console.log('SQL DE ADDRESS', sql); */
           connection.query(sql, (errorUpd, resultUpd) => {
@@ -532,7 +536,6 @@ editPurchase = (req,res) => {
   }
   res.status(200).send('insert correctos');
   /* console.log('correctos'); */
-
 }
 
 
@@ -628,9 +631,6 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-
-      
-
       propertyDetailsImg = (req, res) => {
         let {property_id} = req.params;
   
@@ -641,9 +641,6 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-
-      
-
       propertyDetailsAddress = (req, res) => {
         let {property_id} = req.params;
   
@@ -653,7 +650,6 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-
 
       propertyDetailsPurchase = (req, res) => {
         let {property_id} = req.params;
@@ -684,7 +680,6 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-
 
       propertyDetailsSubtype = (req, res) => {
         let {property_id} = req.params;
@@ -740,12 +735,11 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-  
       
       fav = (req, res) => {
-    let {user_id, property_id} = req.params;
+        let {user_id, property_id} = req.params;
         console.log(user_id, property_id, "SOMOS LOS ID")
-    let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
+        let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
@@ -790,18 +784,22 @@ getAllPurchaseData = (req, res) => {
           })
         }
 
+        getType = (req, res) => {
+          let {property_subtype_id} = req.params;
+          console.log(property_subtype_id, 'id del subtipo');
+          
+          property_subtype_id = Number(property_subtype_id);
+
+          let sqlType = `SELECT subtype_type_id from subtype  WHERE subtype_id = ${property_subtype_id}`;
+
+          connection.query(sqlType, (error, result) => {
+            error ? res.status(400).json({error}) : res.status(200).json(result);
+            console.log(result, 'resultado select tipo..lsdkjflñsk');
+            
+          })
+        }
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = new propertyController();

@@ -22,7 +22,7 @@ export const Portafolio = () => {
 
     let id = jwtDecode(token).user.id;
     setIsLogged(true);
-    console.log(id);
+    /* console.log(id); */
     
     axios
       .get(`http://localhost:4000/users/getAllProperty/${id}`)

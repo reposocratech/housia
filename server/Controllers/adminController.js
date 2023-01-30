@@ -8,7 +8,7 @@ class adminController {
 
         // let sql = "SELECT property.property_id, property.property_is_user_deleted, property.property_is_admin_deleted, property.property_built_year, purchase.purchase_buy_price, address.address_street_name, address.address_street_number,  province.province_name, city.city_name  FROM property, purchase, address, province, city WHERE  property.property_id =  address.address_property_id AND property.property_id = purchase.purchase_property_id AND address.address_city_id = city.city_id AND address.address_province_id = province.province_id AND property.property_is_admin_deleted = false;";
 
-        let sql = 'SELECT * FROM property'
+        let sql = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id and property.property_is_admin_deleted = false';
 
         connection.query(sql, (error, result)=>{
             if(error){

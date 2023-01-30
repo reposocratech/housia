@@ -101,9 +101,11 @@ export const AddPropertyImage = () => {
                         data-target="#ModalPreViewImg"
                         className="img-responsive rounded-4"
                     />
-                  <div  className="options delete">
-                    <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
-                  </div>
+                    {images.length > 1 && (
+                    <div  className="options delete">
+                      <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
+                    </div>
+                    )}
                 </div>
             </Col>
           ))
@@ -121,7 +123,7 @@ export const AddPropertyImage = () => {
       )}
       
 
-      {images.length > 0 && (
+      {images.length >= 1 && (
         <Button 
           size="lg" 
           variant="dark"

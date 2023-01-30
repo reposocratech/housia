@@ -13,10 +13,11 @@ const initialState = {
 
   export const Login = () => {
     const [login, setLogin] = useState(initialState);
-    const {isLogged, setIsLogged} = useContext(AppContext);
+    const {isLogged, setIsLogged, user} = useContext(AppContext);
     const [showPassword, setshowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const [messageError, setMessageError] = useState("");
+
 
     const navigate = useNavigate();
 
@@ -37,7 +38,13 @@ const initialState = {
             const token = res.data.token;
             saveLocalStorageUser(token);
             setIsLogged(true);
-            navigate('/user/portafolio');
+            
+            if(isLogged && user.user_type === 2){
+              navigate('/user/portafolio');
+            }
+            else if(isLogged && user.user_type === 1 ){
+              navigate('/admin')
+            }
           })
           .catch((error) => {
             setMessageError("Usuario y/o contraseña incorrecta");

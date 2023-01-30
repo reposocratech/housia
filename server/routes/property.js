@@ -190,5 +190,7 @@ router.get("/favUser/:user_id", propertyController.favUser);
 //localhost:4000/property/discover/allpropertywithfeature
 router.get('/discover/allpropertywithfeature', propertyController.getAllFeature_Property);
 
+router.get('/getType/:property_subtype_id', propertyController.getType);
+
 
 module.exports = router;
