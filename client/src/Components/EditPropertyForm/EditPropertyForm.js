@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Select from 'react-select';
 import { AppContext } from "../../Context/AppContext";
 
-import './editProperty.css'
+import './editPropertyForm.scss'
 import { ModalAddImage } from "./ModalAddImage";
 
 
@@ -306,13 +306,13 @@ export const EditPropertyForm = () => {
 
 
   return (
-    <Container fluid>
-        <h2 className="text-center mb-3">Editar Propiedad</h2>
+    <Container fluid className='datos-propiedad-container'>
+        <h1 className="text-center mb-3">Editar Propiedad</h1>
 
         <Form className="m-3" onSubmit={onSubmit /* handleSubmit(onSubmit) */}>
 
-            <Row>
-                <Col md='6'>
+            <Row className="justify-content-center">
+                <Col md='6' lg='5'>
                     <Form.Label>Nombre Propiedad</Form.Label>
                     <Form.Control
                         className="mb-3" 
@@ -469,7 +469,7 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row> 
                 </Col>
-                <Col md='6'>
+                <Col md='6' lg='5'>
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Superficie Útil</Form.Label>
@@ -493,8 +493,8 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row>
 
-                    <Row className="d-flex justify-content-between">
-                        <Form.Group className="mb-3" as={Col} md='3'>
+                    <Row className="d-flex">
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Año Construcción</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -504,7 +504,7 @@ export const EditPropertyForm = () => {
                                 name='property_built_year'
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Habitaciones</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -514,7 +514,8 @@ export const EditPropertyForm = () => {
                                 value={property?.property_rooms === "undefined" ? 0 : property?.property_rooms}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                    
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Baños</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -524,7 +525,7 @@ export const EditPropertyForm = () => {
                                 value={property?.property_bathrooms === "undefined" ? 0 : property?.property_bathrooms}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Garaje</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -549,10 +550,10 @@ export const EditPropertyForm = () => {
                             </Form.Group>
                         </Form.Group>
                     </Row>
-                    <Row className="d-flex mt-4">
+                    <Row className="mt-4">
                         {prueba?.map((feature, index) => {
                             return(
-                                <Col md={3} key={index}>
+                                <Col md={4} key={index}>
                                     <Button
                                         className="rounded rounded-4 mb-3"
                                         variant={feature?.checked ? 'info' : 'outline-info'}
@@ -567,8 +568,8 @@ export const EditPropertyForm = () => {
                     <Row>
                         {imagesProperty?.map((img, ind) => {
                             return(
-                                <Col md={3} key={ind}>
-                                    <div className="editImage">
+                                <Col className='editImage' sm={6} md={5} key={ind}>
+                                    <div className="container-img">
                                         <Image
                                             style={{width: '100%'}}
                                             src={`/images/property/${img.image_title}`}
@@ -606,11 +607,12 @@ export const EditPropertyForm = () => {
                         </div>
                     </Row>
                 </Col>
+                <Button className='boton-editar' type="submit">
+                GUARDAR
+               </Button>
             </Row>
 
-            <Button size="lg" variant="secondary" type="submit">
-                GUARDAR
-            </Button>
+            
         </Form>
         <ModalAddImage 
             property={property} 
