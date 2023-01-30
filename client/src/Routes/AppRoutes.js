@@ -28,7 +28,7 @@ import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 
 export const AppRoutes = () => {
-  const {user, setUser, isLogged} = useContext(AppContext);
+  const {user, isLogged} = useContext(AppContext);
   
   return (
     <div>

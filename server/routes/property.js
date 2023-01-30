@@ -63,6 +63,10 @@ router.get("/allCities/:province_id", propertyController.allCities );
 //localhost:4000/property/addPropertyAddress/:property_id/:province_id/:city_id
 router.put("/addPropertyAddress/:property_id/:province_id/:city_id", propertyController.addAddress);
 
+//Editar DIRECCIÓN
+//localhost:4000/property/editPropertyAddress/:property_id/:province_id/:city_id
+router.put("/editPropertyAddress/:property_id/:province_id/:city_id", propertyController.editPropertyAddress)
+
 //Mostrar CARACTERÍSTICAS del Inmueble
 //localhost:4000/property/allFeatures
 router.get("/allFeatures", propertyController.allFeatures);
