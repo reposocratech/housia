@@ -85,12 +85,13 @@ const handleChangePurchase = (e) =>{
 
 
   return (
-    <div>
+    <div className='datos-economicos-container'>
          <h1>Formulario Caracteristicas Economicas</h1>
-
-        <div className='d-flex flex-column'>
-
-        <input
+         <Row className='m-0 justify-content-center'>
+         <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
+         <label for='purchase_buy_date'>Precio de Compra</label>
+       
+            <input
             type='number'
             step='0,01'
             placeholder='Precio de Compra'
@@ -98,41 +99,42 @@ const handleChangePurchase = (e) =>{
             value={editPurchase?.purchase_buy_price}
             name='purchase_buy_price'
             onChange={handleChangePurchase}
-        />
-        <label for='purchase_buy_date'>Fecha de Compra</label>
-        <input
+            />
+            <label for='purchase_buy_date'>Fecha de Compra</label>
+            <input
             type='date'
             autoComplete='off'
             value={(editPurchase?.purchase_buy_date)}
             name="purchase_buy_date"
             onChange={handleChangePurchase}
-        />
-        <div>
-       <div>
-            <input type='radio'
+            />
+            
+            <div>
+                <div>
+                <input type='radio'
                 id='opcion-obra-nueva' 
                 name='purchase_is_new'
                 value= 'true'
                 checked = {editPurchase?.purchase_is_new === 1} 
                 onChange={handleRadioIsNew}
                 />
-            <label for='opcion-obra-nueva'>Obra Nueva</label>
-        </div> 
+                <label for='opcion-obra-nueva'>Obra Nueva</label>
+                </div> 
 
-       <div>
-            <input type='radio'
+                <div>
+                <input type='radio'
                 id='opcion-segunda-mano' 
                 name='purchase_is_new'
                 value='false'
                 checked = {editPurchase?.purchase_is_new === 0}
                 onChange={handleRadioIsNew}
                 />
-            <label for='opcion-segunda-mano'>Segunda Mano</label>
-        </div>
-    </div> 
+                <label for='opcion-segunda-mano'>Segunda Mano</label>
+            </div>
+        </div> 
        
         <Accordion alwaysOpen className='datos-economicos-acordion'>
-      <Accordion.Item eventKey="0" className='accordion-opcion'>
+        <Accordion.Item eventKey="0" className='accordion-opcion'>
         <Accordion.Header>Entrada y gastos de compraventa</Accordion.Header>
         <Accordion.Body className='d-flex flex-column'>
           <label>Entrada</label>
@@ -279,15 +281,12 @@ const handleChangePurchase = (e) =>{
                     name="rent_renting_date"
                     onChange={handleChangePurchase}/>
             </div>
-            
-        </Accordion.Body>
-        </Accordion.Item>
-        </Accordion>
-        <button className='boton-editar' onClick={handleSubmitEdit}>Guardar Cambios</button>
-        </Col>
+            </Accordion.Body>
+            </Accordion.Item>
+            </Accordion>
+            <button className='boton-editar' onClick={handleSubmitEdit}>Guardar Cambios</button>
+            </Col>
         </Row>
-
-
     </div>
   )
 }
