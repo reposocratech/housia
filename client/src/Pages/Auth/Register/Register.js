@@ -44,21 +44,22 @@ export const Register = () => {
 
     <div className='login-container'>
       <div className='login-form-container'>
-    <h1>REGISTRO</h1>
-    <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
-    <h2>Registro</h2>
-      <input
-          className='input-login'
-          type='text'
-          placeholder='name'
-          autoComplete='off'
-          name='name'
-          {...register('name', {
+        <h1>REGISTRO</h1> 
+          <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
+
+            <input
+            className='input-login'
+            type='text'
+            placeholder='name'
+            autoComplete='off'
+            name='name'
+            {...register('name', {
+
             required: {value: true, message:'Introduce tu nombre'},
             minLength: {value: 3, message: 'Tu nombre debe tener al menos 3 caracteres'}
-          })}
-       />
-       {errors.name && 
+            })}
+            />
+            {errors.name && 
             <div className='text-danger'>
               {errors.name.message}
             </div>
@@ -127,9 +128,7 @@ export const Register = () => {
 
     <p>Ya tienes cuenta? <span onClick={()=> navigate('/login')}>INICIA SESIÓN</span></p>
     </div>
-
-    
-
     </div>
   )
 } 
+

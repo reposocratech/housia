@@ -8,7 +8,7 @@ import "./AddProperty2.scss";
 export const AddProperty2 = () => {
 const [kitchen, setKitchen] = useState();
 const [kitchenId, setKitchenId] = useState(1);
-const {property, setProperty,  typeId, subTypeId } = useContext(AppContext);
+const {property, setProperty,  typeId } = useContext(AppContext);
 const navigate = useNavigate();
 
 /* console.log(property);
@@ -87,7 +87,7 @@ console.log(subTypeId, 'subtype id'); */
        </div>
        <div className='displayAdd2'>
        <div>
-    {typeId != 4 &&
+    {typeId !== 4 &&
         <>
         <p>Año de construccion</p>
         <input
@@ -136,10 +136,8 @@ console.log(subTypeId, 'subtype id'); */
         />
         
     </>}
-   
-    
 
-       {typeId != 3 && typeId != 4 && <>
+       {typeId !== 3 && typeId !== 4 && <>
         <p>Garage</p>
         <input
             placeholder='0'

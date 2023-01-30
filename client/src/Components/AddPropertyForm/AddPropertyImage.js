@@ -8,6 +8,7 @@ import "./AddPropertyImage.scss";
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
+ 
   
   const [showFinalModal, setShowFinalModal] = useState(false);
   const [showSelectButton, setShowSelectButton] = useState(true);
@@ -58,40 +59,6 @@ export const AddPropertyImage = () => {
       const newArrImgs = images.filter((img) => img.file.name !== name);
       setimages(newArrImgs)
   }
-
-
-  /* const handleDeleteImageEdit = (imageId, imagePropertyId) => {
-    axios
-      .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
-      .then((res) => {
-        console.log(res.data);
-        setImagesToEdit(res.data);
-        setShowImagesToEdit(true);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        
-      })
-  } */
-
-  /* 
-  const handleMainImage = (image) => {
-    let url = '';
-    if(image.image_is_main === 0){
-      url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
-    }
-    else if(image.image_is_main === 1) {
-      url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
-    }
-    axios
-      .put(url)
-      .then((response) => {
-        setImagesToEdit(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  } */
 
   const onSubmit = (id) => {
     const newFormData = new FormData();
@@ -145,7 +112,7 @@ export const AddPropertyImage = () => {
       {/* INPUT IMAGES */}
 <div className="centro">
   
-      {showSelectButton && (
+ {showSelectButton && (
         <Button size="lg" as="label" variant="secondary" className="me-3 centro">
             <span>Seleccionar Imagenes </span>
             <input hidden type="file" multiple onChange={changeInput}></input>

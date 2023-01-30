@@ -33,6 +33,9 @@
         div{
             background-color: #272839 !important;
             margin-top: 12px;
+            .dropdown-item:active {
+                background-color: #272839 !important;
+            }
         }
     }
 }

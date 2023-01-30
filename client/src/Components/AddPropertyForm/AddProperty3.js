@@ -10,7 +10,7 @@ export const AddProperty3 = () => {
     const [city, setCity] = useState();
     const [provinceId, setProvinceId] = useState(1);
     const [cityId, setCityId] = useState(1);
-    const {property, setProperty, typeId, subTypeId } = useContext(AppContext);
+    const {property, typeId} = useContext(AppContext);
     const navigate = useNavigate();
 
     const { register, formState:{errors}, handleSubmit } = useForm();
@@ -47,13 +47,12 @@ export const AddProperty3 = () => {
     }, [provinceId]);
 
     const onSubmit = (data) => {
-        console.log(data);
+        /* console.log(data); */
         
         axios
         .put(`http://localhost:4000/property/addPropertyAddress/${property?.property_id}/${provinceId}/${cityId}`, data)
         .then((res) => {
             navigate("/addProperty4")
-           
         })
         .catch((err) => {
             console.log(err);
@@ -185,7 +184,6 @@ export const AddProperty3 = () => {
             </div>
           }
           </div>
-        
         <div className='col-6 segColAdd3'>
           
         {typeId != 4 && <>
