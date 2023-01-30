@@ -161,7 +161,7 @@ export const PropertyDetails = () => {
 
       
   return (
-    <Container fluid                    className='portafolio-container'>
+    <Container fluid className='portafolio-container'>
          <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
     <Row>
     {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
