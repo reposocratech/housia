@@ -16,6 +16,7 @@ export const Portafolio = () => {
    const {user, setIsLogged} = useContext(AppContext);
    const navigate = useNavigate();
 
+
   useEffect(() => {
     const token = localStorageUser();
     if(token){
