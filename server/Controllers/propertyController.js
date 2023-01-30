@@ -483,7 +483,7 @@ editPurchase = (req,res) => {
   for(const [field, value] of Object.entries(req.body)){
     
 
-    if(field == "purchase_buy_date" && value != null){
+    if(field == "purchase_buy_date" && value && value != ''){
 
      sql = `UPDATE purchase SET ${field} = date_format('${value}', '%Y-%m-%d')  WHERE purchase_property_id = ${property_id}`;
      connection.query(sql, (error, result)=>{

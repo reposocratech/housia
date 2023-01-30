@@ -36,7 +36,7 @@ export const NavBarUser = () => {
             <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
             <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
             </Nav>
-            }
+          }
             
           {isLogged && user?.user_type === 1 &&
             <Nav className='d-flex'>
