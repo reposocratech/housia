@@ -23,6 +23,7 @@ import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconom
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
+import { Footer } from '../Components/Footer/Footer'
 
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
@@ -74,6 +75,7 @@ export const AppRoutes = () => {
                 </>}
 
             </Routes>
+            <Footer/>
         </BrowserRouter>
     </div>
   )
