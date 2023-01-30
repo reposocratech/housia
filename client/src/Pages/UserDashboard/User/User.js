@@ -36,7 +36,6 @@ const handleFav = (property_id) => {
 } 
 
   
-  
   return (
     <div className='perfil-usuario'>
       <section className='perfil-datos'>

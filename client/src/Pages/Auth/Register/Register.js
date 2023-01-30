@@ -44,9 +44,8 @@ export const Register = () => {
 
     <div className='login-container'>
       <div className='login-form-container'>
-        <h1>REGISTRO</h1>
-     
-          <form onSubmit={handleSubmit(onSubmit)}>
+        <h1>REGISTRO</h1> 
+          <form className='login-form' onSubmit={handleSubmit(onSubmit)}>
 
             <input
             className='input-login'
@@ -55,6 +54,7 @@ export const Register = () => {
             autoComplete='off'
             name='name'
             {...register('name', {
+
             required: {value: true, message:'Introduce tu nombre'},
             minLength: {value: 3, message: 'Tu nombre debe tener al menos 3 caracteres'}
             })}

@@ -1,6 +1,10 @@
 .NavBarContainer{
     background-color: #272839 !important;
     border-bottom: 1px solid white;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+    
     img{
         width: 120px;
     }
@@ -42,6 +46,7 @@
     position: fixed;
     top: 10px;
     border-bottom: 1px solid white;
+
     a{
         margin: 10px 20px;
         text-decoration: none;

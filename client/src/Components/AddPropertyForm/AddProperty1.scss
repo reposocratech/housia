@@ -1,0 +1,147 @@
+.fondoAdd1{
+    font-family: Barlow;
+    background-color: #272839;
+    color: white;
+    width: 100%;
+    height: 130vh;  
+        .padreAdd1{
+            padding: 170px 10vw;
+            ::placeholder{
+                color: white;
+            }           
+            h2{
+                font-size:50px;
+                font-weight: bold;
+                text-align: center;
+            }
+            h3{
+                margin: 30px;
+                font-size: 30px;
+                text-align: center;
+            }
+            p{
+                font-size: 20px;
+                font-weight: bold;               
+            }
+            input{
+                width: 550px;
+                border: 1px solid white;
+                background-color: transparent;
+                padding: 15px 15px;
+                font-size: 20px;
+                color:  white;
+                border-radius: 10px;             
+            }
+            select{
+                color: white;
+                width: 550px;
+                border: 1px solid white;
+                background-color: transparent;
+                padding: 15px 15px;
+                font-size: 20px;
+                margin: 10px 0px 20px 0px;
+                border-radius: 10px;
+                option{
+                    background-color: #272839;
+                }
+            }
+        }
+        .padre2Add1{
+            img{
+                padding: 60px 0px 0px 0px;
+                width:650px;
+                margin: 0px 0px 0px 100px;
+            }
+            button{
+                margin-left: 13vw;
+                background-color: white;
+                color: #272839;
+                border: none;
+                width: 400px;
+                border-radius: 5px;
+                font-size: 20px;
+                font-weight: bold;
+                padding: 10px 10px;
+            }
+        }   
+}
+
+
+//RESPONSIVE
+@media (max-width: 1400px ){
+    .fondoAdd1{ 
+        .padreAdd1{
+            padding: 150px 100px 0px 100px;
+        }
+        .padre2Add1{
+            img{
+                display: none;
+            }
+            button{
+                margin: 0px 20vw;
+            }
+    }   
+}
+}
+
+//TABLET
+@media (max-width: 769px ){
+    .fondoAdd1{ 
+            .padreAdd1{
+                padding: 150px 12vw 0px 12vw;
+                input{
+                    width: 72vw;            
+                }
+                select{
+                    width: 72vw;
+                }
+            }
+            .padre2Add1{
+                img{
+                    display: none;
+                }
+                button{
+                    margin: 0px 10vw;
+                    width: 72vw;
+                }
+            }   
+    }
+}
+
+//MOVIL
+@media (max-width: 391px ){
+    .fondoAdd1{
+            .padreAdd1{
+                padding: 150px 10vw 0px 10vw;
+                    
+                h2{
+                    font-size:40px;
+
+                }
+                h3{
+                    font-size: 20px;
+                }
+                p{
+                    font-size: 20px;              
+                }
+                input{
+                    width: 300px;           
+                }
+                select{
+                    width: 300px; 
+                }
+            }
+            .padre2Add1{
+
+                button{
+                   margin:0px 0px 30px 30px;
+                   padding: 10px 5px;
+
+                    width: 300px;
+                }
+            }   
+    }
+
+    
+}
+ 
