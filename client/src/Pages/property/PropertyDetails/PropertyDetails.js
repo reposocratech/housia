@@ -158,7 +158,7 @@ export const PropertyDetails = () => {
 
       
   return (
-    <Container fluid                    className='portafolio-container'>
+    <Container fluid className='portafolio-container'>
          <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
     <Row>
     {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
@@ -218,7 +218,7 @@ export const PropertyDetails = () => {
 
 
         <div className='buttons'>
-        <Button className='button' onClick={()=>navigate("/home")}>Editar detalles</Button>
+        <Button className='button' onClick={()=>navigate("/edit")}>Editar detalles</Button>
         <Button className='button'  onClick={handleShow}>
             Vender propiedad
             </Button>
