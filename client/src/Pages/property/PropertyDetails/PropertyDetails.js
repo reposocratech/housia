@@ -22,14 +22,20 @@ export const PropertyDetails = () => {
     const [rent, setRent] = useState([]);
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
-    const {user, property, setProperty } = useContext(AppContext);
-    let { property_id } = useParams();
-    const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const handleColor = () => setColorSold(!colorSold);
-    console.log(user.user_id, "Soy USER ID");
-    console.log(property_id, 'soy property_id');
 
+    const {user } = useContext(AppContext);
+
+    let { property_id } = useParams();
+
+    const navigate = useNavigate();
+
+    const handleColor = () => setColorSold(!colorSold);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    /* console.log(user.user_id, "Soy USER ID");
+    console.log(property_id, 'soy property_id'); */
 
     const handleSubmit = () => {
     
@@ -43,12 +49,9 @@ export const PropertyDetails = () => {
     .catch((err) => {
         console.log(err);
     });
-    
   } 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
     
-  console.log(user, "EYYYYYYYY")
+  /* console.log(user, "EYYYYYYYY") */
     
     //Detalles Propiedad
     useEffect(() => {
@@ -150,11 +153,11 @@ export const PropertyDetails = () => {
         }, [property_id]);
         
         //carga el property id en navigate para editar detalles economicos
-       const travelToEditEconomicFeatures = ()=>{
+       /* const travelToEditEconomicFeatures = ()=>{
 
             setProperty(property_id)
             navigate("/addEconomicFeatures")
-        }
+        } */
 
       
   return (
@@ -197,28 +200,28 @@ export const PropertyDetails = () => {
           </div>
           <div className='col-3 info'>
             <div className='icono'>
-                <div><img src='/images/property/home.png'/></div>
+                <div><img src='/images/property/home.png' alt='home image'/></div>
                 <div> <p>Tipo</p><p>{type[0]?.subtype_name}</p></div>
             </div>
             <div className='icono'>
-                <div><img src='/images/property/date.png'/></div>
+                <div><img src='/images/property/date.png' alt='date image'/></div>
                 <div><p>Año</p><p>{propertyDetails[0]?.property_built_year}</p></div>
             </div>
             <div className='icono'>
-                <div><img src='/images/property/size.png'/></div>
+                <div><img src='/images/property/size.png' alt='property size'/></div>
                 <div> <p>Tamaño</p><p>{propertyDetails[0]?.property_total_meters}m2</p></div>
             </div>
           </div>
           </div>
 
           <div className='direction'>
-            <img src='/images/property/location.png'/>
+            <img src='/images/property/location.png' alt='property location'/>
             <h6>{address[0]?.address_street_name}, {address[0]?.address_postal_code}, {provinceCity[0]?.province_name}</h6>
         </div>  
 
 
         <div className='buttons'>
-        <Button className='button' onClick={()=>navigate("/edit")}>Editar detalles</Button>
+        <Button className='button' onClick={()=>navigate(`/editProperty/${property_id}`)}>Editar detalles</Button>
         <Button className='button'  onClick={handleShow}>
             Vender propiedad
             </Button>
@@ -264,7 +267,7 @@ export const PropertyDetails = () => {
             <div className='col_6 graph'>
                 <p>Valor de mercado</p>
                 <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
-                <img src='/images/property/grafica.jpg'></img>
+                <img src='/images/property/grafica.jpg' alt='property-graphic'></img>
             </div>
         </div>     
 

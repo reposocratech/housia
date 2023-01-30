@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 export const AddProperty2 = () => {
 const [kitchen, setKitchen] = useState();
 const [kitchenId, setKitchenId] = useState(1);
-const {property, setProperty,  typeId, subTypeId } = useContext(AppContext);
+const {property, setProperty,  typeId } = useContext(AppContext);
 const navigate = useNavigate();
 
 /* console.log(property);
@@ -77,7 +77,7 @@ console.log(subTypeId, 'subtype id'); */
         />
         <hr/>
 
-    {typeId != 4 &&
+    {typeId !== 4 &&
         <>
         <p>Año de construccion</p>
         <input
@@ -93,7 +93,7 @@ console.log(subTypeId, 'subtype id'); */
         <hr/>
         </>
     }  
-    {typeId != 3 && typeId != 4 &&
+    {typeId !== 3 && typeId !== 4 &&
         <>
         <p>Habitaciones</p>
         <input
@@ -107,7 +107,7 @@ console.log(subTypeId, 'subtype id'); */
         <hr/>
         </>
     }
-    {typeId != 4 && <>
+    {typeId !== 4 && <>
         <p>Baños</p>
         <input
             placeholder='0'
@@ -119,7 +119,7 @@ console.log(subTypeId, 'subtype id'); */
         />
         <hr/>
     </>}
-       {typeId != 3 && typeId != 4 && <>
+       {typeId !== 3 && typeId !== 4 && <>
         <p>Garage</p>
         <input
             placeholder='0'

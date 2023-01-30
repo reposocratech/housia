@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Select from 'react-select';
 import { AppContext } from "../../Context/AppContext";
 
 import './editProperty.css'
 import { ModalAddImage } from "./ModalAddImage";
+
 
 
 export const EditPropertyForm = () => {
@@ -32,6 +33,8 @@ export const EditPropertyForm = () => {
     const {property, setProperty} = useContext(AppContext);
 
     const {property_id} = useParams();
+
+    const navigate = useNavigate();
 
     const URL_PROP = 'http://localhost:4000/property';
 
@@ -74,7 +77,7 @@ export const EditPropertyForm = () => {
     
     
     const handleSubTypeId = (e) => {
-     setSubTypeId(e.target.value);
+        setSubTypeId(e.target.value);
     }
 
     useEffect(() => {
@@ -278,8 +281,16 @@ export const EditPropertyForm = () => {
         }
     }
 
-    const saveEditedProperty = () => {
-
+    const editPropertyAddress = () => {
+        axios
+            .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
+            .then((res) => {
+                console.log('RES DE EDIT PROPERTY', res);
+                navigate(`/propertyDetails/${property.property_id}`);
+            })
+            .catch((error) => {
+                console.log('ERROR del EDITADDRESS');
+            })
     }
 
      console.log('PROPIEDAD EN EDICIÓN', property);
@@ -288,8 +299,9 @@ export const EditPropertyForm = () => {
     
     const onSubmit = (e) => {
         e.preventDefault();
-
+        editPropertyAddress();
         saveFeaturesFromEdit(property?.property_id);
+
     }
 
 
@@ -313,8 +325,8 @@ export const EditPropertyForm = () => {
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select onChange={handleTypeId}>
-                                {/* <option value={property?.type_id}>{nombreTipo}</option> */}
+                            <Form.Select onChange={handleTypeId} /* name='type_id' */>
+                                <option value={property?.type_id}>{'Tipo'}</option>
                                 {type?.map((typ, ind) => {
                                     return(
                                         <option key={ind} value={typ.type_id}>{typ.type_name}</option>
@@ -324,9 +336,12 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>SubTipo</Form.Label>
-                            <Form.Select onChange={handleSubTypeId}
+                            <Form.Select 
+                                onChange={handleChange}
+                                name='property_subtype_id'
+                                value={property?.property_subtype_id}
                             >
-                            {/* <option value={property?.property_subtype_id}>{}</option> */}
+                                {/* <option value={property?.property_subtype_id}>{'Nombre Subtipo'}</option> */}
                                 {subtype?.map((subtyp, ind) => {
                                     return(
                                         <option key={ind} value={subtyp.subtype_id}>{subtyp.subtype_name}</option>
@@ -380,12 +395,12 @@ export const EditPropertyForm = () => {
                     <Form.Group>
                         <Form.Label>Código Postal</Form.Label>
                         <Form.Control 
-                        className="mb-3" 
-                        autoComplete="off" 
-                        type="text" 
-                        name="address_postal_code"
-                        onChange={handleChange}
-                        value={property?.address_postal_code}
+                            className="mb-3" 
+                            autoComplete="off" 
+                            type="text" 
+                            name="address_postal_code"
+                            onChange={handleChange}
+                            value={property?.address_postal_code}
                         />
                     </Form.Group>
 
@@ -485,6 +500,8 @@ export const EditPropertyForm = () => {
                                 autoComplete="off"  
                                 type="text"
                                 value={property?.property_built_year}
+                                onChange={handleChange}
+                                name='property_built_year'
                             />
                         </Form.Group>
                         <Form.Group as={Col} md='3'>
@@ -522,7 +539,7 @@ export const EditPropertyForm = () => {
                         <Form.Group as={Col} md='6'>
                             <Form.Group>
                                 <Form.Label>Tipo de Cocina</Form.Label>
-                                <Form.Select onClick={handleKitchenId} value={property?.property_kitchen_id}>
+                                <Form.Select onChange={handleChange} value={property?.property_kitchen_id} name='property_kitchen_id' >
                                     {kitchen?.map((kit, ind) => {
                                         return(
                                             <option key={ind} value={kit.kitchen_id}>{kit.kitchen_name}</option>
@@ -565,7 +582,7 @@ export const EditPropertyForm = () => {
                                                     onClick={() => handleSetMain(img.image_id)}
                                                     className='buttonMain'
                                                     >
-                                                    Hacer Principal
+                                                    Principal
                                                 </div>
                                                 <div
                                                     onClick={() => handleDeleteImage(img.image_id)}

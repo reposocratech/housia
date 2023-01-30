@@ -45,10 +45,7 @@ export const Register = () => {
     <div className='login-container'>
       <div className='login-form-container'>
         <h1>REGISTRO</h1>
-        {/* <form className='login-form' onSubmit={handleSubmit(onSubmit)}> */}
-
-          {/* <div className='fondoAzul'> */}
-            <h2>Registro</h2>
+     
           <form onSubmit={handleSubmit(onSubmit)}>
 
             <input
@@ -131,9 +128,6 @@ export const Register = () => {
 
     <p>Ya tienes cuenta? <span onClick={()=> navigate('/login')}>INICIA SESIÓN</span></p>
     </div>
-
-    
-
     </div>
   )
 } 

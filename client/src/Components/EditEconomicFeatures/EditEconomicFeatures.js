@@ -30,43 +30,19 @@ export const EditEconomicFeatures = () => {
         },[property_id])
 
 
- 
     const handleSubmitEdit =(e)=>{
     e.preventDefault();
 
-    //axios del RENT
-    // axios
-    // .put(`http://localhost:4000/property/editRent/${property_id}`, editRent)
-    // .then((res)=>{
-    //     console.log("respuesta correcta")
-    //     //FALTA NAVIGATE A PROPERTY_ID;
-
-    // })
-    // .catch((error)=>{
-    //     console.log(error)
-    // })
-
-    //axios del LOAN
-    // axios
-    // .put(`http://localhost:4000/property/editLoan/${property_id}`, editLoan)
-    // .then((res)=>{
-    //     console.log("respuesta correcta")
-    // })
-    // .catch((error)=>{
-    //     console.log(error)
-    // })
-
-    // //axios del PURCHASE
     axios
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
+        navigate(`/propertyDetails/${property_id}`);
     })
     .catch((error)=>{
         console.log(error)
     })
     console.log(editPurchase);
-    navigate('/user/portafolio');
 } 
     
 const handleRadioLoanType =(e) =>{
@@ -107,25 +83,13 @@ const handleChangePurchase = (e) =>{
         setEditPurchase({...editPurchase, [name]:value})
     };
 
-// const handleChangeRent = (e) =>{
-//         const {name, value} = e.target;
-//         setEditRent({...editRent, [name]:value})
-        
-//     };
-
-// const handleChangeLoan =(e)=>{
-//         const {name, value} = e.target;
-//         setEditLoan({...editLoan, [name]: value})
-       
-//     };
-
 
   return (
-    <div className='datos-economicos-container'>
-         <h1>Caracteristicas Económicas</h1>
-         <Row className='m-0 justify-content-center'>
-        <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
-        <label for='purchase_buy_date'>Precio de Compra</label>
+    <div>
+         <h1>Formulario Caracteristicas Economicas</h1>
+
+        <div className='d-flex flex-column'>
+
         <input
             type='number'
             step='0,01'

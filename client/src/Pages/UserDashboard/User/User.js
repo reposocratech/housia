@@ -11,7 +11,7 @@ export const User = () => {
   const navigate = useNavigate();
   const [fav, setFav] = useState();
   const [reset, setReset] = useState();
-  console.log(user, "hola")
+  /* console.log(user, "hola") */
   useEffect(() => {
     axios
         .get(`http://localhost:4000/property/favUser/2`)

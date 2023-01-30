@@ -116,7 +116,7 @@ export const AddPropertyImage = () => {
 
       {showSelectButton && (
         <Button size="lg" as="label" variant="secondary" className="me-3">
-            <span>Seleccionar archivos </span>
+            <span>Seleccionar IMÁGENES </span>
             <input hidden type="file" multiple onChange={changeInput}></input>
         </Button>
       )}
