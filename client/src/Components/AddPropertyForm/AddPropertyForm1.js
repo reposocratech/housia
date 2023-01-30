@@ -4,6 +4,9 @@ import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import jwtDecode from 'jwt-decode';
+import { Container} from 'react-bootstrap';
+import "./AddProperty1.scss";
+
 
 const initialValue = {
     property_name: "",
@@ -17,6 +20,7 @@ export const AddPropertyForm1 = () => {
 
     
     const [message, setMessage] = useState("");
+    const [message2, setMessage2] = useState("");
 
     const [newPropertyData, setNewPropertyData] = useState(initialValue);
 
@@ -25,8 +29,8 @@ export const AddPropertyForm1 = () => {
 
     const navigate = useNavigate();
 
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id');
+    /* console.log(typeId, 'type id');
+    console.log(subTypeId, 'subtype id'); */
 
     useEffect(() => {
         setProperty("");
@@ -49,6 +53,8 @@ export const AddPropertyForm1 = () => {
         .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
         .then((res) => {
             setSubtype(res.data);
+            setMessage('');
+            setMessage2('');
         })
         .catch((err) => {
             console.log(err);
@@ -57,39 +63,41 @@ export const AddPropertyForm1 = () => {
 
 const handleTypeId = (e) =>{
     setTypeId(e.target.value);
+
 }
 
 const handleSubTypeId = (e) => {
  setSubTypeId(e.target.value);
 }
 
-
 const handleChange = (e) => {
     const {name, value} = e.target;
     // setProperty({...property, [name]:value});
     setNewPropertyData({...newPropertyData, [name]:value});
     setMessage("");
-
 }
 
 const handleSubmit = (e) => {
-    e.preventDefault();
 
-    if(!newPropertyData.property_name){
+    if(!newPropertyData.property_name) {
         setMessage("Introduce un nombre para tu propiedad");
-    } else {
+        setMessage2("");
+    } else if( typeId === -1 || subTypeId === -1) {
+        setMessage2("Elige un tipo de propiedad");
+        setMessage("");
+    } 
+    else {
         axios
-        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,property )
+        .post(`http://localhost:4000/property/createProperty/${user.user_id}/${subTypeId}`,newPropertyData )
         .then((res) => {
             setProperty(res.data.resultProperty[0]);
             // console.log(res.data.resultProperty[0]);
-            navigate("/addProperty2");
+            navigate("/addProperty2", {replace:true});
         })
         .catch((err) => {
             console.log(err);
         });
     }
-
 
    /* const token = localStorageUser();
     if(token) {
@@ -112,14 +120,16 @@ const handleSubmit = (e) => {
 }
   return (
 
-    <div>
+    <Container fluid className='fondoAdd1'>
+        <div className='row '>
+            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
         <h2>¿Preparado para conocer el valor 
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
         mediante AI</h3>
         <p>Elije un nombre para tu propiedad</p>
         
-        <form>
+        
         <input
        placeholder='Nombra la propiedad'
        autoComplete='off'
@@ -128,12 +138,15 @@ const handleSubmit = (e) => {
        onChange={handleChange}
         ></input>
         <div style={{ color: "red" }}>{message}</div>
-        <hr/>
+        <br/>
 
         <p>Tipo</p>
         <div>
 
          <select onChange={handleTypeId}>
+            <option value={-1}>
+                Seleccionar
+            </option>
             {type?.map((tipo, i) => {
                 return(
                     <option key={i}  value={tipo.type_id}>{tipo.type_name}</option>
@@ -145,7 +158,9 @@ const handleSubmit = (e) => {
         <div>
         <p>Tipo de inmueble</p>
         <select onChange={handleSubTypeId}>
-        
+        <option value={-1}>
+                Seleccionar
+            </option>
          {subtype?.map((subtipo, i) => {
                 return(
                     <option key={i} value={subtipo.subtype_id} >{subtipo?.subtype_name}</option>
@@ -153,13 +168,22 @@ const handleSubmit = (e) => {
             })}  
         </select>
         </div>
-        <hr/>
+        <div style={{ color: "white" }}>{message2}</div>
+        <br/>
+        </div>
+        
+        <div className='col-6 padre2Add1'>
+         <img src='./images/user/Captura.png' alt="ForSale.png" />
+         <br/>
         <button 
             type='submit' 
             onClick={handleSubmit}
             >Añadir propiedad</button>
-        </form>
-    </div>
+        
+            
+         </div>
+         </div>
+    </Container>
    
     
     

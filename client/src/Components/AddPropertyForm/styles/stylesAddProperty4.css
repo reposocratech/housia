@@ -1,14 +1,14 @@
 .checkbox-container{
-    margin-bottom: 2rem;
+    margin:2vw 4vw;
 }
 
 .label{
-    background-color: white;
-    color: navy;
+    background-color: #272839;
+    color: white;
     font-size: 20px;
     width: 240px;
     height: 60px;
-    border: 1px solid black;
+    border: 1px solid white;
     transition: 0.4s;
     border-radius: 20px;
     display: flex;
@@ -44,7 +44,7 @@ input[type="checkbox"]:checked + .label{
     border-top: 30px solid navy;
     border-bottom: 30px solid navy;
     color: white;
-    outline: 3px solid red;
+    outline: 3px solid white;
     box-sizing: border-box;
 }
 

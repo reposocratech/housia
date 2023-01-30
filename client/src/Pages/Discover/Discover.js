@@ -3,6 +3,8 @@ import axios from "axios";
 
 
 export const Discover = () => {
+
+    //ESTADOS DE MANIPULACION U OBTENCION DE DATOS
     const [discover, setDiscover] = useState([]);
     const [fav, setFav] = useState(false);
     const [typeInDB, setTypeInDB] = useState([]);
@@ -11,7 +13,12 @@ export const Discover = () => {
     const [showSubtype, setShowSubtype] = useState(false)
     const [provinceInDb, setProvinceInDb] = useState([]);
     const [cityInDb, setCityInDb] = useState([]);
-    const [showCities, setShowCities] = useState(false)
+    const [showCities, setShowCities] = useState(false);
+    const [featuresInDB, setFeaturesInDB] = useState([])
+    const [showFeatures, setShowFeatures] = useState(false)
+    const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([])
+    const [featuresSelected, setFeaturesSelected] = useState([])
+    const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([])
 
     //estados de filtros
     //PRECIO
@@ -30,21 +37,23 @@ export const Discover = () => {
     //GARAJES
     const [filterGarage, setFilterGarage] = useState(0);
     //TIPOS DE ACTIVOS
-    const [filterType, setFilterType] = useState(-1)
+    const [filterType, setFilterType] = useState(-1);
     //SUBTIPOS DE ACTIVOS
-    const [filterSubtype, setFilterSubtype] = useState(-1)
+    const [filterSubtype, setFilterSubtype] = useState(-1);
     //TIPOS DE COCINA
-    const [filterKitchen, setFilterKitchen] = useState(-1)
+    const [filterKitchen, setFilterKitchen] = useState(-1);
     //Province
-    const [filterProvince, setFilterProvince] = useState(-1)
+    const [filterProvince, setFilterProvince] = useState(-1);
     //Ciudades
-    const [filterCity, setFilterCity] = useState(-1)
+    const [filterCity, setFilterCity] = useState(-1);
+    //NUEVO O USADO
+    const [filterIsNew, setFilterIsNew] = useState(-1);
 
 
     useEffect(() => {
         //Activos en venta
         axios
-        .get(`http://localhost:4000/property/descubre`)
+        .get(`http://localhost:4000/property/discover`)
 
 
         // .get(`http://localhost:4000/property/discover`) esta a acabar siendo la buena
@@ -91,10 +100,20 @@ export const Discover = () => {
             console.log(error)
         })
 
+        //los features
+        axios
+        .get('http://localhost:4000/property/allFeatures')
+        .then((resFeatures)=>{
+            setFeaturesInDB(resFeatures.data)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
 
     }, [])
 
-console.log(discover, "DISCOVER")
+
     
         const handleFav = (user_id, property_id) => {
         setFav(!fav);
@@ -120,7 +139,6 @@ console.log(discover, "DISCOVER")
                 console.log(err);
             });
         } 
-
         }
 
 
@@ -140,9 +158,16 @@ console.log(discover, "DISCOVER")
         setShowCities(false)
         setFilterCity(-1);
         setCityInDb([])
-        
-
+        setShowFeatures(false);
+        setPropertiesWithFeatures([])
+        setFeaturesSelected([])
+        setFilterIsNew(-1);
+        setPropertiesWithFeaturesSelect([])
     }
+
+    const handleIsNew = (seleccion) =>{
+        setFilterIsNew(seleccion);
+    } 
 
     const handleNumOfGarage = (NumOfGarage)=>{
         setFilterGarage(NumOfGarage)
@@ -295,6 +320,89 @@ console.log(discover, "DISCOVER")
 
     }
 
+    const openFeaturesDisplay =()=>{
+        if(showFeatures === false){
+            setShowFeatures(true);
+
+            axios
+            .get('http://localhost:4000/property/discover/allpropertywithfeature')
+            .then((result)=>{
+                setPropertiesWithFeatures(result.data)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+        } else {
+            setShowFeatures(false);
+            setPropertiesWithFeatures([])
+        }
+    }
+
+    const handleFeaturesSelected =(featureId)=>{
+        if(featuresSelected.includes(featureId)=== false){
+            let prueba = [...featuresSelected, featureId];
+
+            setFeaturesSelected([...featuresSelected, featureId]);
+            setPropertiesWithFeaturesSelect(bucleParaFiltrarPropiedadesKTienenLosFeatures(prueba, propertiesWithFeatures));
+        }
+        else{
+            let prueba = featuresSelected.filter(elem => elem !== featureId);
+            setFeaturesSelected(featuresSelected.filter(elem => elem !== featureId));
+            setPropertiesWithFeaturesSelect( bucleParaFiltrarPropiedadesKTienenLosFeatures(prueba, propertiesWithFeatures));
+        }
+    }
+
+
+    
+    const bucleParaFiltrarPropiedadesKTienenLosFeatures =(featuresSelected, propertiesWithFeatures)=>{
+
+        
+        let restantes = [];
+        for(let i = 0; i< propertiesWithFeatures.length; i++){
+            
+        if(i === propertiesWithFeatures.length){
+          
+        }
+            for(let j = 0; j< featuresSelected.length; j++){
+                
+            
+                if(featuresSelected[j] === propertiesWithFeatures[i].feature_id){
+                     restantes = [...restantes, propertiesWithFeatures[i].property_id]
+                    }
+                }  
+            }
+            
+
+        let doll = -1;
+        let resultadoFinal = []
+       
+            //para poder filtrar aquellos que si tengan caracteristicas y ver si tienen todas la necesarias o no
+        for(let i = 0; i< restantes.length; i++){
+            doll = restantes[i];
+          
+            //usamos prueba para extraer el primer index del activo a comprobar
+           let prueba = restantes.findIndex(elem => elem === doll)
+            
+            
+           //no quiero meter por duplicado entradas, cuando entra una vez se prohibe la entrada
+            if(resultadoFinal.includes(doll) === false){
+                
+               
+                // si la distancia entre las entradas es igual al numero de extras seleccionados, significa que los tiene todos. 
+                if((restantes.lastIndexOf(doll)+1) - prueba === featuresSelected.length){
+                    
+                    
+                    resultadoFinal = [...resultadoFinal, doll]
+
+                    }
+                }
+
+            }
+           restantes = resultadoFinal;
+            return restantes
+        }
+
+        
     
 
     // console.log(typeInDB, "estos son los tipos");
@@ -302,7 +410,11 @@ console.log(discover, "DISCOVER")
     console.log(discover, "esto es el arrays de casas originales");
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
-    
+    // console.log(featuresInDB, "las features");
+    // console.log(propertiesWithFeatures, "los 48");
+    console.log(featuresSelected, "BOTONES PULSADOS");
+    console.log(propertiesWithFeaturesSelect, "COINCIDENCIAS");
+
     
 
 
@@ -350,8 +462,32 @@ console.log(discover, "DISCOVER")
     if(filterCity !== -1){
         filterList = filterList.filter(elem => elem.city_id === Number(filterCity))
     }
+    //filtro de si es nuevo o segunda mano
+    if(filterIsNew !== -1){
+        filterList = filterList.filter(elem => elem.purchase_is_new === Number(filterIsNew))
+    }
     
+    //FILTRO PARA FEATURES 
+    if(propertiesWithFeaturesSelect.length > 0){
 
+        let contenedor = [];
+        let caja = [];
+    propertiesWithFeaturesSelect.map((elem)=>{
+       
+        if(caja[0] !== undefined){
+             contenedor = [...contenedor, caja[0]];
+        
+        }
+       
+        return(
+           caja = filterList.filter(casa => casa.property_id === elem)
+        ) 
+         
+    })
+    filterList = contenedor;
+    } 
+       
+    
 
   return (
     <div>
@@ -401,6 +537,26 @@ console.log(discover, "DISCOVER")
         <button onClick={()=>handleNumOfGarage(1)}> 1 o mas</button>
         <button onClick={()=>handleNumOfGarage(2)}> 2 o mas</button>
 
+        <hr/>
+        <h3>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h3>
+        <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
+        <button onClick={()=>handleIsNew(1)}> Buscar situacion : Nuevo</button>
+        <button onClick={()=>handleIsNew(0)}> Buscar situacion : Segunda Mano</button>
+        
+        <hr/>
+        <button onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+        <hr/>
+       {showFeatures &&
+       <>
+       <h3>Extras del activo</h3>
+        {featuresInDB.map((feature, index)=>{
+            return(
+               <button key={feature.feature_id} onClick={()=>handleFeaturesSelected(feature.feature_id)}>{feature.feature_name}</button>
+            )
+        })}
+       </>
+       } 
+        
         <hr/>
         <h3>Tipos de cocina</h3>
         <select onChange={SelectKitchenFilter}>
@@ -474,11 +630,7 @@ console.log(discover, "DISCOVER")
                 </select>
             
             }
-       
-        
         </div>
-
-        
 
         <div>
         {filterList?.map((property, i) => {
@@ -487,11 +639,11 @@ console.log(discover, "DISCOVER")
                 <img src={property?.image_title} alt=""></img>
                 <h3>{property?.property_name}</h3>
 
-                <p>{property?.province_name} {property?.city_name} (Spain)</p>
-                <p>Precio: {property?.purchase_buy_price}</p>
-                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
+                
+               
 
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
+                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
                 <p>Año de construccion: {property?.property_built_year} </p>

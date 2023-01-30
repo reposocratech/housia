@@ -4,19 +4,19 @@ import {Row, Col} from 'react-bootstrap'
 import {useNavigate} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from "axios";
+import './user.scss';
 
 export const User = () => {
   const {user} = useContext(AppContext);
   const navigate = useNavigate();
   const [fav, setFav] = useState();
   const [reset, setReset] = useState();
-  console.log(user, "hola")
+  /* console.log(user, "hola") */
   useEffect(() => {
     axios
         .get(`http://localhost:4000/property/favUser/2`)
         .then((res) => {
-            setFav(res.data)
-            console.log(res.data, "EEEEEEEEEEEEEE")              
+            setFav(res.data)             
         })
         .catch((err) => {
             console.log(err);
@@ -36,31 +36,33 @@ const handleFav = (property_id) => {
 } 
 
   
-  
   return (
-    <div>
-      <Row>
+    <div className='perfil-usuario'>
+      <section className='perfil-datos'>
         <h1>Perfíl</h1>
-        <img className='w-25' src={`../images/user/${user?.user_img}`} alt='foto_user' />
+        <img className='perfil-imagen' src={`../images/user/${user?.user_img}`} alt='foto_user' />
         <h2>{user?.user_name} {user?.user_lastname}</h2>
-        <h3>{user?.user_email}</h3>
-        
-      </Row>
+        <h5>{user?.user_email}</h5>
+      </section>
 
-      <Row>
-        <Col>
-        <h1>Busquedas</h1>
-        <Dropdown>
-        <Dropdown.Toggle variant="Secondary" id="dropdown-basic">
-        ❤  Mis favoritos
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-        
-       {fav?.length === 0 ? (<Dropdown.Item>No tienes favoritos</Dropdown.Item>) : (fav?.map ((fav, i) => {
+    <section className='perfil-extras'>
+      <Row className='fila m-0'>
+        <Col className='columna' xs={10} sm={5} lg={4}>
+          <h2>Busquedas</h2>
+          <div className='perfil-opcion'><span class="material-symbols-outlined icono">
+            favorite
+          </span> <p>Mis favoritos</p> 
+          <Dropdown>
+          <Dropdown.Toggle className='toggle'>
+       
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+          {fav?.length === 0 ? (<Dropdown.Item>No tienes favoritos</Dropdown.Item>) : (fav?.map ((fav, i) => {
           return(
           <Dropdown.Item key={i} ><div style={{display:"flex", alignItems: 'center'}}>
-            <span onClick={()=>handleFav(fav?.property_id)} >⭐    </span>
+            <span class="material-symbols-outlined icono" onClick={()=>handleFav(fav?.property_id)} >
+            favorite
+          </span>
             <div  style={{ margin:"20px"}} onClick={()=>navigate(`/propertyDetails/${fav?.property_id}`)}>
               <img style={{width:"100px"}} src={`/images/property/${fav?.image_title}`} alt={fav?.image_title}/>
               <p>{fav?.property_name}</p>
@@ -68,24 +70,49 @@ const handleFav = (property_id) => {
             </div>
             </Dropdown.Item>
           )
-        })) }
+          })) }
+           </Dropdown.Menu>
+          </Dropdown>
+          </div>
+          <div className='perfil-opcion'>
+          <span class="material-symbols-outlined icono">
+          label_important
+          </span>
+          <p>Busquedas guardadas</p>
+          </div>
 
-
-        
-        
-       
-        </Dropdown.Menu>
-        </Dropdown>
-        <p>Busquedas guardadas</p>
-        <p>Alertas</p>
-        
+          <div className='perfil-opcion'><span class="material-symbols-outlined icono">
+            notifications
+          </span> <p>Alertas</p> 
+          </div>
         </Col>
-        <Col>
-        <h1>General</h1>
-        <p onClick={()=>navigate('/user/editUser')}>Editar perfil</p>
-        <p>Ajustes</p>
+
+        <Col xs={10} sm={5} lg={4}>
+            <h2>General</h2>
+            <div className='perfil-opcion'>
+              <span class="material-symbols-outlined icono">
+              edit
+              </span>
+            <p onClick={()=>navigate('/user/editUser')}>Editar perfil</p>
+          </div>
+
+          <div className='perfil-opcion'>
+              <span class="material-symbols-outlined icono">
+              <span class="material-symbols-outlined">
+              settings
+              </span>
+              </span>
+            <p>Ajuste</p>
+          </div>
+            
+         
         </Col>
       </Row>
+    </section>
+      
+        
+      
+     
       
     </div>
   )

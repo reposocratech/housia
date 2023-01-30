@@ -97,7 +97,7 @@ loginUser =(req, res)=>{
 selectOneUser = (req, res) => {
 
     const userId = req.params.user_id;
-console.log(userId, "userId");
+/* console.log(userId, "userId"); */
     let sqlUser = `SELECT user_id, user_name, user_lastname, user_email, user_password, user_creation_date, user_certify_ownership, user_img, user_type, user_is_deleted, user_phone, user_dni, user_acepted_policies, user_code,  date_format(user.user_birth_date, '%Y-%m-%d') as user_birth_date FROM user WHERE user_id = ${userId} and user_is_deleted = false`;
 
     let sqlProperty = `SELECT * from property WHERE property_user_id = ${userId} and property_is_user_deleted = false and property_is_admin_deleted = false`;
@@ -167,7 +167,7 @@ editOneUser =(req, res)=>{
 getAllProperty = (req, res) => {
     let {user_id} = req.params;
 
-    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC LIMIT 6`;
+    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC LIMIT 6`;
   
     
         connection.query(sql2, (error2, resultProperty) => {
@@ -179,12 +179,12 @@ getAllProperty = (req, res) => {
                    
     };
 
-    ///Trae TODAS las propiedades de un usuario
+    ///Trae TODAS las propiedades de un usuario con su foto principal
     //localhost:4000/users/getProperties/:user_id
     getProperties = (req, res) => {
         let {user_id} = req.params;
 
-        let sql = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
+        let sql = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC`;
 
 
     connection.query(sql, (error, result)=>{

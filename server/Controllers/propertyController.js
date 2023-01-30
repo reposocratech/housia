@@ -1,4 +1,5 @@
 const connection = require("../config/db.js");
+const fs = require('fs').promises;
 
 
 class propertyController {
@@ -31,16 +32,16 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
+    /* console.log(property_subtype_id, 'SUBTYPEEEEEE'); */
 
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
-    console.log('SQLLLL', sql);
-    
+    /* console.log('SQLLLL', sql); */
 
     connection.query(sql, (error, result) => {
       if (error){res.status(400).json(error)}
 
-      console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT");
+      /* console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT"); */
       
         let property_id = result.insertId;
 
@@ -86,9 +87,7 @@ class propertyController {
        property_garage = ${property_garage}, property_kitchen_id = ${property_kitchen_id}
         WHERE property_id = ${property_id}`;
 
-
     let sqlProperty = `SELECT * FROM property WHERE property_id = ${property_id}`;
-
 
     connection.query(sql, (error, result)=>{
       if (error) {res.status(400).json({error})}
@@ -107,7 +106,8 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
-        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
+
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
 
         connection.query(sql, (error, result) => {
 
@@ -125,7 +125,7 @@ class propertyController {
         let {property_id, user_id} = req.params;
 
         let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
-        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC  `;
 
         connection.query(sql, (error, result) => {
           if (error){
@@ -140,8 +140,6 @@ class propertyController {
   
   //Método get descubre (ES TEMPORAL POR FALTA DE ARQUITECTURA)
     showAllDescubre = (req, res) =>{
-
-        // let sql = 'SELECT * from property WHERE property_is_for_sale = true AND property_is_user_deleted = false AND property_is_admin_deleted = false ORDER BY property_built_year DESC';
 
        let sql = `SELECT property.*, purchase.purchase_buy_price, address.address_city_id, city.city_name, province.province_id, province.province_name, type.type_id, type.type_name, subtype.subtype_name, subtype.subtype_id, kitchen.*
        from property, purchase, address, city, province, type, subtype, kitchen
@@ -158,7 +156,6 @@ class propertyController {
 
         connection.query(sql, (error, result)=>{
             error ? res.status(400).json({error}) : res.status(200).json(result);
-            
         })
     }
 
@@ -185,8 +182,6 @@ class propertyController {
     }
 
 
-
-
 //MUESTRA TODAS LAS PROVINCIAS
     allProvinces = (req, res) => {
 
@@ -206,10 +201,7 @@ class propertyController {
       connection.query(sql, (error, result) => {
         error ? res.status(400).json({error}) : res.status(200).json(result);
       })
-    
     }
-    
-
 
     //Trae todas las fotos de una propiedad
     //localhost:4000/property/getImagesProperty/:property_id
@@ -223,13 +215,11 @@ class propertyController {
         });
       }
       
-//CREAR LA DIRECCION DE UNA PROPIEDAD
+    //CREAR LA DIRECCION DE UNA PROPIEDAD
       addAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
   
         let {address_street_name, address_street_number, address_floor, address_gate, address_block, address_stair, address_door, address_postal_code} = req.body;
-
-        
   
         let sql = `INSERT INTO address VALUES (${property_id}, "${address_street_name}", "${address_street_number}", "${address_floor}", "${address_gate}", "${address_block}", "${address_stair}", "${address_door}", "${address_postal_code}", ${province_id}, ${city_id})`;
   
@@ -247,6 +237,37 @@ class propertyController {
             res.status(200).json(resultAddress);
           })
         })
+      }
+
+      //EDITAR DIRECCIÓN Propiedad
+      editPropertyAddress = (req, res) => {
+        let {property_id, province_id, city_id} = req.params;
+
+        /* console.log('PROPIEDAD', property_id, 'PROVINCIA', province_id, 'CIUDAD', city_id);
+        
+        console.log('REQ.BODY DE LA EDIDCIÓN DE LA DIRECCIÓN', req.body); */
+
+        let sql = 'select * from property';
+
+        for(const [field, value] of Object.entries(req.body)){
+
+          if(field.startsWith('property') && field != 'property_id' && value){
+            sql = `UPDATE property SET ${field} = '${value}' WHERE property_id = ${property_id}`
+          }
+
+          if(field.startsWith('address') && field != 'address_property_id' && value){
+            sql = `UPDATE address SET ${field} = '${value}' WHERE address_property_id = ${property_id}`
+          }
+
+          /* console.log('SQL DE ADDRESS', sql); */
+          connection.query(sql, (errorUpd, resultUpd) => {
+            /* errorUpd && res.status(400).json({errorUpd}) */
+            errorUpd && console.log(errorUpd);
+            
+          })
+        }
+
+        res.status(200).send('update correct')
       }
   
       //TRAE INFO DE TODAS LAS CARACTERISTICAS DE  LOS ACTIVOS
@@ -276,6 +297,28 @@ class propertyController {
   
         res.status(200).send('features save successfully')
       }
+
+      //EDITAR CARACTERÍSTICAS DE UN INMUEBLE
+      editFeaturesProperty = (req, res) => {
+        let {property_id} = req.params;
+        let features = req.body;
+
+        let sqlDelete = `DELETE FROM feature_property WHERE property_id = ${property_id}`;
+
+        connection.query(sqlDelete, (errorDel, resultDel) => {
+          errorDel && res.status(400).json({errorDel});
+
+          features?.map((feature, ind) => {
+            let sqlIns = `INSERT INTO feature_property (feature_id, property_id) VALUES(${feature}, ${property_id})`;
+
+            connection.query(sqlIns, (errorIns, resultIns) => {
+              errorIns && res.status(400).json({errorIns})
+            })
+          })
+
+          res.status(200).send('features saved succesfully');
+        })
+      }
   
 
 
@@ -302,11 +345,11 @@ class propertyController {
           img = req.files;
         }
 
-        console.log(img);
+
+        /* console.log(img); */
+
         
         let mainImage = img[0].filename
-
-
 
         img.forEach((img) => {
 
@@ -335,121 +378,98 @@ class propertyController {
         });
       };
 
-//CREAR ALQUILER
+      //Editar Fotos Propiedad
+      //localhost:4000/property/updateImagesProperty/:property_id
+      updateImagesProperty = (req, res) => {
+        let {property_id} = req.params;
+        let imgs = [''];
+        let mainImage = '';
 
-// createRent = (req, res) => {
-//   let {property_id} = req.params;
-
-//   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
-//   console.log(req.body, 'este es el body de create rent');
-//   // let sql = `INSERT INTO rent (rent_property_id, rent_renting_date, rent_renting_price, rent_expenses) VALUES (${property_id}, '${rent_renting_date}', ${rent_renting_price}, ${rent_expenses})`;
-
-//   let sqlHead = "INSERT INTO rent (rent_property_id";
-//   let sqlTail = `VALUES (${property_id} `;
-
-//   if(rent_renting_date !== undefined){
-//     sqlHead += `, rent_renting_date`;
-//     sqlTail += `, '${rent_renting_date}'`
-//    };
-//    if(rent_renting_price !== undefined){
-//     sqlHead += `, rent_renting_price`;
-//     sqlTail += `, ${rent_renting_price}`
-//    };
-//    if(rent_expenses !== undefined){
-//     sqlHead += `, rent_expenses`;
-//     sqlTail += `, ${rent_expenses}`
-//    };
-//    sqlTail += ')';
-//    sqlHead += ')';
-//    let sql = sqlHead + " " + sqlTail;
+        if(req.files != undefined){
+          imgs = req.files;
+          mainImage = imgs[0].filename
+        }
 
 
-//   connection.query(sql, (error, result)=>{
-//       if (error){
-//           res.status(400).json({error});
+        let sqlDeleteImg = `UPDATE image SET image_is_deleted = true, image_is_main = false WHERE image_property_id = ${property_id}`
+
+        connection.query(sqlDeleteImg, (errorDeleteImg, resultDeleteImg) => {
+          errorDeleteImg && res.status(400).json({errorDeleteImg})
+
+          /* console.log('IMAGEN PRINCIPAL', mainImage); */
+         /*  console.log('IMÁGENES QUE VOY A INSERTAR', imgs); */
+
+          imgs.forEach((img) => {
           
-//       }
-//       res.status(200).json(result);
-//       console.log(result, 'este es el resultado de create rent');
-//   });
-// };
+            let sqlInsert = '';
+          
+            if(mainImage == img.filename){
+              sqlInsert = `INSERT INTO image (image_title, image_property_id, image_is_main) VALUES('${img.filename}', ${property_id}, true)`
+            }
+            else {
+              sqlInsert = `INSERT INTO image (image_title, image_property_id) VALUES('${img.filename}', ${property_id})`;
+            }
 
-//EDITAR ALQUILER
+            connection.query(sqlInsert, (errorInsert, resultInsert) => {
+              errorInsert && res.status(400).json({errorInsert})
+            })
+          })
+          
+          let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
 
-// editRent = (req, res) => {
-//   let {property_id} = req.params;
+          connection.query(sqlSelect, (errorSelect, resultSelect) => {
+            errorSelect 
+                ? res.status(400).json({errorSelect})
+                : res.status(200).json({resultSelect})
+          })
+        })
+      }
 
-//   let {rent_renting_date, rent_renting_price, rent_expenses} = req.body;
+
+      addOneImage = (req, res) => {
+        let {property_id} = req.params;
+        let images = [''];
+
+        if(req.files != undefined){
+          images = req.files;
+        }
+
+        /* console.log('IMAGENES PARA GUARDAR', images); */
+        
+
+        images.forEach((img) =>{
+          let sqlAdd = `INSERT INTO image (image_title, image_property_id) VALUES ('${img.filename}', ${property_id})`
+
+          connection.query(sqlAdd, (errorAdd, resultAdd) => {
+            errorAdd && res.status(400).json({errorAdd})
+          })
+        })
+
+        let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
+
+        connection.query(sqlSelect, (errorSelect, resultSelect) => {
+          errorSelect 
+              ? res.status(400).json({errorSelect})
+              : res.status(200).json({resultSelect})
+        })
+      }
+
+      //Elimina una Foto del EditForm
+      //localhost:4000/property/delImg/:image_id
+      delImg = (req, res) => {
+        const {image_id} = req.params;
+        console.log('ID DE LA FOTO A QUITAR',image_id);
+        
+
+        let sqlDeleteImg = `UPDATE image SET image_is_deleted = true, image_is_main = false WHERE image_id = ${image_id}`
+        connection.query(sqlDeleteImg, (errorDel, resultDel) => {
+          errorDel ? res.status(400).json({errorDel}) : res.status(200).json(resultDel) 
+        } )
+      }
+
     
-//       if(rent_renting_date != null){
-//         if(rent_renting_date.length == 0){
-//           rent_renting_date = null;
-//         }
-//         else if(rent_renting_date.length> 10){
-//           rent_renting_date = rent_renting_date.slice(0, 10);
-//         }
-//       }
-//       if(rent_expenses != null){
-//           if(rent_expenses.length == 0){
-//               rent_expenses = null;
-//               }
-//           }
-//       if(rent_renting_price !=null){
-//           if(rent_renting_price.length == 0){
-//             rent_renting_price = null;
-//               }
-//           }
 
-//  let sql = "";
 
-//  if(rent_renting_date == null){
-//   sql = `UPDATE rent SET rent_renting_date = ${rent_renting_date}, rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_property_id =${property_id}`;
-//  } else {
-//   sql = `UPDATE rent SET rent_renting_date = '${rent_renting_date}', rent_renting_price = ${rent_renting_price}, rent_expenses = ${rent_expenses} WHERE rent_property_id =${property_id}`;
-//  }
-    
-//   connection.query(sql, (error, result)=>{
-//       if (error){
-//           res.status(400).json({error});    
-//       }
-//       res.status(200).json(result);
-//       console.log(result);
-//   });
-// };
-
-//EDITAR Hipoteca
-
-// editLoan = (req, res) => {
-//   let {property_id} = req.params;
-
-//   let {loan_years, loan_interest_rate, loan_type, loan_value} = req.body;
-
-//   if(loan_value != null){
-//     if(loan_value.length == 0){
-//       loan_value = null;
-//     }
-//   }
-//   if(loan_years != null){
-//     if(loan_years.length == 0){
-//       loan_years = null;
-//     }
-//   }
-//   if(loan_interest_rate != null){
-//     if(loan_interest_rate.length == 0){
-//       loan_interest_rate = null;
-//     }
-//   }
-
-//   let sql = `UPDATE loan SET loan_years = ${loan_years},loan_interest_rate = ${loan_interest_rate}, loan_type = ${loan_type}, loan_value = ${loan_value} WHERE loan_property_id = ${property_id}`;
-    
-//   connection.query(sql, (error, result)=>{
-//       if (error){
-//           res.status(400).json({error});    
-//       }
-//       res.status(200).json(result);
-//       console.log(result);
-//   });
-// };
 
 //editPurchase, rent y loan
 editPurchase = (req,res) => {
@@ -462,7 +482,9 @@ editPurchase = (req,res) => {
 
   for(const [field, value] of Object.entries(req.body)){
     
-    if(field == "purchase_buy_date"){
+
+    if(field == "purchase_buy_date" && value && value != ''){
+
      sql = `UPDATE purchase SET ${field} = date_format('${value}', '%Y-%m-%d')  WHERE purchase_property_id = ${property_id}`;
      connection.query(sql, (error, result)=>{
       if (error){
@@ -478,7 +500,11 @@ editPurchase = (req,res) => {
         } 
       });
     } 
-    if(field == "rent_renting_date"){
+
+   
+
+    if(field == "rent_renting_date" && value && value != ''){
+
       sql = `UPDATE rent SET ${field} = date_format('${value}', '%Y-%m-%d') WHERE rent_property_id = ${property_id}`;
       connection.query(sql, (error, result)=>{
        if (error){
@@ -505,32 +531,7 @@ editPurchase = (req,res) => {
   
   }
   res.status(200).send('insert correctos');
-  console.log('correctos');
-  
-  
-
-
-//   if(purchase_buy_price && purchase_buy_price.length > 0 ||
-//     purchase_buy_date && purchase_buy_date.length > 0 ||
-//     purchase_entry_expenses && purchase_entry_expenses.length > 0 ||
-//     purchase_trading_expenses && purchase_trading_expenses.length > 0 ||
-//     purchase_reform_expenses && purchase_reform_expenses.length > 0 ||
-//     purchase_furniture_expenses && purchase_furniture_expenses.length > 0 ||
-//     purchase_ownership_percentage && purchase_ownership_percentage.length > 0
-//   ){
-//     sql = `UPDATE purchase SET purchase_buy_price = ${purchase_buy_price},purchase_buy_date = '${purchase_buy_date}', purchase_is_new = ${purchase_is_new}, purchase_furniture_expenses = ${purchase_furniture_expenses}, purchase_reform_expenses = ${purchase_reform_expenses},purchase_ownership_percentage = ${purchase_ownership_percentage}, purchase_is_usual = ${purchase_is_usual},  purchase_entry_expenses = ${purchase_entry_expenses}, purchase_trading_expenses = ${purchase_trading_expenses} WHERE purchase_property_id = ${property_id}`;
-//   } 
-
-
-
-
-  // if(!purchase_buy_date ){
-  //   sql = `UPDATE purchase SET purchase_buy_price = ${purchase_buy_price},purchase_buy_date = ${purchase_buy_date}, purchase_is_new = ${purchase_is_new}, purchase_furniture_expenses = ${purchase_furniture_expenses}, purchase_reform_expenses = ${purchase_reform_expenses},purchase_ownership_percentage = ${purchase_ownership_percentage}, purchase_is_usual = ${purchase_is_usual},  purchase_entry_expenses = ${purchase_entry_expenses}, purchase_trading_expenses = ${purchase_trading_expenses} WHERE purchase_property_id = ${property_id}`;
-  // }else {
-  //   sql = `UPDATE purchase SET purchase_buy_price = ${purchase_buy_price},purchase_buy_date = '${purchase_buy_date}', purchase_is_new = ${purchase_is_new}, purchase_furniture_expenses = ${purchase_furniture_expenses}, purchase_reform_expenses = ${purchase_reform_expenses},purchase_ownership_percentage = ${purchase_ownership_percentage}, purchase_is_usual = ${purchase_is_usual},  purchase_entry_expenses = ${purchase_entry_expenses}, purchase_trading_expenses = ${purchase_trading_expenses} WHERE purchase_property_id = ${property_id}`;
-  // }
-
-
+  /* console.log('correctos'); */
 
 }
 
@@ -559,11 +560,11 @@ editPurchase = (req,res) => {
       setMainImage = (req, res) => {
         let {image_id, property_id} = req.params;
 
-        let unSetMainSql = 'UPDATE image SET image_is_main = false'
+        let unSetMainSql = `UPDATE image SET image_is_main = false WHERE image_property_id = ${property_id}`
 
         let sql = `UPDATE image SET image_is_main = true WHERE image.image_id = ${image_id}`;
 
-        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id}`;
+        let sqlImagesProperty = `SELECT * FROM image WHERE image_property_id = ${property_id} and image_is_deleted = false`;
 
         connection.query(unSetMainSql, (errorUnSet, resultUnSet) => {
           if (errorUnSet) {res.status(400).json({errorUnSet})}
@@ -596,130 +597,6 @@ editPurchase = (req,res) => {
         })
       }
 
-
-
-
-//crear loan
-// createLoan = (req,res) => {
-//   let {property_id} = req.params;
-
-//   let {loan_years, loan_interest_rate,loan_type,loan_value } = req.body;
-
-//   console.log('este es el req.body de create loan', req.body);
-//   // let sql = `INSERT INTO loan (loan_property_id, loan_years, loan_interest_rate, loan_type, loan_value) VALUES (${property_id}, ${loan_years}, ${loan_interest_rate}, ${loan_type}, ${loan_value})`;
-
-//   let sqlHead = "INSERT INTO loan (loan_property_id";
-//   let sqlTail = `VALUES (${property_id} `;
-
-//   if(loan_years !== undefined){
-//     sqlHead += `, loan_years`;
-//     sqlTail += `, ${loan_years}`
-//    };
-//    if(loan_interest_rate !== undefined ){
-//     sqlHead += `, loan_interest_rate`;
-//     sqlTail += `, ${loan_interest_rate}`
-//    };
-//    if(loan_type !== undefined){
-//     sqlHead += `, loan_type`;
-//     sqlTail += `, ${loan_type}`
-//    };
-//    if(loan_value !== undefined){
-//     sqlHead += `, loan_value`;
-//     sqlTail += `, ${loan_value}`
-//    };
-
-//    sqlHead += ')';
-//    sqlTail += ')';
-   
-//    let sql = sqlHead + " " + sqlTail;
-
-//       connection.query(sql, (error, resultLoan)=>{
-//       if (error){
-//           res.status(400).json({error});
-//           console.log(error, 'este es el error de loan');
-//       }
-//       res.status(200).json(resultLoan);
-//       console.log('este es el resultado de loan',resultLoan);
-//  })
-// }
-
-
-
-//crear purchase
-// createPurchase = (req,res) =>{
-//   let {property_id} = req.params;
-  
-
-//   let {purchase_buy_price, purchase_buy_date, purchase_is_new, purchase_furniture_expenses, purchase_reform_expenses,purchase_ownership_percentage, purchase_is_usual, purchase_entry_expenses ,purchase_trading_expenses } = req.body;
-
-//  purchase_is_new === 'true' ? true : false;
-
-//  console.log('este es el req.body de create purchase', req.body);
-    
-  // let sql = `INSERT INTO purchase (purchase_property_id, purchase_buy_price, purchase_buy_date, purchase_is_new, purchase_furniture_expenses, purchase_reform_expenses,purchase_ownership_percentage, purchase_is_usual, purchase_entry_expenses ,purchase_trading_expenses) VALUES (${property_id}, ${purchase_buy_price}, '${purchase_buy_date}', ${purchase_is_new}, ${purchase_furniture_expenses}, ${purchase_reform_expenses},${purchase_ownership_percentage},${purchase_is_usual},${purchase_entry_expenses}, ${purchase_trading_expenses})`;
-
-
-//  let sqlHead = "INSERT INTO purchase (purchase_property_id";
-//  let sqlTail = `VALUES (${property_id} ` ;
-
-
-// if(purchase_buy_date !== undefined){
-//  sqlHead += `, purchase_buy_date`;
-//  sqlTail += `, '${purchase_buy_date}'`
-// };
-
-// if(purchase_buy_price !== undefined){
-//   sqlHead += `, purchase_buy_price` 
-//   sqlTail += `, ${purchase_buy_price}`
-// }
-
-// if(purchase_is_new !== undefined){
-//   sqlHead += `, purchase_is_new`
-//   sqlTail += `, ${purchase_is_new}`
-// }
-
-// if(purchase_furniture_expenses !== undefined){
-//   sqlHead += `, purchase_furniture_expenses`
-//   sqlTail += `, ${purchase_furniture_expenses}`
-// }
-
-// if(purchase_reform_expenses !== undefined){
-//   sqlHead += `, purchase_reform_expenses`
-//   sqlTail += `, (${purchase_reform_expenses})`
-// }    
-// if(purchase_ownership_percentage !== undefined){
-//   sqlHead += `, purchase_ownership_percentage`
-//   sqlTail += `, ${purchase_ownership_percentage}`
-// }
-
-// if(purchase_is_usual !== undefined){
-//   sqlHead += `, purchase_is_usual`
-//   sqlTail += `, ${purchase_is_usual}`
-// }
-// if(purchase_entry_expenses !== undefined){
-//   sqlHead += `, purchase_entry_expenses`
-//   sqlTail += `, ${purchase_entry_expenses}`
-// }
-// if(purchase_trading_expenses !== undefined){
-//   sqlHead += `, purchase_trading_expenses`
-//   sqlTail += `, ${purchase_trading_expenses}`
-// }
-// sqlTail += ')';
-// sqlHead += ')';
-// let sql = sqlHead + " " + sqlTail;
-
-
-//       connection.query(sql, (error, resultPurchase)=>{
-//       if (error){
-//           // res.status(400).json({error});
-//           if (error){
-//             res.status(400).json(error)}
-//           console.log(error, 'este es el error de purchase');
-//       }
-//       res.status(200).json(resultPurchase);
-//       console.log(resultPurchase);
-//       })
-// }
   
 //trae todos los datos de purchase, rent y loan
 getAllPurchaseData = (req, res) => {
@@ -840,28 +717,24 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-
-      
-      
-
       discover = (req, res) => {
   
-        let sql = `SELECT property.*, address.*, purchase.*, image.image_title, city.city_name, province.province_name
-        FROM property 
-        LEFT JOIN address
-        ON property.property_id = address.address_property_id 
-        JOIN city
-        ON address.address_city_id = city.city_id
-        JOIN province
-        on city.city_province_id = province.province_id
-        LEFT JOIN purchase 
-        ON property.property_id = purchase.purchase_property_id 
-        JOIN image
-        ON property.property_id = image.image_property_id 
-        WHERE property_is_user_deleted = false
-        AND image.image_is_main = 1
-        group by province.province_id
-        having province.province_id = address.address_province_id`;
+        let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
+        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, 
+        image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
+        FROM property, address, city, province, purchase, image, type, subtype, kitchen
+        where property.property_id = purchase.purchase_property_id 
+        AND property.property_subtype_id = subtype.subtype_id
+        AND subtype.subtype_type_id = type.type_id
+        AND property.property_kitchen_id = kitchen.kitchen_id
+        and property.property_id = address.address_property_id 
+        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
+        and city.city_province_id = province.province_id
+        and property.property_id = image.image_property_id 
+        AND  property.property_is_for_sale = true
+        AND property.property_is_admin_deleted = false
+        AND property.property_is_user_deleted = false
+              AND image.image_is_main = 1;`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
@@ -890,8 +763,6 @@ getAllPurchaseData = (req, res) => {
             })
           }
 
-
-
         favUser = (req, res) => {
         let {user_id} = req.params;
         console.log("Hola")
@@ -909,6 +780,15 @@ getAllPurchaseData = (req, res) => {
 
   
 
+        //SACA TODAS LA ENTRADAS DE FEATURES_PROPERTY PARA FILTRAR EN DESCUBRE.
+        //localhost:4000/property/discover/allpropertywithfeature
+        getAllFeature_Property = (req, res) =>{
+          let sql = 'select * from feature_property ORDER BY property_id;'
+
+          connection.query(sql, (error, result)=>{
+            error ? res.status(400).json({error}) : res.status(200).json(result);
+          })
+        }
 
 }
 

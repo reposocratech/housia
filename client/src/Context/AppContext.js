@@ -13,8 +13,8 @@ export const AppProvider = (props) => {
     const [resetUser, setResetUser] = useState(false);
     const [userProperties, setUserProperties] = useState();
     const [isLogged, setIsLogged] = useState(false);
-    const [subTypeId, setSubTypeId] = useState(1);
-    const [typeId, setTypeId] = useState(1);
+    const [subTypeId, setSubTypeId] = useState(-1);
+    const [typeId, setTypeId] = useState(-1);
     const token = localStorageUser(); 
 
 useEffect(() => {
@@ -26,7 +26,8 @@ useEffect(() => {
     axios
     .get(`http://localhost:4000/users/${id}`)
     .then((res)=> {
-        console.log(res.data);
+
+        // console.log(res.data);
         setUser(res.data.resultUser[0]);
         setUserProperties(res.data.resultProperty);
     })

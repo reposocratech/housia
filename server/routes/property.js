@@ -58,12 +58,14 @@ router.get("/allProvinces", propertyController.allProvinces);
 //localhost:4000/property/allCities/:province_id
 router.get("/allCities/:province_id", propertyController.allCities );
 
-//muestra todas la propiedades de descubre
-router.get("/descubre", propertyController.showAllDescubre);
 
 //Actualizar DIRECCIÓN PROPIEDAD
 //localhost:4000/property/addPropertyAddress/:property_id/:province_id/:city_id
 router.put("/addPropertyAddress/:property_id/:province_id/:city_id", propertyController.addAddress);
+
+//Editar DIRECCIÓN
+//localhost:4000/property/editPropertyAddress/:property_id/:province_id/:city_id
+router.put("/editPropertyAddress/:property_id/:province_id/:city_id", propertyController.editPropertyAddress)
 
 //Mostrar CARACTERÍSTICAS del Inmueble
 //localhost:4000/property/allFeatures
@@ -73,6 +75,10 @@ router.get("/allFeatures", propertyController.allFeatures);
 //localhost:4000/property/addFeaturesToProperty/:property_id
 router.post("/addFeaturesToProperty/:property_id", propertyController.addFeaturesToProperty);
 
+//Actualizar Características
+//localhost:4000/property/editFeaturesProperty/:property_id
+router.post('/editFeaturesProperty/:property_id', propertyController.editFeaturesProperty);
+
 //Mostrar Características
 //localhost:4000/property/getPropertyFeatures/:property_id
 router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFeatures);
@@ -81,10 +87,18 @@ router.get("/getPropertyFeatures/:property_id", propertyController.getPropertyFe
 //localhost:4000/property/addImgsProperty/:property_id
 router.put("/addImgsProperty/:property_id", multer("property"), propertyController.addImgsProperty);
 
+//Actualizar Fotos Propiedad
+//localhost:4000/property/updateImagesProperty/:property_id
+router.post('/updateImagesProperty/:property_id', multer("property"), propertyController.updateImagesProperty)
 
-//ELIMINA FOTO de una Propiedad
+
+//ELIMINA FOTO de una Propiedad cuando la creamos
 //localhost:4000/property/deleteImageProperty/:image_id/:property_id
 router.delete('/deleteInitialImageProperty/:image_id/:property_id', propertyController.deleteInitialImageProperty)
+
+//ELIMINAR FOTO de Edit
+//localhost:4000/property/delImg/:image_id
+router.put('/delImg/:image_id', propertyController.delImg);
 
 //Setear FOTO PRINCIPAL de una propiedad
 //localhost:4000/property/setMainImage/:image_id/:property_id
@@ -93,6 +107,10 @@ router.put('/setMainImage/:image_id/:property_id', propertyController.setMainIma
 //Deshacer Foto Principal de una propiedad
 //localhost:4000/property/unSetMainImage/:image_id/:property_id
 router.put('/unSetMainImage/:image_id/:property_id', propertyController.unSetMainImage);
+
+//Añadir una foto a la propiedad
+//localhost:4000/property/addOneImage/:property_id
+router.put('/addOneImage/:property_id', multer("property"), propertyController.addOneImage)
 
 ////rent
 //localhost:4000/property/createRent/:property_id
@@ -167,5 +185,10 @@ router.delete("/unfav/:user_id/:property_id", propertyController.unfav);
 //Trae los favoritos de un usuario
 //localhost:4000/property/favUser/:user_id
 router.get("/favUser/:user_id", propertyController.favUser);
+
+//saca todas la entradas de features_property para filtrar descubre
+//localhost:4000/property/discover/allpropertywithfeature
+router.get('/discover/allpropertywithfeature', propertyController.getAllFeature_Property);
+
 
 module.exports = router;

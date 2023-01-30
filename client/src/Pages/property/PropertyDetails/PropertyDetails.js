@@ -22,14 +22,20 @@ export const PropertyDetails = () => {
     const [rent, setRent] = useState([]);
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
-    const {user, property, setProperty } = useContext(AppContext);
-    let { property_id } = useParams();
-    const navigate = useNavigate();
     const [show, setShow] = useState(false);
-    const handleColor = () => setColorSold(!colorSold);
-    console.log(user.user_id, "Soy USER ID");
-    console.log(property_id, 'soy property_id');
 
+    const {user } = useContext(AppContext);
+
+    let { property_id } = useParams();
+
+    const navigate = useNavigate();
+
+    const handleColor = () => setColorSold(!colorSold);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    /* console.log(user.user_id, "Soy USER ID");
+    console.log(property_id, 'soy property_id'); */
 
     const handleSubmit = () => {
     
@@ -43,12 +49,9 @@ export const PropertyDetails = () => {
     .catch((err) => {
         console.log(err);
     });
-    
   } 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
     
-  console.log(user, "EYYYYYYYY")
+  /* console.log(user, "EYYYYYYYY") */
     
     //Detalles Propiedad
     useEffect(() => {
@@ -150,15 +153,15 @@ export const PropertyDetails = () => {
         }, [property_id]);
         
         //carga el property id en navigate para editar detalles economicos
-       const travelToEditEconomicFeatures = ()=>{
+       /* const travelToEditEconomicFeatures = ()=>{
 
             setProperty(property_id)
             navigate("/addEconomicFeatures")
-        }
+        } */
 
       
   return (
-    <Container fluid                    className='portafolio-container'>
+    <Container fluid className='portafolio-container'>
          <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
     
         <div className='infoCarousel'>
@@ -198,6 +201,7 @@ export const PropertyDetails = () => {
                     <img src='/images/property/place.png'/>
                     <h6>{address[0]?.address_street_name}, {address[0]?.address_postal_code}, {provinceCity[0]?.province_name}</h6>
                 </div>
+
                 <div className='info'>
                     <div className='icono'>
                         <div><img src='/images/property/home.png'/></div>
@@ -249,6 +253,7 @@ export const PropertyDetails = () => {
                 </Modal>
                          
         </div>
+
        
             <h4>Información</h4>
 
@@ -274,9 +279,11 @@ export const PropertyDetails = () => {
                 <div className='valor'>
                 <p>Valor de mercado</p>
                 <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
+
                 </div>
                 
                 <img src='/images/property/grafica4.jpg'></img>
+               
             </div>
         </div>   
 

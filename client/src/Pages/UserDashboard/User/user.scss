@@ -1,0 +1,108 @@
+.perfil-usuario{
+    background-color: #272839;
+    height: 100vh;
+    color: white;
+    .perfil-datos{
+        padding-top:120px;
+        text-align: center;
+        h1{
+            color: rgba(3, 255, 247, 1);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        .perfil-imagen{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        h2, p{
+            margin-top: 10px;
+        }
+        h5{
+            color: gray;
+            font-weight: lighter;
+            letter-spacing: 0.5px;
+
+        }
+    }
+    .perfil-extras{
+        margin-top: 50px;
+        .fila{
+            display: flex;
+            justify-content: center;
+        }
+        h2{
+            color: gray;
+            margin: 20px 0;
+        }
+       
+        .perfil-opcion{
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            width: 100%;
+            cursor: pointer;
+            .icono{
+                color: rgba(3, 255, 247, 1);
+                padding: 5px;
+                background-color: rgba(255, 255, 255, 0.09);
+                border-radius: 10px;
+                margin-right: 5px;
+            }
+            .toggle{
+                background-color: transparent;
+                border: none;
+            }
+            p{
+                margin: 0;
+            }
+        }
+    }
+    .perfil-editar{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        label{
+            margin-left: 5px;
+        }
+        .perfil-input{
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 5px 10px;
+            border-radius: 10px;
+            margin: 10px 0;
+            color: white;
+            font-weight: lighter;
+            border: none;
+            margin: 5px 0;
+        }
+        ::placeholder{
+            color: white;
+        }
+        :focus{
+            outline: 1px solid #4cecf5;
+            border: 1px solid #4cecf5;
+        }
+    }
+    .editar-perfil-botones{
+        display: flex;
+        justify-content: center;
+        button{
+            background-color: #26ADB5;
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin: 0 10px;  
+            width: 40%;
+            margin-top: 10px;
+            &:hover{
+                background-color: #26aeb53f;
+                transition: 0.5s;
+            }
+        }
+       }
+}

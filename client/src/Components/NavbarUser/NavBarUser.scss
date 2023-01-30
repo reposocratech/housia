@@ -1,15 +1,16 @@
 .NavBarContainer{
-    display: flex;
-    justify-content: space-around;
-    background-color: #272839;
+    background-color: #272839 !important;
     border-bottom: 1px solid white;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+    
     img{
         width: 120px;
     }
     a{
-        margin: 10px 20px;
         text-decoration: none;
-        font-weight: 700;
+        font-weight: 500;
         color: white;
     }
     a:hover {
@@ -23,6 +24,51 @@
     }
     .avatar-img{
         width: 50px;
-        margin-right: 15px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .dropdown-perfil{
+        div{
+            background-color: #272839 !important;
+            margin-top: 12px;
+            .dropdown-item:active {
+                background-color: #272839 !important;
+            }
+        }
+    }
+}
+.NavBarContainerLogin{
+    background-color: transparent;
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    top: 10px;
+    border-bottom: 1px solid white;
+
+    a{
+        margin: 10px 20px;
+        text-decoration: none;
+        font-weight: 700;
+        color: white;
+    }
+    a:hover {
+        color: rgb(48,162,185);
+    }
+    img{
+        width: 120px;
+    }
+    button{
+        background-color: rgb(48,162,185);
+        border: none;
+        color: white;
+        font-weight: 700;
+        padding: 10px 15px;
+        border-radius: 10px;
+        &:hover{
+            background-color: rgba(37, 130, 148, 0.952);
+            transition: 0.5s;
+        }
     }
 }

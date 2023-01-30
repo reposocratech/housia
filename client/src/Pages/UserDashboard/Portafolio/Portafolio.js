@@ -8,17 +8,13 @@ import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
 
-
-
-
 export const Portafolio = () => {
 
   const [propertyDetails, setPropertyDetails] = useState();
-
+  /* console.log(propertyDetails); */
 
    const {user, setIsLogged} = useContext(AppContext);
    const navigate = useNavigate();
-
 
 
   useEffect(() => {
@@ -41,7 +37,6 @@ export const Portafolio = () => {
     }
 }, [])
 
-
   const delPropertyUser = (propiedad) => {
     
     axios
@@ -52,9 +47,6 @@ export const Portafolio = () => {
       })
       .catch((error)=> {console.log(error);})
   }
-    
-
-
 
   const handleSold = (idProperty, isSold) => {
     let url = "";
@@ -68,7 +60,6 @@ export const Portafolio = () => {
     axios
     .put(url)
     .then((res)=>{
-
       setPropertyDetails(res.data)
     })
     .catch((Err)=>console.log(Err))
@@ -114,7 +105,7 @@ export const Portafolio = () => {
               <div className='col-12 col-sm-6 col-lg-4 properties' key={index}>
               <div  className='property' key={prop.property_id}>
 
-                <div onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'><img src='/images/property/Id-1674320379687-descarga (1).jpeg'/></div>
+                <div onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'><img src={`/images/property/${prop.image_title}`}/></div>
 
               <div className='all'>
                 <button onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'>

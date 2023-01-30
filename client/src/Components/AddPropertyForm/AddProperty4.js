@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {Button, Container} from "react-bootstrap";
 import { AppContext } from '../../Context/AppContext';
-
+import "./AddProperty4.scss";
 import {useNavigate} from 'react-router-dom';
 import "./styles/stylesAddProperty4.css"
 
@@ -56,21 +56,15 @@ export const AddProperty4 = () => {
  console.log(features, "features")
  
   return (
-    <Container>
+    <div className='PadreAdd4'>
+    <div className='TituloAdd4'>
     <h2 className='text-center'>Añadir propiedad</h2>
+    </div>
+  
     <h4>Seleccionar caracteristicas</h4>
-{/* <input onClick={handleAC}  value={feature.feature_id} placeholder="" type="checkbox" /> */}
 
-    {featureAll?.map((feature, i)=>{
-        return(
-            
-            
-            <Button  onClick={handleAC} key={i} /* variant={features.includes(feature.feature_id) ? "dark" : "outline-dark"} */ value={feature.feature_id} >{feature.feature_name}</Button>
-            
-            
-        )
-    })}
-        <div className='padre_de_los_checkbox'>
+
+    <div className='padre_de_los_checkbox divAdd4'>
             
         { featureAll?.map((feature, i)=>{
             return(
@@ -92,29 +86,8 @@ export const AddProperty4 = () => {
 
     </div>
 
-    <button onClick={handleSubmit}>Siguiente</button>
+    <Button variant='info' size='lg' onClick={handleSubmit}>Siguiente</Button>
 
-
-            {/* <Form.Group className='d-flex'>
-                <Form.Check onClick={handleAC} key={i} value={feature.feature_id}/>
-                <Form.Label>{feature.feature_name}</Form.Label>
-            </Form.Group> */}
-            
-
-
-    {/* <form>
-    {feature?.map((feature, i)=>{
-        return(
-            
-            <input   value={feature.feature_id} placeholder="" type="checkbox" />
-            
-            
-        )
-    })}
-    <button type='submit' onClick={onSubmit} >Siguiente</button>
-    </form> */}
-    
-    
-    </Container>
+    </div>
   )
 }
