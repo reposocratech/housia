@@ -14,6 +14,7 @@ const navigate = useNavigate();
 /* console.log(property);
 console.log(typeId, 'type id');
 console.log(subTypeId, 'subtype id'); */
+console.log(typeId, 'type id');
 
     useEffect(() => {
         axios
@@ -87,7 +88,7 @@ console.log(subTypeId, 'subtype id'); */
        </div>
        <div className='displayAdd2'>
        <div>
-    {typeId !== 4 &&
+    {typeId != 4 &&
         <>
         <p>Año de construccion</p>
         <input
@@ -137,7 +138,7 @@ console.log(subTypeId, 'subtype id'); */
         
     </>}
 
-       {typeId !== 3 && typeId !== 4 && <>
+       {typeId != 3 && typeId != 4 && <>
         <p>Garage</p>
         <input
             placeholder='0'
