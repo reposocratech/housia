@@ -102,7 +102,7 @@ export const AdminCustomFeatures = () => {
    
 
     const createFeatures = () => {
-        if(features.feature_name === '' || features.features_name === undefined ){
+        if(!features.feature_name){
             setMessage1('Campo vacío');
         } else {
             axios
@@ -118,35 +118,47 @@ export const AdminCustomFeatures = () => {
             })
         }   
     }
+    
     const createPropertyType = () => {
-        axios
-        .post('http://localhost:4000/admin/createPropertyType', propertyType)
-        .then((res) => {
-            console.log(res.data);
-            setResetUser(!resetUser);
-            setPropertyType("");
-            setMessage2("");
-        })
-        .catch((err) => {
-            console.log(err, 'error del create type');
-        })
+        if(!propertyType.type_name){
+            setMessage2("Campo vacío");
+        }else{
+            axios
+            .post('http://localhost:4000/admin/createPropertyType', propertyType)
+            .then((res) => {
+                console.log(res.data);
+                setResetUser(!resetUser);
+                setPropertyType("");
+                setMessage2("");
+            })
+            .catch((err) => {
+                console.log(err, 'error del create type');
+            })
+        }
+       
     }
+    
     const createPropertySubtype = () => {
-        let type_id = propertySubType.type_id;
-        axios
-        .post(`http://localhost:4000/admin/createPropertySubType/${type_id}`, propertySubType)
-        .then((res) => {
-            console.log(res.data);
-            setResetUser(!resetUser);
-            setPropertySubType("");
-            setMessage3 ("");
-        })
-        .catch((err) => {
-            console.log(err, 'error del create subtype');
-        })
+        if(!propertySubType.subtype_name) {
+            setMessage3("Campo vacío");
+        } else{
+            let type_id = propertySubType.type_id;
+            axios
+            .post(`http://localhost:4000/admin/createPropertySubType/${type_id}`, propertySubType)
+            .then((res) => {
+                console.log(res.data);
+                setResetUser(!resetUser);
+                setPropertySubType("");
+                setMessage3 ("");
+            })
+            .catch((err) => {
+                console.log(err, 'error del create subtype');
+            })
+        }
+        
     }
     const createKitchenType = () => {
-        if(kitchenType.kitchen_name === '' || kitchenType.kitchen_name === undefined ){
+        if(!kitchenType.kitchen_name){
             setMessage4('Campo vacío');
         } else{
             axios
@@ -371,6 +383,7 @@ export const AdminCustomFeatures = () => {
                 {show && 
                 <>
                 <select className='select-subtype' name='type_id' onChange={handleSelectSubtype}>
+                <option>Tipo</option>
                      {typesDb.map((type, index) =>{
                         return(
                             <option value={type.type_id}>{type.type_name}</option>

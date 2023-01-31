@@ -20,13 +20,13 @@ export const ModalSaveProperty = ({setimages, showFinalModal, setShowFinalModal,
 
     const handleAddressToPortfolio = () => {
         setimages([]);
+        setShowSelectButton(true);
         if(user.user_type === 2){
             navigate('/user/portafolio');
         }
-        else if(user.uset_type === 1){
+        else if(user.user_type === 1){
             navigate('/admin/allproperties')
-        }
-        setShowSelectButton(true);
+        }    
     }
 
     const navigate = useNavigate();
