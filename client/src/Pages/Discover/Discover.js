@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from "axios";
 
 import './Discover.scss';
-import { Container, Form, InputGroup,  Modal } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 
@@ -29,8 +29,8 @@ export const Discover = () => {
     const [favOption, setFavOption] = useState(false)
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
-    const [smShow, setSmShow] = useState(false)
-
+    const [show, setShow] = useState(false)
+    const target = useRef(null);
 
     ///////////token para comprobar si el usuario es
     //estados de filtros
@@ -75,7 +75,9 @@ export const Discover = () => {
             axios
             .get(`http://localhost:4000/users/getFavs/${userId}`)
             .then((res)=>{
-                setFavInDB(res.data.result)
+              
+                setFavInDB(res.data)
+                
             })
             .catch((error)=>{
                 console.log(error)
@@ -152,12 +154,12 @@ export const Discover = () => {
 
 
 
-        const addToFavs = (property_id) =>{
-            console.log(property_id, "PROPERTY ID");
-            console.log(favInDB);
+        const addToFavs = (propertyId) =>{
+           
+            console.log(favInDB, "lo que traigo ya en la lista");
             if(favInDB.length === 0){
                 axios
-                .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                .post(`http://localhost:4000/users/postFav/${userId}/${propertyId}`)
                 .then((res)=>{
                 console.log(res);
                 })
@@ -166,13 +168,26 @@ export const Discover = () => {
                 })
             } else{
 
-                   let flag= favInDB.filter(elem => Number(elem.property_id) === property_id);
-                    
+                let flag = [];
+                favInDB.map((elem)=>{
+                    if(Number(elem.property_id) !== Number(propertyId)){
+                        flag.push(elem)
+                    }
+                })
+
+                 
                 if(flag.length !== favInDB.length){
-                    setSmShow(true)
+                    setShow(!show)
                 } else {
+
+                    let doll = {
+                        property_id: propertyId
+                    }
+                   setFavInDB([...favInDB, doll]);
+
+                   
                     axios
-                    .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                    .post(`http://localhost:4000/users/postFav/${userId}/${propertyId}`)
                     .then((res)=>{
                     console.log(res);
                     })
@@ -451,13 +466,13 @@ export const Discover = () => {
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
-    console.log(discover, "esto es el arrays de casas originales");
+    // console.log(discover, "esto es el arrays de casas originales");
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
     // console.log(propertiesWithFeatures, "los 48");
-    console.log(featuresSelected, "BOTONES PULSADOS");
-    console.log(propertiesWithFeaturesSelect, "COINCIDENCIAS");
+    // console.log(featuresSelected, "BOTONES PULSADOS");
+    // console.log(propertiesWithFeaturesSelect, "COINCIDENCIAS");
 
     
 
@@ -531,7 +546,6 @@ export const Discover = () => {
     filterList = contenedor;
     } 
        
-    console.log(filterList, "hola")
 
   return (
 
@@ -721,19 +735,6 @@ export const Discover = () => {
         {filterList?.map((property, i) => {
             return(
                 <div key={i} style={{border:"2px solid red"}}>
-                     <Modal
-                        size="sm"
-                        show={smShow}
-                        onHide={() => setSmShow(false)}
-                        aria-labelledby="example-modal-sizes-title-sm"
-                    >
-                    <Modal.Header closeButton>
-                    <Modal.Title id="example-modal-sizes-title-sm">
-                    Accion repetida.
-                    </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Esta propiedad ya esta en su lista de Favoritos. (para acceder a sus favoritos despliege desde su foto las opciones)</Modal.Body>
-                    </Modal>
                 <img src={property?.image_title} alt=""></img>
 
 
@@ -742,7 +743,11 @@ export const Discover = () => {
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
-                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
+                {favOption &&
+                <div>
+                <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
+                {show && <span>Esta opcion ya esta en tus favoritos</span>}
+                </div>}
                 <hr/>
                 <p>Año de construccion: {property?.property_built_year} </p>
                 <p>Metros construidos: {property?.property_built_meters} </p>

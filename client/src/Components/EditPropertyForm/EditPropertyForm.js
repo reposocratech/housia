@@ -5,6 +5,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 
 import { useNavigate, useParams } from "react-router-dom";
 
+
 import { AppContext } from "../../Context/AppContext";
 
 import './editPropertyForm.scss'
@@ -306,7 +307,10 @@ export const EditPropertyForm = () => {
     }
 
 
-  return (
+
+
+ return (
+
     <Container fluid className='datos-propiedad-container'>
         <h1 className="text-center mb-3">Editar Propiedad</h1>
 
@@ -447,7 +451,7 @@ export const EditPropertyForm = () => {
                                 onChange={handleChange}
                                 value={property?.address_stair === "undefined" ? 0 : property?.address_stair}
                             />
-                        </Form.Group>
+                             </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='2'>
                             <Form.Label>Planta</Form.Label>
                             <Form.Control 
