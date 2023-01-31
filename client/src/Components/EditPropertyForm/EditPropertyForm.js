@@ -1,17 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
-
-
 import { useNavigate, useParams } from "react-router-dom";
-
-
 import { AppContext } from "../../Context/AppContext";
 
-import './editPropertyForm.scss'
+import './editProperty.css'
 import { ModalAddImage } from "./ModalAddImage";
-
-
 
 export const EditPropertyForm = () => {
 
@@ -23,7 +17,7 @@ export const EditPropertyForm = () => {
     const [kitchenId, setKitchenId] = useState(1);
     const [province, setProvince] = useState();
     const [city, setCity] = useState();
-    const [provinceId, setProvinceId] = useState(1);
+    const [provinceId, setProvinceId] = useState();
     const [cityId, setCityId] = useState();
     const [features, setFeatures] = useState([])
     const [featuresSelected, setFeaturesSelected] = useState([]);
@@ -32,22 +26,15 @@ export const EditPropertyForm = () => {
     const [showAddImage, setShowAddImage] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
-    const {property, setProperty} = useContext(AppContext);
+    const {property, setProperty, user, isLogged} = useContext(AppContext);
 
-    const {property_id} = useParams();
+    const {property_id, property_subtype_id} = useParams();
 
     const navigate = useNavigate();
 
     const URL_PROP = 'http://localhost:4000/property';
-
     
-
-    // let nombreTipo = type[(property?.type_id) -1 ].type_name;
-    
-    // let nombreSubTipo = Number(subtype[(property?.property_subtype_id) -1 ] .subtype_name);
-
-    
-
+    /* Trae todos los tipos disponibles */
     useEffect(() => {
         axios
         .get("http://localhost:4000/property/allTypes")
@@ -59,27 +46,49 @@ export const EditPropertyForm = () => {
         });
     }, []);
 
+    
+    /* Me trae el tipo de esta propiedad según el subtipo. */
+    useEffect(() => {
+        /* console.log(property_subtype_id, 'subtype id de los params'); */
+
+        axios
+            .get(`${URL_PROP}/getType/${property_subtype_id}`)
+            .then((res) => {
+                setTypeId(res.data[0].subtype_type_id);
+            })
+            .catch((err) => {
+                console.log(err);
+                
+            })
+    }, [property_subtype_id])
+
+    /* console.log('tipo que me viene', typeId); */
+    
 
     useEffect(() => {
-        axios
-        .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
-        .then((res) => {
-           
-            setSubtype(res.data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+
+        if(typeId){
+            axios
+            .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
+            .then((res) => {
+              /*  console.log(res.data, 'RESSSS DE LOS SUBTIPOS'); */
+                setSubtype(res.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }
     }, [type, typeId]);
+
 
     const handleTypeId = (e) =>{
         setTypeId(e.target.value);
-        // setTypeId(id);
+        setProperty({...property, property_subtype_id: subTypeId, type_id: e.target.value })
     }
-    
     
     const handleSubTypeId = (e) => {
         setSubTypeId(e.target.value);
+        setProperty({...property, property_subtype_id: e.target.value})
     }
 
     useEffect(() => {
@@ -121,24 +130,33 @@ export const EditPropertyForm = () => {
 
     const handleProvinceId = (e) => {
         setProvinceId(e.target.value);
+        setProperty({...property, address_province_id: Number(e.target.value)})
+        setCityId(1);
        }
 
     const handleCityId = (e) => {
         setCityId(e.target.value);
+        setProperty({...property, address_city_id: Number(e.target.value)});
     }
 
-  
+    /* console.log(provinceId, 'PROVINCE IDDDD'); */
 
     useEffect(() => {
         axios
             .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
             .then((res) => {
-                /* console.log(res.data[0], 'DATOS PROPIEDAD'); */
+                /* console.log(res.data[0].property_subtype_id, 'DATOS PROPIEDAD');
+                console.log(res.data[0].address_city_id, 'city iddddd' ); */
+                
+                let subtipo = res.data[0].property_subtype_id;
+
+                setSubTypeId(subtipo);
                 setProperty(res.data[0])
+                setCityId(res.data[0].address_city_id)
+                setProvinceId(res.data[0].address_province_id);
             })
             .catch((error) => {
                 console.log(error.message);
-                
             })
     }, [property_id])
 
@@ -191,7 +209,6 @@ export const EditPropertyForm = () => {
             })
 
     }, [property?.property_id])
-    
 
     /* console.log('IMAGES PARA GUARDAR', imagesProperty); */
 
@@ -268,12 +285,11 @@ export const EditPropertyForm = () => {
     })
     setPrueba(prueba2)
 }
-    
 
     const saveFeaturesFromEdit = (id) => {
         if(featuresSelected){
             axios
-                .post(`http://localhost:4000/property/editFeaturesProperty/${id}`, featuresSelected)
+                .post(`${URL_PROP}/editFeaturesProperty/${id}`, featuresSelected)
                 .then((res) => {
                     console.log(res);
                 })
@@ -282,20 +298,27 @@ export const EditPropertyForm = () => {
                 })
         }
     }
-
+    
     const editPropertyAddress = () => {
         axios
-            .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
-            .then((res) => {
-                console.log('RES DE EDIT PROPERTY', res);
-                navigate(`/propertyDetails/${property.property_id}`);
-            })
-            .catch((error) => {
-                console.log('ERROR del EDITADDRESS');
-            })
+        .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
+        .then((res) => {
+            console.log('RES DE EDIT PROPERTY', res);
+            
+        })
+        .catch((error) => {
+            console.log('ERROR del EDITADDRESS');
+        })
     }
-
-     console.log('PROPIEDAD EN EDICIÓN', property);
+    
+    /* console.log('TIPO de Propiedad', property?.type_id);
+    console.log(type, 'TIOPOOOOOOO');
+    console.log(subTypeId, 'subtypeIdddddddddddd');
+    
+    console.log('PROPIEDAD EN EDICIÓN', property);
+     console.log(property.property_subtype_id, 'SUBTYP PROPERTY DEL AXIOS/CONTEXT'); */
+     
+     
     /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
     /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
     
@@ -304,17 +327,23 @@ export const EditPropertyForm = () => {
         editPropertyAddress();
         saveFeaturesFromEdit(property?.property_id);
 
+        if(isLogged && user.user_type === 2){
+            navigate(`/user/portafolio`);
+        }
+        else if(isLogged && user.user_type === 1){
+            navigate('/admin/allproperties')
+        }
     }
 
 
   return (
-    <Container fluid className='datos-propiedad-container'>
-        <h1 className="text-center mb-3">Editar Propiedad</h1>
+    <Container fluid>
+        <h2 className="text-center mb-3">Editar Propiedad</h2>
 
-        <Form className="m-3" onSubmit={onSubmit /* handleSubmit(onSubmit) */}>
+        <Form className="m-3" onSubmit={onSubmit}>
 
-            <Row className="justify-content-center">
-                <Col md='6' lg='5'>
+            <Row>
+                <Col md='6'>
                     <Form.Label>Nombre Propiedad</Form.Label>
                     <Form.Control
                         className="mb-3" 
@@ -325,30 +354,33 @@ export const EditPropertyForm = () => {
                     />
 
                     <Row className="d-flex justify-content-between">
+
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select onChange={handleTypeId} /* name='type_id' */>
-                                <option value={property?.type_id}>{'Tipo'}</option>
+
+                            <Form.Select  onChange={handleTypeId} value={typeId}>
+
                                 {type?.map((typ, ind) => {
                                     return(
                                         <option key={ind} value={typ.type_id}>{typ.type_name}</option>
                                     )
                                 })}
                             </Form.Select>
+
                         </Form.Group>
+
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>SubTipo</Form.Label>
                             <Form.Select 
-                                onChange={handleChange}
+                                onChange={handleSubTypeId}
                                 name='property_subtype_id'
-                                value={property?.property_subtype_id}
+                                value={subTypeId}
                             >
-                                {/* <option value={property?.property_subtype_id}>{'Nombre Subtipo'}</option> */}
-                                {subtype?.map((subtyp, ind) => {
-                                    return(
-                                        <option key={ind} value={subtyp.subtype_id}>{subtyp.subtype_name}</option>
-                                    )
-                                })}
+                            {subtype?.map((subtyp, ind) => {
+                                return(
+                                    <option key={ind} value={subtyp.subtype_id}>{subtyp.subtype_name}</option>
+                                )
+                            })}
                             </Form.Select>
                         </Form.Group>
                     </Row> 
@@ -356,12 +388,12 @@ export const EditPropertyForm = () => {
                     <Form.Group>
                         <Form.Label>Calle</Form.Label>
                         <Form.Control 
-                        className="mb-3" 
-                        autoComplete="off" 
-                        type="text" 
-                        name="address_street_name"
-                        value={property?.address_street_name}
-                        onChange={handleChange}
+                            className="mb-3" 
+                            autoComplete="off" 
+                            type="text" 
+                            name="address_street_name"
+                            value={property?.address_street_name}
+                            onChange={handleChange}
                     />
                     </Form.Group>
 
@@ -379,8 +411,8 @@ export const EditPropertyForm = () => {
 
                         <Form.Group as={Col} md='9'>
                             <Form.Label>Provincia</Form.Label>
-                            <Form.Select onChange={handleProvinceId}>
-                                <option value={property?.address_province_id}>{property?.province_name}</option>
+                            <Form.Select value={provinceId} onChange={handleProvinceId}>
+                                
                                 {province?.map((prov, ind) =>{
                                     return(
                                         <option
@@ -408,8 +440,8 @@ export const EditPropertyForm = () => {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Ciudad</Form.Label>
-                        <Form.Select onChange={handleCityId}>
-                        <option value={property?.address_city_id}>{property?.city_name}</option>
+                        <Form.Select value={cityId} onChange={handleCityId}>
+                        
                             {city?.map((cit, ind) =>{
                                 return(
                                     <option key={ind} value={cit.city_id}>{cit.city_name}</option>
@@ -471,7 +503,7 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row> 
                 </Col>
-                <Col md='6' lg='5'>
+                <Col md='6'>
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Superficie Útil</Form.Label>
@@ -495,8 +527,8 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row>
 
-                    <Row className="d-flex">
-                        <Form.Group className="mb-2" as={Col} md='6'>
+                    <Row className="d-flex justify-content-between">
+                        <Form.Group className="mb-3" as={Col} md='3'>
                             <Form.Label>Año Construcción</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -506,7 +538,7 @@ export const EditPropertyForm = () => {
                                 name='property_built_year'
                             />
                         </Form.Group>
-                        <Form.Group className="mb-2" as={Col} md='6'>
+                        <Form.Group as={Col} md='3'>
                             <Form.Label>Habitaciones</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -516,8 +548,7 @@ export const EditPropertyForm = () => {
                                 value={property?.property_rooms === "undefined" ? 0 : property?.property_rooms}
                             />
                         </Form.Group>
-                    
-                        <Form.Group className="mb-2" as={Col} md='6'>
+                        <Form.Group as={Col} md='3'>
                             <Form.Label>Baños</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -527,7 +558,7 @@ export const EditPropertyForm = () => {
                                 value={property?.property_bathrooms === "undefined" ? 0 : property?.property_bathrooms}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-2" as={Col} md='6'>
+                        <Form.Group as={Col} md='3'>
                             <Form.Label>Garaje</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -552,10 +583,10 @@ export const EditPropertyForm = () => {
                             </Form.Group>
                         </Form.Group>
                     </Row>
-                    <Row className="mt-4">
+                    <Row className="d-flex mt-4">
                         {prueba?.map((feature, index) => {
                             return(
-                                <Col md={4} key={index}>
+                                <Col md={3} key={index}>
                                     <Button
                                         className="rounded rounded-4 mb-3"
                                         variant={feature?.checked ? 'info' : 'outline-info'}
@@ -570,8 +601,8 @@ export const EditPropertyForm = () => {
                     <Row>
                         {imagesProperty?.map((img, ind) => {
                             return(
-                                <Col className='editImage' sm={6} md={5} key={ind}>
-                                    <div className="container-img">
+                                <Col md={3} key={ind}>
+                                    <div className="editImage">
                                         <Image
                                             style={{width: '100%'}}
                                             src={`/images/property/${img.image_title}`}
@@ -609,12 +640,11 @@ export const EditPropertyForm = () => {
                         </div>
                     </Row>
                 </Col>
-                <Button className='boton-editar' type="submit">
-                GUARDAR
-               </Button>
             </Row>
 
-            
+            <Button size="lg" variant="secondary" type="submit">
+                GUARDAR
+            </Button>
         </Form>
         <ModalAddImage 
             property={property} 
@@ -624,7 +654,6 @@ export const EditPropertyForm = () => {
         />
     
     </Container>
-
     
   );
 };

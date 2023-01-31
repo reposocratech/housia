@@ -194,7 +194,7 @@ getAllProperty = (req, res) => {
 };
 
 
- //Borra de manera lógica una propiedad
+    //Borra de manera lógica una propiedad
       //localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
       logicDeletedUserProperty = (req, res) => {
         let {property_id, user_id} = req.params;

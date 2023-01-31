@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import { saveLocalStorageUser } from '../../../Utils/localStorage/localStorageUser';
 import 'material-icons/iconfont/material-icons.css';
 import './login.scss';
+import jwtDecode from 'jwt-decode';
 
 const initialState = {
     email: "",
@@ -13,10 +14,14 @@ const initialState = {
 
   export const Login = () => {
     const [login, setLogin] = useState(initialState);
-    const {isLogged, setIsLogged, user} = useContext(AppContext);
+
+    const {setIsLogged} = useContext(AppContext);
+
+
     const [showPassword, setshowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const [messageError, setMessageError] = useState("");
+
 
     const navigate = useNavigate();
     
@@ -36,16 +41,23 @@ const initialState = {
           .post('http://localhost:4000/users/login', login)
           .then((res) => {
             const token = res.data.token;
+
             saveLocalStorageUser(token);
             setIsLogged(true);
-            navigate('/user/portafolio');
-          })
-          .catch((error) => {
-            setMessageError("Usuario y/o contraseña incorrecta");
-            console.log(error);
-          })
+
+            const type = jwtDecode(token).user.type;
+            /* console.log(type, 'TIPO USUARIO'); */
+
+            type === 1 ? navigate('/admin/allproperties') : type === 2 ? navigate('/user/portafolio') : navigate('/', {replace: true})
+              
+            })
+            .catch((error) => {
+              setMessageError("Usuario y/o contraseña incorrecta");
+              console.log(error);
+            })
+            
         }
-    }
+      }
 
     return (
      <div className='login-container'>

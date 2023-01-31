@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import { Image } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { ModalDeleteProperty } from '../../../Components/ModalAdminDispenseProperty/ModalDeleteProperty'
 import { AppContext } from '../../../Context/AppContext'
@@ -32,13 +33,15 @@ export const AdminAllProperties = () => {
     // let casasAMostrar = allProperties.filter(elem => elem.price >= "el precio del limitar que pongamos")
 
     let casasAMostrar = allProperties;
+    console.log(allProperties, 'todas propiedades');
+    
 
     //Para bloquear activos
-    const handleBlock = (propertyId, estaBlock) =>{
+    const handleBlock = (propertyId, isBlock) =>{
 
         let url = `http://localhost:4000/admin/blockProperty/${propertyId}`
 
-        if(estaBlock === true){
+        if(isBlock === 1){
             url = `http://localhost:4000/admin/unBlockProperty/${propertyId}`
         }
 
@@ -58,48 +61,48 @@ export const AdminAllProperties = () => {
         setShowModalDelete(true);
     }
 
+    const redirectEditBasicFeatures =(elem) =>{
+        setProperty(elem.property_id);
+        navigate(`/editProperty/${elem.property_id}/${elem.property_subtype_id}`);
+    }
 
-    const redirectEdit =(id) =>{
-        setProperty(id);
-        navigate("/editEconomicFeatures");
+    const redirectEditEconomicFeatures = (elem) => {
+        navigate(`/editEconomicFeatures/${elem.property_id}`)
     }
 
     
   return (
-
     <div className='pt-5'>
         <h1 className='pt-5'>Aqui tiene que ver todas la propiedades</h1>
 
         <div>
-            <h3>Nombre de la casa</h3>
-            <p>calle</p>
-            <p>provincia</p>
-            <p>precio</p>
-            <button>bloquear activo</button>
-            <button >editar activo</button>
-            <button  onClick={()=>handleDelete(2000)}>BORRAR Activo</button>
+            { casasAMostrar?.map((elem, index)=>{
+                return(
+                    <div key={index}>
+                        <div>
+                            <Image style={{width: '40%'}} src={`/images/property/${elem.image_title}`}/>
+                        </div>
+                        <h3>{elem.property_name}</h3>
+                        <p>{elem.address_street_name}</p>
+                        <p>{elem.province_name}</p>
+                        <p>{elem.purchase_buy_price} €</p>
+                        <button 
+                            onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}>
+                            {elem.property_is_user_deleted === 1 ? "Desbloquear":"Bloquear"}
+                        </button>
+                        <hr/>
+                        <button onClick={()=>redirectEditBasicFeatures(elem)}>Propiedades básicas</button>
+                        <hr/>
+                        <button onClick={()=>redirectEditEconomicFeatures(elem)}>Características Económicas</button>
+                        <hr/>
+                        <button onClick={()=>handleDelete(elem.property_id)}>Eliminar Activo</button>
+                        <hr/>
+                        <hr/>
+                    </div>
+                )
+            })   
+            }
         </div>
-
-        { casasAMostrar?.map((elem, index)=>{
-            return(
-                <div key={index}>
-                     <h3>Nombre de la casa: {elem.property_name}</h3>
-                    <p>calle: {elem.address_street}</p>
-                    <p>provincia: {elem.province_name}</p>
-                    <p>precio: {elem.purchase_price}</p>
-                    <button onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}>
-                    {elem.property_is_user_deleted === false? "BLOCK":"UNBLOCK"}
-                    </button>
-                    <hr/>
-                    <button onClick={()=>redirectEdit(elem.property_id)}>editar activo</button>
-                    <hr/>
-                    <button onClick={()=>handleDelete(elem.property_id)}>BORRAR activo</button>
-                    <hr/>
-                    <hr/>
-                </div>
-            )
-        })   
-        }
 
         {showModalDelete && 
         <ModalDeleteProperty

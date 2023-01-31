@@ -8,7 +8,7 @@ class adminController {
 
         // let sql = "";
 
-        let sql = 'SELECT * FROM property'
+        let sql = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id JOIN image ON image.image_property_id = property.property_id WHERE property.property_is_admin_deleted = false AND image.image_is_main = true';
 
         connection.query(sql, (error, result)=>{
             if(error){
@@ -280,11 +280,6 @@ class adminController {
             console.log(result);
         });
     };
-
-
-
-
-    
 
     //Borra de manera logica un ACTIVO (inmueble)
     //localhost:4000/admin/logicDeletedAdminProperty/:property_id
