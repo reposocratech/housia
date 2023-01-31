@@ -23,12 +23,16 @@ import { AddEconomicFeatures } from '../Components/AddEconomicFeatures/AddEconom
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
+import { Footer } from '../Components/Footer/Footer'
 
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
+import { Favourite } from '../Components/Favourites/Favourite'
 
 export const AppRoutes = () => {
-  const {user, setUser, isLogged} = useContext(AppContext);
+
+  const {user, isLogged, token} = useContext(AppContext);
+
   
   return (
     <div>
@@ -38,35 +42,41 @@ export const AppRoutes = () => {
         
             <Routes>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/testField' element={<TestField/>}/>
+                
+                {!token && !isLogged && <>
                 <Route path='/register' element={<Register/>}/>
                 <Route path='/login' element={<Login/>}/>
+                </>}
 
+                {user?.user_type === 2 && <>
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
-                
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
                 <Route path='/user/editUser' element={<EditUser/>}/>
                 <Route path='/user/summaryInversion' element={<SummaryInversionUser/>}/>
-
+                <Route path='/user/favourites' element={<Favourite/>}/>
                 <Route path='/propertyDetails/:property_id' element={<PropertyDetails/>}/>
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
-                <Route path='/testField' element={<TestField/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
 
                 <Route path='/discover' element={<Discover/>}/> 
 
-                <Route path='/addEconomicFeatures' element={<AddEconomicFeatures/>}/> 
-                <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
                 <Route path='/editProperty/:property_id' element={<EditPropertyForm/>} />
+                <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
+                </>}
 
+                {user?.user_type === 1 && <>
                 <Route path='/admin' element={<AdminHome/>}/>
                 <Route path='/admin/allproperties' element={<AdminAllProperties/>}/>
                 <Route path='/admin/customFeaturesElem' element={<AdminCustomFeatures/>}/>
+                </>}
 
             </Routes>
+            <Footer/>
         </BrowserRouter>
     </div>
   )

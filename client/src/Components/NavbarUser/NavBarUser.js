@@ -32,11 +32,11 @@ export const NavBarUser = () => {
           {isLogged && user?.user_type === 2 && 
             <Nav className='d-flex'>
             <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
-            <Nav.Link as={Link} to='/user/resumen'>Resúmen</Nav.Link>
+            <Nav.Link as={Link} to='/user/summaryInversion'>Resúmen</Nav.Link>
             <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
             <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
             </Nav>
-            }
+          }
             
           {isLogged && user?.user_type === 1 &&
             <Nav className='d-flex'>
@@ -59,7 +59,7 @@ export const NavBarUser = () => {
                 <NavDropdown.Item as={Link} to='/user/editUser'>
                   Editar perfil
                   </NavDropdown.Item>  
-                  <NavDropdown.Item href="#action/3.3">
+                  <NavDropdown.Item as={Link} to="/user/favourites">
                   Favoritos
                   </NavDropdown.Item>  
                   <NavDropdown.Item href="#action/3.4" onClick={logOut}>

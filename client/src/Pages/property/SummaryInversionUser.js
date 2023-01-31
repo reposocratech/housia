@@ -5,7 +5,6 @@ import { AppContext } from '../../Context/AppContext';
 import './summaryInv.scss';
 
 
-
 export const SummaryInversionUser = () => {
     const [countProperties, setCountProperties] = useState();
     const [rentedProperties, setRentedProperties] = useState();

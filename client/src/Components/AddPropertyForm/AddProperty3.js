@@ -10,19 +10,12 @@ export const AddProperty3 = () => {
     const [city, setCity] = useState();
     const [provinceId, setProvinceId] = useState(1);
     const [cityId, setCityId] = useState(1);
-    const {property, setProperty, typeId, subTypeId } = useContext(AppContext);
+    const {property, typeId} = useContext(AppContext);
     const navigate = useNavigate();
 
     const { register, formState:{errors}, handleSubmit } = useForm();
     
-    /* console.log(property);
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id'); */
 
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target;
-    //     setProperty({...property, [name]:value})
-    // }
 
     useEffect(() => {
         axios
@@ -47,13 +40,11 @@ export const AddProperty3 = () => {
     }, [provinceId]);
 
     const onSubmit = (data) => {
-        console.log(data);
         
         axios
         .put(`http://localhost:4000/property/addPropertyAddress/${property?.property_id}/${provinceId}/${cityId}`, data)
         .then((res) => {
             navigate("/addProperty4")
-           
         })
         .catch((err) => {
             console.log(err);
@@ -81,10 +72,8 @@ export const AddProperty3 = () => {
         <input 
             placeholder='Calle'
             autoComplete='off'
-            type="text"
-            // value= {property?.address_street_name}
-            name="address_street_name"
-            // onChange={handleChange}
+            type="text"       
+            name="address_street_name"    
             {...register('address_street_name', {
                 required: {value: true, message:'Campo obligatorio'}
               })}
@@ -103,9 +92,7 @@ export const AddProperty3 = () => {
             placeholder='0'
             autoComplete='off'
             type="number"
-            // value= {property?.address_street_number}
             name="address_street_number"
-            // onChange={handleChange}
             {...register('address_street_number', {
                 required: {value: true, message:'Campo obligatorio'},
                 maxLength: {value: 5, message: 'El número no puede tener más de 5 dígitos'}
@@ -149,9 +136,7 @@ export const AddProperty3 = () => {
             placeholder='Codigo postal'
             autoComplete='off'
             type="text"
-            // value= {property?.address_postal_code}
             name="address_postal_code"
-            // onChange={handleChange}
             {...register('address_postal_code', {
                 required: {value: true, message:'Campo obligatorio'},
                 maxLength: {value: 5, message: 'El código postal no puede tener más de 5 dígitos'}
@@ -185,7 +170,6 @@ export const AddProperty3 = () => {
             </div>
           }
           </div>
-        
         <div className='col-6 segColAdd3'>
           
         {typeId != 4 && <>
@@ -195,9 +179,7 @@ export const AddProperty3 = () => {
             autoComplete='off'
             className='bloque'
             type="text"
-            // value= {property?.address_block}
             name="address_block"
-            // onChange={handleChange}
             {...register('address_block')}
         />
         <br/>
@@ -208,9 +190,7 @@ export const AddProperty3 = () => {
             placeholder='Portal'
             autoComplete='off'
             type="text"
-            // value= {property?.address_gate}
             name="address_gate"
-            // onChange={handleChange}
             {...register('address_gate')}
         />
         <br/>
@@ -221,9 +201,7 @@ export const AddProperty3 = () => {
             placeholder='Escalera'
             autoComplete='off'
             type="text"
-            // value= {property?.address_stair}
             name="address_stair"
-            // onChange={handleChange}
             {...register('address_stair')}
         />
         <br/>
@@ -234,9 +212,7 @@ export const AddProperty3 = () => {
             placeholder='Planta'
             autoComplete='off'
             type="text"
-            // value= {property?.address_floor}
             name="address_floor"
-            // onChange={handleChange}
             {...register('address_floor')}
         />
         <br/>
@@ -248,9 +224,7 @@ export const AddProperty3 = () => {
             autoComplete='off'
             type="text"
             className='puertaaAdd3'
-            // value= {property?.address_door}
             name="address_door"
-            // onChange={handleChange}
             {...register('address_door')}
         />
         <br/>

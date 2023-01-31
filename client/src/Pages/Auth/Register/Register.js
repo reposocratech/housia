@@ -55,9 +55,9 @@ export const Register = () => {
           {...register('name', {
             required: {value: true, message:'Introduce tu nombre'},
             minLength: {value: 3, message: 'Tu nombre debe tener al menos 3 caracteres'}
-          })}
-       />
-       {errors.name && 
+            })}
+            />
+            {errors.name && 
             <div className='text-danger'>
               {errors.name.message}
             </div>
@@ -126,9 +126,7 @@ export const Register = () => {
 
     <p>Ya tienes cuenta? <span onClick={()=> navigate('/login')}>INICIA SESIÓN</span></p>
     </div>
-
-    
-
     </div>
   )
 } 
+
