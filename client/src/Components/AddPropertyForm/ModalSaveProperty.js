@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Image, Modal } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-
+import { AppContext } from '../../Context/AppContext'
 
 
 export const ModalSaveProperty = ({setimages, showFinalModal, setShowFinalModal, property_id, setShowSelectButton}) => {
+
+    const {user} = useContext(AppContext);
    
     const handleClose = () => {
         setShowFinalModal(false)
@@ -18,7 +20,12 @@ export const ModalSaveProperty = ({setimages, showFinalModal, setShowFinalModal,
 
     const handleAddressToPortfolio = () => {
         setimages([]);
-        navigate('/user/portafolio');
+        if(user.user_type === 2){
+            navigate('/user/portafolio');
+        }
+        else if(user.uset_type === 1){
+            navigate('/admin/allproperties')
+        }
         setShowSelectButton(true);
     }
 
@@ -36,7 +43,7 @@ export const ModalSaveProperty = ({setimages, showFinalModal, setShowFinalModal,
                     Introducir Datos Económicos
                 </Button>
                 <Button className='w-75' variant="secondary" size='lg' onClick={handleAddressToPortfolio }>
-                    Salir a Mi Portafolio
+                    {user.user_type === 2 ? 'Ir a Portfolio' : 'Ver todas las Propiedades'}
                 </Button>
 
             </div>
