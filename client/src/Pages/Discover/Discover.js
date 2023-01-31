@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
+
 import './Discover.scss';
-import { Container, Form, InputGroup } from 'react-bootstrap';
+import { Container, Form, InputGroup,  Modal } from 'react-bootstrap';
+import jwtDecode from 'jwt-decode';
+import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+
+
+
+
 
 export const Discover = () => {
 
     //ESTADOS DE MANIPULACION U OBTENCION DE DATOS
     const [discover, setDiscover] = useState([]);
-    const [fav, setFav] = useState(false);
     const [typeInDB, setTypeInDB] = useState([]);
     const [subTypeInDB, setSubTypeInDB] = useState([]);
     const [kitchenInDB, setKitchenInDB] = useState([]);
@@ -15,12 +21,18 @@ export const Discover = () => {
     const [provinceInDb, setProvinceInDb] = useState([]);
     const [cityInDb, setCityInDb] = useState([]);
     const [showCities, setShowCities] = useState(false);
-    const [featuresInDB, setFeaturesInDB] = useState([])
-    const [showFeatures, setShowFeatures] = useState(false)
-    const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([])
-    const [featuresSelected, setFeaturesSelected] = useState([])
-    const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([])
+    const [featuresInDB, setFeaturesInDB] = useState([]);
+    const [showFeatures, setShowFeatures] = useState(false);
+    const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([]);
+    const [featuresSelected, setFeaturesSelected] = useState([]);
+    const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([]);
+    const [favOption, setFavOption] = useState(false)
+    const [favInDB, setFavInDB] = useState([])
+    const [userId, setUserId] = useState()
+    const [smShow, setSmShow] = useState(false)
 
+
+    ///////////token para comprobar si el usuario es
     //estados de filtros
     //PRECIO
     const [priceFilterMin, setPriceFilterMin] = useState(0);
@@ -52,6 +64,30 @@ export const Discover = () => {
 
 
     useEffect(() => {
+        
+        
+        const token = localStorageUser();
+        if(token){
+
+            let userId = jwtDecode(token).user.id;
+
+            setUserId(userId)
+            axios
+            .get(`http://localhost:4000/users/getFavs/${userId}`)
+            .then((res)=>{
+                setFavInDB(res.data.result)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+            setFavOption(true)
+        } else {
+            setFavOption(false)
+        }
+
+
+        
         //Activos en venta
         axios
         .get(`http://localhost:4000/property/discover`)
@@ -115,31 +151,38 @@ export const Discover = () => {
     }, [])
 
 
-    
-        const handleFav = (user_id, property_id) => {
-        setFav(!fav);
-        if(fav === false){
-            axios
-            .post(`http://localhost:4000/property/fav/${user_id}/${property_id}`)
-            .then((res) => {
-                console.log("Insertado")
-               
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
 
-        if(fav === true){
-            axios
-            .delete(`http://localhost:4000/property/unfav/${user_id}/${property_id}`)
-            .then((res) => {
-                console.log("Eliminado")
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        } 
+        const addToFavs = (property_id) =>{
+            console.log(property_id, "PROPERTY ID");
+            console.log(favInDB);
+            if(favInDB.length === 0){
+                axios
+                .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                .then((res)=>{
+                console.log(res);
+                })
+                .catch((error)=>{
+                console.log(error)
+                })
+            } else{
+
+                   let flag= favInDB.filter(elem => Number(elem.property_id) === property_id);
+                    
+                if(flag.length !== favInDB.length){
+                    setSmShow(true)
+                } else {
+                    axios
+                    .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                    .then((res)=>{
+                    console.log(res);
+                    })
+                    .catch((error)=>{
+                    console.log(error)
+                    })
+                 }
+
+            }
+
         }
 
 
@@ -488,7 +531,7 @@ export const Discover = () => {
     filterList = contenedor;
     } 
        
-    
+    console.log(filterList, "hola")
 
   return (
 
@@ -549,7 +592,11 @@ export const Discover = () => {
         </div>
 
         <hr/> 
-        <h5>Plazas de aparcamiento : {filterBaths===0? "Sin filtro": filterBaths }</h5>
+
+       
+        
+
+        <h5>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</h5>
         <div className='buttons'>
         <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
         <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
@@ -674,16 +721,29 @@ export const Discover = () => {
         {filterList?.map((property, i) => {
             return(
                 <div key={i} style={{border:"2px solid red"}}>
+                     <Modal
+                        size="sm"
+                        show={smShow}
+                        onHide={() => setSmShow(false)}
+                        aria-labelledby="example-modal-sizes-title-sm"
+                    >
+                    <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">
+                    Accion repetida.
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Esta propiedad ya esta en su lista de Favoritos. (para acceder a sus favoritos despliege desde su foto las opciones)</Modal.Body>
+                    </Modal>
                 <img src={property?.image_title} alt=""></img>
-                <h5>{property?.property_name}</h5>
 
-                
-               
+
+                <h5>{property?.property_name}</h5>                                     
 
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
-                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
+                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
+                <hr/>
                 <p>Año de construccion: {property?.property_built_year} </p>
                 <p>Metros construidos: {property?.property_built_meters} </p>
                 <p>Metros totales: {property?.property_total_meters} </p>

@@ -6,9 +6,9 @@ class adminController {
 
     showAdminAllProperties = (req, res) =>{
 
-        // let sql = "SELECT property.property_id, property.property_is_user_deleted, property.property_is_admin_deleted, property.property_built_year, purchase.purchase_buy_price, address.address_street_name, address.address_street_number,  province.province_name, city.city_name  FROM property, purchase, address, province, city WHERE  property.property_id =  address.address_property_id AND property.property_id = purchase.purchase_property_id AND address.address_city_id = city.city_id AND address.address_province_id = province.province_id AND property.property_is_admin_deleted = false;";
+        // let sql = "";
 
-        let sql = 'SELECT * FROM property'
+        let sql = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id JOIN image ON image.image_property_id = property.property_id WHERE property.property_is_admin_deleted = false AND image.image_is_main = true';
 
         connection.query(sql, (error, result)=>{
             if(error){
@@ -38,7 +38,7 @@ class adminController {
     createPropertyType = (req, res) => {
         let {type_name} = req.body;
 
-        let sql =`INSERT INTO type (type_name) VALUES (${type_name})`;
+        let sql =`INSERT INTO type (type_name) VALUES ('${type_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -90,8 +90,7 @@ class adminController {
 
         let {subtype_name} = req.body;
 
-        let sql = `INSERT INTO subtype (subtype_type_id,subtype_name ) VALUES (${subtype_type_id}, ${subtype_name})`;
-
+        let sql = `INSERT INTO subtype (subtype_type_id,subtype_name ) VALUES (${subtype_type_id}, '${subtype_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -169,15 +168,16 @@ class adminController {
   //crea un tipo de cocina
     createKitchenType = (req, res) => {
         let {kitchen_name} = req.body;
+        console.log(req.body);
+        let sql =`INSERT INTO kitchen (kitchen_name) VALUES ('${kitchen_name}')`;
 
-        let sql =`INSERT INTO kitchen (kitchen_name) VALUES (${kitchen_name})`;
-        console.log(sql);
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
+                console.log(error, 'error de la consulta');
                 
             }
-            res.status(200).json(result);
+            res.status(200).json(result,);
         });
     }
 
@@ -236,7 +236,7 @@ class adminController {
     createPropertyFeatures = (req, res) => {
         let {feature_name} = req.body;
 
-        let sql =`INSERT INTO feature (feature_name) VALUES (${feature_name})`;
+        let sql =`INSERT INTO feature (feature_name) VALUES ('${feature_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -280,11 +280,6 @@ class adminController {
             console.log(result);
         });
     };
-
-
-
-
-    
 
     //Borra de manera logica un ACTIVO (inmueble)
     //localhost:4000/admin/logicDeletedAdminProperty/:property_id
