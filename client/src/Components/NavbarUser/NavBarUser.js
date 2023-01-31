@@ -59,7 +59,7 @@ export const NavBarUser = () => {
                 <NavDropdown.Item as={Link} to='/user/editUser'>
                   Editar perfil
                   </NavDropdown.Item>  
-                  <NavDropdown.Item href="#action/3.3">
+                  <NavDropdown.Item as={Link} to="/user/favourites">
                   Favoritos
                   </NavDropdown.Item>  
                   <NavDropdown.Item href="#action/3.4" onClick={logOut}>

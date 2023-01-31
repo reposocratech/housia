@@ -162,7 +162,7 @@ class propertyController {
 //METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
     discover = (req, res) => {
   
-      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_is_for_sale, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
       property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
       FROM property, address, city, province, purchase, image
       where property.property_id = purchase.purchase_property_id 
@@ -728,6 +728,7 @@ getAllPurchaseData = (req, res) => {
         AND property.property_is_admin_deleted = false
         AND property.property_is_user_deleted = false
         AND image.image_is_main = 1;`;
+
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
@@ -759,10 +760,14 @@ getAllPurchaseData = (req, res) => {
         favUser = (req, res) => {
         let {user_id} = req.params;
         console.log("Hola")
-        let sql = `SELECT property.*, image.image_title 
-        FROM property, favourite, image 
+        let sql = `SELECT property.*, image.image_title, purchase.*, city.*, province.*
+        FROM  property, favourite, image, purchase, city, province, address
         WHERE favourite.favourite_property_id = property.property_id
+         AND purchase.purchase_property_id = property.property_id
          AND image.image_property_id = property.property_id 
+         and property.property_id = address.address_property_id 
+        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
+        and city.city_province_id = province.province_id
          AND image.image_is_main = 1 
          AND favourite.favourite_user_id = ${user_id}`;
           

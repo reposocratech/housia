@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
+import { AppContext } from '../../Context/AppContext';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import { Modal } from 'react-bootstrap';
+
 
 
 export const Discover = () => {
 
     //ESTADOS DE MANIPULACION U OBTENCION DE DATOS
     const [discover, setDiscover] = useState([]);
-    const [fav, setFav] = useState(false);
     const [typeInDB, setTypeInDB] = useState([]);
     const [subTypeInDB, setSubTypeInDB] = useState([]);
     const [kitchenInDB, setKitchenInDB] = useState([]);
@@ -29,9 +30,6 @@ export const Discover = () => {
 
 
     ///////////token para comprobar si el usuario es
-
-
-
     //estados de filtros
     //PRECIO
     const [priceFilterMin, setPriceFilterMin] = useState(0);
@@ -150,7 +148,7 @@ export const Discover = () => {
     }, [])
 
 
-    
+
         const addToFavs = (property_id) =>{
             console.log(property_id, "PROPERTY ID");
             console.log(favInDB);
@@ -181,9 +179,6 @@ export const Discover = () => {
                  }
 
             }
-
-            
-            
 
         }
 
@@ -533,7 +528,7 @@ export const Discover = () => {
     filterList = contenedor;
     } 
        
-    
+    console.log(filterList, "hola")
 
   return (
     <div>

@@ -14,6 +14,7 @@ export const NavBarLogin = () => {
           <Container fluid className='NavBarContainerLogin'>
             <Nav>
               <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Nav.Link>
+              
              </Nav>
           </Container>
         </Navbar>
