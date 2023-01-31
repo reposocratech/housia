@@ -62,4 +62,12 @@ router.get("/getTotalInv/:user_id", userController.getTotalInv);
 //localhost:4000/users/getMonthlyIncome/:user_id
 router.get("/getMonthlyIncome/:user_id", userController.getMonthlyIncome);
 
+//TRAE TODOS LOS FAVORITOS DE UN USUARIO QUE NO ESTEN BORRADOS
+//localhost:4000/users/getFavs/:user_id
+router.get('/getFavs/:user_id',userController.getFavsFromAUser);
+
+ //CREA UNA NUEVA ENTRADA EN LOS FAVORITOS DE UN USUARIO
+//localhost:4000/users/postFav/:user_id/:property_id
+router.post('/postFav/:user_id/:property_id', userController.addFavToYourList)
+
 module.exports = router;

@@ -713,21 +713,21 @@ getAllPurchaseData = (req, res) => {
       discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
-        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, 
+        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
         image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
-        FROM property, address, city, province, purchase, image, type, subtype, kitchen
-        where property.property_id = purchase.purchase_property_id 
-        AND property.property_subtype_id = subtype.subtype_id
-        AND subtype.subtype_type_id = type.type_id
-        AND property.property_kitchen_id = kitchen.kitchen_id
-        and property.property_id = address.address_property_id 
-        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
-        and city.city_province_id = province.province_id
-        and property.property_id = image.image_property_id 
-        AND  property.property_is_for_sale = true
+        FROM property 
+        LEFT JOIN purchase ON  purchase.purchase_property_id = property.property_id
+        LEFT JOIN address ON address.address_property_id = property.property_id
+        LEFT JOIN city ON address.address_city_id = city.city_id and  address.address_province_id  = city.city_province_id
+        LEFT JOIN province ON city.city_province_id = province.province_id
+        LEFT JOIN image ON property.property_id = image.image_property_id 
+        LEFT JOIN subtype ON property.property_subtype_id = subtype.subtype_id
+        LEFT JOIN type ON subtype.subtype_type_id = type.type_id
+        LEFT JOIN kitchen ON property.property_kitchen_id = kitchen.kitchen_id
+        WHERE  property.property_is_for_sale = true
         AND property.property_is_admin_deleted = false
         AND property.property_is_user_deleted = false
-              AND image.image_is_main = 1;`;
+        AND image.image_is_main = 1;`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
