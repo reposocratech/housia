@@ -40,7 +40,7 @@ export const NavBarUser = () => {
             
           {isLogged && user?.user_type === 1 &&
             <Nav className='d-flex'>
-            <Nav.Link as={Link} to='/admin/allproperties'>Home</Nav.Link>
+            <Nav.Link as={Link} to='/admin/allproperties'>Todas Propiedades</Nav.Link>
             <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
             <Nav.Link as={Link} to='/admin/customFeaturesElem'>Custom features</Nav.Link>
             </Nav>

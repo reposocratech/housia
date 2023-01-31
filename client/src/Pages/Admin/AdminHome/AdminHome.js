@@ -10,7 +10,7 @@ export const AdminHome = () => {
     const {user} = useContext(AppContext);
     
   return (
-    <div>
+    <div >
         <h1>Hola {user.user_name}</h1>
 
         <button onClick={()=>navigate("/admin/allproperties")}>Todas la Propiedades</button>

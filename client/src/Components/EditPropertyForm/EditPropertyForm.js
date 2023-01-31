@@ -328,7 +328,7 @@ export const EditPropertyForm = () => {
         saveFeaturesFromEdit(property?.property_id);
 
         if(isLogged && user.user_type === 2){
-            navigate(`/user/portfolio`);
+            navigate(`/user/portafolio`);
         }
         else if(isLogged && user.user_type === 1){
             navigate('/admin/allproperties')

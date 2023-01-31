@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
+import { Image } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { ModalDeleteProperty } from '../../../Components/ModalAdminDispenseProperty/ModalDeleteProperty'
 import { AppContext } from '../../../Context/AppContext'
@@ -78,6 +79,9 @@ export const AdminAllProperties = () => {
             { casasAMostrar?.map((elem, index)=>{
                 return(
                     <div key={index}>
+                        <div>
+                            <Image style={{width: '40%'}} src={`/images/property/${elem.image_title}`}/>
+                        </div>
                         <h3>{elem.property_name}</h3>
                         <p>{elem.address_street_name}</p>
                         <p>{elem.province_name}</p>
