@@ -67,8 +67,8 @@ export const AdminAllProperties = () => {
     
   return (
 
-    <div>
-        <h1>Aqui tiene que ver todas la propiedades</h1>
+    <div className='pt-5'>
+        <h1 className='pt-5'>Aqui tiene que ver todas la propiedades</h1>
 
         <div>
             <h3>Nombre de la casa</h3>

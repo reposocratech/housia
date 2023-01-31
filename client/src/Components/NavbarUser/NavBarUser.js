@@ -8,6 +8,7 @@ import './NavBarUser.scss';
 
 export const NavBarUser = () => {
   const {user, setUser, isLogged, setIsLogged} = useContext(AppContext);
+ 
 
   const navigate= useNavigate();
 
@@ -20,52 +21,61 @@ export const NavBarUser = () => {
 
   return (
    <>
-   <Navbar className='NavBarContainer' expand="lg">
+   <Navbar collapseOnSelect className='NavBarContainer' expand="lg">
       <Container>
       <Navbar.Brand as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className='d-flex justify-content-evenly'>
-          <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+        <Navbar.Collapse id="basic-navbar-nav" className='collapse-navbar'>
+          <Nav>
+            <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
 
 
-          {isLogged && user?.user_type === 2 && 
+            {isLogged && user?.user_type === 2 && 
             <Nav className='d-flex'>
-            <Nav.Link as={Link} to='/user/portafolio'>Portafolio</Nav.Link>
-            <Nav.Link as={Link} to='/user/summaryInversion'>Resúmen</Nav.Link>
-            <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
-            <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
+            <Nav.Link as={Link} to='/user/portafolio' eventKey="1">Portafolio</Nav.Link>
+            <Nav.Link as={Link} to='/user/summaryInversion' eventKey="2">Resúmen</Nav.Link>
+            <Nav.Link as={Link} to='/discover' eventKey="3">Descubre</Nav.Link>
+            <Nav.Link as={Link} to='/addProperty' eventKey="4">Añadir propiedad</Nav.Link>
+            <Nav.Link className='link-perfil' as={Link} to='/user/perfil' eventKey="5">Perfíl</Nav.Link>
+            <Nav.Link className='link-logout' onClick={logOut}>Cerrar Sesión</Nav.Link>
             </Nav>
-          }
+            }
             
-          {isLogged && user?.user_type === 1 &&
+            {isLogged && user?.user_type === 1 &&
             <Nav className='d-flex'>
             <Nav.Link as={Link} to='/admin'>Home</Nav.Link>
-            <Nav.Link as={Link} to='/addProperty'>Añadir propiedad</Nav.Link>
+            <Nav.Link as={Link} to='/admin/allproperties' eventKey="1">Propiedades</Nav.Link>
             <Nav.Link as={Link} to='/admin/customFeaturesElem'>Custom features</Nav.Link>
             </Nav>
-          }
+            }
           </Nav>
 
-          <div className='d-flex align-items-center'>
-          <img 
-                  className='avatar-img' 
-                  onClick={()=> navigate('/user/perfil')}
-                  src={`/images/user/${user?.user_img}`}
-                  alt={user?.user_name}
-                  />
-            <NavDropdown className='dropdown-perfil' id="basic-nav-dropdown">
-            <NavDropdown.Item as={Link} to='/user/perfil'>Perfíl</NavDropdown.Item>
+          <div className = 'dropdown-perfil'>
+            
+            <NavDropdown  id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to='/user/perfil'>Perfíl</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to='/user/editUser'>
                   Editar perfil
                   </NavDropdown.Item>  
+
+               
+
                   <NavDropdown.Item as={Link} to="/user/favourites">
+
                   Favoritos
                   </NavDropdown.Item>  
-                  <NavDropdown.Item href="#action/3.4" onClick={logOut}>
+                  <NavDropdown.Item onClick={logOut}>
                   Cerrar sesión
                   </NavDropdown.Item>  
-            </NavDropdown>
+              </NavDropdown>
+
+           
+              <img 
+                className='avatar-img' 
+                onClick={()=> navigate('/user/perfil')}
+                src={`/images/user/${user?.user_img}`}
+                alt={user?.user_name}
+              />
           </div>
         </Navbar.Collapse>
       </Container>
