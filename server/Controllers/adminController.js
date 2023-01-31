@@ -6,7 +6,7 @@ class adminController {
 
     showAdminAllProperties = (req, res) =>{
 
-        // let sql = "SELECT property.property_id, property.property_is_user_deleted, property.property_is_admin_deleted, property.property_built_year, purchase.purchase_buy_price, address.address_street_name, address.address_street_number,  province.province_name, city.city_name  FROM property, purchase, address, province, city WHERE  property.property_id =  address.address_property_id AND property.property_id = purchase.purchase_property_id AND address.address_city_id = city.city_id AND address.address_province_id = province.province_id AND property.property_is_admin_deleted = false;";
+        // let sql = "";
 
         let sql = 'SELECT * FROM property'
 

@@ -26,6 +26,7 @@ import { Footer } from '../Components/Footer/Footer'
 
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
+import { Favourite } from '../Components/Favourites/Favourite'
 
 export const AppRoutes = () => {
 
@@ -63,6 +64,10 @@ export const AppRoutes = () => {
                 <Route path='/user/perfil' element={<User/>}/>
                 <Route path='/user/editUser' element={<EditUser/>}/>
                 <Route path='/user/summaryInversion' element={<SummaryInversionUser/>}/>
+
+                <Route path='/user/favourites' element={<Favourite/>}/>
+                <Route path='/propertyDetails/:property_id' element={<PropertyDetails/>}/>
+
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
                 <Route path='/addProperty3' element={<AddProperty3/>}/>

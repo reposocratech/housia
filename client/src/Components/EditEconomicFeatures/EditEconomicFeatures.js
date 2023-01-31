@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import './editEconomicFeatures.scss';
 
+
 export const EditEconomicFeatures = () => {
     const [editPurchase, setEditPurchase] = useState();
     const [editLoan, setEditLoan] = useState();

@@ -57,7 +57,11 @@ export const NavBarUser = () => {
                 <NavDropdown.Item as={Link} to='/user/editUser'>
                   Editar perfil
                   </NavDropdown.Item>  
-                  <NavDropdown.Item >
+
+               
+
+                  <NavDropdown.Item as={Link} to="/user/favourites">
+
                   Favoritos
                   </NavDropdown.Item>  
                   <NavDropdown.Item onClick={logOut}>

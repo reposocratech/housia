@@ -23,17 +23,6 @@ export const User = () => {
         });
   }, [reset])
 
-const handleFav = (property_id) => {
-  setReset("")
-  axios
-  .delete(`http://localhost:4000/property/unfav/2/${property_id}`)
-  .then((res) => {
-      console.log("Eliminado")
-  })
-  .catch((err) => {
-      console.log(err);
-  });
-} 
 
   
   return (
@@ -51,28 +40,7 @@ const handleFav = (property_id) => {
           <h2>Busquedas</h2>
           <div className='perfil-opcion'><span class="material-symbols-outlined icono">
             favorite
-          </span> <p>Mis favoritos</p> 
-          <Dropdown>
-          <Dropdown.Toggle className='toggle'>
-       
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-          {fav?.length === 0 ? (<Dropdown.Item>No tienes favoritos</Dropdown.Item>) : (fav?.map ((fav, i) => {
-          return(
-          <Dropdown.Item key={i} ><div style={{display:"flex", alignItems: 'center'}}>
-            <span class="material-symbols-outlined icono" onClick={()=>handleFav(fav?.property_id)} >
-            favorite
-          </span>
-            <div  style={{ margin:"20px"}} onClick={()=>navigate(`/propertyDetails/${fav?.property_id}`)}>
-              <img style={{width:"100px"}} src={`/images/property/${fav?.image_title}`} alt={fav?.image_title}/>
-              <p>{fav?.property_name}</p>
-            </div>
-            </div>
-            </Dropdown.Item>
-          )
-          })) }
-           </Dropdown.Menu>
-          </Dropdown>
+          </span><p onClick={()=>navigate("/user/favourites")}>Mis favoritos</p> 
           </div>
           <div className='perfil-opcion'>
           <span class="material-symbols-outlined icono">
