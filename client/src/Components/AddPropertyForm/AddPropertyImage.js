@@ -4,6 +4,8 @@ import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { AppContext } from "../../Context/AppContext";
 import { ModalSaveProperty } from "./ModalSaveProperty";
 import "./AddPropertyImage.scss";
+
+
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
@@ -43,47 +45,12 @@ export const AddPropertyImage = () => {
     return arrayImages;
   }
 
-  console.log(images, 'IMGANESSSSSS');
-  
+  /* console.log(images, 'IMGANESSSSSS'); */
 
   const handleDeleteImage = (name) => {
       const newArrImgs = images.filter((img) => img.file.name !== name);
       setimages(newArrImgs)
   }
-
-
-  /* const handleDeleteImageEdit = (imageId, imagePropertyId) => {
-    axios
-      .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
-      .then((res) => {
-        console.log(res.data);
-        setImagesToEdit(res.data);
-        setShowImagesToEdit(true);
-      })
-      .catch((error) => {
-        console.log(error.message);
-        
-      })
-  } */
-
-  /* 
-  const handleMainImage = (image) => {
-    let url = '';
-    if(image.image_is_main === 0){
-      url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
-    }
-    else if(image.image_is_main === 1) {
-      url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
-    }
-    axios
-      .put(url)
-      .then((response) => {
-        setImagesToEdit(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  } */
 
   const onSubmit = (id) => {
     const newFormData = new FormData();
@@ -122,11 +89,13 @@ export const AddPropertyImage = () => {
                         src={imagen.url}
                         data-toggle="modal"
                         data-target="#ModalPreViewImg"
-                        className="img-responsive rounded-4"
+                        className="img-responsive"
                     />
-                  <div  className="options delete">
-                    <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
-                  </div>
+                   {images.length > 1 && (
+                    <div className="options delete">
+                      <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
+                    </div>
+                   )} 
                 </div>
             </Col>
           ))
@@ -135,29 +104,26 @@ export const AddPropertyImage = () => {
 
       <div className="mt-4">
       {/* INPUT IMAGES */}
-<div className="centro">
+        <div className="centro">
   
-      {showSelectButton && (
-        <Button size="lg" as="label" variant="secondary" className="me-3 centro">
-            <span>Seleccionar Imagenes </span>
-            <input hidden type="file" multiple onChange={changeInput}></input>
-        </Button>
-      )}
-     
-     
+          {showSelectButton && (
+            <Button size="lg" as="label" variant="secondary" className="me-3 centro">
+                <span>Seleccionar Imagenes </span>
+              <input hidden type="file" multiple onChange={changeInput}></input>
+          </Button>
+          )}
     
-      {images.length > 0 && (
-        <Button 
-          size="lg" 
-          variant="dark"
-          onClick={() => onSubmit(property.property_id)}
-          className="centro2"
-          >Guardar Y Terminar
-        </Button>
-      )}
+          {images.length > 0 && (
+            <Button 
+              size="lg" 
+              variant="dark"
+              onClick={() => onSubmit(property.property_id)}
+              className="centro2"
+              >Guardar Y Terminar
+            </Button>
+          )}
      
-     
-      </div>
+        </div>
       </div>
 
       </Container>
