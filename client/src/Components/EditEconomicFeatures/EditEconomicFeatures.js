@@ -1,9 +1,11 @@
 import axios from 'axios'
+
 import React, {  useContext, useEffect, useState } from 'react'
 import { Accordion, Col, Row } from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import { AppContext } from '../../Context/AppContext';
+
 import './editEconomicFeatures.scss';
 
 export const EditEconomicFeatures = () => {
@@ -12,7 +14,9 @@ export const EditEconomicFeatures = () => {
     const [editRent, setEditRent] = useState();
     const [checkboxState, setCheckboxState] = useState(false)
 
+
    const{user, isLogged} = useContext(AppContext)
+
 
     let {property_id} = useParams(); 
     const navigate= useNavigate();

@@ -26,8 +26,10 @@ export const ModalSaveProperty = ({setimages, showFinalModal, setShowFinalModal,
         }
         else if(user.user_type === 1){
             navigate('/admin/allproperties')
+
+        }    
+
         } 
-    }
 
     const navigate = useNavigate();
 
