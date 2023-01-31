@@ -4,8 +4,10 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
-import './editProperty.css'
+import './editPropertyForm.scss'
 import { ModalAddImage } from "./ModalAddImage";
+
+
 
 export const EditPropertyForm = () => {
 
@@ -337,150 +339,148 @@ export const EditPropertyForm = () => {
 
 
   return (
-    <Container fluid>
-        <h2 className="text-center mb-3">Editar Propiedad</h2>
+   
+    <Container fluid className='datos-propiedad-container'>
+    <h1 className="text-center mb-3">Editar Propiedad</h1>
 
-        <Form className="m-3" onSubmit={onSubmit}>
+    <Form className="m-3" onSubmit={onSubmit /* handleSubmit(onSubmit) */}>
 
-            <Row>
-                <Col md='6'>
-                    <Form.Label>Nombre Propiedad</Form.Label>
-                    <Form.Control
-                        className="mb-3" 
-                        type="text" 
-                        name="property_name"
-                        value={property?.property_name}
-                        onChange={handleChange}
-                    />
+        <Row className="justify-content-center">
+            <Col md='6' lg='5'>
+                <Form.Label>Nombre Propiedad</Form.Label>
+                <Form.Control
+                    className="mb-3" 
+                    type="text" 
+                    name="property_name"
+                    value={property?.property_name}
+                    onChange={handleChange}
+                />
 
-                    <Row className="d-flex justify-content-between">
-
-                        <Form.Group className="mb-3" as={Col} md='6'>
-                            <Form.Label>Tipo</Form.Label>
-
-                            <Form.Select  onChange={handleTypeId} value={typeId}>
-
-                                {type?.map((typ, ind) => {
-                                    return(
-                                        <option key={ind} value={typ.type_id}>{typ.type_name}</option>
-                                    )
-                                })}
-                            </Form.Select>
-
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" as={Col} md='6'>
-                            <Form.Label>SubTipo</Form.Label>
-                            <Form.Select 
-                                onChange={handleSubTypeId}
-                                name='property_subtype_id'
-                                value={subTypeId}
-                            >
+                <Row className="d-flex justify-content-between">
+                    <Form.Group className="mb-3" as={Col} md='6'>
+                        <Form.Label>Tipo</Form.Label>
+                        <Form.Select onChange={handleTypeId} /* name='type_id' */>
+                            <option value={property?.type_id}>{'Tipo'}</option>
+                            {type?.map((typ, ind) => {
+                                return(
+                                    <option key={ind} value={typ.type_id}>{typ.type_name}</option>
+                                )
+                            })}
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3" as={Col} md='6'>
+                        <Form.Label>SubTipo</Form.Label>
+                        <Form.Select 
+                            onChange={handleChange}
+                            name='property_subtype_id'
+                            value={property?.property_subtype_id}
+                        >
+                            {/* <option value={property?.property_subtype_id}>{'Nombre Subtipo'}</option> */}
                             {subtype?.map((subtyp, ind) => {
                                 return(
                                     <option key={ind} value={subtyp.subtype_id}>{subtyp.subtype_name}</option>
                                 )
                             })}
-                            </Form.Select>
-                        </Form.Group>
-                    </Row> 
-
-                    <Form.Group>
-                        <Form.Label>Calle</Form.Label>
-                        <Form.Control 
-                            className="mb-3" 
-                            autoComplete="off" 
-                            type="text" 
-                            name="address_street_name"
-                            value={property?.address_street_name}
-                            onChange={handleChange}
-                    />
+                        </Form.Select>
                     </Form.Group>
+                </Row> 
 
-                    <Row className="d-flex justify-content-between">
-                        <Form.Group className="mb-3" as={Col} md='3'>
-                            <Form.Label>Número</Form.Label>
-                            <Form.Control 
-                                autoComplete="off"  
-                                type="text" 
-                                onChange={handleChange}
-                                value={property?.address_street_number}
-                                name='address_street_number'
-                            />
-                        </Form.Group>
+                <Form.Group>
+                    <Form.Label>Calle</Form.Label>
+                    <Form.Control 
+                    className="mb-3" 
+                    autoComplete="off" 
+                    type="text" 
+                    name="address_street_name"
+                    value={property?.address_street_name}
+                    onChange={handleChange}
+                />
+                </Form.Group>
 
-                        <Form.Group as={Col} md='9'>
-                            <Form.Label>Provincia</Form.Label>
-                            <Form.Select value={provinceId} onChange={handleProvinceId}>
-                                
-                                {province?.map((prov, ind) =>{
-                                    return(
-                                        <option
-                                            key={ind} 
-                                            value={prov.province_id}
-                                            >{prov.province_name}
-                                        </option>
-                                    )
-                                })}
-                            </Form.Select>
-                        </Form.Group>
-                    </Row>   
-
-                    <Form.Group>
-                        <Form.Label>Código Postal</Form.Label>
+                <Row className="d-flex justify-content-between">
+                    <Form.Group className="mb-3" as={Col} md='3'>
+                        <Form.Label>Número</Form.Label>
                         <Form.Control 
-                            className="mb-3" 
-                            autoComplete="off" 
+                            autoComplete="off"  
                             type="text" 
-                            name="address_postal_code"
                             onChange={handleChange}
-                            value={property?.address_postal_code}
+                            value={property?.address_street_number}
+                            name='address_street_number'
                         />
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Ciudad</Form.Label>
-                        <Form.Select value={cityId} onChange={handleCityId}>
-                        
-                            {city?.map((cit, ind) =>{
+                    <Form.Group as={Col} md='9'>
+                        <Form.Label>Provincia</Form.Label>
+                        <Form.Select onChange={handleProvinceId}>
+                            <option value={property?.address_province_id}>{property?.province_name}</option>
+                            {province?.map((prov, ind) =>{
                                 return(
-                                    <option key={ind} value={cit.city_id}>{cit.city_name}</option>
+                                    <option
+                                        key={ind} 
+                                        value={prov.province_id}
+                                        >{prov.province_name}
+                                    </option>
                                 )
                             })}
                         </Form.Select>
                     </Form.Group>
+                </Row>   
 
-                    <Row className="d-flex justify-content-between">
-                        <Form.Group className="mb-3" as={Col} md='2'>
-                            <Form.Label>Bloque</Form.Label>
-                            <Form.Control 
-                                autoComplete="off" 
-                                type="text"
-                                name="address_block"
-                                onChange={handleChange}
-                                value={property?.address_block === "undefined" ? 0 : property?.address_block}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" as={Col} md='2'>
-                            <Form.Label>Portal</Form.Label>
-                            <Form.Control 
-                                autoComplete="off"  
-                                type="text"
-                                name="address_gate"
-                                onChange={handleChange}
-                                value={property?.address_gate === "undefined" ? 0 : property?.address_gate}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" as={Col} md='2'>
-                            <Form.Label>Escalera</Form.Label>
-                            <Form.Control 
-                                autoComplete="off"  
-                                type="text"
-                                name="address_stair"
-                                onChange={handleChange}
-                                value={property?.address_stair === "undefined" ? 0 : property?.address_stair}
-                            />
-                        </Form.Group>
+                <Form.Group>
+                    <Form.Label>Código Postal</Form.Label>
+                    <Form.Control 
+                        className="mb-3" 
+                        autoComplete="off" 
+                        type="text" 
+                        name="address_postal_code"
+                        onChange={handleChange}
+                        value={property?.address_postal_code}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Select onChange={handleCityId}>
+                    <option value={property?.address_city_id}>{property?.city_name}</option>
+                        {city?.map((cit, ind) =>{
+                            return(
+                                <option key={ind} value={cit.city_id}>{cit.city_name}</option>
+                            )
+                        })}
+                    </Form.Select>
+                </Form.Group>
+
+                <Row className="d-flex justify-content-between">
+                    <Form.Group className="mb-3" as={Col} md='2'>
+                        <Form.Label>Bloque</Form.Label>
+                        <Form.Control 
+                            autoComplete="off" 
+                            type="text"
+                            name="address_block"
+                            onChange={handleChange}
+                            value={property?.address_block === "undefined" ? 0 : property?.address_block}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" as={Col} md='2'>
+                        <Form.Label>Portal</Form.Label>
+                        <Form.Control 
+                            autoComplete="off"  
+                            type="text"
+                            name="address_gate"
+                            onChange={handleChange}
+                            value={property?.address_gate === "undefined" ? 0 : property?.address_gate}
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" as={Col} md='2'>
+                        <Form.Label>Escalera</Form.Label>
+                        <Form.Control 
+                            autoComplete="off"  
+                            type="text"
+                            name="address_stair"
+                            onChange={handleChange}
+                            value={property?.address_stair === "undefined" ? 0 : property?.address_stair}
+                        />
+                         </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='2'>
                             <Form.Label>Planta</Form.Label>
                             <Form.Control 
@@ -503,7 +503,7 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row> 
                 </Col>
-                <Col md='6'>
+                <Col md='6' lg='5'>
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Superficie Útil</Form.Label>
@@ -527,8 +527,8 @@ export const EditPropertyForm = () => {
                         </Form.Group>
                     </Row>
 
-                    <Row className="d-flex justify-content-between">
-                        <Form.Group className="mb-3" as={Col} md='3'>
+                    <Row className="d-flex">
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Año Construcción</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -538,7 +538,7 @@ export const EditPropertyForm = () => {
                                 name='property_built_year'
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Habitaciones</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -548,7 +548,8 @@ export const EditPropertyForm = () => {
                                 value={property?.property_rooms === "undefined" ? 0 : property?.property_rooms}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                    
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Baños</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -558,7 +559,7 @@ export const EditPropertyForm = () => {
                                 value={property?.property_bathrooms === "undefined" ? 0 : property?.property_bathrooms}
                             />
                         </Form.Group>
-                        <Form.Group as={Col} md='3'>
+                        <Form.Group className="mb-2" as={Col} md='6'>
                             <Form.Label>Garaje</Form.Label>
                             <Form.Control 
                                 autoComplete="off"  
@@ -583,10 +584,10 @@ export const EditPropertyForm = () => {
                             </Form.Group>
                         </Form.Group>
                     </Row>
-                    <Row className="d-flex mt-4">
+                    <Row className="mt-4">
                         {prueba?.map((feature, index) => {
                             return(
-                                <Col md={3} key={index}>
+                                <Col md={4} key={index}>
                                     <Button
                                         className="rounded rounded-4 mb-3"
                                         variant={feature?.checked ? 'info' : 'outline-info'}
@@ -601,8 +602,8 @@ export const EditPropertyForm = () => {
                     <Row>
                         {imagesProperty?.map((img, ind) => {
                             return(
-                                <Col md={3} key={ind}>
-                                    <div className="editImage">
+                                <Col className='editImage' sm={6} md={5} key={ind}>
+                                    <div className="container-img">
                                         <Image
                                             style={{width: '100%'}}
                                             src={`/images/property/${img.image_title}`}
@@ -640,11 +641,12 @@ export const EditPropertyForm = () => {
                         </div>
                     </Row>
                 </Col>
+                <Button className='boton-editar' type="submit">
+                GUARDAR
+               </Button>
             </Row>
 
-            <Button size="lg" variant="secondary" type="submit">
-                GUARDAR
-            </Button>
+            
         </Form>
         <ModalAddImage 
             property={property} 
@@ -654,6 +656,5 @@ export const EditPropertyForm = () => {
         />
     
     </Container>
-    
   );
 };
