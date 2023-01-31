@@ -82,7 +82,7 @@ export const SummaryInversionUser = () => {
                     
     }, [user_id])
         
- 
+ ///////
     
   return (
     <Container fluid className='main' >

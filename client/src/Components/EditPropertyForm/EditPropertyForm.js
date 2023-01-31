@@ -11,6 +11,8 @@ import { AppContext } from "../../Context/AppContext";
 import './editPropertyForm.scss'
 import { ModalAddImage } from "./ModalAddImage";
 
+
+
 export const EditPropertyForm = () => {
 
     const [type, setType] = useState();
@@ -340,7 +342,7 @@ export const EditPropertyForm = () => {
     }
 
 
-  return (
+ return (
     <Container fluid className='datos-propiedad-container'>
         <h1 className="text-center mb-3">Editar Propiedad</h1>
 

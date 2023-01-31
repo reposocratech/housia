@@ -11,7 +11,9 @@ export const EditEconomicFeatures = () => {
     const [editLoan, setEditLoan] = useState();
     const [editRent, setEditRent] = useState();
     const [checkboxState, setCheckboxState] = useState(false)
+
    const{user, isLogged} = useContext(AppContext)
+
     let {property_id} = useParams(); 
     const navigate= useNavigate();
     
@@ -38,12 +40,13 @@ export const EditEconomicFeatures = () => {
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
+
         if(isLogged && user.user_type === 2){
          navigate(`/propertyDetails/${property_id}`);
         } else{
             navigate(`/admin/allproperties`);
-        }
-        
+        }   
+
     })
     .catch((error)=>{
         console.log(error)
