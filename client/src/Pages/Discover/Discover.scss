@@ -1,0 +1,66 @@
+
+.portafolio-container{
+    font-family: Barlow;
+    background-color: #272839;
+    color: white;
+    height: 100%;
+    text-align: center;
+    padding: 7% 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .discover {
+        width: 100%;
+        padding: 120px 0;
+        .filters{
+            width: 30%;
+            text-align: left;
+            
+            .filterImg{
+                width: 30px;
+                height: 30px;
+            }
+        }
+        .clearButton{
+            width: 40%;
+            height: 4vh;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.897);
+                   
+        }
+        .clearButton:hover{
+            border: 1px solid rgb(48,162,185);
+            color: rgb(48,162,185);
+        }
+        .buttons{
+            width: 100%;
+            height: 5vh;
+            margin: 0;
+            margin-top: 3%;
+            button{
+                width: 22%;
+                height: 80%;
+                border-radius: 15px;
+                background-color: transparent;
+                border: 1px solid gray;
+                color: white;
+            }
+
+        }
+        .featuresButton{
+            width: 60%;
+            height: 4vh;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.897);
+        }
+        .featuresButton:hover{
+            border: 1px solid rgb(48,162,185);
+            color: rgb(48,162,185);
+        }
+        .checkbox-container{
+            width: 50%;
+        }
+    }
+    
+
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-
+import './Discover.scss';
+import { Container, Form, InputGroup } from 'react-bootstrap';
 
 export const Discover = () => {
 
@@ -490,76 +491,113 @@ export const Discover = () => {
     
 
   return (
-    <div>
+
+    <Container fluid className='portafolio-container'>
+    <div className='discover'>
         <h1>Descubre</h1>
-        <h1>Filtros de busqueda</h1>
+        <div className='filters'>
+        <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
         <div>
-            <button onClick={cleanFilters}>Limpiar Filtros</button>
+            <button className='mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
         </div>
 
         <div>
-        <h3>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h3>
-        <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin limite en metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(1)}>entre 30 y 100 metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(2)}>entre 100 y 300 metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(3)}>mas de 300 metros contruidos</button>
+        
+
+        <h5>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
+        </div>
+
         <hr/>
-        <h3>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h3>
-        <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin limites en metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(1)}>entre 100 y 300 metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(2)}> entre 300 y 1000 metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(3)}>mas de 1000 metros totales</button>
+        <h5>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
+        <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
+        <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
+        <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
+        </div>
+
         <hr/> 
-        <h3>valor minimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h3>
-        
-        <button onClick={()=>handleBothFilterPrice(0)}>Todas la propiedades (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(1)}>entre 100k y 300k (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(2)}>entre 300k y 500k (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(3)}>mayor a 500k (precio) </button>
+        <h5>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
+        <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
+        <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
+        <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
+        </div>
         
         <hr/> 
-        <h3>valor numero de habitaciones minimas: {filterRooms===0? "Sin filtro": filterRooms }</h3>
+        <h5>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfRooms(2)}> 2 o mas</button>
-        <button onClick={()=>handleNumOfRooms(3)}> 3 o mas</button>
-        <button onClick={()=>handleNumOfRooms(4)}> 4 o mas</button>
+        <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
+        <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
+        <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
+        </div>
 
         <hr/> 
-        <h3>valor numero de baños de la propiedad: {filterBaths===0? "Sin filtro": filterBaths }</h3>
+        <h5>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfBath(2)}> 2 o mas</button>
-        <button onClick={()=>handleNumOfBath(3)}> 3 o mas</button>
-        <button onClick={()=>handleNumOfBath(4)}> 4 o mas</button>
+        <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
+        <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
+        <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
+        </div>
 
         <hr/> 
-        <h3>Plazas de aparcamiento : {filterBaths===0? "Sin filtro": filterBaths }</h3>
+        <h5>Plazas de aparcamiento : {filterBaths===0? "Sin filtro": filterBaths }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfGarage(1)}> 1 o mas</button>
-        <button onClick={()=>handleNumOfGarage(2)}> 2 o mas</button>
+        <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
+        <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
+        </div>
 
         <hr/>
-        <h3>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h3>
+        <h5>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h5>
+        <div className='buttons'>
         <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
-        <button onClick={()=>handleIsNew(1)}> Buscar situacion : Nuevo</button>
-        <button onClick={()=>handleIsNew(0)}> Buscar situacion : Segunda Mano</button>
+        <button onClick={()=>handleIsNew(1)}> Nueva</button>
+        <button onClick={()=>handleIsNew(0)}> Usada</button>
+        </div>
         
         <hr/>
-        <button onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+       
+        <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+       
         <hr/>
+       
        {showFeatures &&
        <>
-       <h3>Extras del activo</h3>
+       <h5>Extras del activo</h5>
         {featuresInDB.map((feature, index)=>{
             return(
-               <button key={feature.feature_id} onClick={()=>handleFeaturesSelected(feature.feature_id)}>{feature.feature_name}</button>
+                <div key={index} className='checkbox-container'>
+                <input 
+                    type="checkbox" 
+                    classname="checkbox" 
+                    id={`checkbox-${feature.feature_name}`} 
+                    onClick={()=>handleFeaturesSelected(feature.feature_id)}
+                     
+                />
+
+                <label 
+                    for={`checkbox-${feature.feature_name}`} 
+                    className="label">{feature.feature_name}
+                </label>
+            </div> 
+
             )
         })}
        </>
        } 
         
         <hr/>
-        <h3>Tipos de cocina</h3>
-        <select onChange={SelectKitchenFilter}>
+        <h5>Tipos de cocina</h5>
+        <select className='clearButton' onChange={SelectKitchenFilter}>
             <option value={-1}>Sin filtro</option>
             {kitchenInDB?.map((kitchen, index)=>{
                 return(
@@ -573,8 +611,8 @@ export const Discover = () => {
         </select>
 
         <hr/>
-        <h3>Tipos de Activo</h3>
-        <select onChange={selectTypeIdFilter}>
+        <h5>Tipos de Activo</h5>
+        <select className='clearButton' onChange={selectTypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {typeInDB?.map((type, index)=>{
                 return(
@@ -588,7 +626,7 @@ export const Discover = () => {
         </select>
 
         { showSubtype &&
-         <select onChange={selectSubtypeIdFilter}>
+         <select className='clearButton' onChange={selectSubtypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {subTypeInDB?.map((subtype, index)=>{
                 return(
@@ -604,8 +642,8 @@ export const Discover = () => {
         }
 
         <hr/>
-        <h3>Filtrar por provincia</h3>
-        <select onChange={selectProvinceIdFilter}>
+        <h5>Filtrar por provincia</h5>
+        <select className='clearButton' onChange={selectProvinceIdFilter}>
             <option value={-1}>Sin filtro</option>
             {provinceInDb?.map((province, index)=>{
                 return(
@@ -637,7 +675,7 @@ export const Discover = () => {
             return(
                 <div key={i} style={{border:"2px solid red"}}>
                 <img src={property?.image_title} alt=""></img>
-                <h3>{property?.property_name}</h3>
+                <h5>{property?.property_name}</h5>
 
                 
                
@@ -659,6 +697,8 @@ export const Discover = () => {
             )
         })}
         </div>
+        </div>
     </div>
+    </Container>
   )
 }
