@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from "axios";
+
+import './Discover.scss';
+import { Container, Form, InputGroup,  Modal } from 'react-bootstrap';
+import jwtDecode from 'jwt-decode';
+import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+
+
+
 
 
 export const Discover = () => {
 
     //ESTADOS DE MANIPULACION U OBTENCION DE DATOS
     const [discover, setDiscover] = useState([]);
-    const [fav, setFav] = useState(false);
     const [typeInDB, setTypeInDB] = useState([]);
     const [subTypeInDB, setSubTypeInDB] = useState([]);
     const [kitchenInDB, setKitchenInDB] = useState([]);
@@ -14,12 +21,18 @@ export const Discover = () => {
     const [provinceInDb, setProvinceInDb] = useState([]);
     const [cityInDb, setCityInDb] = useState([]);
     const [showCities, setShowCities] = useState(false);
-    const [featuresInDB, setFeaturesInDB] = useState([])
-    const [showFeatures, setShowFeatures] = useState(false)
-    const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([])
-    const [featuresSelected, setFeaturesSelected] = useState([])
-    const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([])
+    const [featuresInDB, setFeaturesInDB] = useState([]);
+    const [showFeatures, setShowFeatures] = useState(false);
+    const [propertiesWithFeatures, setPropertiesWithFeatures] = useState([]);
+    const [featuresSelected, setFeaturesSelected] = useState([]);
+    const [propertiesWithFeaturesSelect, setPropertiesWithFeaturesSelect] = useState([]);
+    const [favOption, setFavOption] = useState(false)
+    const [favInDB, setFavInDB] = useState([])
+    const [userId, setUserId] = useState()
+    const [smShow, setSmShow] = useState(false)
 
+
+    ///////////token para comprobar si el usuario es
     //estados de filtros
     //PRECIO
     const [priceFilterMin, setPriceFilterMin] = useState(0);
@@ -51,6 +64,30 @@ export const Discover = () => {
 
 
     useEffect(() => {
+        
+        
+        const token = localStorageUser();
+        if(token){
+
+            let userId = jwtDecode(token).user.id;
+
+            setUserId(userId)
+            axios
+            .get(`http://localhost:4000/users/getFavs/${userId}`)
+            .then((res)=>{
+                setFavInDB(res.data.result)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+
+            setFavOption(true)
+        } else {
+            setFavOption(false)
+        }
+
+
+        
         //Activos en venta
         axios
         .get(`http://localhost:4000/property/discover`)
@@ -114,31 +151,38 @@ export const Discover = () => {
     }, [])
 
 
-    
-        const handleFav = (user_id, property_id) => {
-        setFav(!fav);
-        if(fav === false){
-            axios
-            .post(`http://localhost:4000/property/fav/${user_id}/${property_id}`)
-            .then((res) => {
-                console.log("Insertado")
-               
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
 
-        if(fav === true){
-            axios
-            .delete(`http://localhost:4000/property/unfav/${user_id}/${property_id}`)
-            .then((res) => {
-                console.log("Eliminado")
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        } 
+        const addToFavs = (property_id) =>{
+            console.log(property_id, "PROPERTY ID");
+            console.log(favInDB);
+            if(favInDB.length === 0){
+                axios
+                .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                .then((res)=>{
+                console.log(res);
+                })
+                .catch((error)=>{
+                console.log(error)
+                })
+            } else{
+
+                   let flag= favInDB.filter(elem => Number(elem.property_id) === property_id);
+                    
+                if(flag.length !== favInDB.length){
+                    setSmShow(true)
+                } else {
+                    axios
+                    .post(`http://localhost:4000/users/postFav/${userId}/${property_id}`)
+                    .then((res)=>{
+                    console.log(res);
+                    })
+                    .catch((error)=>{
+                    console.log(error)
+                    })
+                 }
+
+            }
+
         }
 
 
@@ -487,79 +531,120 @@ export const Discover = () => {
     filterList = contenedor;
     } 
        
-    
+    console.log(filterList, "hola")
 
   return (
-    <div>
+
+    <Container fluid className='portafolio-container'>
+    <div className='discover'>
         <h1>Descubre</h1>
-        <h1>Filtros de busqueda</h1>
+        <div className='filters'>
+        <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
         <div>
-            <button onClick={cleanFilters}>Limpiar Filtros</button>
+            <button className='mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
         </div>
 
         <div>
-        <h3>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h3>
-        <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin limite en metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(1)}>entre 30 y 100 metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(2)}>entre 100 y 300 metros contruidos</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(3)}>mas de 300 metros contruidos</button>
+        
+
+        <h5>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
+        <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
+        </div>
+
         <hr/>
-        <h3>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h3>
-        <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin limites en metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(1)}>entre 100 y 300 metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(2)}> entre 300 y 1000 metros totales</button>
-        <button onClick={()=>handleBothFilterTotalMeters(3)}>mas de 1000 metros totales</button>
+        <h5>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
+        <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
+        <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
+        <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
+        </div>
+
         <hr/> 
-        <h3>valor minimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h3>
-        
-        <button onClick={()=>handleBothFilterPrice(0)}>Todas la propiedades (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(1)}>entre 100k y 300k (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(2)}>entre 300k y 500k (precio) </button>
-        <button onClick={()=>handleBothFilterPrice(3)}>mayor a 500k (precio) </button>
+        <h5>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h5>
+        <div className='buttons'>
+        <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
+        <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
+        <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
+        <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
+        </div>
         
         <hr/> 
-        <h3>valor numero de habitaciones minimas: {filterRooms===0? "Sin filtro": filterRooms }</h3>
+        <h5>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfRooms(2)}> 2 o mas</button>
-        <button onClick={()=>handleNumOfRooms(3)}> 3 o mas</button>
-        <button onClick={()=>handleNumOfRooms(4)}> 4 o mas</button>
+        <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
+        <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
+        <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
+        </div>
 
         <hr/> 
-        <h3>valor numero de baños de la propiedad: {filterBaths===0? "Sin filtro": filterBaths }</h3>
+        <h5>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfBath(2)}> 2 o mas</button>
-        <button onClick={()=>handleNumOfBath(3)}> 3 o mas</button>
-        <button onClick={()=>handleNumOfBath(4)}> 4 o mas</button>
+        <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
+        <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
+        <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
+        </div>
 
         <hr/> 
-        <h3>Plazas de aparcamiento : {filterBaths===0? "Sin filtro": filterBaths }</h3>
+
+       
+        
+
+        <h5>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</h5>
+        <div className='buttons'>
         <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfGarage(1)}> 1 o mas</button>
-        <button onClick={()=>handleNumOfGarage(2)}> 2 o mas</button>
+        <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
+        <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
+        </div>
 
         <hr/>
-        <h3>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h3>
+        <h5>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h5>
+        <div className='buttons'>
         <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
-        <button onClick={()=>handleIsNew(1)}> Buscar situacion : Nuevo</button>
-        <button onClick={()=>handleIsNew(0)}> Buscar situacion : Segunda Mano</button>
+        <button onClick={()=>handleIsNew(1)}> Nueva</button>
+        <button onClick={()=>handleIsNew(0)}> Usada</button>
+        </div>
         
         <hr/>
-        <button onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+       
+        <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+       
         <hr/>
+       
        {showFeatures &&
        <>
-       <h3>Extras del activo</h3>
+       <h5>Extras del activo</h5>
         {featuresInDB.map((feature, index)=>{
             return(
-               <button key={feature.feature_id} onClick={()=>handleFeaturesSelected(feature.feature_id)}>{feature.feature_name}</button>
+                <div key={index} className='checkbox-container'>
+                <input 
+                    type="checkbox" 
+                    classname="checkbox" 
+                    id={`checkbox-${feature.feature_name}`} 
+                    onClick={()=>handleFeaturesSelected(feature.feature_id)}
+                     
+                />
+
+                <label 
+                    for={`checkbox-${feature.feature_name}`} 
+                    className="label">{feature.feature_name}
+                </label>
+            </div> 
+
             )
         })}
        </>
        } 
         
         <hr/>
-        <h3>Tipos de cocina</h3>
-        <select onChange={SelectKitchenFilter}>
+        <h5>Tipos de cocina</h5>
+        <select className='clearButton' onChange={SelectKitchenFilter}>
             <option value={-1}>Sin filtro</option>
             {kitchenInDB?.map((kitchen, index)=>{
                 return(
@@ -573,8 +658,8 @@ export const Discover = () => {
         </select>
 
         <hr/>
-        <h3>Tipos de Activo</h3>
-        <select onChange={selectTypeIdFilter}>
+        <h5>Tipos de Activo</h5>
+        <select className='clearButton' onChange={selectTypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {typeInDB?.map((type, index)=>{
                 return(
@@ -588,7 +673,7 @@ export const Discover = () => {
         </select>
 
         { showSubtype &&
-         <select onChange={selectSubtypeIdFilter}>
+         <select className='clearButton' onChange={selectSubtypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {subTypeInDB?.map((subtype, index)=>{
                 return(
@@ -604,8 +689,8 @@ export const Discover = () => {
         }
 
         <hr/>
-        <h3>Filtrar por provincia</h3>
-        <select onChange={selectProvinceIdFilter}>
+        <h5>Filtrar por provincia</h5>
+        <select className='clearButton' onChange={selectProvinceIdFilter}>
             <option value={-1}>Sin filtro</option>
             {provinceInDb?.map((province, index)=>{
                 return(
@@ -636,16 +721,29 @@ export const Discover = () => {
         {filterList?.map((property, i) => {
             return(
                 <div key={i} style={{border:"2px solid red"}}>
+                     <Modal
+                        size="sm"
+                        show={smShow}
+                        onHide={() => setSmShow(false)}
+                        aria-labelledby="example-modal-sizes-title-sm"
+                    >
+                    <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">
+                    Accion repetida.
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Esta propiedad ya esta en su lista de Favoritos. (para acceder a sus favoritos despliege desde su foto las opciones)</Modal.Body>
+                    </Modal>
                 <img src={property?.image_title} alt=""></img>
-                <h3>{property?.property_name}</h3>
 
-                
-               
+
+                <h5>{property?.property_name}</h5>                                     
 
                 <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
-                <span onClick={()=>handleFav(property?.property_user_id, property?.property_id)} style={{backgroundColor: fav ? "yellow" : "white", border: "1px solid black"}}>{fav ? "⭐" : "✰"}</span>
                 <p>Provincia: {property?.province_name}</p>
                 <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
+                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
+                <hr/>
                 <p>Año de construccion: {property?.property_built_year} </p>
                 <p>Metros construidos: {property?.property_built_meters} </p>
                 <p>Metros totales: {property?.property_total_meters} </p>
@@ -659,6 +757,8 @@ export const Discover = () => {
             )
         })}
         </div>
+        </div>
     </div>
+    </Container>
   )
 }

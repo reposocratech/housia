@@ -1,15 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios";
-import {Form, useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../../../Context/AppContext';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
-import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import { Carousel, Container, Row } from 'react-bootstrap';
 import './PropertyDetails.scss';
-
-
-//cambiar el user id, esta hardcodeado
-//cambiar los navigate a la pagina editar detalles y editar detalles economicos
 
 
 export const PropertyDetails = () => {
@@ -29,6 +25,7 @@ export const PropertyDetails = () => {
     let { property_id } = useParams();
 
     const navigate = useNavigate();
+    const URL_PROP = 'http://localhost:4000/property';
 
     const handleColor = () => setColorSold(!colorSold);
     const handleClose = () => setShow(false);
@@ -40,11 +37,11 @@ export const PropertyDetails = () => {
     const handleSubmit = () => {
     
     axios
-    .put(`http://localhost:4000/property/checkSale/${user.user_id}/${property_id}`)
+    .put(`${URL_PROP}/checkSale/${user.user_id}/${property_id}`)
     .then((res) => {
         setShow(false);
-        console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO");
         navigate("/home") //navigate al descubre
+        /* console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO"); */
     })
     .catch((err) => {
         console.log(err);
@@ -57,7 +54,7 @@ export const PropertyDetails = () => {
     useEffect(() => {
         
         axios
-        .get(`http://localhost:4000/property/propertyDetails/2/${property_id}`)
+        .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
         .then((res) => {
            setPropertyDetails(res.data);
         })
@@ -69,7 +66,7 @@ export const PropertyDetails = () => {
     //Imagenes propiedad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsImg/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsImg/${property_id}`)
         .then((res) => {
            setImagenes(res.data);
         })
@@ -81,7 +78,7 @@ export const PropertyDetails = () => {
     //Direccion de la propiedad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsAddress/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsAddress/${property_id}`)
         .then((res) => {
            setAddress(res.data);
         })
@@ -93,7 +90,7 @@ export const PropertyDetails = () => {
     //Datos de compra de la propeidad
     useEffect(() => {
         axios
-        .get(`http://localhost:4000/property/propertyDetailsPurchase/${property_id}`)
+        .get(`${URL_PROP}/propertyDetailsPurchase/${property_id}`)
         .then((res) => {
            setDetailsPurchase(res.data);
         })
@@ -105,7 +102,7 @@ export const PropertyDetails = () => {
         //Trae la provincia y Ciudad de una propiedad 
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsProvinceCity/${property_id}`)
             .then((res) => {
                 setProvinceCity(res.data);
             })
@@ -117,7 +114,7 @@ export const PropertyDetails = () => {
         //Trae el tipo 
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsSubtype/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsSubtype/${property_id}`)
             .then((res) => {
                 setType(res.data);
             })
@@ -126,12 +123,11 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
 
-
         
         //Trae el alquiler
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsRent/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsRent/${property_id}`)
             .then((res) => {
                 setRent(res.data);
             })
@@ -143,7 +139,7 @@ export const PropertyDetails = () => {
         //Trae la hipoteca
         useEffect(() => {
             axios
-            .get(`http://localhost:4000/property/propertyDetailsLoan/${property_id}`)
+            .get(`${URL_PROP}/propertyDetailsLoan/${property_id}`)
             .then((res) => {
                 setLoan(res.data);
             })
@@ -152,98 +148,91 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
         
-        //carga el property id en navigate para editar detalles economicos
-       /* const travelToEditEconomicFeatures = ()=>{
-
-            setProperty(property_id)
-            navigate("/addEconomicFeatures")
-        } */
+        
 
       
   return (
     <Container fluid className='portafolio-container'>
+
          <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
-    
+
         <div className='infoCarousel'>
-             
-        <div className='infoAllProperty'>             
-        <div className="carrusel">
+        {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
+            <div className='infoAllProperty'>
 
-       
-           <Carousel>
-           {imagenes?.map((imagen, i)=>{return(
-   
-             <Carousel.Item className="contCarrusel imgCarrusel" key={i}>
-              
-               <div className="contenedorImagen d-flex justify-content-center" >
-                   
-               <img
-                 className="d-block justify-content-center"
-                 src={`/images/property/${imagen?.image_title}`}
-                 alt={imagen?.image_title} 
-               />
-               </div>
-             
-             </Carousel.Item>
-   
-           )})
-             
-             } 
-           </Carousel>
-           </div>
-         </div>
-         </div>
 
-        
-         <div className='information'>
+            {/* CARRUSEL IMAGENES  */}    
+                <div className="carrusel">
+
+                <Carousel>
+                    {imagenes?.map((imagen, i)=>{return(
+                        <Carousel.Item className="contCarrusel imgCarrusel" key={i}>
+                        
+                          <div className="contenedorImagen d-flex justify-content-center" >
+                            <img
+                              className="d-block justify-content-center"
+                              src={`/images/property/${imagen?.image_title}`}
+                              alt={imagen?.image_title} 
+                            />
+                          </div>
+                        </Carousel.Item>
+                    )})
+                    
+                      } 
+                    </Carousel>
+                  </div>
+              </div>
+          </div>
+
+          
+
+          <div className='information'>
             <div className='direction'>
                 <div className='dir'>
-                    <img src='/images/property/place.png'/>
+                    <img src='/images/property/place.png' alt='property-location'/>
                     <h6>{address[0]?.address_street_name}, {address[0]?.address_postal_code}, {provinceCity[0]?.province_name}</h6>
                 </div>
 
-                <div className='info'>
-                    <div className='icono'>
-                        <div><img src='/images/property/home.png'/></div>
-                        <div> <p>Tipo</p><p>{type[0]?.subtype_name}</p></div>
-                    </div>
-                    <div className='icono'>
-                        <div><img src='/images/property/date.png'/></div>
-                        <div><p>Año</p><p>{propertyDetails[0]?.property_built_year}</p></div>
-                    </div>
-                    <div className='icono'>
-                        <div><img src='/images/property/size.png'/></div>
-                        <div> <p>Tamaño</p><p>{propertyDetails[0]?.property_total_meters}m2</p></div>
-                    </div>          
+            <div className='info'>
+                <div className='icono'>
+                    <div><img src='/images/property/home.png' alt='home image'/></div>
+                    <div> <p>Tipo</p><p>{type[0]?.subtype_name}</p></div>
                 </div>
-            </div> 
+                <div className='icono'>
+                    <div><img src='/images/property/date.png' alt='date image'/></div>
+                    <div><p>Año</p><p>{propertyDetails[0]?.property_built_year}</p></div>
+                </div>
+                <div className='icono'>
+                    <div><img src='/images/property/size.png' alt='property size'/></div>
+                    <div><p>Tamaño</p><p>{propertyDetails[0]?.property_total_meters}m2</p></div>
+                </div>
+            </div>
+        </div>
+
             <div className='transparent'>
                 <div  className='perTrans'>12%</div>
                 <h2 className='turquoise'>{detailsPurchase[0]?.purchase_buy_price}€</h2>  
-                
-                    
             </div>
-         </div>       
-                 
-                          
+        </div>
+
+
         <div className='divButtons'>
+
             <div className='buttons'>
-                <Button className='button' onClick={()=>navigate("/home")}>
-                    <img src='/images/icons/editSmall.png'/>
-                    Editar detalles</Button>
-                <Button className='button'  onClick={handleShow}>
-                <img src='/images/icons/graphSmall.png'/>
+            <Button className='button' onClick={()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)}>Editar detalles</Button>
+            <Button className='button'  onClick={handleShow}>
                 Vender propiedad
                 </Button>
-            </div>
-                                                   
+            
+                                
+        
                 <Modal className='modal' show={show} onHide={handleClose}>
                 <Modal.Header  closeButton>
                 <Modal.Title>¿Estas seguro que deseas vender la propiedad?</Modal.Title>
                 </Modal.Header>
-                
+            
                 <Modal.Footer>
-                 <Button variant="secondary" onClick={handleClose}>
+                <Button variant="secondary" onClick={handleClose}>
                 Cerrar
                 </Button>
                 <Button variant="primary" onClick={handleSubmit}>
@@ -251,42 +240,41 @@ export const PropertyDetails = () => {
                 </Button>
                 </Modal.Footer>
                 </Modal>
-                         
+                </div>
         </div>
 
-       
-            <h4>Información</h4>
+
+        <h4>Informacion</h4>
 
         <div className='row infoGrafica'>
+
             <div className='col-12 col-sm-4 col-lg-2 percenteges'>
                 <div className='percent'>
                     <p>Ingresos</p>
                     <p>0%</p>
-                    <div className='perGreen'>+0,0%</div>
+                    <p>+0,0%</p>
                 </div>
                 <div className='percent'>
                     <p>Costes</p>
                     <p>1.200€</p>
-                    <div className='perGreen'>+12,6%</div>
+                    <p>+12,6%</p>
                 </div>
                 <div className='percent'>
                     <p>Beneficios</p>
                     <p>26.400€</p>
-                    <div className='perRed'>-4%</div>
+                    <p>-4%</p>
                 </div>
             </div>
+
             <div className='col-12 col-sm-8 col-lg-10 graph'>
-                <div className='valor'>
                 <p>Valor de mercado</p>
                 <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
-
-                </div>
-                
-                <img src='/images/property/grafica4.jpg'></img>
-               
+                <img src='/images/property/grafica4.jpg' alt='property-graphic'></img>
             </div>
-        </div>   
 
+        </div>  
+
+        
 
         <div className='row infos'>
 
@@ -314,15 +302,15 @@ export const PropertyDetails = () => {
          <div className='inversion'>
             <div className='box'>
                 <div className='divUno'>
-                    <h6 className='gray'>Inversion inicial</h6>
+                    <p className='gray'>Inversion inicial</p>
                      <p>{detailsPurchase[0]?.purchase_entry_expenses + detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
                 </div>               
                 <div className='divDos'>
-                    <h6>Entrada </h6>
+                    <p className='gray'>Entrada </p>
                     <p>{detailsPurchase[0]?.purchase_entry_expenses}€</p>
                 </div>
                     <div className='divDos'>
-                        <h6>Impuestos y gastos</h6>
+                        <p className='gray'>Impuestos y gastos</p>
                         <p>{detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
                     </div>
                 
@@ -330,20 +318,20 @@ export const PropertyDetails = () => {
 
             <div className='box'>
                 <div className='divUno'>
-                    <h6>Amortiaciones y gastos</h6>
+                    <p className='gray'>Amortiaciones y gastos</p>
                     <p>{loan[0]?.loan_type + loan[0]?.loan_value + 765}€</p>
                 </div>
                 
                     <div className='divDos'>
-                    <h6>Hipoteca </h6>
+                    <p className='gray'>Hipoteca </p>
                     <p>{loan[0]?.loan_value}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Gastos</h6>
+                    <p className='gray'>Gastos</p>
                     <p>{loan[0]?.loan_type}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Impuestos</h6>
+                    <p className='gray'>Impuestos</p>
                     <p>765€</p>
                     </div>
                 </div>
@@ -351,16 +339,16 @@ export const PropertyDetails = () => {
 
             <div className='box'>
                 <div className='divUno'>
-                <h6>Ingresos</h6>
+                <p className='gray'>Ingresos</p>
                 <p>{rent[0]?.rent_renting_price}€</p>
                 </div>
                 
                     <div className='divDos'>
-                    <h6>Renta </h6>
+                    <p className='gray'>Renta </p>
                     <p>{rent[0]?.rent_renting_price}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Otros ingresos</h6>
+                    <p className='gray'>Otros ingresos</p>
                     <p>0€</p>
                     </div>
                 
@@ -494,11 +482,6 @@ export const PropertyDetails = () => {
             </div>
 
     </div>
-
-
-
-        
-        
     
 
     </Container>

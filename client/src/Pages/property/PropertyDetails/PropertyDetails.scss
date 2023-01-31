@@ -1,3 +1,4 @@
+
 .portafolio-container{
     font-family: Barlow;
     background-color: #272839;
@@ -17,28 +18,36 @@
     .infoCarousel{
         display: flex;
         justify-content: center;
+        width: 45vw;
+        
         
         .infoAllProperty{
             display: flex;
             align-items: center;
+            width: 100%;
             
             .carrusel{
-                width: 700px;
+                width: 100%;
                 height: 380px;
                 border-radius: 10px;
                 box-shadow: 0px 0px 10px black;
                 position: relative;
                 z-index: 1;
                 display: flex;               
-                align-items: center;           
-                               
-                img{
-                    width: 700px;
-                    height: 380px;
+                align-items: center; 
+                .carousel{
+                    width: 100%;
                     border-radius: 10px;
-                    object-fit: cover;
-                    object-position: center;
-                }
+                    img{
+                        width: 100%;
+                        height: 380px;
+                        border-radius: 10px;
+                        object-fit: cover;
+                        object-position: center;
+                    }
+                }          
+                               
+                
             }
         }
     }
@@ -46,12 +55,12 @@
     .information{
         display: flex;
         justify-content: space-between;
-        width: 700px;
+        width: 50%;
         margin-top: 1%;
         .direction{
             display: flex;
             flex-direction: column;
-            width: 50%;
+            width: 75%;
             .dir{
                 display: flex;
                 img{
@@ -64,6 +73,7 @@
                 display: flex;
                 justify-content:space-between;
                 margin-top: 5%;
+                text-align: left;
                .icono{
                 display: flex;
                 align-items: center;
@@ -75,12 +85,11 @@
                 }
                 p{
                     margin: 0;
-                    margin-left: 15%;
+                    margin-left: 3%;
                 }           
                 
                }
             }
-            
         }
         .transparent{
             width: 50%;
@@ -100,11 +109,12 @@
     .divButtons{
         display: flex;
         justify-content: center;
+        width: 100%;
         .buttons{
-            width: 600px;
+            width: 40%;
             display: flex;
             justify-content:space-around;
-            margin: 5% 0%;
+            margin: 3% 0%;
             }
             .button {
                 width: 60%;
@@ -219,9 +229,6 @@
                     }
                 }
             }
-           
-           
-            
         }
         .inversions{
             .inversion{
@@ -234,7 +241,7 @@
                 .box{
                     width: 30%; 
                     margin-top: 2%;  
-                    h6{
+                    .gray{
                         color: rgba(255, 255, 255, 0.614);
                     }                
                     .divUno{
@@ -294,7 +301,6 @@
                             background-color: white;
                             color: rgb(35,38,47);
                         }
-                        
                     }
                     .stageTwo{
                         display: flex;
@@ -403,57 +409,101 @@
                 margin-left: 2%;
             }
         }
-
-        
     }
-
 
     @media (max-width: 769px ){
         .portafolio-container {
-         .carrusel{
-            width: 400px;
-            height: 250px;
+         .infoCarousel{
+            width: 80vw;            
          }
+         .information{
+            width: 90%;
+            .direction{
+                width: 100%;
+             }
+         }
+         .divButtons{
+            .buttons{
+                width: 80%;
+            }
+         }
+         
          .infoGrafica{
             .percenteges{
-                display: flex;
-                flex-direction: row;
+               width: 20%;
                 .percent{
-                    width: 30%;
+                    width: 90%;
                 }
-             }
+            }
+            .graph{
+                width: 80%;
+                .valor{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    width: 50%;
+                }
+                .img{
+                    width: 90%;
+                }
+            }
+
          }
          .infos{
             margin: 5% 0%;
+            width: 90%;
             .inversions{
                 margin: 0%;
                 margin-top: 5%;
+                
                 .inversion{
                     width: 100%;
+                    padding: 0% 10%;
                     display: flex;
                     flex-direction: column;
                     .box{
                         width: 100%;
                         padding: 3%;
+                        
+                        .divUno{
+                            padding-right: 2%;
+                            font-size: x-large;
+                        }
                     }
                 }
             }
          }
          .largeGraph{
+            width: 86%;
             .scenarios{
                 display: flex;
                 flex-direction: column;
+                
                 .partOne{
-                    width: 100%;
+                    width: 90%;
                 }
                 .partTwo{
+                    width: 90%;
+                    height: 20vh;
+                    margin-bottom: 5%;
+                    
                     img{
                         width: 100%;
-                        margin-bottom: 5%;
+                        height: 100%;
+                        
                     }
                 }
                 .partThree{
+                    display: flex;
+                    justify-content: center;
                     width: 100%;
+                    .data{
+                        width: 100%;
+                        .d{
+                            width: 50%;
+                            margin-right: 10%;
+                        }
+                    }
                 }
             }
          }
@@ -494,8 +544,121 @@
      
      
      @media (max-width: 391px){
-         
+        .portafolio-container{
+            .infoCarousel{
+                width: 80vw;
+                height: 30vh;
+                .infoAllProperty{
+                    width: 80vw;
+                    height: 30vh;
+                    .carrusel{
+                        width: 80vw;
+                        height: 30vh;
+                        .carousel{
+                            width: 80vw;
+                            height: 30vh;
+                            img{
+                                width: 80vw;
+                                height: 30vh;
+                               
+                            }
+                        }
+                    }
+                }
+             }          
+        }
+        .information{
+            display: flex;
+            flex-direction:column-reverse;
+            width: 100%;
+            .info{
+                img{
+                    width: 35px;
+                    height: 35px;
+                }
+                p{
+                    font-size:x-small;
+                }
+            }
+            .transparent{
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between;
+                align-items: flex-start !important;
+            }
+        }
+        .divButtons{
+            
+            .buttons{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100% !important;
+                .button{
+                    font-size: small;
+                    
+                }
+            }
+        }
+        .infoGrafica{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .percenteges{
+                width: 100% !important;
+                display: flex;
+                flex-direction: row !important;
+                .percent{
+                    width: 35%;
+                    margin: 2% !important;
+                    font-size: small;
+                    .perGreen, .perRed{
+                        width: 65% !important;
+                    }
+                }
+                
+            }
+            .graph{
+                width: 100% !important;
+                height: 25vh;
+                .valor{
+                    font-size: small;
+                    width: 60% !important;
+                }
+                img{
+                    width: 100% !important;
+                }
+            }
+            .infos{
+                width: 100%;
+                .inversions{
+                                     
+                    .inversion{
+                        width: 100% !important;
+                        display: flex;
+                        flex-direction: column;
+                        .box{
+                            width: 100% !important;
+                            
+                            
+                            
+                        }
+                    }
+                }
+            }
+        }
+        .divUno{
+            font-size: 16px !important;
+            padding: 1%;
+        }
+           
     }
+           
+           
+           
+   
+        
      
         
     

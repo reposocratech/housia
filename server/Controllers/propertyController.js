@@ -162,7 +162,7 @@ class propertyController {
 //METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
     discover = (req, res) => {
   
-      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_is_for_sale, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
       property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
       FROM property, address, city, province, purchase, image
       where property.property_id = purchase.purchase_property_id 
@@ -243,9 +243,9 @@ class propertyController {
       editPropertyAddress = (req, res) => {
         let {property_id, province_id, city_id} = req.params;
 
-        /* console.log('PROPIEDAD', property_id, 'PROVINCIA', province_id, 'CIUDAD', city_id);
+        /* console.log('PROPIEDAD', property_id, 'PROVINCIA', province_id, 'CIUDAD', city_id);*/
         
-        console.log('REQ.BODY DE LA EDIDCIÓN DE LA DIRECCIÓN', req.body); */
+        console.log('REQ.BODY DE LA EDIDCIÓN DE LA DIRECCIÓN', req.body);
 
         let sql = 'select * from property';
 
@@ -258,6 +258,10 @@ class propertyController {
           if(field.startsWith('address') && field != 'address_property_id' && value){
             sql = `UPDATE address SET ${field} = '${value}' WHERE address_property_id = ${property_id}`
           }
+
+          /* else if(field == 'type_id'){
+
+          } */
 
           /* console.log('SQL DE ADDRESS', sql); */
           connection.query(sql, (errorUpd, resultUpd) => {
@@ -532,7 +536,6 @@ editPurchase = (req,res) => {
   }
   res.status(200).send('insert correctos');
   /* console.log('correctos'); */
-
 }
 
 
@@ -628,9 +631,6 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-
-      
-
       propertyDetailsImg = (req, res) => {
         let {property_id} = req.params;
   
@@ -641,9 +641,6 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-
-      
-
       propertyDetailsAddress = (req, res) => {
         let {property_id} = req.params;
   
@@ -653,7 +650,6 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-
 
       propertyDetailsPurchase = (req, res) => {
         let {property_id} = req.params;
@@ -684,7 +680,6 @@ getAllPurchaseData = (req, res) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-
 
       propertyDetailsSubtype = (req, res) => {
         let {property_id} = req.params;
@@ -720,32 +715,32 @@ getAllPurchaseData = (req, res) => {
       discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
-        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, 
+        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
         image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
-        FROM property, address, city, province, purchase, image, type, subtype, kitchen
-        where property.property_id = purchase.purchase_property_id 
-        AND property.property_subtype_id = subtype.subtype_id
-        AND subtype.subtype_type_id = type.type_id
-        AND property.property_kitchen_id = kitchen.kitchen_id
-        and property.property_id = address.address_property_id 
-        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
-        and city.city_province_id = province.province_id
-        and property.property_id = image.image_property_id 
-        AND  property.property_is_for_sale = true
+        FROM property 
+        LEFT JOIN purchase ON  purchase.purchase_property_id = property.property_id
+        LEFT JOIN address ON address.address_property_id = property.property_id
+        LEFT JOIN city ON address.address_city_id = city.city_id and  address.address_province_id  = city.city_province_id
+        LEFT JOIN province ON city.city_province_id = province.province_id
+        LEFT JOIN image ON property.property_id = image.image_property_id 
+        LEFT JOIN subtype ON property.property_subtype_id = subtype.subtype_id
+        LEFT JOIN type ON subtype.subtype_type_id = type.type_id
+        LEFT JOIN kitchen ON property.property_kitchen_id = kitchen.kitchen_id
+        WHERE  property.property_is_for_sale = true
         AND property.property_is_admin_deleted = false
         AND property.property_is_user_deleted = false
-              AND image.image_is_main = 1;`;
+        AND image.image_is_main = 1;`;
+
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
       }
-  
       
       fav = (req, res) => {
-    let {user_id, property_id} = req.params;
+        let {user_id, property_id} = req.params;
         console.log(user_id, property_id, "SOMOS LOS ID")
-    let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
+        let sql = `INSERT INTO favourite(favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`;
   
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
@@ -766,10 +761,14 @@ getAllPurchaseData = (req, res) => {
         favUser = (req, res) => {
         let {user_id} = req.params;
         console.log("Hola")
-        let sql = `SELECT property.*, image.image_title 
-        FROM property, favourite, image 
+        let sql = `SELECT property.*, image.image_title, purchase.*, city.*, province.*
+        FROM  property, favourite, image, purchase, city, province, address
         WHERE favourite.favourite_property_id = property.property_id
+         AND purchase.purchase_property_id = property.property_id
          AND image.image_property_id = property.property_id 
+         and property.property_id = address.address_property_id 
+        and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id      
+        and city.city_province_id = province.province_id
          AND image.image_is_main = 1 
          AND favourite.favourite_user_id = ${user_id}`;
           
@@ -790,18 +789,22 @@ getAllPurchaseData = (req, res) => {
           })
         }
 
+        getType = (req, res) => {
+          let {property_subtype_id} = req.params;
+          console.log(property_subtype_id, 'id del subtipo');
+          
+          property_subtype_id = Number(property_subtype_id);
+
+          let sqlType = `SELECT subtype_type_id from subtype  WHERE subtype_id = ${property_subtype_id}`;
+
+          connection.query(sqlType, (error, result) => {
+            error ? res.status(400).json({error}) : res.status(200).json(result);
+            console.log(result, 'resultado select tipo..lsdkjflñsk');
+            
+          })
+        }
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = new propertyController();

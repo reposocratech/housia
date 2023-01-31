@@ -194,7 +194,7 @@ getAllProperty = (req, res) => {
 };
 
 
- //Borra de manera lógica una propiedad
+    //Borra de manera lógica una propiedad
       //localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
       logicDeletedUserProperty = (req, res) => {
         let {property_id, user_id} = req.params;
@@ -301,6 +301,37 @@ getAllProperty = (req, res) => {
       
 
 
+      //TRAE TODOS LOS FAVORITOS DE UN USUARIO QUE NO ESTEN BORRADOS
+      //localhost:4000/users/getFavs/:user_id
+      getFavsFromAUser = (req, res)=>{
+        let {user_id} = req.params;
+
+        let sql = `SELECT property.property_id FROM property, user, favourite WHERE property.property_id = favourite.favourite_property_id
+        AND user.user_id = favourite.favourite_user_id AND property.property_is_user_deleted = false AND property_is_admin_deleted = false AND user.user_id = ${user_id}`
+
+        connection.query(sql, (error, result)=>{
+            if(error){
+                res.status(400).json({error});
+            }
+            res.status(200).json({result})
+        })
+      }
+
+
+      //CREA UNA NUEVA ENTRADA EN LOS FAVORITOS DE UN USUARIO
+      //localhost:4000/users/postFav/:user_id/:property_id
+      addFavToYourList = (req, res) =>{
+        let {user_id, property_id} = req.params
+
+        let sql = `INSERT INTO favourite (favourite_user_id, favourite_property_id) VALUES (${user_id}, ${property_id})`
+
+        connection.query(sql, (error, result)=>{
+            if(error){
+                res.status(400).json({error});
+            }
+            res.status(200).json({result})
+        })
+      }
 }
 
 module.exports = new userController();
