@@ -444,14 +444,7 @@ class propertyController {
             errorAdd && res.status(400).json({errorAdd})
           })
         })
-
-        let sqlSelect = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
-
-        connection.query(sqlSelect, (errorSelect, resultSelect) => {
-          errorSelect 
-              ? res.status(400).json({errorSelect})
-              : res.status(200).json({resultSelect})
-        })
+       
       }
 
       //Elimina una Foto del EditForm
