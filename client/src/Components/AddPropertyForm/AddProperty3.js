@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form' 
-
+import { useForm } from 'react-hook-form';
+import { Container} from 'react-bootstrap';
+import "./AddProperty3.scss";
 export const AddProperty3 = () => {
     const [province, setProvince] = useState();
     const [city, setCity] = useState();
@@ -14,14 +15,7 @@ export const AddProperty3 = () => {
 
     const { register, formState:{errors}, handleSubmit } = useForm();
     
-    /* console.log(property);
-    console.log(typeId, 'type id');
-    console.log(subTypeId, 'subtype id'); */
 
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target;
-    //     setProperty({...property, [name]:value})
-    // }
 
     useEffect(() => {
         axios
@@ -46,7 +40,6 @@ export const AddProperty3 = () => {
     }, [provinceId]);
 
     const onSubmit = (data) => {
-        /* console.log(data); */
         
         axios
         .put(`http://localhost:4000/property/addPropertyAddress/${property?.property_id}/${provinceId}/${cityId}`, data)
@@ -67,19 +60,20 @@ export const AddProperty3 = () => {
     }
 
   return (
-    <div>
+    <div className='padreeAdd3'>
      <h2>Añadir Propiedad</h2>
      <h3>Direccion</h3>
-
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Container fluid className='padreee3Add'>
+        <div className='row rowAdd3'>
+          <div className='col-12 col-md- 12 col-lg-6 col-xxl-6 priColAdd3'>
         <p>Calle</p>
+        
         <input 
             placeholder='Calle'
             autoComplete='off'
-            type="text"
-            // value= {property?.address_street_name}
-            name="address_street_name"
-            // onChange={handleChange}
+            type="text"       
+            name="address_street_name"    
             {...register('address_street_name', {
                 required: {value: true, message:'Campo obligatorio'}
               })}
@@ -90,27 +84,32 @@ export const AddProperty3 = () => {
             </div>
           }
         <br/>
+        <div className='displayAdd3'>
+        <div>
         <p>Numero</p>
         <input 
+        className='numeroAdd3'
             placeholder='0'
             autoComplete='off'
             type="number"
-            // value= {property?.address_street_number}
             name="address_street_number"
-            // onChange={handleChange}
             {...register('address_street_number', {
                 required: {value: true, message:'Campo obligatorio'},
                 maxLength: {value: 5, message: 'El número no puede tener más de 5 dígitos'}
               })}
         />
+        
         {errors.address_street_number && 
             <div className='text-danger'>
               {errors.address_street_number.message}
             </div>
           }
+          </div>
         <br/>
+        <div>
         <p>Provincia</p>
         <select 
+        className='provinciaAdd3'
             name='address_province_id'
             {...register('address_province_id', {
                 required: {value: true, message:'Campo obligatorio'}
@@ -130,14 +129,14 @@ export const AddProperty3 = () => {
             </div>
         }
         <br/>
+        </div>
+        </div>
         <p>Codigo postal</p>
         <input 
             placeholder='Codigo postal'
             autoComplete='off'
             type="text"
-            // value= {property?.address_postal_code}
             name="address_postal_code"
-            // onChange={handleChange}
             {...register('address_postal_code', {
                 required: {value: true, message:'Campo obligatorio'},
                 maxLength: {value: 5, message: 'El código postal no puede tener más de 5 dígitos'}
@@ -149,6 +148,7 @@ export const AddProperty3 = () => {
             </div>
           }
         <br/>
+        
         <p>Ciudad</p>
         <select 
             name='address_city_id'
@@ -169,66 +169,73 @@ export const AddProperty3 = () => {
               {errors.address_city_id.message}
             </div>
           }
-        <br/>
-        {typeId !== 4 && <>
-          <p>Bloque</p>
+          </div>
+        <div className='col-6 segColAdd3'>
+          
+        {typeId != 4 && <>
+        <div >
         <input 
             placeholder='Bloque'
             autoComplete='off'
+            className='bloque'
             type="text"
-            // value= {property?.address_block}
             name="address_block"
-            // onChange={handleChange}
             {...register('address_block')}
         />
         <br/>
-        <p>Portal</p>
+        </div>
+        <div>
+ 
         <input
             placeholder='Portal'
             autoComplete='off'
             type="text"
-            // value= {property?.address_gate}
             name="address_gate"
-            // onChange={handleChange}
             {...register('address_gate')}
         />
         <br/>
-        <p>Escalera</p>
+        </div>
+        <div>
+
         <input
             placeholder='Escalera'
             autoComplete='off'
             type="text"
-            // value= {property?.address_stair}
             name="address_stair"
-            // onChange={handleChange}
             {...register('address_stair')}
         />
         <br/>
-        <p>Planta</p>
+        </div>
+        <div>
+
         <input
             placeholder='Planta'
             autoComplete='off'
             type="text"
-            // value= {property?.address_floor}
             name="address_floor"
-            // onChange={handleChange}
             {...register('address_floor')}
         />
         <br/>
-        <p>Puerta</p>
+        </div>
+        <br/>
+<div>
         <input
             placeholder='Puerta'
             autoComplete='off'
             type="text"
-            // value= {property?.address_door}
+            className='puertaaAdd3'
             name="address_door"
-            // onChange={handleChange}
             {...register('address_door')}
         />
         <br/>
+        </div>
         </>}
-        
+        </div>
      <button onClick={handleSubmit}>Siguiente</button>
+  
+     
+     </div>
+     </Container>
      </form>
     </div>
   )

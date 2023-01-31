@@ -8,10 +8,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
-    .turquoise {
-        color: rgb(48,162,185);
+    h1{
+        padding-top: 12px;
     }
+    
     .image {
         background-image: url("../../../../public/images/property/imagenfondo.png");
         background-position: center;

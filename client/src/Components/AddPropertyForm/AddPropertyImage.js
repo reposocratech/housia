@@ -1,13 +1,10 @@
-
-
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { AppContext } from "../../Context/AppContext";
-
 import "./addimage.css";
 import { ModalSaveProperty } from "./ModalSaveProperty";
-
+import "./AddPropertyImage.scss";
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
@@ -86,14 +83,14 @@ export const AddPropertyImage = () => {
 
   return (
     <>
-    <Container fluid className="m-4">
+    <Container fluid className=" fondo">
 
-      <h2 className="text-center">Añadir Propiedad</h2>
+      <h2 className="addPropertyImage">Añadir Propiedad</h2>
 
         {/* VIEW IMAGES */}
       <Row>
         {images?.map((imagen) => (
-            <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
+            <Col className="col-12 col-sm-6 col-lg-6 col-xl-4 col-xxl-3 colImage " key={imagen.index}>
                 <div className="content_img">
                     <Image
                         alt='property image'
@@ -115,23 +112,28 @@ export const AddPropertyImage = () => {
 
       <div className="mt-4">
       {/* INPUT IMAGES */}
-
-      {showSelectButton && (
-        <Button size="lg" as="label" variant="secondary" className="me-3">
-            <span>Seleccionar IMÁGENES </span>
+<div className="centro">
+  
+ {showSelectButton && (
+        <Button size="lg" as="label" variant="secondary" className="me-3 centro">
+            <span>Seleccionar Imagenes </span>
             <input hidden type="file" multiple onChange={changeInput}></input>
         </Button>
       )}
-      
 
       {images.length >= 1 && (
+
         <Button 
           size="lg" 
           variant="dark"
           onClick={() => onSubmit(property.property_id)}
+          className="centro2"
           >Guardar Y Terminar
         </Button>
       )}
+     
+     
+      </div>
       </div>
 
       </Container>

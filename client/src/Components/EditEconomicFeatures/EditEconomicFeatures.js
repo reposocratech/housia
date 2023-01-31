@@ -3,7 +3,7 @@ import React, {  useContext, useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 import { AppContext } from '../../Context/AppContext';
-import { Accordion} from 'react-bootstrap';
+import { Accordion, Col, Row} from 'react-bootstrap';
 import './editEconomicFeatures.scss';
 
 export const EditEconomicFeatures = () => {
@@ -93,29 +93,29 @@ const handleChangePurchase = (e) =>{
 
 
   return (
-    <div>
-         <h1>Formulario Caracteristicas Economicas</h1>
-
-        <div className='d-flex flex-column'>
-
-            <input
-                type='number'
-                step='0,01'
-                placeholder='Precio de Compra'
-                autoComplete='off'
-                value={editPurchase?.purchase_buy_price}
-                name='purchase_buy_price'
-                onChange={handleChangePurchase}
-            />
-            <label for='purchase_buy_date'>Fecha de Compra</label>
-            <input
-                type='date'
-                autoComplete='off'
-                value={(editPurchase?.purchase_buy_date)}
-                name="purchase_buy_date"
-                onChange={handleChangePurchase}
-            />
-        </div>
+    <div className='datos-economicos-container'>
+         <h1>Caracteristicas Económicas</h1>
+         <Row className='m-0 justify-content-center'>
+        <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
+        <label for='purchase_buy_date'>Precio de Compra</label>
+        <input
+            type='number'
+            step='0,01'
+            placeholder='Precio de Compra'
+            autoComplete='off'
+            value={editPurchase?.purchase_buy_price}
+            name='purchase_buy_price'
+            onChange={handleChangePurchase}
+        />
+        <label for='purchase_buy_date'>Fecha de Compra</label>
+        <input
+            type='date'
+            autoComplete='off'
+            value={(editPurchase?.purchase_buy_date)}
+            name="purchase_buy_date"
+            onChange={handleChangePurchase}
+        />
+        <div>
        <div>
             <input type='radio'
                 id='opcion-obra-nueva' 

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {Button, Container} from "react-bootstrap";
 import { AppContext } from '../../Context/AppContext';
-
+import "./AddProperty4.scss";
 import {useNavigate} from 'react-router-dom';
 import "./styles/stylesAddProperty4.css"
 
@@ -56,11 +56,15 @@ export const AddProperty4 = () => {
  console.log(features, "features")
  
   return (
-    <Container>
+    <div className='PadreAdd4'>
+    <div className='TituloAdd4'>
     <h2 className='text-center'>Añadir propiedad</h2>
+    </div>
+  
     <h4>Seleccionar caracteristicas</h4>
 
-    <div className='padre_de_los_checkbox'>
+
+    <div className='padre_de_los_checkbox divAdd4'>
             
         { featureAll?.map((feature, i)=>{
             return(
@@ -84,6 +88,6 @@ export const AddProperty4 = () => {
 
     <Button variant='info' size='lg' onClick={handleSubmit}>Siguiente</Button>
 
-    </Container>
+    </div>
   )
 }

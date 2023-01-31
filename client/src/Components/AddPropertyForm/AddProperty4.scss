@@ -1,0 +1,73 @@
+.PadreAdd4{
+    font-family: Barlow;
+    background-color: #272839;
+    color: white;
+    width: 100%;
+    height: 120vh;
+    h4{
+        text-align: center;
+        font-size:30px;
+        font-weight: bold;
+        padding: 50px 50px 0px;
+    } 
+    button{
+        text-align: center;  
+        margin-left: 40vw;
+        width:400px;
+        background-color: white;
+        font-weight: bold;
+        margin-top: 50px;
+        padding: 10px 10px;
+    }
+    .TituloAdd4{
+        h2{
+            padding-top: 150px;
+            padding-bottom: 20px;
+            font-weight: bold;
+            font-size: 50px;
+            text-align: center;
+            color: rgba(3, 255, 247, 1);
+        }
+    }
+    .divAdd4{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+//TABLET
+@media (max-width: 769px ){
+    .PadreAdd4{
+        height: 130vh;
+        button{
+            margin-left: 25vw;
+            width:50vw;
+        }
+    }
+}
+
+//TABLET
+@media (max-width: 391px ){
+    .PadreAdd4{
+        height: 100%;
+        h4{
+            padding-top: 20px;
+            font-size:30px;
+        } 
+        button{
+            margin-left: 18vw;
+            width: 250px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .TituloAdd4{
+            h2{
+                padding-top: 150px;
+                padding-bottom: 0px;
+                font-size: 40px;
+            }
+        }
+    }
+    
+}

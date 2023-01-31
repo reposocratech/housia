@@ -1,6 +1,11 @@
 .NavBarContainer{
     background-color: #272839 !important;
     border-bottom: 1px solid white;
+    height: 100px;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    
     img{
         width: 120px;
     }
@@ -29,6 +34,9 @@
         div{
             background-color: #272839 !important;
             margin-top: 12px;
+            .dropdown-item:active {
+                background-color: #272839 !important;
+            }
         }
     }
 }
@@ -39,6 +47,7 @@
     position: fixed;
     top: 10px;
     border-bottom: 1px solid white;
+
     a{
         margin: 10px 20px;
         text-decoration: none;
