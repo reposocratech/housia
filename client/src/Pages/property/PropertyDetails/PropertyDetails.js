@@ -314,15 +314,15 @@ export const PropertyDetails = () => {
          <div className='inversion'>
             <div className='box'>
                 <div className='divUno'>
-                    <h6 className='gray'>Inversion inicial</h6>
+                    <p className='gray'>Inversion inicial</p>
                      <p>{detailsPurchase[0]?.purchase_entry_expenses + detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
                 </div>               
                 <div className='divDos'>
-                    <h6>Entrada </h6>
+                    <p className='gray'>Entrada </p>
                     <p>{detailsPurchase[0]?.purchase_entry_expenses}€</p>
                 </div>
                     <div className='divDos'>
-                        <h6>Impuestos y gastos</h6>
+                        <p className='gray'>Impuestos y gastos</p>
                         <p>{detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
                     </div>
                 
@@ -330,20 +330,20 @@ export const PropertyDetails = () => {
 
             <div className='box'>
                 <div className='divUno'>
-                    <h6>Amortiaciones y gastos</h6>
+                    <p className='gray'>Amortiaciones y gastos</p>
                     <p>{loan[0]?.loan_type + loan[0]?.loan_value + 765}€</p>
                 </div>
                 
                     <div className='divDos'>
-                    <h6>Hipoteca </h6>
+                    <p className='gray'>Hipoteca </p>
                     <p>{loan[0]?.loan_value}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Gastos</h6>
+                    <p className='gray'>Gastos</p>
                     <p>{loan[0]?.loan_type}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Impuestos</h6>
+                    <p className='gray'>Impuestos</p>
                     <p>765€</p>
                     </div>
                 </div>
@@ -351,16 +351,16 @@ export const PropertyDetails = () => {
 
             <div className='box'>
                 <div className='divUno'>
-                <h6>Ingresos</h6>
+                <p className='gray'>Ingresos</p>
                 <p>{rent[0]?.rent_renting_price}€</p>
                 </div>
                 
                     <div className='divDos'>
-                    <h6>Renta </h6>
+                    <p className='gray'>Renta </p>
                     <p>{rent[0]?.rent_renting_price}€</p>
                     </div>
                     <div className='divDos'>
-                    <h6>Otros ingresos</h6>
+                    <p className='gray'>Otros ingresos</p>
                     <p>0€</p>
                     </div>
                 
