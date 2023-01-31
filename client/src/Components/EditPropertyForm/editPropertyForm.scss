@@ -11,6 +11,7 @@
         letter-spacing: 2px;
         margin-bottom: 30px;
     }
+   
     
     input{
         background-color: rgba(255, 255, 255, 0.05);
@@ -28,8 +29,9 @@
     :focus{
         outline: 1px solid #4cecf5 !important;
         border: 1px solid #4cecf5 !important;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: #272839!important;
         border: none;
+        color: white;
     }   
    
     .form-select{
@@ -41,6 +43,7 @@
     }
     .editImage {
         margin: 5px 0;
+        width: 150px;
         .container-img{
             position: relative;
             width: 100%;
@@ -49,7 +52,8 @@
             border: 1px solid white;
             border-radius: 6px;
             display: flex;
-            justify-content: flex-end;      
+            justify-content: flex-end;    
+            
         } 
     }
     .options {

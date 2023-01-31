@@ -40,7 +40,7 @@ export const PropertyDetails = () => {
     .put(`${URL_PROP}/checkSale/${user.user_id}/${property_id}`)
     .then((res) => {
         setShow(false);
-        navigate("/home") //navigate al descubre
+        navigate("/user/portafolio") //navigate al descubre
         /* console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO"); */
     })
     .catch((err) => {

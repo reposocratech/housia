@@ -239,7 +239,7 @@ getAllProperty = (req, res) => {
       //localhost:4000/users/getSoldProperties/:user_id
       getSoldProperties = (req, res) =>{
         let {user_id} = req.params;
-
+        console.log(user_id, "aaaaaaaaa")
         let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
 
         connection.query(sql, (error, result) => {
@@ -248,6 +248,7 @@ getAllProperty = (req, res) => {
                 
             }
             res.status(200).json({result})
+            console.log(result, "reSULT")
           })
       }
 

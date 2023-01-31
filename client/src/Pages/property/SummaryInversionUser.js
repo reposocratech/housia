@@ -96,7 +96,7 @@ export const SummaryInversionUser = () => {
             </Col>
         
             <Col className=' graphic ' xs={12} md={12} lg={8}>
-                <img src='/images/property/grafica.jpg' alt='valoracion_patrimonio'/>
+                <img src='/images/property/grafica4.jpg' alt='valoracion_patrimonio'/>
             </Col>
         </Row >
         <Row className='datos justify-content-evenly'>
