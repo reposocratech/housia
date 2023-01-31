@@ -2,19 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Row, Col, Container} from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import "./AddProperty2.scss";
 
 export const AddProperty2 = () => {
 const [kitchen, setKitchen] = useState();
 const [kitchenId, setKitchenId] = useState(1);
 const {property, setProperty,  typeId } = useContext(AppContext);
-const navigate = useNavigate();
 
-/* console.log(property);
-console.log(typeId, 'type id');
-console.log(subTypeId, 'subtype id'); */
-console.log(typeId, 'type id');
+const navigate = useNavigate();
 
     useEffect(() => {
         axios
@@ -28,11 +24,6 @@ console.log(typeId, 'type id');
     }, [])
 
    
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-        setProperty({...property, [name]:value})
-    }
-
     const handleSubmit = () => {
   
         axios
@@ -51,6 +42,17 @@ console.log(typeId, 'type id');
         setKitchenId(e.target.value);
        }
 
+       const handleNumber = (e) => {
+        const {name, value} = e.target
+        const num = Number(value);
+        if(num >= 0){
+            setProperty({...property, [name]: num})
+        }
+       }
+
+       /* console.log(parseInt(typeId), 'TIPO EN EL 2 FORMULARIO');
+       console.log(property, 'PROPIEDAD EN EL FORM 2');
+        */
     
   return (
     <div className='padreAdd2'>
@@ -71,7 +73,8 @@ console.log(typeId, 'type id');
             type="number"
             value={property?.property_total_meters === 0 ? '' : property?.property_total_meters}
             name="property_total_meters"
-            onChange={handleChange}
+            onChange={handleNumber}
+            min='0'
         />
        </div>
        <div className='sepAdd2'>
@@ -82,13 +85,14 @@ console.log(typeId, 'type id');
             type="number"
             value={property?.property_built_meters === 0 ? '' : property?.property_built_meters}
             name="property_built_meters"
-            onChange={handleChange}
+            onChange={handleNumber}
+            min='0'
         />
        </div>
        </div>
        <div className='displayAdd2'>
        <div>
-    {typeId != 4 &&
+    {parseInt(typeId) !== 4 &&
         <>
         <p>Año de construccion</p>
         <input
@@ -99,14 +103,14 @@ console.log(typeId, 'type id');
             max="3000"
             value={property?.property_built_year === 0 ? '' : property?.property_built_year}
             name="property_built_year"
-            onChange={handleChange}
+            onChange={handleNumber}
         />
       
         </>
     } 
     </div> 
     <div className='sepAdd2'>
-    {typeId != 3 && typeId != 4 &&
+    {parseInt(typeId) !== 3 && parseInt(typeId) !== 4 &&
         <>
         <p>Habitaciones</p>
         <input
@@ -115,7 +119,8 @@ console.log(typeId, 'type id');
             type="number"
             value={property?.property_rooms === 0 ? '' : property?.property_rooms}
             name="property_rooms"
-            onChange={handleChange}
+            onChange={handleNumber}
+            min='0'
         />
       
         </>
@@ -125,7 +130,7 @@ console.log(typeId, 'type id');
     </div>
     <div className='col-6 otroColAdd2'>
         
-    {typeId != 4 && <>
+    {parseInt(typeId) !== 4 && <>
         <p>Baños</p>
         <input
             placeholder='0'
@@ -133,12 +138,13 @@ console.log(typeId, 'type id');
             type="number"
             value={property?.property_bathrooms === 0 ? '' : property?.property_bathrooms }
             name="property_bathrooms"
-            onChange={handleChange}
+            onChange={handleNumber}
+            min='0'
         />
         
     </>}
 
-       {typeId != 3 && typeId != 4 && <>
+       {parseInt(typeId) !== 3 && parseInt(typeId) !== 4 && <>
         <p>Garage</p>
         <input
             placeholder='0'
@@ -146,7 +152,8 @@ console.log(typeId, 'type id');
             type="number"
             value={property?.property_garage === 0 ? '' : property?.property_garage}
             name="property_garage"
-            onChange={handleChange}
+            onChange={handleNumber}
+            min='0'
         />
         
         <p>Tipo de cocina</p>
