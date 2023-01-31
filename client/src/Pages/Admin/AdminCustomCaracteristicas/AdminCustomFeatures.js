@@ -1,7 +1,12 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../../Context/AppContext';
+import './adminCustomFeatures.scss';
 
+const initialValue = {
+    type_id: "",
+    subtype_name: ""
+}
 export const AdminCustomFeatures = () => {
 
     const {resetUser, setResetUser} = useContext(AppContext)
@@ -10,18 +15,29 @@ export const AdminCustomFeatures = () => {
     const [showHousesSubtype, setShowHousesSubtype] = useState(false);
     const [showFeatures, setShowFeatures] = useState(false)
 
-
     const [featuresDB, setFeaturesDB] = useState();
     const [typesDb, setTypesDb] = useState();
     const [subTypesDB, setSubTypesDB] = useState();
     const [kitchenDB, setKitchenDB] = useState();
+
+    const [show, setShow] = useState(false);
+    const [message1, setMessage1] = useState("");
+    const [message2, setMessage2] = useState("");
+    const [message3, setMessage3] = useState("");
+    const [message4, setMessage4] = useState("");
+    
+    const [kitchenType, setKitchenType] = useState("");
+    const [features, setFeatures] = useState("");
+    const [propertyType, setPropertyType] = useState("");
+    const [propertySubType, setPropertySubType] = useState(initialValue);
+
+
 
     useEffect(() => {
         axios
         .get(`http://localhost:4000/property/allFeatures`)
         .then((res) => {
             setFeaturesDB(res.data);
-            
            
         })
         .catch((err) => {
@@ -63,17 +79,140 @@ export const AdminCustomFeatures = () => {
 
     }, [resetUser]);
 
-        
+    const handleChangeFeatures = (e) => {
+        setFeatures({...features, feature_name:e.target.value})
+        setMessage1("");
+
+    }
+    const handleChangePropertyType = (e) => {
+        setPropertyType({...propertyType, type_name:e.target.value})
+        setMessage2("");
+    }
+    
+    const handleSelectSubtype = (e) => {
+        let {name, value} = e.target;
+        setPropertySubType({...propertySubType, [name]:value})
+        setMessage3("");
+    }
+
+    const handleChangeKitchen = (e) => {
+        setKitchenType({...kitchenType, kitchen_name:e.target.value})
+        setMessage4("");
+    }
+   
+
+    const createFeatures = () => {
+        if(features.feature_name === '' || features.features_name === undefined ){
+            setMessage1('Campo vacío');
+        } else {
+            axios
+            .post('http://localhost:4000/admin/createPropertyFeatures', features)
+            .then((res) => {
+                console.log(res.data);
+                setResetUser(!resetUser);
+                setFeatures("");
+                setMessage1("");
+            })
+            .catch((err) => {
+                console.log(err, 'error del create features');
+            })
+        }   
+    }
+    const createPropertyType = () => {
+        axios
+        .post('http://localhost:4000/admin/createPropertyType', propertyType)
+        .then((res) => {
+            console.log(res.data);
+            setResetUser(!resetUser);
+            setPropertyType("");
+            setMessage2("");
+        })
+        .catch((err) => {
+            console.log(err, 'error del create type');
+        })
+    }
+    const createPropertySubtype = () => {
+        let type_id = propertySubType.type_id;
+        axios
+        .post(`http://localhost:4000/admin/createPropertySubType/${type_id}`, propertySubType)
+        .then((res) => {
+            console.log(res.data);
+            setResetUser(!resetUser);
+            setPropertySubType("");
+            setMessage3 ("");
+        })
+        .catch((err) => {
+            console.log(err, 'error del create subtype');
+        })
+    }
+    const createKitchenType = () => {
+        if(kitchenType.kitchen_name === '' || kitchenType.kitchen_name === undefined ){
+            setMessage4('Campo vacío');
+        } else{
+            axios
+            .post('http://localhost:4000/admin/createKitchenType', kitchenType)
+            .then((res) => {
+                console.log(res.data);
+                setResetUser(!resetUser);
+                setKitchenType("");
+                setMessage4("");
+            })
+            .catch((err) => {
+                console.log(err, 'error del create kitchen');
+            })
+        }
+    }
     
 
+    const deleteFeature = (feature_id) => {
+        axios
+        .delete(`http://localhost:4000/admin/deletePropertyFeature/${feature_id}`)
+        .then((res) => {
+            console.log(res.data, 'respuesta del delete feature');
+            setResetUser(!resetUser);
+        })
+        .catch((err) => {
+            console.log(err, 'error del delete feature');
+        })
+    }
+    const deletePropertyType = (property_id) => {
+        axios
+        .delete(`http://localhost:4000/admin/deletePropertyType/${property_id}`)
+        .then((res) => {
+            console.log(res.data, 'respuesta del delete type');
+            setResetUser(!resetUser);
+        })
+        .catch((err) => {
+            console.log(err, 'error del delete type');
+        })
+    }
+    const deletePropertySubType = (subtype_id) => {
+        axios
+        .delete(`http://localhost:4000/admin/deletePropertySubType/${subtype_id}`)
+        .then((res) => {
+            console.log(res.data, 'respuesta del delete subtype');
+            setResetUser(!resetUser);
+        })
+        .catch((err) => {
+            console.log(err, 'error del delete subtype');
+        })
+    }
+
+    const deleteKitchenType = (kitchen_id) => {
+        axios
+        .delete(`http://localhost:4000/admin/deleteKitchenType/${kitchen_id}`)
+        .then((res) => {
+            console.log(res.data, 'respuesta del delete');
+            setResetUser(!resetUser);
+        })
+        .catch((err) => {
+            console.log(err, 'error del delete kitchen');
+        })
+    }
+
+    
 
     const clickOption = (n) =>{
-        // if(n === 1){
-        //     setShowHousesSubtype(false);
-        // setShowFeatures(false);
-        // setShowHousesType(false);
-        // setShowKitchen(true);
-        // }
         switch (n){
             case 1:
                 setShowHousesSubtype(false);
@@ -107,57 +246,115 @@ export const AdminCustomFeatures = () => {
     }
 
   return (
-    <div>
-        <h1>Campo de  control//edicion de las caracteristicas de los activos</h1>
+    <div className='features-container'>
+        <h1>Edición de características</h1>
 
         <div className='botonera-opciones'>
-            <button onClick={()=>clickOption(3)}>Caracteristicas // Features</button>
-            <button onClick={()=>clickOption(2)}> Tipos Activo</button>
-            <button onClick={()=>clickOption(4)}> Subtipos Activos</button>
-            <button onClick={()=>clickOption(1)}> Clases de cocinas</button>
+            <button onClick={()=>clickOption(3)}> Características</button>
+            <button onClick={()=>clickOption(2)}> Tipos</button>
+            <button onClick={()=>clickOption(4)}> Subtipos</button>
+            <button onClick={()=>clickOption(1)}> Cocina</button>
         </div>
 
 
         {showKitchen && 
-        <div>
+        <div className='editar-opciones-container'>
+            <div className='añadir-opcion'>
+                <span class="material-symbols-outlined" onClick={()=>setShow(!show)}>
+                add_circle  
+                </span>            
+                {show && 
+                <>
+                <input
+                type='text'
+                placeholder='Tipo de cocina'
+                name='kitchen_name'
+                value={kitchenType.kitchen_name}
+                onChange={handleChangeKitchen}
+                />
+                <button onClick={createKitchenType}>Añadir</button>
+                <p className='m-0'>{message4}</p>
+                </>
+                }
+            </div>
             
-            <button>añadir nueva cocina</button>
            {kitchenDB?.map((elem, index)=>{
             return(
-               <div key={index}>
-                    <span>{elem.kitchen_name}---</span>
-                    <button>borrar cocina</button>
-
+               <div className='container-mapeo' key={index}>
+                    <span>{elem.kitchen_name}</span>
+                    <span onClick={()=> deleteKitchenType(elem.kitchen_id)} class="material-symbols-outlined icono">
+                    delete
+                    </span>
                 </div> 
             )
-        })}
+            })}
         </div>
         }
     
         {showHousesType &&
-        <div>
-            
-            <button>añadir nuevo tipo</button>
+        <div className='editar-opciones-container'>
+            <div className='añadir-opcion'>
+                <span class="material-symbols-outlined" onClick={()=>setShow(!show)}>
+                add_circle  
+                </span>  
+                {show && 
+                <>
+                <input
+                type='text'
+                placeholder='Tipo de propiedad'
+                name='type_name'
+                value={propertyType.type_name}
+                onChange={handleChangePropertyType}
+                />
+                <button onClick={createPropertyType}>Añadir</button>
+                <p className='m-0'>{message2}</p>            
+                </>
+                }
+            </div>
             { typesDb?.map((elem, index)=>{
                 return(
-                    <div key={index}>
-                        <span>{elem.type_name} -- {elem.type_id} --</span><button>borrar tipo</button>
+                    <div className='container-mapeo' key={index}>
+                        <span>{elem.type_name}</span>
+                        <span onClick={()=> deletePropertyType(elem.type_id)} class="material-symbols-outlined icono">
+                        delete
+                        </span>
                     </div>
                 )
             })
-        }
+            }
         </div>
         }
 
         {showFeatures  && 
-            <div> 
-                <button>añadir nueva caracteristica</button>
+            <div className='editar-opciones-container'> 
+                <div className='añadir-opcion'>
+                <span class="material-symbols-outlined" onClick={()=>setShow(!show)}>
+                add_circle  
+                </span> 
+           
+                {show && 
+                <>
+                <input
+                type='text'
+                placeholder='Caracterícticas'
+                name='feature_name'
+                value={features.feature_name}
+                onChange={handleChangeFeatures}
+                />
+                <button onClick={createFeatures}>Añadir</button>
+                <p className='m-0'>{message1}</p>   
+                </>
+                }
+            </div>
+            
                 {
             featuresDB?.map((elem, index)=>{
                 return(
-                    <div key={index}>
-                        <span>{elem.feature_name}--</span>
-                        <button>borrar caracteristica</button>
+                    <div className='container-mapeo' key={index}>
+                        <span>{elem.feature_name} </span>
+                        <span onClick={()=> deleteFeature(elem.feature_id)} class="material-symbols-outlined icono">
+                        delete
+                        </span>
                     </div>
                     
                 )
@@ -166,24 +363,48 @@ export const AdminCustomFeatures = () => {
         }
 
         {showHousesSubtype && 
-        <div> 
-             <button>añadir nuevo subtipo</button>
+       <div className='editar-opciones-container'> 
+            <div className='añadir-opcion'>
+                <span class="material-symbols-outlined" onClick={()=>setShow(!show)}>
+                add_circle  
+                </span> 
+                {show && 
+                <>
+                <select className='select-subtype' name='type_id' onChange={handleSelectSubtype}>
+                     {typesDb.map((type, index) =>{
+                        return(
+                            <option value={type.type_id}>{type.type_name}</option>
+                        )
+                     })}
+
+                </select>
+                <input
+                type='text'
+                placeholder='Subtipo'
+                name='subtype_name'
+                value={propertySubType.subtype_name}
+                onChange={handleSelectSubtype}
+                />
+                <button onClick={createPropertySubtype}>Añadir</button> 
+                <p className='m-0'>{message3}</p>              
+                </>          
+                }
+            </div>
+
             {
         subTypesDB?.map((elem, index)=>{
             return(
-                <div key={index}>
-                    <span>{elem.subtype_name} -- 
-                    {elem.subtype_type_id}--</span>
-                    <button>borrar subtipo</button>
+                <div className='container-mapeo' key={index}>
+                    <span>Tipo {elem.subtype_type_id} /  {elem.subtype_name}
+                    </span>
+                    <span class="material-symbols-outlined icono" onClick={() =>deletePropertySubType(elem.subtype_id)}>
+                        delete
+                    </span>
                 </div>
             )
         })}
         </div>
         }
-        
-        
-
-
 
     </div>
   )

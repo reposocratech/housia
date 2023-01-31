@@ -38,7 +38,7 @@ class adminController {
     createPropertyType = (req, res) => {
         let {type_name} = req.body;
 
-        let sql =`INSERT INTO type (type_name) VALUES (${type_name})`;
+        let sql =`INSERT INTO type (type_name) VALUES ('${type_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -90,8 +90,7 @@ class adminController {
 
         let {subtype_name} = req.body;
 
-        let sql = `INSERT INTO subtype (subtype_type_id,subtype_name ) VALUES (${subtype_type_id}, ${subtype_name})`;
-
+        let sql = `INSERT INTO subtype (subtype_type_id,subtype_name ) VALUES (${subtype_type_id}, '${subtype_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){
@@ -169,15 +168,16 @@ class adminController {
   //crea un tipo de cocina
     createKitchenType = (req, res) => {
         let {kitchen_name} = req.body;
+        console.log(req.body);
+        let sql =`INSERT INTO kitchen (kitchen_name) VALUES ('${kitchen_name}')`;
 
-        let sql =`INSERT INTO kitchen (kitchen_name) VALUES (${kitchen_name})`;
-        console.log(sql);
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
+                console.log(error, 'error de la consulta');
                 
             }
-            res.status(200).json(result);
+            res.status(200).json(result,);
         });
     }
 
@@ -236,7 +236,7 @@ class adminController {
     createPropertyFeatures = (req, res) => {
         let {feature_name} = req.body;
 
-        let sql =`INSERT INTO feature (feature_name) VALUES (${feature_name})`;
+        let sql =`INSERT INTO feature (feature_name) VALUES ('${feature_name}')`;
 
         connection.query(sql, (error, result)=>{
             if (error){

@@ -1,0 +1,115 @@
+.features-container{
+    background-color: #272839;
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1{
+        padding-top: 120px;
+    }
+    .botonera-opciones{
+        margin-top: 30px;
+        width: 70%;
+        display: flex;
+        justify-content: space-between;
+        button{
+            background-color: #26ADB5;
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            margin: 0 5px;
+            width: 20%;
+        }
+    }
+    .editar-opciones-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70%;
+        margin-bottom: 50px;
+        .añadir-opcion{
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            width: 100%;
+                span{
+                    background-color: #0d7a80;
+                    padding: 10px;
+                    font-size:30px;
+                    color: white;
+                    border: none;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                    cursor: pointer;
+                    transform: rotate(0);
+                    transition: .3s ease;
+                }
+                span:hover{
+                    transform: rotate(180deg);
+                }
+                input{
+                    background-color: rgba(163, 161, 161, 0.479);
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    color: white;
+                    font-weight: lighter;
+                    border: none;
+                }
+                ::placeholder{
+                    color: white;
+                }
+                :focus{
+                    outline: 1px solid #4cecf5;
+                    border: 1px solid #4cecf5;
+                }
+                button{
+                    background-color: #0d7a80;
+                    padding: 5px 10px;
+                    border-radius: 10px;
+                    color: white;
+                    font-weight: lighter;
+                    border: none;
+                    margin-left: 20px ;
+                }
+        }
+        .select-subtype{
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+        .container-mapeo{
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid white;
+            border-radius: 10px;
+            width: 100%;
+            margin: 10px 0;
+            padding: 5px 10px;
+            color: white;
+            .icono{
+                cursor: pointer;
+                background-color: red;
+                border: 1px solid white;
+                border-radius: 5px;
+                padding: 4px;
+            }
+        }
+    }
+}
+@media(max-width:576px){
+    .features-container{
+        .botonera-opciones{
+            width: 100%;
+            justify-content: space-evenly;
+        }
+        .editar-opciones-container{
+            width: 90%;
+            .añadir-opcion{
+                justify-content: space-between;
+            }
+        }
+    }
+}
