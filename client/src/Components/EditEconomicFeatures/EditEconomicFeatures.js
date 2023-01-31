@@ -1,15 +1,17 @@
 import axios from 'axios'
-import React, {  useEffect, useState } from 'react'
-import { Accordion, Col, Row } from 'react-bootstrap';
+import React, {  useContext, useEffect, useState } from 'react'
+import { Accordion } from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
-import {useNavigate} from 'react-router-dom';
-import './editEconomicFeatures.scss';
+import {useNavigate} from 'react-router-dom'
+import { AppContext } from '../../Context/AppContext';
 
 export const EditEconomicFeatures = () => {
     const [editPurchase, setEditPurchase] = useState();
     const [editLoan, setEditLoan] = useState();
     const [editRent, setEditRent] = useState();
     const [checkboxState, setCheckboxState] = useState(false)
+
+    const {user, isLogged} = useContext(AppContext);
    
     let {property_id} = useParams(); 
     const navigate= useNavigate();
@@ -37,7 +39,12 @@ export const EditEconomicFeatures = () => {
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
-        navigate(`/propertyDetails/${property_id}`);
+        if(isLogged && user.user_type === 2){
+            navigate(`/propertyDetails/${property_id}`);
+        }
+        else if(isLogged && user.user_type === 1){
+            navigate(`/admin/allproperties`)
+        }
     })
     .catch((error)=>{
         console.log(error)
@@ -49,8 +56,10 @@ const handleRadioLoanType =(e) =>{
     const {value} = e.target
 
     if(value === "1"){
+
         setEditPurchase({...editPurchase, loan_type:1})
     } else if(value === "2"){
+
         setEditPurchase({...editPurchase, loan_type:2})
     }
 }
@@ -61,7 +70,7 @@ const handleRadioIsNew = (e) =>{
             setEditPurchase({...editPurchase, purchase_is_new:1})
         } else if(value === "false"){
             setEditPurchase({...editPurchase, purchase_is_new:0})
-        }
+            }
     }
 
 
@@ -85,11 +94,10 @@ const handleChangePurchase = (e) =>{
 
 
   return (
-    <div className='datos-economicos-container'>
-         <h1>Caracteristicas Económicas</h1>
-         <Row className='m-0 justify-content-center'>
-        <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
-        <label for='purchase_buy_date'>Precio de Compra</label>
+    <div>
+         <h1>Formulario Caracteristicas Economicas</h1>
+
+        <div className='d-flex flex-column'>
         <input
             type='number'
             step='0,01'
@@ -129,16 +137,15 @@ const handleChangePurchase = (e) =>{
                 />
             <label for='opcion-segunda-mano'>Segunda Mano</label>
         </div>
-    </div> 
+       </div> 
        
-        <Accordion alwaysOpen className='datos-economicos-acordion'>
-      <Accordion.Item eventKey="0" className='accordion-opcion'>
+        <Accordion alwaysOpen>
+      <Accordion.Item eventKey="0" className='m-3'>
         <Accordion.Header>Entrada y gastos de compraventa</Accordion.Header>
-        <Accordion.Body className='d-flex flex-column'>
+        <Accordion.Body>
           <label>Entrada</label>
           <input 
             type='number'
-            className='m-2'
             min='0'
             value={editPurchase?.purchase_entry_expenses}
             name="purchase_entry_expenses"
@@ -147,7 +154,6 @@ const handleChangePurchase = (e) =>{
           <label>Gastos de compraventa</label>
           <input 
            type='number'
-           className='m-2'
            min='0'
            value={editPurchase?.purchase_trading_expenses}
            name="purchase_trading_expenses"
@@ -162,11 +168,11 @@ const handleChangePurchase = (e) =>{
             name="purchase_is_usual"
             onChange={handleCheckBox}
             />
-          <label className='m-2' for="check-is-usual">Usuales</label>
+          <label for="check-is-usual">Usuales</label>
           </div>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="1">
+      <Accordion.Item eventKey="1" className='m-3'>
         <Accordion.Header>Gastos de Reparación / Reforma</Accordion.Header>
         <Accordion.Body>
             <div className='d-flex align-items-center'>
@@ -181,10 +187,10 @@ const handleChangePurchase = (e) =>{
             </div>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="2">
+      <Accordion.Item eventKey="2" className='m-3'>
         <Accordion.Header>Gastos de Mobiliario</Accordion.Header>
         <Accordion.Body>
-            <div className='d-flex align-items-center'>
+            <div className='d-flex'>
                 <p className='m-0'>€</p>
                 <input 
                     className='m-2'
@@ -196,27 +202,27 @@ const handleChangePurchase = (e) =>{
             </div>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="3">
+      <Accordion.Item eventKey="3" className='m-3'>
         <Accordion.Header>Porcentaje de propiedad</Accordion.Header>
         <Accordion.Body>
-            <div className='d-flex align-items-center'>
-            <p className='m-0'>%</p>
+            <div className='d-flex'>
                 <input 
                     className='m-2'
                     type='number'
                     value={editPurchase?.purchase_ownership_percentage}
                     name="purchase_ownership_percentage"
                     onChange={handleChangePurchase}/>
-                
+                <p className='m-0'>%</p>
             </div>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="4">
+      <Accordion.Item eventKey="4" className='m-3'>
         <Accordion.Header>Hipoteca</Accordion.Header>
         <Accordion.Body>
-            <div className='d-flex flex-column'>
+            <div className='d-flex flex-column flex-start'>
                 <label>Importe Hipoteca</label>
                 <input 
+                    className='m-2'
                     value={editPurchase?.loan_value}
                     name="loan_value"
                     onChange={handleChangePurchase}/>
@@ -228,7 +234,7 @@ const handleChangePurchase = (e) =>{
                 checked = {editPurchase?.loan_type === 1} 
                  onChange={ handleRadioLoanType}
                 />
-            <label className='m-2' for='hipoteca-importe-fijo'>Fijo</label>
+            <label for='hipoteca-importe-fijo'>Fijo</label>
             <input type='radio'
                id='hipoteca-importe-fijo' 
                name='loan_type'
@@ -236,16 +242,17 @@ const handleChangePurchase = (e) =>{
                checked = {editPurchase?.loan_type === 2} 
                onChange={ handleRadioLoanType}
                 />
-            <label className='m-2' for='hipoteca-importe-variable'>Variable</label>
+            <label for='hipoteca-importe-variable'>Variable</label>
             
-            <div className='d-flex flex-column'>
+            <div className='d-flex'>
                 <label>Años</label>
                 <input 
+                    className='m-2'
                     value={editPurchase?.loan_years}
                     name="loan_years"
                     onChange={handleChangePurchase}/>
-                <label>Interés</label>
                 <input 
+                    className='m-2'
                     placeholder='Interés'
                     value={editPurchase?.loan_interest_rate}
                     name="loan_interest_rate"
@@ -253,12 +260,13 @@ const handleChangePurchase = (e) =>{
             </div>
         </Accordion.Body>
       </Accordion.Item>
-      <Accordion.Item eventKey="5">
+      <Accordion.Item eventKey="5"className='m-3' >
         <Accordion.Header>Alquiler</Accordion.Header>
         <Accordion.Body>
             <div className='d-flex flex-column flex-start'>
                 <label>Precio d alquiler</label>
                 <input 
+                    className='m-2'
                     value={editPurchase?.rent_renting_price}
                     name="rent_renting_price"
                     onChange={handleChangePurchase}/>
@@ -266,6 +274,7 @@ const handleChangePurchase = (e) =>{
             <div className='d-flex flex-column flex-start'>
                 <label>Gastos mensuales</label>
                 <input 
+                    className='m-2'
                     value={editPurchase?.rent_expenses}
                     name="rent_expenses"
                     onChange={handleChangePurchase}/>
@@ -283,9 +292,8 @@ const handleChangePurchase = (e) =>{
         </Accordion.Body>
         </Accordion.Item>
         </Accordion>
-        <button className='boton-editar' onClick={handleSubmitEdit}>Guardar Cambios</button>
-        </Col>
-        </Row>
+        <button onClick={handleSubmitEdit}>Guardar Cambios</button>
+        </div>
 
 
     </div>
