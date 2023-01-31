@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 
 import { useNavigate, useParams } from "react-router-dom";
-import Select from 'react-select';
+
 
 import { AppContext } from "../../Context/AppContext";
 
@@ -23,7 +23,7 @@ export const EditPropertyForm = () => {
     const [kitchenId, setKitchenId] = useState(1);
     const [province, setProvince] = useState();
     const [city, setCity] = useState();
-    const [provinceId, setProvinceId] = useState();
+    const [provinceId, setProvinceId] = useState(1);
     const [cityId, setCityId] = useState();
     const [features, setFeatures] = useState([])
     const [featuresSelected, setFeaturesSelected] = useState([]);
@@ -32,15 +32,22 @@ export const EditPropertyForm = () => {
     const [showAddImage, setShowAddImage] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
-    const {property, setProperty, user, isLogged} = useContext(AppContext);
+    const {property, setProperty} = useContext(AppContext);
 
-    const {property_id, property_subtype_id} = useParams();
+    const {property_id} = useParams();
 
     const navigate = useNavigate();
 
     const URL_PROP = 'http://localhost:4000/property';
+
     
-    /* Trae todos los tipos disponibles */
+
+    // let nombreTipo = type[(property?.type_id) -1 ].type_name;
+    
+    // let nombreSubTipo = Number(subtype[(property?.property_subtype_id) -1 ] .subtype_name);
+
+    
+
     useEffect(() => {
         axios
         .get("http://localhost:4000/property/allTypes")
@@ -52,49 +59,27 @@ export const EditPropertyForm = () => {
         });
     }, []);
 
-    
-    /* Me trae el tipo de esta propiedad según el subtipo. */
-    useEffect(() => {
-        /* console.log(property_subtype_id, 'subtype id de los params'); */
 
+    useEffect(() => {
         axios
-            .get(`${URL_PROP}/getType/${property_subtype_id}`)
-            .then((res) => {
-                setTypeId(res.data[0].subtype_type_id);
-            })
-            .catch((err) => {
-                console.log(err);
-                
-            })
-    }, [property_subtype_id])
-
-    /* console.log('tipo que me viene', typeId); */
-    
-
-    useEffect(() => {
-
-        if(typeId){
-            axios
-            .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
-            .then((res) => {
-              /*  console.log(res.data, 'RESSSS DE LOS SUBTIPOS'); */
-                setSubtype(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        }
+        .get(`http://localhost:4000/property/allSubTypes/${typeId}`)
+        .then((res) => {
+           
+            setSubtype(res.data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
     }, [type, typeId]);
-
 
     const handleTypeId = (e) =>{
         setTypeId(e.target.value);
-        setProperty({...property, property_subtype_id: subTypeId, type_id: e.target.value })
+        // setTypeId(id);
     }
+    
     
     const handleSubTypeId = (e) => {
         setSubTypeId(e.target.value);
-        setProperty({...property, property_subtype_id: e.target.value})
     }
 
     useEffect(() => {
@@ -136,33 +121,24 @@ export const EditPropertyForm = () => {
 
     const handleProvinceId = (e) => {
         setProvinceId(e.target.value);
-        setProperty({...property, address_province_id: Number(e.target.value)})
-        setCityId(1);
        }
 
     const handleCityId = (e) => {
         setCityId(e.target.value);
-        setProperty({...property, address_city_id: Number(e.target.value)});
     }
 
-    /* console.log(provinceId, 'PROVINCE IDDDD'); */
+  
 
     useEffect(() => {
         axios
             .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
             .then((res) => {
-                /* console.log(res.data[0].property_subtype_id, 'DATOS PROPIEDAD');
-                console.log(res.data[0].address_city_id, 'city iddddd' ); */
-                
-                let subtipo = res.data[0].property_subtype_id;
-
-                setSubTypeId(subtipo);
+                /* console.log(res.data[0], 'DATOS PROPIEDAD'); */
                 setProperty(res.data[0])
-                setCityId(res.data[0].address_city_id)
-                setProvinceId(res.data[0].address_province_id);
             })
             .catch((error) => {
                 console.log(error.message);
+                
             })
     }, [property_id])
 
@@ -215,6 +191,7 @@ export const EditPropertyForm = () => {
             })
 
     }, [property?.property_id])
+    
 
     /* console.log('IMAGES PARA GUARDAR', imagesProperty); */
 
@@ -291,11 +268,12 @@ export const EditPropertyForm = () => {
     })
     setPrueba(prueba2)
 }
+    
 
     const saveFeaturesFromEdit = (id) => {
         if(featuresSelected){
             axios
-                .post(`${URL_PROP}/editFeaturesProperty/${id}`, featuresSelected)
+                .post(`http://localhost:4000/property/editFeaturesProperty/${id}`, featuresSelected)
                 .then((res) => {
                     console.log(res);
                 })
@@ -304,27 +282,20 @@ export const EditPropertyForm = () => {
                 })
         }
     }
-    
+
     const editPropertyAddress = () => {
         axios
-        .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
-        .then((res) => {
-            console.log('RES DE EDIT PROPERTY', res);
-            
-        })
-        .catch((error) => {
-            console.log('ERROR del EDITADDRESS');
-        })
+            .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
+            .then((res) => {
+                console.log('RES DE EDIT PROPERTY', res);
+                navigate(`/propertyDetails/${property.property_id}`);
+            })
+            .catch((error) => {
+                console.log('ERROR del EDITADDRESS');
+            })
     }
-    
-    /* console.log('TIPO de Propiedad', property?.type_id);
-    console.log(type, 'TIOPOOOOOOO');
-    console.log(subTypeId, 'subtypeIdddddddddddd');
-    
-    console.log('PROPIEDAD EN EDICIÓN', property);
-     console.log(property.property_subtype_id, 'SUBTYP PROPERTY DEL AXIOS/CONTEXT'); */
-     
-     
+
+     console.log('PROPIEDAD EN EDICIÓN', property);
     /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
     /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
     
@@ -333,16 +304,13 @@ export const EditPropertyForm = () => {
         editPropertyAddress();
         saveFeaturesFromEdit(property?.property_id);
 
-        if(isLogged && user.user_type === 2){
-            navigate(`/user/portafolio`);
-        }
-        else if(isLogged && user.user_type === 1){
-            navigate('/admin/allproperties')
-        }
     }
 
 
+
+
  return (
+
     <Container fluid className='datos-propiedad-container'>
         <h1 className="text-center mb-3">Editar Propiedad</h1>
 
@@ -659,6 +627,7 @@ export const EditPropertyForm = () => {
         />
     
     </Container>
+
     
   );
 };
