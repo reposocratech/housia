@@ -14,13 +14,17 @@ const initialState = {
 
   export const Login = () => {
     const [login, setLogin] = useState(initialState);
+
     const {setIsLogged} = useContext(AppContext);
+
+
     const [showPassword, setshowPassword] = useState(false);
     const [message, setMessage] = useState("");
     const [messageError, setMessageError] = useState("");
 
 
     const navigate = useNavigate();
+    
 
     const handleChange = (e)=>{
         const {name, value} = e.target;

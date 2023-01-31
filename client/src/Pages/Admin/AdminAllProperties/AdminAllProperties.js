@@ -72,9 +72,9 @@ export const AdminAllProperties = () => {
 
     
   return (
+    <div className='pt-5'>
+        <h1 className='pt-5'>Aqui tiene que ver todas la propiedades</h1>
 
-    <div>
-        <h1>Aqui tiene que ver todas la propiedades</h1>
         <div>
             { casasAMostrar?.map((elem, index)=>{
                 return(
