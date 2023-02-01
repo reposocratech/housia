@@ -15,39 +15,20 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    
 }
 
 input[type="checkbox"]{
     visibility: hidden;
 }
 
-/* efecto diafragma
-input[type="checkbox"]:checked + .label{
-    border: 30px solid navy;
-    color: white;
-}
-
-efecto compuerta 
-input[type="checkbox"]:checked + .label{
-    
-    border-left: 120px solid navy;
-    border-right: 120px solid navy;
-    color: white;
-}
-*/
-
-
 /* efecto parpadeo */
 input[type="checkbox"]:checked + .label{
     
-    border-top: 30px solid navy;
-    border-bottom: 30px solid navy;
-    color: white;
-    outline: 3px solid white;
+    border-top: 31px solid rgba(3, 255, 247, 1);
+    border-bottom: 31px solid rgba(3, 255, 247, 1);
+    color: #272839;
     box-sizing: border-box;
 }
-
 
 .unchecked {
     background-color: red;
@@ -55,11 +36,11 @@ input[type="checkbox"]:checked + .label{
     font-size: 20px;
     width: 240px;
     height: 60px;
-    border: 1px solid black;
-    transition: 0.4s;
+    transition: 0.2s;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    outline: 3px solid white;
 }

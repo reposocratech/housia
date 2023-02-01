@@ -14,14 +14,10 @@ export const EditEconomicFeatures = () => {
     const [editRent, setEditRent] = useState();
     const [checkboxState, setCheckboxState] = useState(false)
 
-
-   const{user, isLogged} = useContext(AppContext)
-
+    const{user, isLogged} = useContext(AppContext)
 
     let {property_id} = useParams(); 
     const navigate= useNavigate();
-    
-
 
     useEffect(()=>{
         axios
@@ -44,9 +40,10 @@ export const EditEconomicFeatures = () => {
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
+        navigate(`/propertyDetails/${property_id}`)
 
         if(isLogged && user.user_type === 2){
-         navigate(`/propertyDetails/${property_id}`);
+            navigate(`/user/portafolio`);
         } else{
             navigate(`/admin/allproperties`);
         }   
@@ -145,40 +142,40 @@ const handleChangePurchase = (e) =>{
     </div> 
        
         <Accordion alwaysOpen className='datos-economicos-acordion'>
-      <Accordion.Item eventKey="0" className='accordion-opcion'>
-        <Accordion.Header>Entrada y gastos de compraventa</Accordion.Header>
-        <Accordion.Body className='d-flex flex-column'>
-          <label>Entrada</label>
-          <input 
-            type='number'
-            className='m-2'
-            min='0'
-            value={editPurchase?.purchase_entry_expenses}
-            name="purchase_entry_expenses"
-            onChange={handleChangePurchase}/>
+            <Accordion.Item eventKey="0" className='accordion-opcion'>
+            <Accordion.Header>Entrada y gastos de compraventa</Accordion.Header>
+            <Accordion.Body className='d-flex flex-column'>
+                <label>Entrada</label>
+                <input 
+                  type='number'
+                  className='m-2'
+                  min='0'
+                  value={editPurchase?.purchase_entry_expenses}
+                  name="purchase_entry_expenses"
+                  onChange={handleChangePurchase}/>
 
-          <label>Gastos de compraventa</label>
-          <input 
-           type='number'
-           className='m-2'
-           min='0'
-           value={editPurchase?.purchase_trading_expenses}
-           name="purchase_trading_expenses"
-           onChange={handleChangePurchase}/>
+                <label>Gastos de compraventa</label>
+                <input 
+                 type='number'
+                 className='m-2'
+                 min='0'
+                 value={editPurchase?.purchase_trading_expenses}
+                 name="purchase_trading_expenses"
+                 onChange={handleChangePurchase}/>
 
-          <div className='d-flex align-items-center'>
-          <input 
-            type="checkbox" 
-            id="check-is-usual" 
-            className='check-is-usual'
-            checked = {editPurchase?.purchase_is_usual}
-            name="purchase_is_usual"
-            onChange={handleCheckBox}
-            />
-          <label className='m-2' for="check-is-usual">Usuales</label>
-          </div>
-        </Accordion.Body>
-      </Accordion.Item>
+                <div className='d-flex align-items-center'>
+                <input 
+                  type="checkbox" 
+                  id="check-is-usual" 
+                  className='check-is-usual'
+                  checked = {editPurchase?.purchase_is_usual}
+                  name="purchase_is_usual"
+                  onChange={handleCheckBox}
+                  />
+                <label className='m-2' for="check-is-usual">Usuales</label>
+                </div>
+            </Accordion.Body>
+        </Accordion.Item>
       <Accordion.Item eventKey="1">
         <Accordion.Header>Gastos de Reparación / Reforma</Accordion.Header>
         <Accordion.Body>

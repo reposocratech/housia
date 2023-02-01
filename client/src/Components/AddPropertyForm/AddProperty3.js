@@ -59,6 +59,8 @@ export const AddProperty3 = () => {
         setCityId(e.target.value);
     }
 
+    /* console.log(typeId, 'tipo en form3'); */
+
   return (
     <div className='padreeAdd3'>
      <h2>Añadir Propiedad</h2>
@@ -95,7 +97,8 @@ export const AddProperty3 = () => {
             name="address_street_number"
             {...register('address_street_number', {
                 required: {value: true, message:'Campo obligatorio'},
-                maxLength: {value: 5, message: 'El número no puede tener más de 5 dígitos'}
+                maxLength: {value: 5, message: 'El número no puede tener más de 5 dígitos'},
+                min: {value: 0, message: 'Número mayor a'}
               })}
         />
         
@@ -139,7 +142,8 @@ export const AddProperty3 = () => {
             name="address_postal_code"
             {...register('address_postal_code', {
                 required: {value: true, message:'Campo obligatorio'},
-                maxLength: {value: 5, message: 'El código postal no puede tener más de 5 dígitos'}
+                maxLength: {value: 5, message: 'El código postal debe tener 5 dígitos'},
+                minLength: {value: 5, message: 'El código postal debe tener 5 dígitos'}
               })}
         />
         {errors.address_postal_code && 
@@ -172,7 +176,7 @@ export const AddProperty3 = () => {
           </div>
         <div className='col-6 segColAdd3'>
           
-        {typeId != 4 && <>
+        {Number(typeId) !== 4 && <>
         <div >
         <input 
             placeholder='Bloque'
@@ -180,8 +184,15 @@ export const AddProperty3 = () => {
             className='bloque'
             type="text"
             name="address_block"
-            {...register('address_block')}
+            {...register('address_block', {
+              maxLength: {value: 3, message: 'Bloque máximo 3 dígitos'}
+            })}
         />
+        {errors.address_block && 
+            <div className='text-danger'>
+              {errors.address_block.message}
+            </div>
+          }
         <br/>
         </div>
         <div>
@@ -191,8 +202,15 @@ export const AddProperty3 = () => {
             autoComplete='off'
             type="text"
             name="address_gate"
-            {...register('address_gate')}
+            {...register('address_gate', {
+              maxLength: {value: 3, message: 'Portal máximo 3 dígitos'}
+            })}
         />
+        {errors.address_gate && 
+            <div className='text-danger'>
+              {errors.address_gate.message}
+            </div>
+          }
         <br/>
         </div>
         <div>
@@ -202,8 +220,15 @@ export const AddProperty3 = () => {
             autoComplete='off'
             type="text"
             name="address_stair"
-            {...register('address_stair')}
+            {...register('address_stair', {
+              maxLength: {value: 3, message: 'Escalera máximo 3 dígitos'}
+            })}
         />
+        {errors.address_stair && 
+            <div className='text-danger'>
+              {errors.address_stair.message}
+            </div>
+          }
         <br/>
         </div>
         <div>
@@ -213,8 +238,16 @@ export const AddProperty3 = () => {
             autoComplete='off'
             type="text"
             name="address_floor"
-            {...register('address_floor')}
+            {...register('address_floor', {
+              min: {value: 0, message: 'Número mayor a 0'},
+              max: {value: 1000, message: 'Número menor que 1000'}
+            })}
         />
+        {errors.address_floor && 
+            <div className='text-danger'>
+              {errors.address_floor.message}
+            </div>
+          }
         <br/>
         </div>
         <br/>
@@ -225,8 +258,15 @@ export const AddProperty3 = () => {
             type="text"
             className='puertaaAdd3'
             name="address_door"
-            {...register('address_door')}
+            {...register('address_door', {
+              maxLength: {value: 3, message: 'Puerta máximo 3 dígitos'}
+            })}
         />
+        {errors.address_door && 
+            <div className='text-danger'>
+              {errors.address_door.message}
+            </div>
+          }
         <br/>
         </div>
         </>}
