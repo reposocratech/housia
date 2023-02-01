@@ -2,14 +2,17 @@ import axios from 'axios'
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
-export const ModalDeleteProperty = ({showModal, setShowModal, idABorrar}) => {
+export const ModalDeleteProperty = ({showModal, setShowModal, idABorrar, setAllProperties, allProperties}) => {
 
     const hideForAdmin =(id)=>{
+
+        let newProp = allProperties.filter((prop) => prop.property_id !== id)
 
         axios
         .put(`http://localhost:4000/admin/logicDeletedAdminProperty/${id}`)
         .then((res)=>{
             setShowModal(false);
+            setAllProperties(newProp)
         })
         .catch((error)=>{
             console.log(error)

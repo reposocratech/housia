@@ -19,6 +19,7 @@ export const PropertyDetails = () => {
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
     const [show, setShow] = useState(false);
+    const [isSold, setIsSold] = useState(false);
 
     const {user } = useContext(AppContext);
 
@@ -34,21 +35,38 @@ export const PropertyDetails = () => {
     /* console.log(user.user_id, "Soy USER ID");
     console.log(property_id, 'soy property_id'); */
 
-    const handleSubmit = () => {
+    const handleSubmit = (isForSale) => {
+
+        let url = "";
+        const URL_END = `${Number(property_id)}/${Number(user.user_id)}`
+
+        console.log(isForSale, 'parámetro is_for_sale');
+        
     
-    axios
-    .put(`${URL_PROP}/checkSale/${user.user_id}/${property_id}`)
-    .then((res) => {
-        setShow(false);
-        navigate("/home") //navigate al descubre
-        /* console.log(res, "VENDIDOOOOOOOOOOOOOOOOOOO"); */
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+        if(isForSale === 1){
+          url=`${URL_PROP}/uncheckSale/${URL_END}`
+    
+        }else if (isForSale === 0) {
+          url = `${URL_PROP}/checkSale/${URL_END}`
+        }
+    
+        axios
+        .put(url)
+        .then((res) => {
+            setShow(false);
+            setIsSold(res.data[0].property_is_for_sale)
+            setPropertyDetails(res.data)
+            navigate(`/propertyDetails/${property_id}`)
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
   } 
     
   /* console.log(user, "EYYYYYYYY") */
+  /* console.log(propertyDetails[0], 'detalles propiedad');
+  console.log(isSold, 'ESTÁ VENDIO?'); */
     
     //Detalles Propiedad
     useEffect(() => {
@@ -57,6 +75,7 @@ export const PropertyDetails = () => {
         .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
         .then((res) => {
            setPropertyDetails(res.data);
+           setIsSold(res.data[0].property_is_for_sale)
         })
         .catch((err) => {
             console.log(err);
@@ -154,7 +173,7 @@ export const PropertyDetails = () => {
   return (
     <Container fluid className='portafolio-container'>
 
-         <h1 className='title'>{propertyDetails[0]?.property_name}</h1>
+         <h1 className='title mt-4'>{propertyDetails[0]?.property_name}</h1>
 
         <div className='infoCarousel'>
         {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
@@ -219,23 +238,29 @@ export const PropertyDetails = () => {
         <div className='divButtons'>
 
             <div className='buttons'>
-            <Button className='button' onClick={()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)}>Editar detalles</Button>
-            <Button className='button'  onClick={handleShow}>
-                Vender propiedad
-                </Button>
+            <Button 
+                className='button' 
+                onClick={()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)}
+                >Editar detalles
+            </Button>
+            <Button 
+                className='button'  
+                onClick={handleShow}
+                >{isSold === 0 ? 'Vender propiedad' : 'Quitar de la Venta'}
+            </Button>
             
                                 
         
                 <Modal className='modal' show={show} onHide={handleClose}>
                 <Modal.Header  closeButton>
-                <Modal.Title>¿Estas seguro que deseas vender la propiedad?</Modal.Title>
+                <Modal.Title>{isSold === 1 ? 'Quieres Quitar la propiedad de la Venta?' : '¿Seguro de poner a la venta la propiedad'}</Modal.Title>
                 </Modal.Header>
             
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                 Cerrar
                 </Button>
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="primary" onClick={() => handleSubmit(propertyDetails[0].property_is_for_sale)}>
                 Aceptar
                 </Button>
                 </Modal.Footer>
@@ -446,21 +471,23 @@ export const PropertyDetails = () => {
                     Editar detalles conomicos</Button>
 
 
-            <Button className='sold'
+            <Button 
+                className='sold'
                 onClick={handleShow}>
-                    <img src='/images/icons/graphSmall.png'/>
-                Vender propiedad</Button>
+                <img src='/images/icons/graphSmall.png'/>
+                <span>{isSold === 1 ? 'Quitar de la Venta' : 'Vender Propiedad'}</span>
+            </Button>
 
             <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-             <Modal.Title>¿Estas seguro que deseas vender la propiedad?</Modal.Title>
+             <Modal.Title>{isSold === 1 ? 'Quieres Quitar la propiedad de la Venta?' : '¿Seguro de poner a la venta la propiedad'}</Modal.Title>
             </Modal.Header>
            
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
             Cerrar
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>
+            <Button variant="primary" onClick={() => handleSubmit(propertyDetails[0].property_is_for_sale)}>
             Aceptar
             </Button>
             </Modal.Footer>

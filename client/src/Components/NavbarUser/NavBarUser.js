@@ -27,7 +27,7 @@ export const NavBarUser = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav" className='collapse-navbar'>
           <Nav>
-            <Nav.Link as={Link} to='/testField'>Campo de pruebas</Nav.Link>
+           
 
 
             {isLogged && user?.user_type === 2 && 
@@ -49,6 +49,7 @@ export const NavBarUser = () => {
             <Nav.Link as={Link} to='/admin/allproperties' eventKey="6">Propiedades</Nav.Link>
 
             <Nav.Link as={Link} to='/admin/customFeaturesElem' eventKey="7" >Custom features</Nav.Link>
+            <Nav.Link className='link-logout' onClick={logOut}>Cerrar Sesión</Nav.Link>
             </Nav>
             }
           </Nav>

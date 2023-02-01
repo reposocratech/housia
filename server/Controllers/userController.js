@@ -201,7 +201,7 @@ getAllProperty = (req, res) => {
         console.log(property_id, user_id);
         let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = "${property_id}"`;
 
-        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id  WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false ORDER BY property_built_year DESC `;
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
 
         connection.query(sql, (error, resultDel) => {
             if (error){
@@ -239,7 +239,7 @@ getAllProperty = (req, res) => {
       //localhost:4000/users/getSoldProperties/:user_id
       getSoldProperties = (req, res) =>{
         let {user_id} = req.params;
-
+        console.log(user_id, "aaaaaaaaa")
         let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
 
         connection.query(sql, (error, result) => {
@@ -248,6 +248,7 @@ getAllProperty = (req, res) => {
                 
             }
             res.status(200).json({result})
+            console.log(result, "reSULT")
           })
       }
 
@@ -313,7 +314,7 @@ getAllProperty = (req, res) => {
             if(error){
                 res.status(400).json({error});
             }
-            res.status(200).json({result})
+            res.status(200).json(result)
         })
       }
 
