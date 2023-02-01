@@ -95,11 +95,13 @@ const handleChangePurchase = (e) =>{
 
 
   return (
+
     <div className='datos-economicos-container'>
          <h1>Caracteristicas Económicas</h1>
          <Row className='m-0 justify-content-center'>
         <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
         <label for='purchase_buy_date'>Precio de Compra</label>
+
         <input
             type='number'
             step='0,01'
