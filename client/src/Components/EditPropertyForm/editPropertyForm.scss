@@ -11,6 +11,7 @@
         letter-spacing: 2px;
         margin-bottom: 30px;
     }
+   
     
     input{
         background-color: rgba(255, 255, 255, 0.05);
@@ -28,19 +29,21 @@
     :focus{
         outline: 1px solid #4cecf5 !important;
         border: 1px solid #4cecf5 !important;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: #272839!important;
         border: none;
+        color: white;
     }   
    
     .form-select{
         padding: 5px 10px;
         margin: 5px 0;
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: rgba(255, 255, 255, 0.05) !important;
         color: white;
         background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
     }
     .editImage {
         margin: 5px 0;
+        width: 150px;
         .container-img{
             position: relative;
             width: 100%;
@@ -49,7 +52,8 @@
             border: 1px solid white;
             border-radius: 6px;
             display: flex;
-            justify-content: flex-end;      
+            justify-content: flex-end;    
+            
         } 
     }
     .options {

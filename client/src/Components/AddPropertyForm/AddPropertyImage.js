@@ -1,34 +1,23 @@
-
-
 import axios from "axios";
 import React, { useState, useContext } from "react";
 import { Button, Container, Row, Col, Image } from "react-bootstrap";
 import { AppContext } from "../../Context/AppContext";
-
-import "./addimage.css";
 import { ModalSaveProperty } from "./ModalSaveProperty";
-
+import "./AddPropertyImage.scss";
 export const AddPropertyImage = () => {
 
   const [images, setimages] = useState([]);
-  
   const [showFinalModal, setShowFinalModal] = useState(false);
   const [showSelectButton, setShowSelectButton] = useState(true);
-
   const {property, setProperty} = useContext(AppContext);
-
+  
   const URL_PROP = 'http://localhost:4000/property';
-
   const changeInput = (e) => {
-    
     let newImgsToState = readmultifiles(e);
-
     let newImgs = [...images]
-
     newImgsToState.map((img) => {
       newImgs.push(img)
     })
-
     setimages(newImgs)
 };
 
@@ -62,6 +51,40 @@ export const AddPropertyImage = () => {
       setimages(newArrImgs)
   }
 
+
+  /* const handleDeleteImageEdit = (imageId, imagePropertyId) => {
+    axios
+      .delete(`http://localhost:4000/property/deleteInitialImageProperty/${imageId}/${imagePropertyId}`)
+      .then((res) => {
+        console.log(res.data);
+        setImagesToEdit(res.data);
+        setShowImagesToEdit(true);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        
+      })
+  } */
+
+  /* 
+  const handleMainImage = (image) => {
+    let url = '';
+    if(image.image_is_main === 0){
+      url = `${URL_PROP}/setMainImage/${image.image_id}/${image.image_property_id}`
+    }
+    else if(image.image_is_main === 1) {
+      url = `${URL_PROP}/unSetMainImage/${image.image_id}/${image.image_property_id}`
+    }
+    axios
+      .put(url)
+      .then((response) => {
+        setImagesToEdit(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  } */
+
   const onSubmit = (id) => {
     const newFormData = new FormData();
 
@@ -85,14 +108,14 @@ export const AddPropertyImage = () => {
 
   return (
     <>
-    <Container fluid className="m-4">
+    <Container fluid className=" fondo">
 
-      <h2 className="text-center">Añadir Propiedad</h2>
+      <h2 className="addPropertyImage">Añadir Propiedad</h2>
 
         {/* VIEW IMAGES */}
       <Row>
         {images?.map((imagen) => (
-            <Col className="col-6 col-sm-4 col-lg-3 m-2" key={imagen.index}>
+            <Col className="col-12 col-sm-6 col-lg-6 col-xl-4 col-xxl-3 colImage " key={imagen.index}>
                 <div className="content_img">
                     <Image
                         alt='property image'
@@ -101,11 +124,9 @@ export const AddPropertyImage = () => {
                         data-target="#ModalPreViewImg"
                         className="img-responsive rounded-4"
                     />
-                    {images.length > 1 && (
-                    <div  className="options delete">
-                      <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
-                    </div>
-                    )}
+                  <div  className="options delete">
+                    <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
+                  </div>
                 </div>
             </Col>
           ))
@@ -114,23 +135,29 @@ export const AddPropertyImage = () => {
 
       <div className="mt-4">
       {/* INPUT IMAGES */}
-
+<div className="centro">
+  
       {showSelectButton && (
-        <Button size="lg" as="label" variant="secondary" className="me-3">
-            <span>Seleccionar IMÁGENES </span>
+        <Button size="lg" as="label" variant="secondary" className="me-3 centro">
+            <span>Seleccionar Imagenes </span>
             <input hidden type="file" multiple onChange={changeInput}></input>
         </Button>
       )}
-      
-
-      {images.length >= 1 && (
+     
+     
+    
+      {images.length > 0 && (
         <Button 
           size="lg" 
           variant="dark"
           onClick={() => onSubmit(property.property_id)}
+          className="centro2"
           >Guardar Y Terminar
         </Button>
       )}
+     
+     
+      </div>
       </div>
 
       </Container>
