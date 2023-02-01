@@ -4,9 +4,9 @@ import axios from 'axios';
 import {Button, Container} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import './portafolio.scss';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
+import './portafolio.scss';
 
 export const Portafolio = () => {
 
@@ -102,20 +102,29 @@ export const Portafolio = () => {
             return(
 
               <div className='col-12 col-sm-6 col-lg-4 properties' key={index}>
-              <div  className='property' key={prop.property_id}>
+              <div  className='property'>
 
-                <div onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'><img src={`/images/property/${prop.image_title}`}/></div>
+                <div 
+                  onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
+                    <img src={`/images/property/${prop.image_title}`}/>
+                </div>
 
               <div className='all'>
-                <button onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'>
+                <button 
+                  onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'
+                >
                   <h5>{prop?.property_name}
-                  <div className={prop.property_is_for_sale === 0 ? "nosold " : "sold " }>En Venta</div></h5>
+                    <div 
+                      className={prop.property_is_for_sale === 0 ? "nosold " : "sold " }
+                      >En Venta
+                    </div>
+                  </h5>
                   <p>
                     <img className='location' src='/images/property/location.png'/>
                     <span className='address'> {prop.address_street_name} </span>
                     <span className='address'>{prop.address_street_number}</span>
-                    </p>
-                    <h5 className='turquoise'>{prop.purchase_buy_price} €</h5>
+                  </p>
+                  <h5 className='turquoise'>{prop.purchase_buy_price} €</h5>
                 </button>
 
                 <div className='del_sale'>

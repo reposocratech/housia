@@ -40,6 +40,7 @@ export const EditEconomicFeatures = () => {
     .put(`http://localhost:4000/property/editPurchase/${property_id}`, editPurchase)
     .then((res)=>{
         console.log("respuesta correcta")
+        navigate(`/propertyDetails/${property_id}`)
 
         if(isLogged && user.user_type === 2){
             navigate(`/user/portafolio`);

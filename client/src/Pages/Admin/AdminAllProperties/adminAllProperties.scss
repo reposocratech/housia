@@ -1,0 +1,55 @@
+.allProperties {
+    background-color: #272839;
+    font-family: Barlow;
+    color: white;
+    min-height: 100vh;
+    padding: 3% 5%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+
+    h1{
+        padding-top: 1rem;
+    }
+
+    .prop {
+        width: 100%;
+        background-color: rgb(17,24,39);
+        border: none;
+        border-top-right-radius: 10px !important;
+        border-top-left-radius: 10px !important;
+        display: flex;
+        .imgProp {
+            width: 50%;
+            height:100%;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+        .info {
+            padding: 2%;
+            p {
+                font-size: 1.2rem;
+            }
+            h3:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .buttons {
+        background-color: rgb(17,24,39);
+        border-bottom-right-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+        padding: 2%;
+
+    }
+}
