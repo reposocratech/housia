@@ -397,6 +397,7 @@
                     font-size: xx-large;
                     color: rgb(48,162,185);
                     border: none;
+                    
                 }
                 button:hover{
                     background-color: rgb(48,162,185);
@@ -409,6 +410,10 @@
                 margin-left: 2%;
             }
         }
+    }
+
+    #buttonDel:hover {
+        background-color: rgb(141, 36, 36)
     }
 
     @media (max-width: 769px ){

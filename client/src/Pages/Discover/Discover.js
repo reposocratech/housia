@@ -3,14 +3,10 @@ import axios from "axios";
 
 import './Discover.scss';
 
-import { Col, Container, Form, InputGroup,  Modal, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, InputGroup,  Modal, Row } from 'react-bootstrap';
 
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
-
-
-
-
 
 export const Discover = () => {
 
@@ -744,8 +740,8 @@ export const Discover = () => {
                 <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
                      <Modal
                         size="sm"
-                        show={smShow}
-                        onHide={() => setSmShow(false)}
+                        show={show}
+                        onHide={() => setShow(false)}
                         aria-labelledby="example-modal-sizes-title-sm"
                     >
                     <Modal.Header closeButton>
@@ -769,18 +765,34 @@ export const Discover = () => {
                 
                 
                 <p>{Math.floor(property?.purchase_buy_price * 1.14)}</p>
-                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
-                
                            
                 <p  className='perTrans'>12%</p>                             
                
-
-                <div>
-                <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
-                {show && <span>Esta opcion ya esta en tus favoritos</span>}
-                </div>}
+                {favOption &&
+                    <div>
+                    <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
+                    {show && <>
+                    <Modal show={show} onHide={()=>setShow(false)}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Accion ya realizada</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
+                        <br/>
+                        Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={()=>setShow(false)}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+                    </>}
+                    </div>}
                
                 </div>
+
+
+
                 
             )
         })}

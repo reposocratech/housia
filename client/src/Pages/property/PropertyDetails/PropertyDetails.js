@@ -6,10 +6,11 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { Carousel, Container, Row } from 'react-bootstrap';
 import './PropertyDetails.scss';
+import { ModalDeletePropertyUser } from './ModalDeletePropertyUser';
+import { ModalSalePropertyUser } from './ModalSalePropertyUser';
 
 
 export const PropertyDetails = () => {
-    const [propertyDetails, setPropertyDetails] = useState([]);
     const [imagenes, setImagenes] = useState();
     const [address, setAddress] = useState([]);
     const [detailsPurchase, setDetailsPurchase] = useState([]);
@@ -19,9 +20,11 @@ export const PropertyDetails = () => {
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
     const [show, setShow] = useState(false);
-    const [isSold, setIsSold] = useState(false);
+    const [isSold, setIsSold] = useState('');
+    const [showDeleteModalUser, setShowDeleteModalUser] = useState(false);
+    const [showSalePropertyUser, setShowSalePropertyUser] = useState(false);
 
-    const {user } = useContext(AppContext);
+    const {user, propertyDetails, setPropertyDetails } = useContext(AppContext);
 
     let { property_id } = useParams();
 
@@ -29,8 +32,8 @@ export const PropertyDetails = () => {
     const URL_PROP = 'http://localhost:4000/property';
 
     const handleColor = () => setColorSold(!colorSold);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    /* const handleClose = () => setShow(false); */
+    const handleShow = () => setShowSalePropertyUser(true);
 
     /* console.log(user.user_id, "Soy USER ID");
     console.log(property_id, 'soy property_id'); */
@@ -39,15 +42,12 @@ export const PropertyDetails = () => {
 
         let url = "";
         const URL_END = `${Number(property_id)}/${Number(user.user_id)}`
-
-        console.log(isForSale, 'parámetro is_for_sale');
         
-    
         if(isForSale === 1){
-          url=`${URL_PROP}/uncheckSale/${URL_END}`
-    
-        }else if (isForSale === 0) {
-          url = `${URL_PROP}/checkSale/${URL_END}`
+            url=`${URL_PROP}/uncheckSale/${URL_END}`
+
+        }else if(isForSale === 0) {
+            url = `${URL_PROP}/checkSale/${URL_END}`
         }
     
         axios
@@ -55,18 +55,20 @@ export const PropertyDetails = () => {
         .then((res) => {
             setShow(false);
             setIsSold(res.data[0].property_is_for_sale)
+
             setPropertyDetails(res.data)
             navigate(`/propertyDetails/${property_id}`)
-
         })
         .catch((err) => {
             console.log(err);
         });
   } 
-    
+
+  /* console.log(isSold, 'parámetro is_for_sale'); */
+        
   /* console.log(user, "EYYYYYYYY") */
-  /* console.log(propertyDetails[0], 'detalles propiedad');
-  console.log(isSold, 'ESTÁ VENDIO?'); */
+   /* console.log(propertyDetails[0], 'detalles propiedad'); */
+  /*console.log(isSold, 'ESTÁ VENDIO?'); */
     
     //Detalles Propiedad
     useEffect(() => {
@@ -167,18 +169,21 @@ export const PropertyDetails = () => {
             });
         }, [property_id]);
         
-        
+        const goToEdit = () => {
+            navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)
+            window.location.reload();
+        }
 
       
   return (
+    <>
     <Container fluid className='portafolio-container'>
 
-         <h1 className='title mt-4'>{propertyDetails[0]?.property_name}</h1>
+        <h1 className='title mt-4'>{propertyDetails[0]?.property_name}</h1>
 
         <div className='infoCarousel'>
         {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
             <div className='infoAllProperty'>
-
 
             {/* CARRUSEL IMAGENES  */}    
                 <div className="carrusel">
@@ -187,23 +192,20 @@ export const PropertyDetails = () => {
                     {imagenes?.map((imagen, i)=>{return(
                         <Carousel.Item className="contCarrusel imgCarrusel" key={i}>
                         
-                          <div className="contenedorImagen d-flex justify-content-center" >
+                        <div className="contenedorImagen d-flex justify-content-center" >
                             <img
-                              className="d-block justify-content-center"
-                              src={`/images/property/${imagen?.image_title}`}
-                              alt={imagen?.image_title} 
+                                className="d-block justify-content-center"
+                                src={`/images/property/${imagen?.image_title}`}
+                                alt={imagen?.image_title} 
                             />
-                          </div>
+                        </div>
                         </Carousel.Item>
                     )})
-                    
-                      } 
+                    } 
                     </Carousel>
                   </div>
               </div>
           </div>
-
-          
 
           <div className='information'>
             <div className='direction'>
@@ -228,46 +230,35 @@ export const PropertyDetails = () => {
             </div>
         </div>
 
-            <div className='transparent'>
-                <div  className='perTrans'>12%</div>
-                <h2 className='turquoise'>{detailsPurchase[0]?.purchase_buy_price}€</h2>  
-            </div>
+        <div className='transparent'>
+            <div className='perTrans'>12%</div>
+            <h2 className='turquoise'>{detailsPurchase[0]?.purchase_buy_price}€</h2>  
         </div>
-
+        </div>
 
         <div className='divButtons'>
 
             <div className='buttons'>
-            <Button 
-                className='button' 
-                onClick={()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`)}
-                >Editar detalles
-            </Button>
-            <Button 
-                className='button'  
-                onClick={handleShow}
-                >{isSold === 0 ? 'Vender propiedad' : 'Quitar de la Venta'}
-            </Button>
-            
-                                
-        
-                <Modal className='modal' show={show} onHide={handleClose}>
-                <Modal.Header  closeButton>
-                <Modal.Title>{isSold === 1 ? 'Quieres Quitar la propiedad de la Venta?' : '¿Seguro de poner a la venta la propiedad'}</Modal.Title>
-                </Modal.Header>
-            
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                Cerrar
+                <Button 
+                    className='button' 
+                    onClick={ goToEdit /* ()=>navigate(`/editProperty/${property_id}/${propertyDetails[0].property_subtype_id}`) */}
+                    >Editar detalles
                 </Button>
-                <Button variant="primary" onClick={() => handleSubmit(propertyDetails[0].property_is_for_sale)}>
-                Aceptar
+                    
+                <Button 
+                    className='button'  
+                    onClick={handleShow}
+                    >{isSold === 0 ? 'Vender' : 'No Vender'}
                 </Button>
-                </Modal.Footer>
-                </Modal>
-                </div>
+                    
+                <Button 
+                    id='buttonDel'
+                    className='button'  
+                    onClick={() => setShowDeleteModalUser(true)}
+                    >Eliminar
+                </Button>
+            </div>
         </div>
-
 
         <h4>Informacion</h4>
 
@@ -296,10 +287,7 @@ export const PropertyDetails = () => {
                 <p>{detailsPurchase[0]?.purchase_buy_price}€</p>
                 <img src='/images/property/grafica4.jpg' alt='property-graphic'></img>
             </div>
-
         </div>  
-
-        
 
         <div className='row infos'>
 
@@ -334,11 +322,10 @@ export const PropertyDetails = () => {
                     <p className='gray'>Entrada </p>
                     <p>{detailsPurchase[0]?.purchase_entry_expenses}€</p>
                 </div>
-                    <div className='divDos'>
-                        <p className='gray'>Impuestos y gastos</p>
-                        <p>{detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
-                    </div>
-                
+                <div className='divDos'>
+                    <p className='gray'>Impuestos y gastos</p>
+                    <p>{detailsPurchase[0]?.purchase_trading_expenses + detailsPurchase[0]?.purchase_reform_expenses + detailsPurchase[0]?.purchase_furniture_expenses}€</p>
+                </div>
             </div>
 
             <div className='box'>
@@ -347,27 +334,25 @@ export const PropertyDetails = () => {
                     <p>{loan[0]?.loan_type + loan[0]?.loan_value + 765}€</p>
                 </div>
                 
-                    <div className='divDos'>
+                <div className='divDos'>
                     <p className='gray'>Hipoteca </p>
                     <p>{loan[0]?.loan_value}€</p>
-                    </div>
-                    <div className='divDos'>
+                </div>
+                <div className='divDos'>
                     <p className='gray'>Gastos</p>
                     <p>{loan[0]?.loan_type}€</p>
-                    </div>
-                    <div className='divDos'>
+                </div>
+                <div className='divDos'>
                     <p className='gray'>Impuestos</p>
                     <p>765€</p>
-                    </div>
                 </div>
-            
+            </div>
 
             <div className='box'>
                 <div className='divUno'>
                 <p className='gray'>Ingresos</p>
                 <p>{rent[0]?.rent_renting_price}€</p>
                 </div>
-                
                     <div className='divDos'>
                     <p className='gray'>Renta </p>
                     <p>{rent[0]?.rent_renting_price}€</p>
@@ -376,12 +361,10 @@ export const PropertyDetails = () => {
                     <p className='gray'>Otros ingresos</p>
                     <p>0€</p>
                     </div>
-                
             </div>
             </div>
         </div> 
         </div>
-
 
         <h4>Escenarios</h4>
 
@@ -396,7 +379,6 @@ export const PropertyDetails = () => {
                         </div>
                         <div className='d-flex  align-items-end mt-5'><p className='green'>+12%</p></div>
                     </div>
-                                       
                     
                     <div className='stage'>
                         <p>Escenario</p>
@@ -419,7 +401,6 @@ export const PropertyDetails = () => {
                             <button>10 años</button>
                         </div>
                     </div>                                     
-                                      
                 </div>
 
                 <div className='partTwo'>
@@ -451,7 +432,6 @@ export const PropertyDetails = () => {
                             <p>1.500€</p>
                             <p>232.000€</p>
                         </div>
-                                             
                     </div>
 
                    
@@ -459,44 +439,25 @@ export const PropertyDetails = () => {
             </div>
         </div>              
               
-                 
-              
         <div className='threeButtons'>
-            
-           
             <Button className='edit'
                 onClick={()=>navigate(`/editEconomicFeatures/${property_id}`)}
-                >
-                    <img src='/images/icons/editSmall.png'/>
-                    Editar detalles conomicos</Button>
-
+                ><img src='/images/icons/editSmall.png'/>
+                Editar detalles conomicos
+            </Button>
 
             <Button 
                 className='sold'
                 onClick={handleShow}>
                 <img src='/images/icons/graphSmall.png'/>
-                <span>{isSold === 1 ? 'Quitar de la Venta' : 'Vender Propiedad'}</span>
+                <span>{isSold === 0 ? 'Vender' : 'No Vender'}</span>
             </Button>
-
-            <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-             <Modal.Title>{isSold === 1 ? 'Quieres Quitar la propiedad de la Venta?' : '¿Seguro de poner a la venta la propiedad'}</Modal.Title>
-            </Modal.Header>
-           
-            <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-            Cerrar
-            </Button>
-            <Button variant="primary" onClick={() => handleSubmit(propertyDetails[0].property_is_for_sale)}>
-            Aceptar
-            </Button>
-            </Modal.Footer>
-            </Modal>
 
             <Button className='check'
                 onClick={handleColor} variant={colorSold ? "success" : "danger"}>
-                    <img src='/images/icons/verified.png'/>
-                    {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}</Button>
+                <img src='/images/icons/verified.png'/>
+                {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}
+            </Button>
         </div>
 
     <div className='row boost'>
@@ -507,11 +468,23 @@ export const PropertyDetails = () => {
         <div className='col-7 boostp'>
             <p>BoostInvest analiza la oferta de la zona para ofrecerte ideas para rentabilizar tu inversión inmobiliaria. Precios medios de alquiler, coster de reforma... y, si lo deseas, te conecta con profesionales para que te gestionen el alquiler del inmueble</p>
             </div>
-
     </div>
-    
 
     </Container>
+    <ModalDeletePropertyUser 
+        showDeleteModalUser={showDeleteModalUser}
+        setShowDeleteModalUser={setShowDeleteModalUser}
+        property_id = {property_id}
+    />
+    <ModalSalePropertyUser
+        showSalePropertyUser={showSalePropertyUser}
+        setShowSalePropertyUser={setShowSalePropertyUser}
+        propertyIsForSale = {propertyDetails[0].property_is_for_sale}
+        property_id = {property_id}
+        setIsSold={setIsSold}
+        isSold={isSold}
+    />
+    </>
   )
   
 }

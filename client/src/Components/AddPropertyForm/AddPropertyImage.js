@@ -66,7 +66,7 @@ export const AddPropertyImage = () => {
         .then((res) => {
             console.log(res.data);
             setShowFinalModal(true);
-            setShowSelectButton(false);
+            /* setShowSelectButton(false); */
         })  
         .catch((error) => {
             console.log(error.message);
@@ -93,7 +93,12 @@ export const AddPropertyImage = () => {
                     />
                    {images.length > 1 && (
                     <div className="options delete">
-                      <Button onClick={() => handleDeleteImage(imagen.file.name)} variant="outline-danger" size="sm">Quitar</Button>
+                      <Button 
+                        onClick={() => handleDeleteImage(imagen.file.name)} 
+                        variant="outline-danger" 
+                        size="sm"
+                        >Quitar
+                      </Button>
                     </div>
                    )} 
                 </div>
