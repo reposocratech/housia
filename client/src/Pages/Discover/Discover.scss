@@ -1,4 +1,6 @@
-
+// *{
+//     border: 1px solid tomato;
+// }
 .portafolio-container{
     font-family: Barlow;
     background-color: #272839;
@@ -12,16 +14,16 @@
     .discover {
         width: 100%;
         padding: 120px 0;
+        display: flex;
         .filters{
             width: 30%;
             text-align: left;
-            
+            margin: 0;
             .filterImg{
                 width: 30px;
                 height: 30px;
             }
-        }
-        .clearButton{
+            .clearButton{
             width: 40%;
             height: 4vh;
             border-radius: 15px;
@@ -45,6 +47,10 @@
                 border: 1px solid gray;
                 color: white;
             }
+            button:hover{
+                background-color: white;
+                color: rgb(39,40,57);
+            }
 
         }
         .featuresButton{
@@ -60,6 +66,36 @@
         .checkbox-container{
             width: 50%;
         }
+        }
+        .properties{
+            display: flex;
+            width: 70%;
+            margin: 0;
+            .card{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                background-color: #272839;
+                .cardProperty{
+                    background-color: #272839;
+                    width: 45% !important;
+                    border-radius: 15px;
+                    img{
+                        width: 100%;
+                        height: 200px;
+                        border-radius: 15px;
+                    }
+                    .perTrans{
+                        width: 25%;
+                        background-color: green;
+                        border-radius: 10px;
+                        margin-bottom: 10%;
+                    }            
+                }
+            }
+            
+        }
+        
     }
     
 

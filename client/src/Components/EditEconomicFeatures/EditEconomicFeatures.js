@@ -96,7 +96,7 @@ const handleChangePurchase = (e) =>{
 
   return (
     <div>
-         <h1>Formulario Caracteristicas Economicas</h1>
+         <h1 className='m-5'>Formulario Caracteristicas Economicas</h1>
 
         <div className='d-flex flex-column'>
         <input
