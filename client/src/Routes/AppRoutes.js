@@ -10,10 +10,8 @@ import { User } from '../Pages/UserDashboard/User/User'
 import { AddPropertyForm1 } from '../Components/AddPropertyForm/AddPropertyForm1'
 import { AddProperty2 } from '../Components/AddPropertyForm/AddProperty2'
 import { AddProperty3 } from '../Components/AddPropertyForm/AddProperty3'
-import { TestField } from '../Components/TestField/TestField'
 import { AddProperty4 } from '../Components/AddPropertyForm/AddProperty4'
 import { EditUser } from '../Pages/UserDashboard/User/EditUser'
-import { AdminHome } from '../Pages/Admin/AdminHome/AdminHome'
 import { AdminAllProperties } from '../Pages/Admin/AdminAllProperties/AdminAllProperties'
 import { AddPropertyImage } from '../Components/AddPropertyForm/AddPropertyImage'
 import { AdminCustomFeatures } from '../Pages/Admin/AdminCustomCaracteristicas/AdminCustomFeatures'
@@ -52,36 +50,30 @@ export const AppRoutes = () => {
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/>
-                 <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
-                 <Route path='/editProperty/:property_id/:property_subtype_id' element={<EditPropertyForm/>} />
+                <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
+                <Route path='/editProperty/:property_id/:property_subtype_id' element={<EditPropertyForm/>} />
+                <Route path='/propertyDetails/:property_id' element={<PropertyDetails/>}/>
                 </>}
 
 
               {user?.user_type === 2 && 
               <>
                 <Route path='/user/portafolio' element={<Portafolio/>}/>
-                
                 <Route path='/user/resumen' element={<Resumen/>}/>
                 <Route path='/user/perfil' element={<User/>}/>
                 <Route path='/user/editUser' element={<EditUser/>}/>
                 <Route path='/user/summaryInversion' element={<SummaryInversionUser/>}/>
+                <Route path='/user/favourites' element={<Favourite/>}/>
                 
                 <Route path='/addProperty' element={<AddPropertyForm1/>}/>
                 <Route path='/addProperty2' element={<AddProperty2/>}/>
                 <Route path='/addProperty3' element={<AddProperty3/>}/>
                 <Route path='/addProperty4' element={<AddProperty4/>}/>
                 <Route path='/addPropertyImage' element={<AddPropertyImage/>}/> 
-                <Route path='/user/favourites' element={<Favourite/>}/>
+                <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
+                <Route path='/editProperty/:property_id/:property_subtype_id' element={<EditPropertyForm/>} />
                 <Route path='/propertyDetails/:property_id' element={<PropertyDetails/>}/>
-                 <Route path='/editEconomicFeatures/:property_id' element={<EditEconomicFeatures/>}/>
-                 <Route path='/editProperty/:property_id/:property_subtype_id' element={<EditPropertyForm/>} />
               </>}
-
-                
-
-                
-                   
-
 
             </Routes>
         </BrowserRouter>

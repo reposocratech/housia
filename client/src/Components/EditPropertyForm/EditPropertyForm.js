@@ -32,19 +32,13 @@ export const EditPropertyForm = () => {
     const [showAddImage, setShowAddImage] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
-    const {property, setProperty} = useContext(AppContext);
+    const {property, setProperty , user, isLogged} = useContext(AppContext);
 
-    const {property_id} = useParams();
+    const {property_id, property_subtype_id} = useParams();
 
     const navigate = useNavigate();
 
     const URL_PROP = 'http://localhost:4000/property';
-
-    
-
-    // let nombreTipo = type[(property?.type_id) -1 ].type_name;
-    
-    // let nombreSubTipo = Number(subtype[(property?.property_subtype_id) -1 ] .subtype_name);
 
     
 
@@ -58,6 +52,20 @@ export const EditPropertyForm = () => {
             console.log(err);
         });
     }, []);
+
+    useEffect(() => {
+        /* console.log(property_subtype_id, 'subtype id de los params'); */
+
+        axios
+            .get(`${URL_PROP}/getType/${property_subtype_id}`)
+            .then((res) => {
+                setTypeId(res.data[0].subtype_type_id);
+            })
+            .catch((err) => {
+                console.log(err);
+                
+            })
+    }, [property_subtype_id])
 
 
     useEffect(() => {
@@ -74,12 +82,13 @@ export const EditPropertyForm = () => {
 
     const handleTypeId = (e) =>{
         setTypeId(e.target.value);
-        // setTypeId(id);
+        setProperty({...property, property_subtype_id: subTypeId, type_id: e.target.value })
     }
     
     
     const handleSubTypeId = (e) => {
         setSubTypeId(e.target.value);
+        setProperty({...property, property_subtype_id: e.target.value})
     }
 
     useEffect(() => {
@@ -121,10 +130,13 @@ export const EditPropertyForm = () => {
 
     const handleProvinceId = (e) => {
         setProvinceId(e.target.value);
+        setProperty({...property, address_province_id: Number(e.target.value)})
+        setCityId(1);
        }
 
     const handleCityId = (e) => {
         setCityId(e.target.value);
+        setProperty({...property, address_city_id: Number(e.target.value)});
     }
 
   
@@ -133,8 +145,15 @@ export const EditPropertyForm = () => {
         axios
             .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
             .then((res) => {
-                /* console.log(res.data[0], 'DATOS PROPIEDAD'); */
+                /* console.log(res.data[0].property_subtype_id, 'DATOS PROPIEDAD');
+                console.log(res.data[0].address_city_id, 'city iddddd' ); */
+                
+                let subtipo = res.data[0].property_subtype_id;
+
+                setSubTypeId(subtipo);
                 setProperty(res.data[0])
+                setCityId(res.data[0].address_city_id)
+                setProvinceId(res.data[0].address_province_id);
             })
             .catch((error) => {
                 console.log(error.message);
@@ -273,7 +292,7 @@ export const EditPropertyForm = () => {
     const saveFeaturesFromEdit = (id) => {
         if(featuresSelected){
             axios
-                .post(`http://localhost:4000/property/editFeaturesProperty/${id}`, featuresSelected)
+            .post(`${URL_PROP}/editFeaturesProperty/${id}`, featuresSelected)
                 .then((res) => {
                     console.log(res);
                 })
@@ -288,7 +307,8 @@ export const EditPropertyForm = () => {
             .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
             .then((res) => {
                 console.log('RES DE EDIT PROPERTY', res);
-                navigate(`/propertyDetails/${property.property_id}`);
+
+                
             })
             .catch((error) => {
                 console.log('ERROR del EDITADDRESS');
@@ -304,9 +324,14 @@ export const EditPropertyForm = () => {
         editPropertyAddress();
         saveFeaturesFromEdit(property?.property_id);
 
+        if(user.user_type === 1){
+            navigate('/admin/allproperties')
+        }
+        else if(user.user_type === 2){
+            navigate('/user/portafolio')
+        }
+
     }
-
-
 
 
  return (
@@ -330,8 +355,7 @@ export const EditPropertyForm = () => {
                     <Row className="d-flex justify-content-between">
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>Tipo</Form.Label>
-                            <Form.Select onChange={handleTypeId} /* name='type_id' */>
-                                <option value={property?.type_id}>{'Tipo'}</option>
+                            <Form.Select  onChange={handleTypeId} value={typeId}>
                                 {type?.map((typ, ind) => {
                                     return(
                                         <option key={ind} value={typ.type_id}>{typ.type_name}</option>
@@ -342,9 +366,9 @@ export const EditPropertyForm = () => {
                         <Form.Group className="mb-3" as={Col} md='6'>
                             <Form.Label>SubTipo</Form.Label>
                             <Form.Select 
-                                onChange={handleChange}
+                                onChange={handleSubTypeId}
                                 name='property_subtype_id'
-                                value={property?.property_subtype_id}
+                                value={subTypeId}
                             >
                                 {/* <option value={property?.property_subtype_id}>{'Nombre Subtipo'}</option> */}
                                 {subtype?.map((subtyp, ind) => {
@@ -382,8 +406,7 @@ export const EditPropertyForm = () => {
 
                         <Form.Group as={Col} md='9'>
                             <Form.Label>Provincia</Form.Label>
-                            <Form.Select onChange={handleProvinceId}>
-                                <option value={property?.address_province_id}>{property?.province_name}</option>
+                            <Form.Select value={provinceId} onChange={handleProvinceId}>
                                 {province?.map((prov, ind) =>{
                                     return(
                                         <option
@@ -411,8 +434,7 @@ export const EditPropertyForm = () => {
 
                     <Form.Group className="mb-3">
                         <Form.Label>Ciudad</Form.Label>
-                        <Form.Select onChange={handleCityId}>
-                        <option value={property?.address_city_id}>{property?.city_name}</option>
+                        <Form.Select value={cityId} onChange={handleCityId}>
                             {city?.map((cit, ind) =>{
                                 return(
                                     <option key={ind} value={cit.city_id}>{cit.city_name}</option>
@@ -459,7 +481,7 @@ export const EditPropertyForm = () => {
                                 type="text"
                                 name="address_floor"
                                 onChange={handleChange}
-                                value={property?.floor === "undefined" ? 0 : property?.address_floor}
+                                value={!property?.floor ? 0 : property?.address_floor}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='2'>
@@ -469,7 +491,7 @@ export const EditPropertyForm = () => {
                                 type="text"
                                 name="address_door"
                                 onChange={handleChange}
-                                value={property?.door === "undefined" ? 0 : property?.address_door}
+                                value={!property?.door  ? 0 : property?.address_door}
                             />
                         </Form.Group>
                     </Row> 

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { ModalDeleteProperty } from '../../../Components/ModalAdminDispenseProperty/ModalDeleteProperty'
 import { AppContext } from '../../../Context/AppContext'
 
+import './adminAllProperties.scss'
 
 export const AdminAllProperties = () => {
     
@@ -32,7 +33,7 @@ export const AdminAllProperties = () => {
     //PARA CUANDO TENGAMOS QUE PONER FILTROS.
     // let casasAMostrar = allProperties.filter(elem => elem.price >= "el precio del limitar que pongamos")
 
-    let casasAMostrar = allProperties;
+    let propsToShow = allProperties;
     console.log(allProperties, 'todas propiedades');
     
 
@@ -70,34 +71,58 @@ export const AdminAllProperties = () => {
         navigate(`/editEconomicFeatures/${elem.property_id}`)
     }
 
+    console.log('casas para mostrar', propsToShow);
+    
     
   return (
-    <div className='pt-5'>
-        <h1 className='pt-5'>Aqui tiene que ver todas la propiedades</h1>
+    <div className='pt-5 allProperties'>
+        <h2 className='pt-5 mt-4 mb-4 text-center'>Todas las Propiedades</h2>
 
-        <div>
-            { casasAMostrar?.map((elem, index)=>{
+        <div className='row g-4'>
+            { propsToShow?.map((elem, index)=>{
                 return(
-                    <div key={index}>
-                        <div>
-                            <Image style={{width: '40%'}} src={`/images/property/${elem.image_title}`}/>
+                    <div className='col-12 col-sm-6 col-lg-4 ' key={index}>
+                        <div className='prop'>
+                            <div className='imgProp'>
+                                <Image src={`/images/property/${elem.image_title}`}/>
+                            </div>
+                            <div className='info'>
+                                <h3 onClick={() => navigate(`/propertyDetails/${elem.property_id}`)}>{elem?.property_name}</h3>
+                                <p>{elem?.address_street_name}</p>
+                                <p>{elem?.province_name}</p>
+                                <p>{elem?.purchase_buy_price} €</p>
+                            </div>
                         </div>
-                        <h3>{elem.property_name}</h3>
-                        <p>{elem.address_street_name}</p>
-                        <p>{elem.province_name}</p>
-                        <p>{elem.purchase_buy_price} €</p>
-                        <button 
-                            onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}>
-                            {elem.property_is_user_deleted === 1 ? "Desbloquear":"Bloquear"}
-                        </button>
-                        <hr/>
-                        <button onClick={()=>redirectEditBasicFeatures(elem)}>Propiedades básicas</button>
-                        <hr/>
-                        <button onClick={()=>redirectEditEconomicFeatures(elem)}>Características Económicas</button>
-                        <hr/>
-                        <button onClick={()=>handleDelete(elem.property_id)}>Eliminar Activo</button>
-                        <hr/>
-                        <hr/>
+                        
+                        <div className='d-flex justify-content-around buttons'>
+                            <div className='d-flex flex-column'>
+                                <button 
+                                    onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}
+                                    className='mb-2 bg-warning rounded border-none'
+                                    >
+                                    {elem.property_is_user_deleted === 1 ? "Desbloquear":"Bloquear"}
+                                    
+                                </button>
+                                <button
+                                    onClick={()=>redirectEditBasicFeatures(elem)}
+                                    className='rounded bg-info'
+                                    >Propiedades básicas
+                                </button>
+                            </div>
+                            <div className='d-flex flex-column'>
+                                <button 
+                                    onClick={()=>redirectEditEconomicFeatures(elem)}
+                                    className='mb-2 rounded bg-info'
+                                    >Caract. Económicas
+                                </button>
+                                <button 
+                                    onClick={()=>handleDelete(elem.property_id)}
+                                    className='rounded bg-danger'
+                                    >Eliminar Activo
+                                </button>
+                            </div>
+                            
+                        </div>
                     </div>
                 )
             })   
@@ -106,9 +131,11 @@ export const AdminAllProperties = () => {
 
         {showModalDelete && 
         <ModalDeleteProperty
-        showModal = {showModalDelete}
-        setShowModal = {setShowModalDelete}
-        idABorrar = {idForDelete}
+            setAllProperties={setAllProperties}
+            allProperties={allProperties}
+            showModal = {showModalDelete}
+            setShowModal = {setShowModalDelete}
+            idABorrar = {idForDelete}
         />}
     </div>
 
