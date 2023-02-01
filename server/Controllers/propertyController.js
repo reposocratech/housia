@@ -119,7 +119,42 @@ class propertyController {
              error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
           });
     };
+    ///Marca ADMINISTRADOR una propiedad como en venta
+    checkSaleAdmin = (req, res) => {
+        let {property_id} = req.params;
 
+        let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
+
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE   property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
+
+        connection.query(sql, (error, result) => {
+
+          if (error){
+            res.status(400).json(error)}
+            console.log(error);
+          });
+           connection.query(sql2, (error, resultUsers) => {
+             error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
+          });
+    };
+
+    ///Deshabilita ADMINISTRADOR el marcado en venta
+    uncheckSaleAdmin = (req, res) => {
+        let {property_id} = req.params;
+
+        let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
+
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE  property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC  `;
+
+        connection.query(sql, (error, result) => {
+          if (error){
+            res.status(400).json(error)}
+            console.log(error);
+          });
+           connection.query(sql2, (error, resultUsers) => {
+             error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
+          });
+    };
     ///Deshabilita el marcado en venta
     uncheckSale = (req, res) => {
         let {property_id, user_id} = req.params;

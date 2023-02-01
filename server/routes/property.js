@@ -3,11 +3,6 @@ var router = express.Router();
 const multer = require('../middleware/multer')
 var propertyController = require('../Controllers/propertyController');
 
-
-
-
- 
-////////////////////////////////////////////////////////////////////////////////////////////////
 // localhost:4000/property
 
 //Ver todos los TIPOS de Inmueble
@@ -40,6 +35,14 @@ router.put("/checkSale/:property_id/:user_id", propertyController.checkSale);
 //quitar una propiedad de venta
 //localhost:4000/property/uncheckSale/:property_id/:user_id
 router.put("/uncheckSale/:property_id/:user_id", propertyController.uncheckSale);
+
+//Admin en venta
+//localhost:4000/property/checkSaleAdmin/:property_id
+router.put("/checkSaleAdmin/:property_id", propertyController.checkSaleAdmin);
+
+//Admin quitar una propiedad de venta
+//localhost:4000/property/unCheckSaleAamin/:property_id
+router.put("/unCheckSaleAdmin/:property_id", propertyController.uncheckSaleAdmin);
 
 
 //muestra todas la propiedades de descubre

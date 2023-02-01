@@ -316,7 +316,7 @@ export const EditPropertyForm = () => {
 
     
      /* console.log('PROPIEDAD EN EDICIÓN', property); */
-    console.log(featuresSelected, 'FEATURESSSSSS QUE VIENEN DE LA PROPIEDAD Y QUE ESTOY MARCANDO');
+    /* console.log(featuresSelected, 'FEATURESSSSSS QUE VIENEN DE LA PROPIEDAD Y QUE ESTOY MARCANDO'); */
     /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
     
     const onSubmit = (e) => {
