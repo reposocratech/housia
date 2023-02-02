@@ -11,7 +11,8 @@ export const EditUser = () => {
 
     const [editUser, setEditUser] = useState();
     const [file, setFile] = useState();
-    console.log(user);
+
+    /* console.log(user); */
   
     useEffect(()=> {
         setEditUser(user);
@@ -29,8 +30,9 @@ export const EditUser = () => {
 
       const onSubmit = (e) =>{
         e.preventDefault();
+
         const newFormData = new FormData();
-        console.log(editUser);
+        /* console.log(editUser); */
         newFormData.append('file', file);
         newFormData.append('register', JSON.stringify(editUser));
     
@@ -131,18 +133,5 @@ export const EditUser = () => {
         </form>
       </section>
       </div>
-      
-          
-          
-            
-           
-             
-        
-      
-       
- 
-
-
-  
   )
 }

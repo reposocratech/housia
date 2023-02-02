@@ -2,16 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import './Discover.scss';
 
-
 import { Col, Container, Form, InputGroup,  Modal, Row, Button, Accordion } from 'react-bootstrap';
+
 
 
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
-
-
-
-
 
 export const Discover = () => {
 
@@ -997,17 +993,8 @@ export const Discover = () => {
             </Col>
         </Row>
 
-        
-
-       
-
-       
-        
-       
-           
         </div>
         </div>
-
 
         <Row className='properties'>
        
@@ -1015,6 +1002,7 @@ export const Discover = () => {
             return(
                 <Col className='card'xs={12} md={12} lg={6}>
                 <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
+
                  <div className='styleCard'>
                  <div className='parteTransparente'>
                     <p  className='perTrans'>12%</p> 
@@ -1034,12 +1022,7 @@ export const Discover = () => {
                                                
                            
                 <p>{Math.floor(property?.purchase_buy_price * 1.14)}</p>
-               
                 
-                           
-                                            
-               
-
                 {favOption &&
                 <div>
                 <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
@@ -1067,6 +1050,7 @@ export const Discover = () => {
                 </div>
                
                 </Col>
+
             )
         })}
         

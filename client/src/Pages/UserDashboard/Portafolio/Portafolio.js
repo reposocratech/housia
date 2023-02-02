@@ -1,3 +1,4 @@
+
 import React, { useContext, useEffect, useState}  from 'react';
 import { AppContext } from '../../../Context/AppContext';
 import axios from 'axios';
@@ -6,86 +7,72 @@ import {useNavigate} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
-import './portafolio.scss';
+import "./portafolio.scss";
 
 export const Portafolio = () => {
-
-  const [propertyDetails, setPropertyDetails] = useState();
   /* console.log(propertyDetails); */
 
-   const {user, setIsLogged} = useContext(AppContext);
-   const navigate = useNavigate();
+  const { user, setIsLogged, propertyDetails, setPropertyDetails } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const URL_PROP = 'http://localhost:4000/property';
 
   useEffect(() => {
     const token = localStorageUser();
-    if(token){
+    if (token) {
+      let id = jwtDecode(token).user.id;
+      setIsLogged(true);
+      /* console.log(id); */
 
-    let id = jwtDecode(token).user.id;
-    setIsLogged(true);
-    /* console.log(id); */
-    
-    axios
-      .get(`http://localhost:4000/users/getAllProperty/${id}`)
+      axios
+        .get(`http://localhost:4000/users/getAllProperty/${id}`)
 
-      .then((res)=>{
-        setPropertyDetails(res.data.resultProperty);
-      })
-      .catch((err)=> {
-        console.log(err);
-      })
+        .then((res) => {
+          setPropertyDetails(res.data.resultProperty);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-}, [])
-
-  const delPropertyUser = (propiedad) => {
-    
-    axios
-      .put(`http://localhost:4000/users/logicDeletedUserProperty/${propiedad.property_id}/${user?.user_id}`)
-      .then((res) => {
-        setPropertyDetails(res.data.resultProperty);
-          console.log(res.data.resultProperty, "respuesta del axios del delete");
-      })
-      .catch((error)=> {console.log(error);})
-  }
+  }, []);
 
   const handleSold = (idProperty, isSold) => {
     let url = "";
-    
-    if(isSold === 1){
-      url=`http://localhost:4000/property/uncheckSale/${idProperty}/${user.user_id}`
+    const END_URL_USER = `${idProperty}/${user.user_id}`
 
-    }else if (isSold === 0) {
-      url = `http://localhost:4000/property/checkSale/${idProperty}/${user.user_id}`
+    if (isSold === 1) {
+      url = `${URL_PROP}/uncheckSale/${END_URL_USER}`;
+    } else if (isSold === 0) {
+      url = `${URL_PROP}/checkSale/${END_URL_USER}`;
     }
     axios
-    .put(url)
-    .then((res)=>{
-      setPropertyDetails(res.data)
-    })
-    .catch((Err)=>console.log(Err))
-    }
+      .put(url)
+      .then((res) => {
+        setPropertyDetails(res.data);
+      })
+      .catch((Err) => console.log(Err));
+  };
 
   const handleAllProperties = () => {
     const token = localStorageUser();
-    if(token){
-        let user_id = jwtDecode(token).user.id;
-       
-    axios
-    .get(`http://localhost:4000/users/getProperties/${user_id}`)
-    .then ((res) => {
-      setPropertyDetails(res.data)
+    if (token) {
+      let user_id = jwtDecode(token).user.id;
 
-    })
-    .catch((error)=> console.log(error))
-  }
-  }
-
+      axios
+        .get(`http://localhost:4000/users/getProperties/${user_id}`)
+        .then((res) => {
+          setPropertyDetails(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  };
 
   return (
     <Container fluid className='portafolio-container'>
       <h1>PORTAFOLIO</h1>
 
-      <div className='image'>
-        <div className='benefit'>
+      <div className="image">
+        <div className="benefit">
           <h4>Beneficio</h4>
           <h2>312.220 €</h2>
           <div className='total'><span>Total</span><span className='turquoise'>+32%</span></div>
@@ -93,10 +80,15 @@ export const Portafolio = () => {
         </div>
       </div>
 
-      <div className='buttons'>
-      <Button className='button' onClick={handleAllProperties}>Ver todas mis propiedades</Button>
-      <Button className='button' onClick={()=>navigate(`/addProperty`)}>Añadir propiedad</Button>
+      <div className="buttons">
+        <Button className="button" onClick={handleAllProperties}>
+          Ver todas mis propiedades
+        </Button>
+        <Button className="button" onClick={() => navigate(`/addProperty`)}>
+          Añadir propiedad
+        </Button>
       </div>
+
 
       <Row className='container-prop'>
         {propertyDetails?.map((prop, index)=> {
@@ -140,8 +132,7 @@ export const Portafolio = () => {
           })
       }
       </Row>
-      
-
+   
     </Container>
-  )
-}
+  );
+};

@@ -8,8 +8,6 @@ class userController {
 
 //--    CREAR USUARIO
 //localhost:4000/user/createUser
-
-
 createUser = (req, res) =>{
     const { name, lastname, email, password, promotional_code} = req.body;
 
@@ -51,12 +49,9 @@ loginUser =(req, res)=>{
         } else {
 
             //METODO PARA BCRYPT CUANDO LO IMPLEMENTEMOS
-
             const [user] = result;
             const hash = user.user_password;
-
             const userId = user.user_id;
-
 
             bcrypt.compare(password, hash, (error, response) => {
                 // console.log("respuesta", response);
@@ -79,17 +74,13 @@ loginUser =(req, res)=>{
                   );
                   res.status(200).json({ token });
                
-                  //si las contraseñas coinciden
-                  
                 } else {
                   res.status(401).json("Usuario y contraseña incorrectos");
                   
                 }
               });
         }
-
     })
-
 }
 
 // GET DE UN SOLO USER (devuelve los datos de un usuario tras loguearse)
@@ -113,7 +104,6 @@ selectOneUser = (req, res) => {
             res.status(200).json({ resultUser, resultProperty})
         });
     });
-
 };
 
 // FORMULARIO EDITAR USER
@@ -121,7 +111,6 @@ selectOneUser = (req, res) => {
 showOneUser = (req, res) =>{
      
     let userId = req.params.user_id
-
     let sqlGE = `SELECT * FROM user where user_id = ${userId}`
 
     connection.query(sqlGE, (errorGE, result)=>{
@@ -132,7 +121,6 @@ showOneUser = (req, res) =>{
     } )
 }
 
-
 // EDITAR UN USUARIO (metodo put)
 //localhost:4000/users/editUser/:userId
 editOneUser =(req, res)=>{
@@ -141,7 +129,6 @@ editOneUser =(req, res)=>{
 
     // ESTO es por si lo pasamos como JSON REGISTER
     let { user_name, user_lastname, user_phone, user_dni, user_code, user_birth_date } = JSON.parse(req.body.register)
-    
    
     let img = "";
     if(!user_birth_date){
@@ -168,7 +155,6 @@ getAllProperty = (req, res) => {
     let {user_id} = req.params;
 
     let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC LIMIT 6`;
-  
     
         connection.query(sql2, (error2, resultProperty) => {
             if (error2) {
@@ -176,7 +162,6 @@ getAllProperty = (req, res) => {
             }
             res.status(200).json({ resultProperty});
             });
-                   
     };
 
     ///Trae TODAS las propiedades de un usuario con su foto principal
@@ -199,7 +184,7 @@ getAllProperty = (req, res) => {
       logicDeletedUserProperty = (req, res) => {
         let {property_id, user_id} = req.params;
         console.log(property_id, user_id);
-        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = "${property_id}"`;
+        let sql = `UPDATE property SET property_is_user_deleted = true, property_is_for_sale = false WHERE property_id = "${property_id}"`;
 
         let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
 
@@ -234,12 +219,11 @@ getAllProperty = (req, res) => {
           })
       }
 
-
       ///Obtener propiedades VENDIDAS de un usuario
       //localhost:4000/users/getSoldProperties/:user_id
       getSoldProperties = (req, res) =>{
         let {user_id} = req.params;
-        console.log(user_id, "aaaaaaaaa")
+        /* console.log(user_id, "aaaaaaaaa") */
         let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
 
         connection.query(sql, (error, result) => {
@@ -299,8 +283,6 @@ getAllProperty = (req, res) => {
             res.status(200).json({result})
         })
       }
-      
-
 
       //TRAE TODOS LOS FAVORITOS DE UN USUARIO QUE NO ESTEN BORRADOS
       //localhost:4000/users/getFavs/:user_id
@@ -317,7 +299,6 @@ getAllProperty = (req, res) => {
             res.status(200).json(result)
         })
       }
-
 
       //CREA UNA NUEVA ENTRADA EN LOS FAVORITOS DE UN USUARIO
       //localhost:4000/users/postFav/:user_id/:property_id

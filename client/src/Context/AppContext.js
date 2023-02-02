@@ -16,6 +16,7 @@ export const AppProvider = (props) => {
     const [subTypeId, setSubTypeId] = useState(-1);
     const [typeId, setTypeId] = useState(-1);
     const token = localStorageUser(); 
+    const [propertyDetails, setPropertyDetails] = useState([]);
 
 useEffect(() => {
     const token = localStorageUser();
@@ -53,7 +54,9 @@ useEffect(() => {
                 setTypeId,
                 subTypeId, 
                 setSubTypeId,
-                token
+                token,
+                propertyDetails,
+                setPropertyDetails
                 }}>
             {props.children}
         </AppContext.Provider>
