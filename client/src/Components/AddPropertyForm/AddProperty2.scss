@@ -37,7 +37,7 @@
         p{
             font-size:20px;
         }
-        .sepAdd2{
+        .sepAdd2, .displayAdd2{
            margin-left: 20px;
         }
        }
@@ -77,23 +77,52 @@
         }
     }
 }
+//RESPONSIVE
+@media(max-width:1400px){
+    .padreAdd2{
+        height: 100vh;
+        .rowAdd2{
+            margin: 0px!important;
+            padding: 0px;
+            
+            .colAdd2{    
+            .displayAdd2jose{
+                display: flex;
+                flex-direction: column;
+                align-items: center!important;   
+                text-align: center;      
+            }
+        }
+        .otroColAdd2{
+            align-items: center;
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center ;
+            
+        }
+        }
+    }
+}
 
+@media(max-width:990px){
+    .padreAdd2{
+        height: 100%;
+        button{
+            margin-bottom: 30px;
+        }
+    }
+        
+}
 //TABLET
 @media (max-width: 769px ){
     .padreAdd2{
-        height: 130vh;
+        height: 100%;
         .colAdd2{
-        padding-bottom: 15px;
-           padding-left: 12vw;
-           margin: 0px; 
-           .pAdd2{
-            text-align: center;
-           }
            h3{
             text-align: center;
            }
            .displayAdd2{
-            margin-left: 12vw;
             input{
                 width: 26vw;
             }  
@@ -101,7 +130,7 @@
         }
         .otroColAdd2{
             padding-top: 0px;
-            margin-left: 15vw;   
+              
             input{
                 width: 53vw;
             }  
@@ -118,14 +147,17 @@
 //MOVIL
 @media (max-width: 391px ){
     .padreAdd2{
-        height: 130vh; 
+        height: 100%; 
         .tituloAdd2{
             h2{
                 font-size: 45px;
             }
         }
         .colAdd2{
-           padding: 5vw 7vw;
+            .sepAdd2{
+                margin: 0px!important;
+             }
+          
            h3{
             font-size: 35px;
            }

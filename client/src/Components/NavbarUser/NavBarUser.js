@@ -23,7 +23,7 @@ export const NavBarUser = () => {
    <>
    <Navbar collapseOnSelect className='NavBarContainer' expand="lg">
       <Container>
-      <Navbar.Brand as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Navbar.Brand>
+      <Navbar.Brand as={Link} to='/'><img src='/images/logo-blanco.png' alt='logo_blanco'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav" className='collapse-navbar'>
           <Nav>

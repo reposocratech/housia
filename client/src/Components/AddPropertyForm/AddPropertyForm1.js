@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
@@ -127,6 +128,7 @@ const handleSubmit = (e) => {
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
         mediante AI</h3>
+        <div className='displayresAdd1'>
         <p>Elije un nombre para tu propiedad</p>
         
         
@@ -168,12 +170,14 @@ const handleSubmit = (e) => {
             })}  
         </select>
         </div>
+        </div>
         <div style={{ color: "white" }}>{message2}</div>
         <br/>
         </div>
         
         <div className='col-6 padre2Add1'>
-         <img src='./images/user/Captura.png' alt="ForSale.png" />
+        
+         <img src='./images/user/Captura2.png' alt="ForSale.png" />
          <br/>
         <button 
             type='submit' 

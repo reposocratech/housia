@@ -68,7 +68,7 @@ export const AddProperty3 = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container fluid className='padreee3Add'>
         <div className='row rowAdd3'>
-          <div className='col-12 col-md- 12 col-lg-6 col-xxl-6 priColAdd3'>
+          <div className='col-12 col-lg-6 priColAdd3'>
         <p>Calle</p>
         
         <input 
@@ -174,7 +174,7 @@ export const AddProperty3 = () => {
             </div>
           }
           </div>
-        <div className='col-6 segColAdd3'>
+        <div className='col-12 col-lg-6 segColAdd3'>
           
         {Number(typeId) !== 4 && <>
         <div >

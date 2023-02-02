@@ -3,9 +3,10 @@
     background-color: #272839;
     color: white;
     width: 100%;
-    height: 130vh;  
+    height: 110vh;  
         .padreAdd1{
             padding: 170px 10vw;
+
             ::placeholder{
                 color: white;
             }           
@@ -48,9 +49,10 @@
         }
         .padre2Add1{
             img{
-                padding: 100px 0px 0px 0px;
-                width:650px;
-                margin: 0px 0px 0px 100px;
+                padding: 0px 0px 0px 0px;
+                width:550px;
+                height: 550px;
+                margin: 160px 0px 20px 7vw;
             }
             button{
                 margin-left: 13vw;
@@ -69,16 +71,34 @@
 
 //RESPONSIVE
 @media (max-width: 1400px ){
+    
     .fondoAdd1{ 
+        height: 100vh; 
         .padreAdd1{
             padding: 150px 100px 0px 100px;
+            .displayresAdd1{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 70px;          
+            }
         }
         .padre2Add1{
+            .barraAdd1{
+                
+                  
+                margin: 0PX; 
+            }
+            .progress-bar{
+                background-color: #37A5B7;            
+            }
             img{
                 display: none;
             }
             button{
-                margin: 0px 20vw;
+                width: 70%;
+                text-align: center;
+                margin: 0px 50px 0px 32vw;
             }
     }   
 }
@@ -87,6 +107,7 @@
 //TABLET
 @media (max-width: 769px ){
     .fondoAdd1{ 
+        height: 100%; 
             .padreAdd1{
                 padding: 150px 12vw 0px 12vw;
                 input{
@@ -101,7 +122,8 @@
                     display: none;
                 }
                 button{
-                    margin: 0px 10vw;
+                    width: 10%;
+                    margin: 0px 9vw 30px 11vw;
                     width: 72vw;
                 }
             }   
@@ -111,6 +133,7 @@
 //MOVIL
 @media (max-width: 391px ){
     .fondoAdd1{
+        height: 100%; 
             .padreAdd1{
                 padding: 150px 10vw 0px 10vw;
                     
@@ -134,14 +157,12 @@
             .padre2Add1{
 
                 button{
-                   margin:0px 0px 30px 30px;
+                   margin:0px 0px 30px 7vw;
                    padding: 10px 5px;
 
-                    width: 300px;
+                    width:75vw;
                 }
             }   
-    }
-
-    
+    } 
 }
  
