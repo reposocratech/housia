@@ -21,7 +21,6 @@ import { Discover } from '../Pages/Discover/Discover'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
-
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 import { Favourite } from '../Components/Favourites/Favourite'

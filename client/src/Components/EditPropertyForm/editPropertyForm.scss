@@ -1,7 +1,9 @@
 .datos-propiedad-container{
     background-color: #272839;
     color: white;
-    min-height: 100vh;
+
+    min-height: 160vh;
+
     h1{
         padding-top: 130px;
         font-weight: bold;
@@ -88,4 +90,40 @@
         }
     
     }
+}
+
+@media(max-width: 1130px){
+    .datos-propiedad-container{
+       background-color: #272839;
+        color: white;
+        min-height: 180vh; 
+    }
+        
+}
+
+@media(max-width: 767px){
+    .datos-propiedad-container{
+       background-color: #272839;
+        color: white;
+        height: 320vh;
+    }
+        
+}
+
+@media(max-width: 500px){
+    .datos-propiedad-container{
+       background-color: #272839;
+        color: white;
+        height: 344vh;
+    }
+        
+}
+
+@media(max-width: 350px){
+    .datos-propiedad-container{
+       background-color: #272839;
+        color: white;
+        height: 380vh;
+    }
+        
 }

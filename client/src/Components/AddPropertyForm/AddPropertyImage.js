@@ -78,6 +78,9 @@ export const AddPropertyImage = () => {
     <Container fluid className=" fondo">
 
       <h2 className="addPropertyImage">Añadir Propiedad</h2>
+      <div className='alturaCont4'>
+        <span>5/5</span>
+        </div>
 
         {/* VIEW IMAGES */}
       <Row>

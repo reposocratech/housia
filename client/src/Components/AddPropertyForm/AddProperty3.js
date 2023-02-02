@@ -14,9 +14,6 @@ export const AddProperty3 = () => {
     const navigate = useNavigate();
 
     const { register, formState:{errors}, handleSubmit } = useForm();
-    
-
-
     useEffect(() => {
         axios
         .get("http://localhost:4000/property/allProvinces")
@@ -64,7 +61,10 @@ export const AddProperty3 = () => {
   return (
     <div className='padreeAdd3'>
      <h2>Añadir Propiedad</h2>
-     <h3>Direccion</h3>
+     <div className='alturaCont3'>
+        <span>3/5</span>
+        </div>
+     <h3>Dirección</h3>
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container fluid className='padreee3Add'>
         <div className='row rowAdd3'>
