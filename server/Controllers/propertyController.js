@@ -349,9 +349,6 @@ class propertyController {
           img = req.files;
         }
 
-
-        /* console.log(img); */
-
         
         let mainImage = img[0].filename
 

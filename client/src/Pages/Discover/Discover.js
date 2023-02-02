@@ -3,7 +3,7 @@ import axios from "axios";
 
 import './Discover.scss';
 
-import { Col, Container, Form, InputGroup,  Modal, Row } from 'react-bootstrap';
+import { Col, Container, Form, InputGroup,  Modal, Row, Button, Accordion } from 'react-bootstrap';
 
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
@@ -32,7 +32,7 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
-    const target = useRef(null);
+    
 
     ///////////token para comprobar si el usuario es
     //estados de filtros
@@ -553,86 +553,330 @@ export const Discover = () => {
 
     <Container fluid className='portafolio-container'>
          <h1>Descubre</h1>
+
+
     <div className='discover'>
-       
         <div className='filters'>
         <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
-        <div>
-            <button className='mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
-        </div>
-
-        <div>
+        <Row>
+        <Col className='row'>
+            <button className='col-12 mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
+        </Col>
+        </Row>
         
 
-        <h5>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
-        <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
-        </div>
+        <div>
+            
+        {/* <h5>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h5>
 
-        <hr/>
+        <Row className='buttons'>
+        <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>                     
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
+            </Col>
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
+            </Col>
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
+            </Col>
+                       
+        
+        </Row>
+
         <h5>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
-        <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
-        <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
-        <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
-        </div>
 
-        <hr/> 
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
+            </Col>
+        </Row>
+
+
         <h5>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
-        <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
-        <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
-        <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
-        </div>
-        
-        <hr/> 
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
+            </Col>
+        </Row>
+
         <h5>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
-        <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
-        <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
-        </div>
+       <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
+            </Col>
+       </Row>
 
-        <hr/> 
+       <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
+            </Col>
+        </Row>
+
         <h5>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
-        <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
-        <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
-        </div>
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
+            </Col>
+        </Row>
 
-        <hr/> 
-
-       
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
+            </Col>
+        </Row>
         
-
         <h5>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
-        <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
-        <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
-        </div>
+       <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
+            </Col>
+       </Row>
 
-        <hr/>
-        <h5>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h5>
-        <div className='buttons'>
-        <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
-        <button onClick={()=>handleIsNew(1)}> Nueva</button>
-        <button onClick={()=>handleIsNew(0)}> Usada</button>
-        </div>
+       <Row className='buttons'>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
+            </Col>
+           
+       </Row>
+
+       <h5>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h5>   
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
+            </Col>
+        </Row>
+
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleIsNew(1)}> Nueva</button>
+            </Col>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleIsNew(0)}> Usada</button>
+            </Col>
+           
+        </Row> */}
+
+       
+        <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
+        <Accordion.Body>
+        <Row className='buttons'>
+        <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>                     
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
+            </Col>
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
+            </Col>
+
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
+            </Col>
+                       
         
-        <hr/>
+        </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</Accordion.Header>
+        <Accordion.Body>
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
+            </Col>
+        </Row>
+
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="2">
+        <Accordion.Header>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</Accordion.Header>
+        <Accordion.Body>
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
+            </Col>
+        </Row>
+
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
+            </Col>
+        </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="3">
+        <Accordion.Header>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</Accordion.Header>
+        <Accordion.Body>
+        <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
+            </Col>
+       </Row>
+
+       <Row className=' buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
+            </Col>
+        </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="4">
+        <Accordion.Header>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</Accordion.Header>
+        <Accordion.Body>
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
+            </Col>
+        </Row>
+
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
+            </Col>
+        </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="5">
+        <Accordion.Header>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</Accordion.Header>
+        <Accordion.Body>
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
+            </Col>
+       </Row>
+
+       <Row className='buttons'>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
+            </Col>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
+            </Col>
+           
+       </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="6">
+        <Accordion.Header>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</Accordion.Header>
+        <Accordion.Body>
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={6} lg={3}>
+            <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
+            </Col>
+        </Row>
+
+        <Row className='buttons'>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleIsNew(1)}> Nueva</button>
+            </Col>
+            <Col className="metro" xs={12} md={5} lg={5}>
+            <button onClick={()=>handleIsNew(0)}> Usada</button>
+            </Col>
+           
+        </Row>
+        </Accordion.Body>
+      </Accordion.Item>
+            
+    </Accordion>
+
+
+
+
+
+        
        
-        <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar caracteristicas adicionales": "Ocultar caracteriscas adicionales"}</button>
+       <Row>
+       <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar extras": "Ocultar extras"}</button>
        
-        <hr/>
+       </Row>
+       
+       
        
        {showFeatures &&
        <>
@@ -659,9 +903,11 @@ export const Discover = () => {
        </>
        } 
         
-        <hr/>
+      
         <h5>Tipos de cocina</h5>
-        <select className='clearButton' onChange={SelectKitchenFilter}>
+        <Row className='buttons'>
+            <Col className="cocina" xs={12} md={6} lg={6}>
+            <select className='clearButton' onChange={SelectKitchenFilter}>
             <option value={-1}>Sin filtro</option>
             {kitchenInDB?.map((kitchen, index)=>{
                 return(
@@ -673,10 +919,17 @@ export const Discover = () => {
                 )
             })}
         </select>
+            </Col>
+        </Row>
+       
 
-        <hr/>
+        
+
+
         <h5>Tipos de Activo</h5>
-        <select className='clearButton' onChange={selectTypeIdFilter}>
+        <Row className='buttons'>
+            <Col className="" xs={12} md={6} lg={6}>
+            <select className='clearButton' onChange={selectTypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {typeInDB?.map((type, index)=>{
                 return(
@@ -687,27 +940,32 @@ export const Discover = () => {
                         {type.type_name}</option>
                 )
             })}
-        </select>
+            </select>
+            </Col>
+        
+                <Col className="" xs={12} md={6} lg={6}>
+                { showSubtype &&
+                <select className='clearButton' onChange={selectSubtypeIdFilter}>
+                    <option value={-1}>Sin filtro</option>
+                    {subTypeInDB?.map((subtype, index)=>{
+                        return(
+                            <option 
+                            key={index}
+                            value={subtype.subtype_id}
+                            >{subtype.subtype_name}
+                            </option>
+                        )
+                    })}
+                </select>
 
-        { showSubtype &&
-         <select className='clearButton' onChange={selectSubtypeIdFilter}>
-            <option value={-1}>Sin filtro</option>
-            {subTypeInDB?.map((subtype, index)=>{
-                return(
-                    <option 
-                    key={index}
-                    value={subtype.subtype_id}
-                    >{subtype.subtype_name}
-                    </option>
-                )
-            })}
-         </select>
+                }
+                </Col>
+        </Row>
 
-        }
-
-        <hr/>
         <h5>Filtrar por provincia</h5>
-        <select className='clearButton' onChange={selectProvinceIdFilter}>
+        <Row className='buttons'>
+            <Col className="" xs={12} md={6} lg={6}>
+            <select className='clearButton' onChange={selectProvinceIdFilter}>
             <option value={-1}>Sin filtro</option>
             {provinceInDb?.map((province, index)=>{
                 return(
@@ -718,8 +976,10 @@ export const Discover = () => {
                 )
             })}
         </select>
+            </Col>
+            <Col className="" xs={12} md={6} lg={6}>
             { showCities &&
-                <select onChange={selectCityFilter}>
+                <select className='clearButton' onChange={selectCityFilter}>
                     <option value={-1}>Sin filtro</option>
                     {cityInDb.map((city, index)=>{
                         return(
@@ -732,59 +992,79 @@ export const Discover = () => {
                 </select>
             
             }
+            </Col>
+        </Row>
+
+        
+
+       
+
+       
+        
+       
+           
         </div>
         </div>
 
 
         <Row className='properties'>
-        <Col className='card'>
+       
         {filterList?.map((property, i) => {
             return(
-
+                <Col className='card'xs={12} md={12} lg={6}>
                 <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
-                     <Modal
-                        size="sm"
-                        show={smShow}
-                        onHide={() => setSmShow(false)}
-                        aria-labelledby="example-modal-sizes-title-sm"
-                    >
-                    <Modal.Header closeButton>
-                    <Modal.Title id="example-modal-sizes-title-sm">
-                    Accion repetida.
-                    </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Esta propiedad ya esta en su lista de Favoritos. (para acceder a sus favoritos despliege desde su foto las opciones)</Modal.Body>
-                    </Modal>
-
-
-
-                <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                 <div className='styleCard'>
+                 <div className='parteTransparente'>
+                    <p  className='perTrans'>12%</p> 
+                <div className='estrella'>
+                    <img src='/images/icons/favoritos.png'/></div>
+                </div>
+                    
+                    <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                   
+                    
+                </div>   
+                
                 <div className='d-flex flex-column'>
                 <h5>{property?.property_name}</h5> 
                 <p>{property?.city_name} , {property?.province_name}</p>
                 </div>
-                                                   
-
-
-                
-                
+                                               
+                           
                 <p>{Math.floor(property?.purchase_buy_price * 1.14)}</p>
-                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
+               
                 
                            
-                <p  className='perTrans'>12%</p>                             
+                                            
                
 
+                {favOption &&
                 <div>
                 <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
-                {show && <span>Esta opcion ya esta en tus favoritos</span>}
+                {show && <>
+                 <Modal show={show} onHide={()=>setShow(false)}>
+                 <Modal.Header closeButton>
+                   <Modal.Title>Accion ya realizada</Modal.Title>
+                 </Modal.Header>
+                 <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
+                    <br/>
+                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+                 </Modal.Body>
+                 <Modal.Footer>
+                   <Button variant="secondary" onClick={()=>setShow(false)}>
+                     Close
+                   </Button>
+                 </Modal.Footer>
+               </Modal>
+                </>}
                 </div>}
                
                 </div>
-                
+               
+                </Col>
             )
         })}
-        </Col>
+        
         </Row>
     </div>
     </Container>
