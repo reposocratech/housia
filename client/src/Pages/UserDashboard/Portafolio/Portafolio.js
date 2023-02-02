@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState}  from 'react';
 import { AppContext } from '../../../Context/AppContext';
 import axios from 'axios';
-import {Button, Container} from 'react-bootstrap';
+import {Button, Container, Row} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
@@ -82,12 +82,12 @@ export const Portafolio = () => {
 
   return (
     <Container fluid className='portafolio-container'>
-      <h1 className='turquoise'>PORTAFOLIO</h1>
+      <h1>PORTAFOLIO</h1>
 
       <div className='image'>
         <div className='benefit'>
           <h4>Beneficio</h4>
-          <h1 className='turquoise'>312.220 €</h1>
+          <h2>312.220 €</h2>
           <div className='total'><span>Total</span><span className='turquoise'>+32%</span></div>
           <div className='monthly'><span>Monthly</span><span className='turquoise'>+32%</span></div>
         </div>
@@ -97,57 +97,49 @@ export const Portafolio = () => {
       <Button className='button' onClick={handleAllProperties}>Ver todas mis propiedades</Button>
       <Button className='button' onClick={()=>navigate(`/addProperty`)}>Añadir propiedad</Button>
       </div>
-      <div className='row'>
+
+      <Row className='container-prop'>
         {propertyDetails?.map((prop, index)=> {
             return(
-
-              <div className='col-12 col-sm-6 col-lg-4 properties' key={index}>
+              <div className='col-12 col-sm-10 col-md-6  col-lg-4 properties' key={index}>
               <div  className='property'>
-
                 <div 
                   onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
                     <img src={`/images/property/${prop.image_title}`}/>
-                </div>
-
-              <div className='all'>
-                <button 
-                  onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'
-                >
-                  <h5>{prop?.property_name}
+                   
+                    <div className='filtro-opaco'>
                     <div 
                       className={prop.property_is_for_sale === 0 ? "nosold " : "sold " }
                       >En Venta
                     </div>
-                  </h5>
-                  <p>
-                    <img className='location' src='/images/property/location.png'/>
-                    <span className='address'> {prop.address_street_name} </span>
-                    <span className='address'>{prop.address_street_number}</span>
-                  </p>
-                  <h5 className='turquoise'>{prop.purchase_buy_price} €</h5>
-                </button>
+                    <h5>€{prop.purchase_buy_price}</h5>
+                    </div>
+                   
+                </div>
 
-                <div className='del_sale'>
-                     
-                  <Button 
+              <div className='p-2'>
+                <div onClick={()=>
+                      navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'
+                      >
+                    <h5>{prop?.property_name}</h5>
+                        <div className='d-flex      align-items-center'>
+                        <img className='location' src='/images/property/location.png'/>
+                        <p className='address m-0'> {prop.address_street_name} {prop.address_street_number}</p>
+                      </div>
+                </div>  
+                <Button 
                   onClick={()=>handleSold(prop.property_id, prop.property_is_for_sale)} 
                   className= "sale">
                     {prop.property_is_for_sale === 0 ? "Poner en venta" : "Quitar de la venta"}
-                  </Button>
-
-                  <Button 
-                    onClick={()=>delPropertyUser(prop)} className='delete'
-                    > Borrar
-                    </Button>
+                </Button>
               </div>
-              </div>
-                  </div>
+            </div>
              
-              </div>
+          </div>
             )
           })
       }
-      </div>
+      </Row>
       
 
     </Container>

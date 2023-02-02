@@ -112,6 +112,7 @@ export const AdminCustomFeatures = () => {
                 setResetUser(!resetUser);
                 setFeatures("");
                 setMessage1("");
+                document.getElementById('input-a-borrar-features').value = "";
             })
             .catch((err) => {
                 console.log(err, 'error del create features');
@@ -130,6 +131,7 @@ export const AdminCustomFeatures = () => {
                 setResetUser(!resetUser);
                 setPropertyType("");
                 setMessage2("");
+                document.getElementById('input-a-borrar-tipo').value = "";
             })
             .catch((err) => {
                 console.log(err, 'error del create type');
@@ -150,6 +152,7 @@ export const AdminCustomFeatures = () => {
                 setResetUser(!resetUser);
                 setPropertySubType("");
                 setMessage3 ("");
+                document.getElementById('input-a-borrar-subtipo').value = "";
             })
             .catch((err) => {
                 console.log(err, 'error del create subtype');
@@ -168,6 +171,7 @@ export const AdminCustomFeatures = () => {
                 setResetUser(!resetUser);
                 setKitchenType("");
                 setMessage4("");
+                document.getElementById('input-a-borrar-cocina').value = "";
             })
             .catch((err) => {
                 console.log(err, 'error del create kitchen');
@@ -278,6 +282,7 @@ export const AdminCustomFeatures = () => {
                 {show && 
                 <>
                 <input
+                id='input-a-borrar-cocina'
                 type='text'
                 placeholder='Tipo de cocina'
                 name='kitchen_name'
@@ -293,10 +298,10 @@ export const AdminCustomFeatures = () => {
            {kitchenDB?.map((elem, index)=>{
             return(
                <div className='container-mapeo' key={index}>
-                    <span>{elem.kitchen_name}</span>
-                    <span onClick={()=> deleteKitchenType(elem.kitchen_id)} class="material-symbols-outlined icono">
+                    <span className='p-1'>{elem.kitchen_name}</span>
+                    <span className={elem.kitchen_id === 1 ? 'esconder material-symbols-outlined icono' : 'material-symbols-outlined icono'} onClick={()=> deleteKitchenType(elem.kitchen_id)}>
                     delete
-                    </span>
+                    </span>         
                 </div> 
             )
             })}
@@ -312,6 +317,7 @@ export const AdminCustomFeatures = () => {
                 {show && 
                 <>
                 <input
+                id='input-a-borrar-tipo'
                 type='text'
                 placeholder='Tipo de propiedad'
                 name='type_name'
@@ -347,6 +353,7 @@ export const AdminCustomFeatures = () => {
                 {show && 
                 <>
                 <input
+                id='input-a-borrar-features'
                 type='text'
                 placeholder='Caracterícticas'
                 name='feature_name'
@@ -392,6 +399,7 @@ export const AdminCustomFeatures = () => {
 
                 </select>
                 <input
+                id='input-a-borrar-subtipo'
                 type='text'
                 placeholder='Subtipo'
                 name='subtype_name'
