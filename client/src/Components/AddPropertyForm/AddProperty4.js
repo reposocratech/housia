@@ -60,6 +60,9 @@ export const AddProperty4 = () => {
     <div className='TituloAdd4'>
     <h2 className='text-center'>Añadir propiedad</h2>
     </div>
+    <div className='alturaCont4'>
+        <span>4/5</span>
+        </div>
   
     <h4>Seleccionar caracteristicas</h4>
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from "axios";
 import {useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../../../Context/AppContext';
@@ -30,7 +30,13 @@ export const PropertyDetails = () => {
 
     const navigate = useNavigate();
     const URL_PROP = 'http://localhost:4000/property';
+    const scrollRef = useRef();
 
+    const scrollToElemen = () => scrollRef.current.scrollIntoView();
+    
+    useEffect(() => {
+        scrollToElemen();
+    }, [])
     const handleColor = () => setColorSold(!colorSold);
     /* const handleClose = () => setShow(false); */
     const handleShow = () => setShowSalePropertyUser(true);
@@ -179,7 +185,7 @@ export const PropertyDetails = () => {
     <>
     <Container fluid className='portafolio-container'>
 
-        <h1 className='title mt-4'>{propertyDetails[0]?.property_name}</h1>
+        <h1 className='title mt-4' ref={scrollRef}>{propertyDetails[0]?.property_name}</h1>
 
         <div className='infoCarousel'>
         {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
