@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from "axios";
-
 import './Discover.scss';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Form, InputGroup,  Modal, Row } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 
@@ -30,7 +29,7 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
-    const target = useRef(null);
+   
 
     ///////////token para comprobar si el usuario es
     //estados de filtros
@@ -62,7 +61,7 @@ export const Discover = () => {
     //NUEVO O USADO
     const [filterIsNew, setFilterIsNew] = useState(-1);
 
-
+   
     useEffect(() => {
         
         
@@ -466,7 +465,7 @@ export const Discover = () => {
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
-    // console.log(discover, "esto es el arrays de casas originales");
+    console.log(discover, "esto es el arrays de casas originales");
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
@@ -550,8 +549,9 @@ export const Discover = () => {
   return (
 
     <Container fluid className='portafolio-container'>
+         <h1>Descubre</h1>
     <div className='discover'>
-        <h1>Descubre</h1>
+       
         <div className='filters'>
         <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
         <div>
@@ -730,39 +730,75 @@ export const Discover = () => {
             
             }
         </div>
+        </div>
 
-        <div>
+
+        <Row className='properties'>
+        <Col className='card'>
         {filterList?.map((property, i) => {
             return(
-                <div key={i} style={{border:"2px solid red"}}>
-                <img src={property?.image_title} alt=""></img>
+
+                <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
+                     <Modal
+                        size="sm"
+                        show={smShow}
+                        onHide={() => setSmShow(false)}
+                        aria-labelledby="example-modal-sizes-title-sm"
+                    >
+                    <Modal.Header closeButton>
+                    <Modal.Title id="example-modal-sizes-title-sm">
+                    Accion repetida.
+                    </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Esta propiedad ya esta en su lista de Favoritos. (para acceder a sus favoritos despliege desde su foto las opciones)</Modal.Body>
+                    </Modal>
 
 
-                <h5>{property?.property_name}</h5>                                     
 
-                <p>nombre de la ciudad:{property?.city_name} /// (Spain)</p>
-                <p>Provincia: {property?.province_name}</p>
-                <p>Precio: {Math.floor(property?.purchase_buy_price * 1.14)}</p>
-                {favOption &&
+                <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                <div className='d-flex flex-column'>
+                <h5>{property?.property_name}</h5> 
+                <p>{property?.city_name} , {property?.province_name}</p>
+                </div>
+                                                   
+
+
+                
+                
+                <p>{Math.floor(property?.purchase_buy_price * 1.14)}</p>
+                {favOption && <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>}
+                
+                           
+                <p  className='perTrans'>12%</p>                             
+               
+
                 <div>
                 <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
-                {show && <span>Esta opcion ya esta en tus favoritos</span>}
+                {show && <>
+                 <Modal show={show} onHide={()=>setShow(false)}>
+                 <Modal.Header closeButton>
+                   <Modal.Title>Accion ya realizada</Modal.Title>
+                 </Modal.Header>
+                 <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
+                    <br/>
+                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+                    
+                 </Modal.Body>
+                 <Modal.Footer>
+                   <Button variant="secondary" onClick={()=>setShow(false)}>
+                     Cerrar
+                   </Button>
+                 </Modal.Footer>
+               </Modal>
+                </>}
                 </div>}
-                <hr/>
-                <p>Año de construccion: {property?.property_built_year} </p>
-                <p>Metros construidos: {property?.property_built_meters} </p>
-                <p>Metros totales: {property?.property_total_meters} </p>
-                <p>{property?.type_name} : {property?.subtype_name}</p>
-                <p>Numero de habitaciones: {property?.property_rooms}</p>
-                <p>Numero de baño/s: {property?.property_bathrooms}</p>
-                <p>Tipo de Cocina Actual: {property?.kitchen_name}</p>
-                <p>Plaza/s de aparcamiento: {property?.property_garage}</p>
-
+               
                 </div>
+                
             )
         })}
-        </div>
-        </div>
+        </Col>
+        </Row>
     </div>
     </Container>
   )

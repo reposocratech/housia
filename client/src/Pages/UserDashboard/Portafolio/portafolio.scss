@@ -2,14 +2,21 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    height: 100%;
+    min-height: 100vh;
     text-align: center;
-    padding: 3% 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     h1{
-        padding-top: 12px;
+        padding-top: 100px;
+        color:rgb(65, 193, 219);
+        font-weight: 700;
+        letter-spacing: 2px;
+    }
+    h2{
+        color:rgb(65, 193, 219) ;
+        font-weight: 600;
+        letter-spacing: 1px;
     }
     
     .image {
@@ -42,126 +49,106 @@
         }
     }
     .buttons {
-        width: 600px;
+        width: 50%;
         display: flex;
         justify-content:space-around;
-        margin: 3%;
+        margin: 50px 0;
         .button {
             width: 40%;
-            background-color: rgb(61,62,77);
+            background-color: rgba(255, 255, 255, 0.415);
             border: none;
+            padding: 10px 0;
         }
         .button:hover {
             background-color: rgb(48,162,185);
         }
 
     }
-    .properties {
-        display: flex;
+    .container-prop{
+        width: 90%;
         justify-content: center;
-        margin: 2% 0;
-        
-    }
-    .property {
-       width: 98%;
-        background-color: rgb(17,24,39);
-        border: none;
-        border-radius: 10px;
-        border-top-right-radius: 10px !important;
-        display: flex;
-        
-        
-        .imageMain {
-            width: 50%;
-            height:100%;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-           
-            img {
+        .properties {  
+            margin: 20px 0;
+        }
+        .property {
+            background-color: rgb(17, 24, 39);
+            border-radius: 15px;
+            .imageMain {
                 width: 100%;
-                height: 100%;
-                border-top-left-radius: 10px;
-                border-bottom-left-radius: 10px;
-                object-fit: cover;
-                object-position: center;
-            }
-            img:hover {
+                height: 150px;
                 cursor: pointer;
-            }
-          
-            
-        }
-        .all {
-            width: 60%;
-        }
-        .infoProperty {
-            width: 100%;
-            text-align: left;
-            padding-left: 7%;
-            padding-top: 3%;
-            background-color: rgb(17,24,39);
-            border: none;
-            color: white;
-            border-radius: 10px;
-            h5 {
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 0;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-top-left-radius: 15px;
+                    border-top-right-radius: 15px;
+                    object-fit: cover;
+                    object-position: center;
+                }
+                img:hover {
+                    cursor: pointer;
+                }
+                .filtro-opaco{
+                    height: 150px;
+                    width: 50%;
+                    background-color: rgba(0, 0, 0, 0.571);
+                    position: relative;
+                    bottom: 150px;
+                    border-top-left-radius: 15px;
+                    padding: 10px;
+                }
+                h5{
+                    text-align: left;
+                    margin-left: 10px;
+                    position: absolute;
+                    bottom: 0;
+                    color: white;
+                    font-weight: 700;
+                    font-size: 24px;
+                    color:white;
+                }
                 .sold {
                     background-color: rgb(52,168,83);
                     padding: 0 2%;
-                    margin-right: 5%;
+                    position: absolute;
+                    margin-left: 10px;
                     border-radius: 5px;
+                    width: 60%;
                 }
                 .nosold {
                     display: none;
+                } 
+            }
+            
+            .infoProperty {
+                width: 100%;
+                text-align: left;
+                border: none;
+                color: white;
+                border-radius: 10px;
+               .location {
+                color: invert($color: #767070);
+                margin-right: 5px;
+               }
+                .address {
+                    color: rgb(177,181,195); 
                 }
                 
             }
-           .location {
-            color: invert($color: #767070);
-           }
-            p {
-                margin-bottom: 0.5rem;
-            }
-            .address {
-                color: rgb(177,181,195);
-               
-            }
-            
-        }
-        .del_sale {
-           padding: 5% 8% 5% 5%;
-           
-           width: 100%;
             .sale {
                 background-color: rgb(48,162,185);
                 border: 1px solid white;
-                width: 100%;
+                width: 90%;
                 height: 20%;
-                margin: 2%;
                 border: none;
-               
-                
+                margin: 10px 0;
             }
             .sale:hover {
                 background-color: rgb(65, 193, 219);
-                
-            }
-            .delete {
-                background-color: rgb(61,62,77);
-                border: 1px solid white;
-                width: 100%;
-                height: 20%;
-                margin: 2%;
-                border: none;
-            }
-            .delete:hover {
-                background-color: rgb(141, 36, 36);
             }
         }
-       
     }
+    
    
 
 }
@@ -170,7 +157,7 @@
 @media (max-width: 769px ){
    .portafolio-container {
     .image {
-        width: 410px;
+        width: 370px;
         height: 200px;
        }
        .buttons {
@@ -185,7 +172,7 @@
 @media (max-width: 391px){
     .portafolio-container {
         .image {
-            width: 200px;
+            width: 280px;
            }
            .buttons {
             width: 200px;
