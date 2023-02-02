@@ -1,24 +1,27 @@
-// *{
-//     border: 1px solid tomato;
-// }
 .portafolio-container{
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    height: 100%;
+    min-height: 100vh;
     text-align: center;
-    padding: 7% 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 !important;
+    h1{
+        padding-top: 130px;
+        font-weight: bold;
+        font-size: 50px;
+        text-align: center;
+        color: rgba(3, 255, 247, 1);
+    }
     .discover {
         width: 100%;
-        padding: 120px 0;
         display: flex;
         .filters{
-            width: 35%;
+            width: 30%;
             text-align: left;
-            margin: 0;
+            margin-right: 2%;
             h5{
                 margin-top: 7%;
                 text-decoration: underline rgb(48,162,185);
@@ -32,12 +35,43 @@
             width: 100%;
             height: 4vh;
             border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.897);
+            background-color: #3e3f5a;
+            color: white;
+            border: none;
                    
         }
         .clearButton:hover{
             border: 1px solid rgb(48,162,185);
-            color: rgb(48,162,185);
+            background-color: rgb(48,162,185);
+            color: white;
+            font-size: larger;
+        }
+        .estilosAcordeon{
+            .accordion-item{
+                background-color: #3e3f5a !important;
+                color: white;
+                border: 1px solid #272839;
+                border-radius: 12px 12px 0 0 ;
+                margin: 10px 0;
+                   .accordion-header{
+                    background-color: #3e3f5a;
+                    border-radius: 12px 12px 0 0 ;
+                    button{
+                        background-color: #3e3f5a !important;
+                        color: white;
+                        border: 1px solid #272839;
+                        border-radius: 12px 12px 0 0 ;
+                    }
+                    .accordion-button:after {
+                        background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+                    }
+                    .accordion-button:focus {
+                        box-shadow: none;
+                        border-color: #4cecf5;
+                    }
+                   
+                }
+            }
         }
         .buttons{
             width: 100%;
@@ -49,7 +83,7 @@
                
                 padding: 0;
                 button{
-                    width: 100%;
+                    width: 95%;
                     height: 100%;
                     padding: 5px;
                     margin: auto;
@@ -59,19 +93,22 @@
                     color: white;
                 }
                 button:hover{
-                    background-color: white;
-                    color: rgb(39,40,57);
+                    background-color: #505275;
+                    
                 }
             }
            
 
         }
         .featuresButton{
-            margin-top: 8vh;
-            width: 70%;
-            height: 6vh;
+            width: 100%;
+            height: 4vh;
             border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.897);
+            margin: 0;
+            margin-top: 16px;
+            background-color: #3e3f5a;
+            color: white;
+            border: none;
         }
         .featuresButton:hover{
             border: 1px solid rgb(48,162,185);
@@ -79,33 +116,57 @@
             color: white;
             font-size: larger;
         }
-        .checkbox-container{
-            width: 50%;
+        }
+        .selectButton{
+            width: 100%;
+            height: 4vh;
+            border-radius: 15px;
+            background-color: #3e3f5a;
+            color: white;
+            border: none;
+            select,
+            option:hover {
+            background-color: rgb(48,162,185);
+            }        
+            
+        }
+        
+        .extras{
+            .extra{
+                width: 100%;
+                padding: 0;
+            }
+            .label{
+                width: 100%;
+                font-size:small;
+                text-align: center;
+                padding: 0 1%;
+            }
         }
         }
         .properties{
             display: flex;
             width: 70%;
             margin: 0;
-            .card{
-                display: flex;
-                justify-content:center !important;
+            margin-top: 3%;
+            .tarjeta{
+                
+                height: 280px;
                 background-color: transparent;
                 border: none;
-                padding: 5% 0;
+                padding: 0;
                 .cardProperty{
                     background-color: #272839;
                     width: 90% !important;
-                    height: 60%;
                     border-radius: 15px;
                     margin: auto;
                     .styleCard{
                         width: 100%;
-                        height: 100%;
+                        height: 200px;
                         position: relative;
                         img{
                             width: 100%;
-                           height:80%;
+                            height:100%;
                             border-radius: 15px;
                             object-fit: cover;
                             object-position: center;
@@ -114,29 +175,59 @@
                         }
                         .parteTransparente{
                             width: 50%;
-                            height: 80%;
-                            background-color: #27283989;
+                            height: 100%;
+                            background-color: #272839ab;
                             position: absolute;
+                            display: flex;
                             .perTrans{
-                                width: 25%;
+                                width: 50px;
+                                height: 30px;
                                 background-color: green;
                                 border-radius: 10px;
                                 margin: 5%;
+                                
                             }
-                            .estrella{
-                                width: 15%;
-                                height: 15%;
-                                background-color: rgb(48,162,185);
-                                border-radius: 10px;
-                                img{
-                                    width: 100%;
-                                    object-fit: cover;
-                                    object-position: center;
+                            .botonFavoritos{
+                                margin: 5%;
+                                .estrella{
+                                    width: 30px;
+                                    height: 30px;
+                                    background-color: rgb(48,162,185);
+                                    border-radius: 10px;
                                     
-                                }
-                            }         
+                                    border: none;
+                                    img{
+                                        width: 100%;
+                                        object-fit: cover;
+                                        object-position: center;
+                                        
+                                    }
+                                }         
+                            }
+                            
                         }
                            
+                    }
+                    .datosPropiedad{
+                        display: flex;
+                        flex-direction: column;
+                        img{
+                            width: 20px;
+                            height: 20px;
+                        }
+                       
+                    }
+                    .alinear{
+                        text-align: left;
+                    }
+                    .alineado{
+                        text-align: right;
+                        p{
+                            margin: 2%;
+                        }
+                        .color{
+                            color:rgb(48,162,185);
+                        }
                     }
                     
                     
@@ -146,6 +237,44 @@
         }
         
     }
+
+    @media (max-width: 769px ){
+        .portafolio-container{
+            .discover{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .filters{
+                    width: 70%;
+                   margin-top: 5%;
+                }
+                .properties{
+                    margin: 5% 0;
+                    width: 100%;
+                }
+            }
+        }
+        
+     }
+     
+     
+     
+     @media (max-width: 391px){
+        .portafolio-container{
+            .discover{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .filters{
+                    width: 80%;
+                   margin-top: 5%;
+                }
+                .properties{
+                    margin: 5% 0;
+                    width: 95%;
+                }
+            }
+        }
+     }
     
 
-}

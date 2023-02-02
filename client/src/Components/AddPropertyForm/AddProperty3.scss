@@ -4,6 +4,18 @@
     color: white;
     width: 100%;
     height: 130vh; 
+    .alturaCont3{
+        padding: 10px 10vw 0px;
+        span{
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            padding: 10px 35px;
+            border-radius: 10px;
+            font-size: 20px;
+       
+        }
+    }
     h2{
         padding-top: 150px;
         font-weight: bold;
@@ -14,7 +26,7 @@
     h3{
         font-size:35px;
         font-weight: bold;
-        padding: 50px 10vw 0px;
+        padding: 20px 10vw 0px;
     }
     .priColAdd3{
         padding: 20px 10vw;
@@ -100,10 +112,14 @@
     .padreeAdd3{
 
         height: 100%; 
+        .alturaCont3{
+            padding: 30px 25vw 0px;
+            
+        }
         h3{
             font-size:35px;
             font-weight: bold;
-            padding: 50px 25vw 0px;
+            padding: 20px 25vw 0px;
         }
         .rowAdd3{
             
@@ -151,10 +167,14 @@
 @media (max-width: 770px ){
     .padreeAdd3{
         height: 100%; 
+        
+        .alturaCont3{
+            padding: 30px 21vw 0px;       
+        }
         h3{
             font-size:35px;
             font-weight: bold;
-            padding: 50px 20vw 0px;
+            padding: 20px 21vw 0px;
         }
         .rowAdd3{
         .priColAdd3{
@@ -199,14 +219,23 @@
 
 //Movil
 @media (max-width: 391px ){
-    .padreeAdd3{
+    .padreeAdd3{  
     width: 100%;
+    .alturaCont3{
+        padding: 20px 10vw 0px;
+        span{
+            font-size: 15px;
+                    width: 100px!important;
+                    padding: 10px 30px!important;
+        }
+        
+    }
     h2{
         font-size: 40px;
     }
     h3{
         font-size:25px;
-        padding: 50px 10vw 0px;
+        padding: 20px 10vw 0px;
     }
     .rowAdd3{
     .priColAdd3{

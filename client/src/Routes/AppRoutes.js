@@ -4,7 +4,6 @@ import { Home } from '../Pages/UserDashboard/Home/Home'
 import { Login } from '../Pages/Auth/Login/Login'
 import { Register } from '../Pages/Auth/Register/Register'
 import { NavBarUser } from '../Components/NavbarUser/NavBarUser'
-import { Footer } from '../Components/Footer/Footer'
 import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio'
 import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen'
 import { User } from '../Pages/UserDashboard/User/User'
@@ -21,11 +20,9 @@ import { Discover } from '../Pages/Discover/Discover'
 import { EditEconomicFeatures } from '../Components/EditEconomicFeatures/EditEconomicFeatures'
 import { SummaryInversionUser } from '../Pages/property/SummaryInversionUser'
 import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyForm'
-
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 import { Favourite } from '../Components/Favourites/Favourite'
-
 
 export const AppRoutes = () => {
   const {user, isLogged} = useContext(AppContext);
@@ -77,7 +74,8 @@ export const AppRoutes = () => {
 
             </Routes>
 
-            <Footer/>
+           <Footer/>
+            
 
         </BrowserRouter>
     </div>

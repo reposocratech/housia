@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect, useState}  from 'react';
+import React, { useContext, useEffect}  from 'react';
 import { AppContext } from '../../../Context/AppContext';
 import axios from 'axios';
 import {Button, Container, Row} from 'react-bootstrap';
@@ -69,8 +69,7 @@ export const Portafolio = () => {
 
   return (
     <Container fluid className='portafolio-container'>
-      <h1>PORTAFOLIO</h1>
-
+      <h1>Portafolio</h1>
       <div className="image">
         <div className="benefit">
           <h4>Beneficio</h4>
@@ -93,11 +92,11 @@ export const Portafolio = () => {
       <Row className='container-prop'>
         {propertyDetails?.map((prop, index)=> {
             return(
-              <div className='col-12 col-sm-10 col-md-6  col-lg-4 properties' key={index}>
+              <div className='col-12 col-sm-10 col-md-6 col-lg-4 properties' key={index}>
               <div  className='property'>
                 <div 
                   onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
-                    <img src={`/images/property/${prop.image_title}`}/>
+                    <img src={`/images/property/${prop.image_title}`} alt='property_image'/>
                    
                     <div className='filtro-opaco'>
                     <div 
@@ -115,7 +114,7 @@ export const Portafolio = () => {
                       >
                     <h5>{prop?.property_name}</h5>
                         <div className='d-flex      align-items-center'>
-                        <img className='location' src='/images/property/location.png'/>
+                        <img className='location' src='/images/property/location.png' alt='icon_location'/>
                         <p className='address m-0'> {prop.address_street_name} {prop.address_street_number}</p>
                       </div>
                 </div>  

@@ -96,57 +96,77 @@ export const AdminAllProperties = () => {
     
   return (
     <div className='pt-5 allProperties'>
-        <h2 className='pt-5 mt-4 mb-4 text-center'>Todas las Propiedades</h2>
+        <h1 className='pt-5 mt-4 mb-4 text-center'>Todas las Propiedades</h1>
 
-        <div className='row g-4'>
+        <div className='row justify-content-center g-4 mt-4'>
             { propsToShow?.map((elem, index)=>{
                 return(
-                    <div className='col-12 col-sm-6 col-lg-4 ' key={index}>
+                    <div className='mb-4 col-12 col-sm-10 col-md-6 col-lg-4 col-xl-3' key={index}>
                         <div className='prop'>
                             <div className='imgProp'>
                                 <Image src={`/images/property/${elem.image_title}`}/>
-                            </div>
-                            <div className='info'>
-                                <h3 /* onClick={() => navigate(`/propertyDetails/${elem.property_id}`)} */>{elem?.property_name}</h3>
-                                <p>{elem?.address_street_name}</p>
-                                <p>{elem?.province_name}</p>
-                                <p>{elem?.purchase_buy_price} €</p>
-                            </div>
-                        </div>
-                        
-                        <div className='d-flex justify-content-around buttons'>
-                            <div className='d-flex flex-column'>
-                                <Button
+                           
+                            <div className='filtro-opaco'>
+                            <Button variant= {elem?.property_is_for_sale === 0 ?"success" : "info"}
                                     onClick={() => handleSold(elem.property_id, elem.property_is_for_sale)}
                                     size='sm'
                                     className='mb-2 rounded'
-                                >
-                                    {elem?.property_is_for_sale === 0 ? 'Poner en Venta' : 'Quitar de Venta'}
-                                </Button>
-                                <button 
+                            >
+                                    {elem?.property_is_for_sale === 0 ? <span class="material-symbols-outlined">
+                                    real_estate_agent<span class="material-symbols-outlined">
+                                    done
+                                    </span>
+                                    </span> : 
+                                    <span class="material-symbols-outlined">
+                                    real_estate_agent<span class="material-symbols-outlined">
+                                    close
+                                    </span></span>}
+                            </Button>
+                            <Button variant={elem?.property_is_user_deleted === 1 ? "secondary" : "warning"}
                                     onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}
-                                    className='mb-2 bg-warning rounded border-none'
+                                    className='mb-2 rounded border-none'
                                     >
-                                    {elem.property_is_user_deleted === 1 ? "Desbloquear":"Bloquear"}
-                                    
-                                </button>
-                                <button
-                                    onClick={()=>redirectEditBasicFeatures(elem)}
-                                    className='rounded bg-info'
-                                    >Propiedades básicas
-                                </button>
-                            </div>
-                            <div className='d-flex flex-column'>
-                                <button 
-                                    onClick={()=>redirectEditEconomicFeatures(elem)}
-                                    className='mb-2 rounded bg-info'
-                                    >Caract. Económicas
-                                </button>
-                                <button 
+                                    {elem.property_is_user_deleted === 0 ? <span className="material-symbols-outlined">
+                                    lock_open
+                                    </span>:
+                                    <span className="material-symbols-outlined">
+                                    lock
+                                    </span>}      
+                            </Button>
+                            <Button 
                                     onClick={()=>handleDelete(elem.property_id)}
                                     className='rounded bg-danger'
-                                    >Eliminar Activo
-                                </button>
+                                    ><span class="material-symbols-outlined">
+                                    delete_forever
+                                    </span>
+                            </Button>
+                            <h5>{elem?.purchase_buy_price} €</h5>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <div className='info-inferior'>
+                            <h3>{elem?.property_name}</h3>
+                            <div className='direccion'>
+                                <span class="material-symbols-outlined">
+                                location_on
+                                </span>
+                                <p>{elem?.address_street_name}, {elem?.province_name}</p>
+                            </div> 
+                           
+                            <div className='d-flex buttons'>
+                                <Button
+                                    onClick={()=>redirectEditBasicFeatures(elem)}
+                                    ><span class="material-symbols-outlined">
+                                    edit
+                                    </span><p>Caract. básicas</p>
+                                </Button>
+                                <Button 
+                                    onClick={()=>redirectEditEconomicFeatures(elem)}
+                                    ><span class="material-symbols-outlined">
+                                    edit
+                                    </span> <p>Caract. económicas</p>
+                                </Button> 
                             </div>
                         </div>
                     </div>

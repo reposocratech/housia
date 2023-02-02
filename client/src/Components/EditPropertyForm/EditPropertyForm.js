@@ -33,15 +33,13 @@ export const EditPropertyForm = () => {
     const [resetFeatures, setResetFeatures] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
-    const {property, setProperty , user, isLogged} = useContext(AppContext);
+    const {property, setProperty , user} = useContext(AppContext);
 
     const {property_id, property_subtype_id} = useParams();
 
     const navigate = useNavigate();
 
     const URL_PROP = 'http://localhost:4000/property';
-
-    
 
     useEffect(() => {
         axios
@@ -197,7 +195,7 @@ export const EditPropertyForm = () => {
             .catch((error) => {
                 console.log(error.message);
             })
-    }, [property.property_id])
+    }, [property?.property_id])
 
     useEffect(() =>{
         axios
@@ -232,7 +230,7 @@ export const EditPropertyForm = () => {
 
     const handleSetMain = (id) => {
         axios
-            .put(`${URL_PROP}/setMainImage/${id}/${property.property_id}`)
+            .put(`${URL_PROP}/setMainImage/${id}/${property?.property_id}`)
             .then((res) => {
                 /* console.log('RES DEL SETMAIN', res.data); */
                 setImagesProperty(res.data)
@@ -306,7 +304,7 @@ export const EditPropertyForm = () => {
 
     const editPropertyAddress = () => {
         axios
-            .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
+            .put(`${URL_PROP}/editPropertyAddress/${property?.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
             .then((res) => {
                 console.log('RES DE EDIT PROPERTY', res);
             })

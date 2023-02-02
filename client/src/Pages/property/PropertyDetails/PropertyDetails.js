@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import axios from "axios";
 import {useNavigate, useParams } from 'react-router-dom';
 import { AppContext } from '../../../Context/AppContext';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal'
-import { Carousel, Container, Row } from 'react-bootstrap';
+import { Carousel, Container } from 'react-bootstrap';
 import './PropertyDetails.scss';
 import { ModalDeletePropertyUser } from './ModalDeletePropertyUser';
 import { ModalSalePropertyUser } from './ModalSalePropertyUser';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
+
 
 
 export const PropertyDetails = () => {
@@ -21,7 +21,6 @@ export const PropertyDetails = () => {
     const [rent, setRent] = useState([]);
     const [loan, setLoan] = useState([]);
     const [colorSold, setColorSold] = useState(false)
-    const [show, setShow] = useState(false);
     const [isSold, setIsSold] = useState('');
     const [showDeleteModalUser, setShowDeleteModalUser] = useState(false);
     const [showSalePropertyUser, setShowSalePropertyUser] = useState(false);
@@ -32,42 +31,20 @@ export const PropertyDetails = () => {
 
     const navigate = useNavigate();
     const URL_PROP = 'http://localhost:4000/property';
+    const scrollRef = useRef();
 
+    const scrollToElemen = () => scrollRef.current.scrollIntoView();
+    
+    useEffect(() => {
+        scrollToElemen();
+    }, [])
     const handleColor = () => setColorSold(!colorSold);
     /* const handleClose = () => setShow(false); */
     const handleShow = () => setShowSalePropertyUser(true);
 
     /* console.log(user.user_id, "Soy USER ID");
     console.log(property_id, 'soy property_id'); */
-
-    const handleSubmit = (isForSale) => {
-
-        let url = "";
-        const URL_END = `${Number(property_id)}/${Number(user.user_id)}`
-        
-        if(isForSale === 1){
-            url=`${URL_PROP}/uncheckSale/${URL_END}`
-
-        }else if(isForSale === 0) {
-            url = `${URL_PROP}/checkSale/${URL_END}`
-        }
-    
-        axios
-        .put(url)
-        .then((res) => {
-            setShow(false);
-            setIsSold(res.data[0].property_is_for_sale)
-
-            setPropertyDetails(res.data)
-            navigate(`/propertyDetails/${property_id}`)
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-  } 
-
   /* console.log(isSold, 'parámetro is_for_sale'); */
-        
   /* console.log(user, "EYYYYYYYY") */
    /* console.log(propertyDetails[0], 'detalles propiedad'); */
   /*console.log(isSold, 'ESTÁ VENDIO?'); */
@@ -77,18 +54,19 @@ export const PropertyDetails = () => {
 
         const token = localStorageUser();
         if(token){
-            let id = jwtDecode(token).user.id;
-        
-        axios
-        .get(`${URL_PROP}/propertyDetails/${id}/${property_id}`)
-        .then((res) => {
-           setPropertyDetails(res.data);
-           setIsSold(res.data[0].property_is_for_sale)
-        })
-        .catch((err) => {
-            console.log(err);
-        })};
-    }, [property_id]);
+            let id = jwtDecode(token).user.id
+            axios
+            .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
+            .then((res) => {
+                setPropertyDetails(res.data);
+                setIsSold(res.data[0].property_is_for_sale)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        }   
+    }, [property_id, user?.user_id]);
+
 
     //Imagenes propiedad
     useEffect(() => {
@@ -185,7 +163,7 @@ export const PropertyDetails = () => {
     <>
     <Container fluid className='portafolio-container'>
 
-        <h1 className='title mt-4'>{propertyDetails[0]?.property_name}</h1>
+        <h1 className='title mt-4' ref={scrollRef}>{propertyDetails[0]?.property_name}</h1>
 
         <div className='infoCarousel'>
         {/* TRAER TODA LA INFO DE UNA PROPIEDAD */}
@@ -222,15 +200,15 @@ export const PropertyDetails = () => {
 
             <div className='info'>
                 <div className='icono'>
-                    <div><img src='/images/property/home.png' alt='home image'/></div>
-                    <div> <p>Tipo</p><p>{type[0]?.subtype_name}</p></div>
+                    <div><img src='/images/property/home.png' alt='home'/></div>
+                    <div><p>{type[0]?.subtype_name}</p></div>
                 </div>
                 <div className='icono'>
-                    <div><img src='/images/property/date.png' alt='date image'/></div>
+                    <div><img src='/images/property/date.png' alt='date'/></div>
                     <div><p>Año</p><p>{propertyDetails[0]?.property_built_year}</p></div>
                 </div>
                 <div className='icono'>
-                    <div><img src='/images/property/size.png' alt='property size'/></div>
+                    <div><img src='/images/property/size.png' alt='property_size'/></div>
                     <div><p>Tamaño</p><p>{propertyDetails[0]?.property_total_meters}m2</p></div>
                 </div>
             </div>
@@ -254,7 +232,7 @@ export const PropertyDetails = () => {
                 <Button 
                     className='button'  
                     onClick={handleShow}
-                    >{isSold === 0 ? 'Vender' : 'No Vender'}
+                    >{isSold === 0 ? 'Vender' : 'Quitar en Venta'}
                 </Button>
                     
                 <Button 
@@ -439,8 +417,6 @@ export const PropertyDetails = () => {
                             <p>232.000€</p>
                         </div>
                     </div>
-
-                   
                 </div>
             </div>
         </div>              
@@ -448,21 +424,21 @@ export const PropertyDetails = () => {
         <div className='threeButtons'>
             <Button className='edit'
                 onClick={()=>navigate(`/editEconomicFeatures/${property_id}`)}
-                ><img src='/images/icons/editSmall.png'/>
+                ><img src='/images/icons/editSmall.png' alt='icon_edit_economic_features'/>
                 Editar detalles conomicos
             </Button>
 
             <Button 
                 className='sold'
                 onClick={handleShow}>
-                <img src='/images/icons/graphSmall.png'/>
-                <span>{isSold === 0 ? 'Vender' : 'No Vender'}</span>
+                <img src='/images/icons/graphSmall.png' alt='icon_sell_property'/>
+                <span>{isSold === 0 ? 'Vender' : 'Quitar de Venta'}</span>
             </Button>
 
             <Button className='check'
 
                 onClick={handleColor} variant={colorSold ? "danger" : "success"}>
-                    <img src='/images/icons/verified.png'/>
+                    <img src='/images/icons/verified.png' alt='verify_icon'/>
                     {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}
             </Button>
 
