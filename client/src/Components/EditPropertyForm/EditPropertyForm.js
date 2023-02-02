@@ -179,6 +179,7 @@ export const EditPropertyForm = () => {
     }, [])
 
     useEffect(()=> {
+        
         axios
             .get(`${URL_PROP}/getPropertyFeatures/${property?.property_id}`)
             .then((res) => {

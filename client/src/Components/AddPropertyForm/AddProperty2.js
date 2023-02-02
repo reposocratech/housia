@@ -60,13 +60,14 @@ const navigate = useNavigate();
     <h2>Añadir Propiedad</h2>
     </div>
     <Container fluid>
-        <div className='row'>
-            <div className='col-12 col-lg-12 col-xxl-6  colAdd2'>
+        <div className='row rowAdd2'>
+            <div className='col-12 col-lg-6  colAdd2'>
+                <div className='displayAdd2jose'>
     <h3>Características de la propiedad</h3>
     <p className='pAdd2'>Estos valores son de gran importancia para el analisis automatico de rendimiento de la inversión</p>
     <div className='displayAdd2'>
     <div>
-    <p>Superficie util</p>
+    <p className='ppAdd2'>Superficie util</p>
         <input
             placeholder='0'
             autoComplete='off'
@@ -78,7 +79,7 @@ const navigate = useNavigate();
         />
        </div>
        <div className='sepAdd2'>
-        <p>Superficie construida</p>
+        <p className='ppAdd2'>Superficie construida</p>
         <input
             placeholder='0'
             autoComplete='off'
@@ -94,7 +95,7 @@ const navigate = useNavigate();
        <div>
     {parseInt(typeId) !== 4 &&
         <>
-        <p>Año de construccion</p>
+        <p className='ppAdd2'>Año de construccion</p>
         <input
             placeholder='0'
             autoComplete='off'
@@ -112,7 +113,7 @@ const navigate = useNavigate();
     <div className='sepAdd2'>
     {parseInt(typeId) !== 3 && parseInt(typeId) !== 4 &&
         <>
-        <p>Habitaciones</p>
+        <p className='ppAdd2'>Número Habitaciones</p>
         <input
             placeholder='0'
             autoComplete='off'
@@ -128,7 +129,8 @@ const navigate = useNavigate();
     </div>
     </div>
     </div>
-    <div className='col-6 otroColAdd2'>
+    </div>
+    <div className='col-12 col-lg-6  otroColAdd2'>
         
     {parseInt(typeId) !== 4 && <>
         <p>Baños</p>

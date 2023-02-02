@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../../Context/AppContext";
-import axios from "axios";
-import { Button, Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
-import { localStorageUser } from "../../../Utils/localStorage/localStorageUser";
+
+import React, { useContext, useEffect, useState}  from 'react';
+import { AppContext } from '../../../Context/AppContext';
+import axios from 'axios';
+import {Button, Container, Row} from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
+import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
 import "./portafolio.scss";
 
@@ -67,21 +68,15 @@ export const Portafolio = () => {
   };
 
   return (
-    <Container fluid className="portafolio-container">
-      <h1 className="turquoise">PORTAFOLIO</h1>
+    <Container fluid className='portafolio-container'>
+      <h1>PORTAFOLIO</h1>
 
       <div className="image">
         <div className="benefit">
           <h4>Beneficio</h4>
-          <h1 className="turquoise">312.220 €</h1>
-          <div className="total">
-            <span>Total</span>
-            <span className="turquoise">+32%</span>
-          </div>
-          <div className="monthly">
-            <span>Monthly</span>
-            <span className="turquoise">+32%</span>
-          </div>
+          <h2>312.220 €</h2>
+          <div className='total'><span>Total</span><span className='turquoise'>+32%</span></div>
+          <div className='monthly'><span>Monthly</span><span className='turquoise'>+32%</span></div>
         </div>
       </div>
 
@@ -93,63 +88,51 @@ export const Portafolio = () => {
           Añadir propiedad
         </Button>
       </div>
-      <div className="row">
-        {propertyDetails?.map((prop, index) => {
-          return (
-            <div className="col-12 col-sm-6 col-lg-4 properties" key={index}>
-              <div className="property">
-                <div
-                  onClick={() => navigate(`/propertyDetails/${prop.property_id}`)}
-                  className="imageMain"
-                >
-                  <img src={`/images/property/${prop.image_title}`} />
+
+
+      <Row className='container-prop'>
+        {propertyDetails?.map((prop, index)=> {
+            return(
+              <div className='col-12 col-sm-10 col-md-6  col-lg-4 properties' key={index}>
+              <div  className='property'>
+                <div 
+                  onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
+                    <img src={`/images/property/${prop.image_title}`}/>
+                   
+                    <div className='filtro-opaco'>
+                    <div 
+                      className={prop.property_is_for_sale === 0 ? "nosold " : "sold " }
+                      >En Venta
+                    </div>
+                    <h5>€{prop.purchase_buy_price}</h5>
+                    </div>
+                   
                 </div>
 
-                <div className="all">
-                  <button
-                    onClick={() => navigate(`/propertyDetails/${prop.property_id}`)}
-                    className="infoProperty"
-                  >
-                    <h5>
-                      {prop?.property_name}
-                      <div
-                        className={ prop.property_is_for_sale === 0 ? "nosold " : "sold "}
+              <div className='p-2'>
+                <div onClick={()=>
+                      navigate(`/propertyDetails/${prop.property_id}`)} className='infoProperty'
                       >
-                        En Venta
+                    <h5>{prop?.property_name}</h5>
+                        <div className='d-flex      align-items-center'>
+                        <img className='location' src='/images/property/location.png'/>
+                        <p className='address m-0'> {prop.address_street_name} {prop.address_street_number}</p>
                       </div>
-                    </h5>
-                    <p>
-                      <img
-                        className="location"
-                        src="/images/property/location.png"
-                      />
-                      <span className="address">
-                        {" "}
-                        {prop.address_street_name}{" "}
-                      </span>
-                      <span className="address">
-                        {prop.address_street_number}
-                      </span>
-                    </p>
-                    <h5 className="turquoise">{prop.purchase_buy_price} €</h5>
-                  </button>
-
-                  <div className="del_sale">
-                    <Button
-                      onClick={() => handleSold(prop.property_id, prop.property_is_for_sale) }
-                      className="sale"
-                    >
-                      {prop.property_is_for_sale === 0
-                        ? "Poner en venta"
-                        : "Quitar de la venta"}
-                    </Button>
-                  </div>
-                </div>
+                </div>  
+                <Button 
+                  onClick={()=>handleSold(prop.property_id, prop.property_is_for_sale)} 
+                  className= "sale">
+                    {prop.property_is_for_sale === 0 ? "Poner en venta" : "Quitar de la venta"}
+                </Button>
               </div>
             </div>
-          );
-        })}
-      </div>
+             
+          </div>
+            )
+          })
+      }
+      </Row>
+   
     </Container>
   );
 };

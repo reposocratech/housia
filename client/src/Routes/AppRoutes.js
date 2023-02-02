@@ -4,6 +4,7 @@ import { Home } from '../Pages/UserDashboard/Home/Home'
 import { Login } from '../Pages/Auth/Login/Login'
 import { Register } from '../Pages/Auth/Register/Register'
 import { NavBarUser } from '../Components/NavbarUser/NavBarUser'
+import { Footer } from '../Components/Footer/Footer'
 import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio'
 import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen'
 import { User } from '../Pages/UserDashboard/User/User'
@@ -24,6 +25,7 @@ import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyFor
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 import { Favourite } from '../Components/Favourites/Favourite'
+import { Footer } from '../Components/Footer/Footer'
 
 export const AppRoutes = () => {
   const {user, isLogged} = useContext(AppContext);
@@ -74,6 +76,9 @@ export const AppRoutes = () => {
               </>}
 
             </Routes>
+
+            <Footer/>
+
         </BrowserRouter>
     </div>
   )

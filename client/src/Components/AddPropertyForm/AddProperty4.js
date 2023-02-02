@@ -84,11 +84,12 @@ export const AddProperty4 = () => {
         )})}
 
     </div>
-
+        <div className='displayBro'>
     <Button 
         variant='info' 
         size='lg' 
         onClick={handleSubmit}>Siguiente</Button>
+        </div>
     </div>
   )
 }

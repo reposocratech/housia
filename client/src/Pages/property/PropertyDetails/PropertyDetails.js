@@ -454,10 +454,12 @@ export const PropertyDetails = () => {
             </Button>
 
             <Button className='check'
-                onClick={handleColor} variant={colorSold ? "success" : "danger"}>
-                <img src='/images/icons/verified.png'/>
-                {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}
+
+                onClick={handleColor} variant={colorSold ? "danger" : "success"}>
+                    <img src='/images/icons/verified.png'/>
+                    {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}
             </Button>
+
         </div>
 
     <div className='row boost'>
