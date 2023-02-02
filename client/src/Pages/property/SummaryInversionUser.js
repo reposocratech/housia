@@ -14,13 +14,13 @@ export const SummaryInversionUser = () => {
 
     const {user} = useContext(AppContext);
     const {user_id} = user;
-    console.log(user_id, "USER_ID");
+    /* console.log(user_id, "USER_ID"); */
     
     useEffect(() => {
         axios 
         .get(`http://localhost:4000/users/getCountProperties/${user_id}`)
         .then((res) => {
-            console.log(res.data.result.length, "total propiedades");
+            /* console.log(res.data.result.length, "total propiedades"); */
            setCountProperties(res.data.result.length);
             
         })
@@ -32,26 +32,23 @@ export const SummaryInversionUser = () => {
         axios
         .get(`http://localhost:4000/users/getSoldProperties/${user_id}`)
         .then((res) => {
-            console.log(res.data.result.length, "vendidos");
+            /* console.log(res.data.result.length, "vendidos"); */
             setSoldProperties(res.data.result.length)
             
         })
         .catch((error)=> {console.log(error);
         })
-           
         }, [user_id])
 
     useEffect(() => {
         axios
         .get(`http://localhost:4000/users/getRentedProperties/${user_id}`)
         .then((res) => {
-            console.log(res.data.result.length, "alquilados");
+            /* console.log(res.data.result.length, "alquilados"); */
             setRentedProperties(res.data.result.length);
-                    
         })
         .catch((error)=> {console.log(error);
         })
-              
     }, [user_id])
 
     useEffect(() => {
@@ -60,7 +57,7 @@ export const SummaryInversionUser = () => {
         .then((res) => {
             const array = res.data.result;
             const resultArray = array.reduce((acum, current) => acum + current.purchase_buy_price, 0);
-            console.log(resultArray, "inversion total")                       
+            /* console.log(resultArray, "inversion total")   */                     
             setTotalInv(resultArray)
         })
         .catch((error) => {console.log(error);
@@ -74,7 +71,7 @@ export const SummaryInversionUser = () => {
         .then((res) => {
             const ingresos = res.data.result;
             const resultIngresos = ingresos.reduce((acum, current) => acum + current.rent_renting_price, 0);
-            console.log(resultIngresos, "ingresos totales")                           
+            /* console.log(resultIngresos, "ingresos totales")  */                          
             setMonthlyInc(resultIngresos)
         })
         .catch((error) => {console.log(error);                
