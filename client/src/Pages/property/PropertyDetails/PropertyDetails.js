@@ -8,6 +8,8 @@ import { Carousel, Container, Row } from 'react-bootstrap';
 import './PropertyDetails.scss';
 import { ModalDeletePropertyUser } from './ModalDeletePropertyUser';
 import { ModalSalePropertyUser } from './ModalSalePropertyUser';
+import jwtDecode from 'jwt-decode';
+import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 
 
 export const PropertyDetails = () => {
@@ -72,16 +74,20 @@ export const PropertyDetails = () => {
     
     //Detalles Propiedad
     useEffect(() => {
+
+        const token = localStorageUser();
+        if(token){
+            let id = jwtDecode(token).user.id;
         
         axios
-        .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
+        .get(`${URL_PROP}/propertyDetails/${id}/${property_id}`)
         .then((res) => {
            setPropertyDetails(res.data);
            setIsSold(res.data[0].property_is_for_sale)
         })
         .catch((err) => {
             console.log(err);
-        });
+        })};
     }, [property_id]);
 
     //Imagenes propiedad
@@ -481,7 +487,7 @@ export const PropertyDetails = () => {
     <ModalSalePropertyUser
         showSalePropertyUser={showSalePropertyUser}
         setShowSalePropertyUser={setShowSalePropertyUser}
-        propertyIsForSale = {propertyDetails[0].property_is_for_sale}
+        propertyIsForSale = {propertyDetails[0]?.property_is_for_sale}
         property_id = {property_id}
         setIsSold={setIsSold}
         isSold={isSold}

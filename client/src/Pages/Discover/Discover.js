@@ -8,6 +8,7 @@ import { Col, Container, Form, InputGroup,  Modal, Row, Button, Accordion } from
 
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+import { ModalInfoDiscover } from '../../Components/ModalInfoDiscoverOneProperty/ModalInfoDiscover';
 
 export const Discover = () => {
 
@@ -29,6 +30,8 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
+    const [showModalInfoDiscover, setShowModalInfoDiscover] = useState(false)
+    const [infoOneProperty, setInfoOneProperty] = useState({})
 
 
 
@@ -165,6 +168,11 @@ export const Discover = () => {
                 })
                 .catch((error)=>{
                 console.log(error)
+
+                let doll = {
+                    property_id: propertyId
+                }
+               setFavInDB([...favInDB, doll]);
                 })
             } else{
 
@@ -419,9 +427,7 @@ export const Discover = () => {
         let restantes = [];
         for(let i = 0; i< propertiesWithFeatures.length; i++){
             
-        if(i === propertiesWithFeatures.length){
-          
-        }
+       
             for(let j = 0; j< featuresSelected.length; j++){
                 
             
@@ -462,7 +468,13 @@ export const Discover = () => {
         }
 
         
-    
+       const handleModalInfo = (propertyInfo) =>{
+
+        setInfoOneProperty(propertyInfo);
+        setShowModalInfoDiscover(true);
+       }
+
+
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
@@ -549,6 +561,7 @@ export const Discover = () => {
 
   return (
 
+    <>
     <Container fluid className='portafolio-container'>
          <h1>Descubre</h1>
 
@@ -565,144 +578,7 @@ export const Discover = () => {
 
         <div>
             
-        {/* <h5>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</h5>
 
-        <Row className='buttons'>
-        <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
-            </Col>
-        </Row>
-
-        <Row className=' buttons'>                     
-
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
-            </Col>
-
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
-            </Col>
-
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
-            </Col>
-                       
-        
-        </Row>
-
-        <h5>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</h5>
-
-        <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
-            </Col>
-        </Row>
-
-        <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
-            </Col>
-        </Row>
-
-
-        <h5>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</h5>
-        <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
-            </Col>
-        </Row>
-
-        <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
-            </Col>
-        </Row>
-
-        <h5>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</h5>
-       <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
-            </Col>
-       </Row>
-
-       <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
-            </Col>
-        </Row>
-
-        <h5>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</h5>
-        <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
-            </Col>
-        </Row>
-
-        <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
-            </Col>
-        </Row>
-        
-        <h5>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</h5>
-       <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
-            </Col>
-       </Row>
-
-       <Row className='buttons'>
-            <Col className="metro" xs={12} md={5} lg={5}>
-            <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={5} lg={5}>
-            <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
-            </Col>
-           
-       </Row>
-
-       <h5>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</h5>   
-        <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
-            </Col>
-        </Row>
-
-        <Row className='buttons'>
-            <Col className="metro" xs={12} md={5} lg={5}>
-            <button onClick={()=>handleIsNew(1)}> Nueva</button>
-            </Col>
-            <Col className="metro" xs={12} md={5} lg={5}>
-            <button onClick={()=>handleIsNew(0)}> Usada</button>
-            </Col>
-           
-        </Row> */}
-
-       
         <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
@@ -1001,16 +877,16 @@ export const Discover = () => {
         {filterList?.map((property, i) => {
             return(
                 <Col className='card'xs={12} md={12} lg={6}>
-                <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
+                <div className='cardProperty' key={i} style={{border:"2px solid red"}}  >
 
                  <div className='styleCard'>
                  <div className='parteTransparente'>
-                    <p  className='perTrans'>12%</p> 
+                  <a onClick={()=>handleModalInfo(property)}><p  className='perTrans'>INFO</p></a>  
                 <div className='estrella'>
                     <img src='/images/icons/favoritos.png'/></div>
                 </div>
                     
-                    <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                    <img src={`/images/property/${property?.image_title}`} alt="" ></img>
                    
                     
                 </div>   
@@ -1057,5 +933,13 @@ export const Discover = () => {
         </Row>
     </div>
     </Container>
+    <ModalInfoDiscover
+    showModalInfoDiscover = {showModalInfoDiscover}
+    setShowModalInfoDiscover = {setShowModalInfoDiscover}
+    infoOneProperty = {infoOneProperty}
+    setInfoOneProperty= {setInfoOneProperty}
+    />
+    </>
+    
   )
 }
