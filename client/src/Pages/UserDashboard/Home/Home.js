@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container} from 'react-bootstrap';
+import { Footer } from '../../../Components/Footer/Footer';
 import "./StyleHome.scss";
 export const Home = () => {
   return (
@@ -27,26 +28,8 @@ export const Home = () => {
            <img className='' src='../images/user/mock20.png' alt='mock20.png'/>
         </div>
       </div>
-      <div className='row dos'>
-        <div className='col dos'>
-        <div className='footerInfo'>
-          <img src='../images/logo-blanco.png' alt='LogoHousia' />
-          <p>Housia es una marca comercial debidamente registrada. Todos los derechos reservados. 2022</p>
-          <div className='enlaceInfo'>
-          <img src='../images/user/carta.png' alt='Gmail' />
-          <a href="">info@housia.es</a>
-          </div>
-          <div className='enlaceInfo'>
-          <img src='../images/user/telefono.png' alt='Telefono' />
-          <a href="">656 630911</a>
-          </div>
-        </div>
-        </div>
-      </div> 
-
-
       </div>
-     
+      <Footer/>
     </Container>
   )
 }

@@ -1,11 +1,9 @@
 import axios from 'axios'
-
 import React, {  useContext, useEffect, useState } from 'react'
 import { Accordion, Col, Row } from 'react-bootstrap';
 import {useParams} from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import { AppContext } from '../../Context/AppContext';
-
 import './editEconomicFeatures.scss';
 
 export const EditEconomicFeatures = () => {
@@ -95,12 +93,15 @@ const handleChangePurchase = (e) =>{
 
 
   return (
+
     <div className='datos-economicos-container'>
          <h1>Caracteristicas Económicas</h1>
          <Row className='m-0 justify-content-center'>
         <Col className='datos-economicos-formulario'xs={10} md={8} lg={6}>
         <label for='purchase_buy_date'>Precio de Compra</label>
+
         <input
+            onkeypress='return event.charCode >= 49 && event.charCode <= 57'
             type='number'
             step='0,01'
             placeholder='Precio de Compra'
@@ -163,7 +164,7 @@ const handleChangePurchase = (e) =>{
                  name="purchase_trading_expenses"
                  onChange={handleChangePurchase}/>
 
-                <div className='d-flex align-items-center'>
+                <div className='d-flex align-items-center  isUsual'>
                 <input 
                   type="checkbox" 
                   id="check-is-usual" 

@@ -30,6 +30,7 @@ export const EditPropertyForm = () => {
     const [featuresProperty, setFeaturesProperty] = useState([]);
     const [imagesProperty, setImagesProperty] = useState([]);
     const [showAddImage, setShowAddImage] = useState(false);
+    const [resetFeatures, setResetFeatures] = useState(false);
 
     const [prueba, setPrueba] = useState([]);
     const {property, setProperty , user, isLogged} = useContext(AppContext);
@@ -139,8 +140,6 @@ export const EditPropertyForm = () => {
         setProperty({...property, address_city_id: Number(e.target.value)});
     }
 
-  
-
     useEffect(() => {
         axios
             .get(`http://localhost:4000/property/propertyDetailsProvinceCity/${property_id}`)
@@ -162,16 +161,17 @@ export const EditPropertyForm = () => {
     }, [property_id])
 
     useEffect(() => {
+        
         axios
         .get(`http://localhost:4000/property/allFeatures`)
         .then((res) => {
             setFeatures(res.data);
-                        
-            let array = res.data.map((ele, ind) => {
-                return { ...ele, checked: false}
+
+            let arrProv = res.data.map((ele) => {
+                return {...ele, checked: false}
             })
 
-            setPrueba(array);
+            setPrueba(arrProv);
         })
         .catch((err) => {
             console.log(err);
@@ -179,16 +179,17 @@ export const EditPropertyForm = () => {
     }, [])
 
     useEffect(()=> {
+        
         axios
             .get(`${URL_PROP}/getPropertyFeatures/${property?.property_id}`)
             .then((res) => {
                 setFeaturesProperty(res.data)
+                
                 let arrayProv = [];
 
                 for(let i = 0; i < res.data.length; i++){
                     arrayProv.push(res.data[i].feature_id)
                 }
-                
                 setFeaturesSelected(arrayProv)
 
                 otherFeature(res.data);
@@ -196,7 +197,7 @@ export const EditPropertyForm = () => {
             .catch((error) => {
                 console.log(error.message);
             })
-    }, [property?.property_id])
+    }, [property.property_id])
 
     useEffect(() =>{
         axios
@@ -294,7 +295,8 @@ export const EditPropertyForm = () => {
             axios
             .post(`${URL_PROP}/editFeaturesProperty/${id}`, featuresSelected)
                 .then((res) => {
-                    console.log(res);
+                    console.log(res, 'RES DEL EDIT FEATURES SELECTED');
+                    setResetFeatures(!resetFeatures);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -307,16 +309,15 @@ export const EditPropertyForm = () => {
             .put(`${URL_PROP}/editPropertyAddress/${property.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
             .then((res) => {
                 console.log('RES DE EDIT PROPERTY', res);
-
-                
             })
             .catch((error) => {
                 console.log('ERROR del EDITADDRESS');
             })
     }
 
-     console.log('PROPIEDAD EN EDICIÓN', property);
-    /* console.log(featuresSelected, 'FEATURESSSSSS QUE ESTOY MARCANDO'); */
+    
+     /* console.log('PROPIEDAD EN EDICIÓN', property); */
+    /* console.log(featuresSelected, 'FEATURESSSSSS QUE VIENEN DE LA PROPIEDAD Y QUE ESTOY MARCANDO'); */
     /* console.log(imagesProperty, 'IMÁGENES PARA SUBIR'); */
     
     const onSubmit = (e) => {
@@ -330,7 +331,6 @@ export const EditPropertyForm = () => {
         else if(user.user_type === 2){
             navigate('/user/portafolio')
         }
-
     }
 
 
@@ -481,7 +481,7 @@ export const EditPropertyForm = () => {
                                 type="text"
                                 name="address_floor"
                                 onChange={handleChange}
-                                value={!property?.floor ? 0 : property?.address_floor}
+                                value={property?.address_floor === 'undefined' ? 0 : property?.address_floor}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" as={Col} md='2'>
@@ -491,7 +491,7 @@ export const EditPropertyForm = () => {
                                 type="text"
                                 name="address_door"
                                 onChange={handleChange}
-                                value={!property?.door  ? 0 : property?.address_door}
+                                value={property?.address_door === 'undefined' ? 0 : property?.address_door}
                             />
                         </Form.Group>
                     </Row> 

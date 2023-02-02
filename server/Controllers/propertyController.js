@@ -32,16 +32,13 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
-    /* console.log(property_subtype_id, 'SUBTYPEEEEEE'); */
 
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
-    /* console.log('SQLLLL', sql); */
 
     connection.query(sql, (error, result) => {
       if (error){res.status(400).json(error)}
 
-      /* console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT"); */
       
         let property_id = result.insertId;
 
@@ -119,7 +116,42 @@ class propertyController {
              error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
           });
     };
+    ///Marca ADMINISTRADOR una propiedad como en venta
+    checkSaleAdmin = (req, res) => {
+        let {property_id} = req.params;
 
+        let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
+
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE   property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
+
+        connection.query(sql, (error, result) => {
+
+          if (error){
+            res.status(400).json(error)}
+            console.log(error);
+          });
+           connection.query(sql2, (error, resultUsers) => {
+             error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
+          });
+    };
+
+    ///Deshabilita ADMINISTRADOR el marcado en venta
+    uncheckSaleAdmin = (req, res) => {
+        let {property_id} = req.params;
+
+        let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
+
+        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE  property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC  `;
+
+        connection.query(sql, (error, result) => {
+          if (error){
+            res.status(400).json(error)}
+            console.log(error);
+          });
+           connection.query(sql2, (error, resultUsers) => {
+             error ? res.status(400).json({ error }) : res.status(200).json(resultUsers);
+          });
+    };
     ///Deshabilita el marcado en venta
     uncheckSale = (req, res) => {
         let {property_id, user_id} = req.params;
@@ -260,7 +292,6 @@ class propertyController {
           }
 
           /* else if(field == 'type_id'){
-
           } */
 
           /* console.log('SQL DE ADDRESS', sql); */
@@ -348,9 +379,6 @@ class propertyController {
         if(req.files != undefined){
           img = req.files;
         }
-
-
-        /* console.log(img); */
 
         
         let mainImage = img[0].filename
@@ -808,3 +836,5 @@ getAllPurchaseData = (req, res) => {
 
 
 module.exports = new propertyController();
+
+

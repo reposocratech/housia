@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import { Image } from 'react-bootstrap'
+import { Button, Image } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { ModalDeleteProperty } from '../../../Components/ModalAdminDispenseProperty/ModalDeleteProperty'
 import { AppContext } from '../../../Context/AppContext'
@@ -15,7 +15,9 @@ export const AdminAllProperties = () => {
 
     const [allProperties, setAllProperties] = useState()
     const [showModalDelete, setShowModalDelete] = useState(false);
-    const [idForDelete, setIdForDelete] = useState()
+    const [idForDelete, setIdForDelete] = useState();
+
+    const URL_PROP = 'http://localhost:4000/property';
 
     useEffect(()=>{
         
@@ -34,8 +36,6 @@ export const AdminAllProperties = () => {
     // let casasAMostrar = allProperties.filter(elem => elem.price >= "el precio del limitar que pongamos")
 
     let propsToShow = allProperties;
-    console.log(allProperties, 'todas propiedades');
-    
 
     //Para bloquear activos
     const handleBlock = (propertyId, isBlock) =>{
@@ -71,8 +71,28 @@ export const AdminAllProperties = () => {
         navigate(`/editEconomicFeatures/${elem.property_id}`)
     }
 
-    console.log('casas para mostrar', propsToShow);
-    
+    const handleSold = (idProperty, isSold) => {
+        let url = "";
+        
+        if(isSold === 1) {
+            url = `${URL_PROP}/unCheckSaleAdmin/${idProperty}`;
+        }
+        else if (isSold === 0){
+            url =`${URL_PROP}/checkSaleAdmin/${idProperty}`
+        }
+
+        axios
+            .put(url)
+            .then((res) => {
+                setAllProperties(res.data)
+            })
+            .catch((err) => {
+                console.log(err, 'error de sale_admin');
+            })
+    }
+
+    /* console.log('casas para mostrar', propsToShow); */
+    /* console.log(allProperties, 'todas propiedades'); */
     
   return (
     <div className='pt-5 allProperties'>
@@ -87,7 +107,7 @@ export const AdminAllProperties = () => {
                                 <Image src={`/images/property/${elem.image_title}`}/>
                             </div>
                             <div className='info'>
-                                <h3 onClick={() => navigate(`/propertyDetails/${elem.property_id}`)}>{elem?.property_name}</h3>
+                                <h3 /* onClick={() => navigate(`/propertyDetails/${elem.property_id}`)} */>{elem?.property_name}</h3>
                                 <p>{elem?.address_street_name}</p>
                                 <p>{elem?.province_name}</p>
                                 <p>{elem?.purchase_buy_price} €</p>
@@ -96,6 +116,13 @@ export const AdminAllProperties = () => {
                         
                         <div className='d-flex justify-content-around buttons'>
                             <div className='d-flex flex-column'>
+                                <Button
+                                    onClick={() => handleSold(elem.property_id, elem.property_is_for_sale)}
+                                    size='sm'
+                                    className='mb-2 rounded'
+                                >
+                                    {elem?.property_is_for_sale === 0 ? 'Poner en Venta' : 'Quitar de Venta'}
+                                </Button>
                                 <button 
                                     onClick={()=>handleBlock(elem.property_id, elem.property_is_user_deleted)}
                                     className='mb-2 bg-warning rounded border-none'
@@ -121,7 +148,6 @@ export const AdminAllProperties = () => {
                                     >Eliminar Activo
                                 </button>
                             </div>
-                            
                         </div>
                     </div>
                 )
