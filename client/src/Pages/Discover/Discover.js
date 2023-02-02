@@ -851,7 +851,7 @@ export const Discover = () => {
 
                         <div className='styleCard'>
                             <div className='parteTransparente'>
-                                <p  className='perTrans'>INFO</p> 
+                                <p  className='perTrans' onClick={()=>handleModalInfo(property)}>INFO</p>
                                 
                                 {favOption &&
                         <div className='botonFavoritos'>

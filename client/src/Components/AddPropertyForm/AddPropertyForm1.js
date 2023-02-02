@@ -99,7 +99,7 @@ const handleSubmit = (e) => {
 }
   return (
 
-    <Container fluid className='fondoAdd1'>
+    <Container fluid className='fondoAdd1 pb-3'>
         <div className='row '>
            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
                 <div className='alturaCont'>
@@ -156,7 +156,7 @@ const handleSubmit = (e) => {
         <br/>
         </div>
         
-        <div className='col-6 padre2Add1'>
+        <div className='col-6 padre2Add1 '>
         
          <img src='./images/user/Captura2.png' alt="ForSale.png" />
          <br/>

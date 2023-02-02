@@ -35,3 +35,16 @@
     margin: 0;
     margin: 15px 0;
 }
+
+div{
+    .cartita{
+        height: 450px;
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }  
+}
