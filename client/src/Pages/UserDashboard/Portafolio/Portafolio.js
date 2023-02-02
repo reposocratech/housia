@@ -69,8 +69,7 @@ export const Portafolio = () => {
 
   return (
     <Container fluid className='portafolio-container'>
-      <h1>PORTAFOLIO</h1>
-
+      <h1>Portafolio</h1>
       <div className="image">
         <div className="benefit">
           <h4>Beneficio</h4>
@@ -93,7 +92,7 @@ export const Portafolio = () => {
       <Row className='container-prop'>
         {propertyDetails?.map((prop, index)=> {
             return(
-              <div className='col-12 col-sm-10 col-md-6  col-lg-4 properties' key={index}>
+              <div className='col-12 col-sm-10 col-md-6 col-lg-4 properties' key={index}>
               <div  className='property'>
                 <div 
                   onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>

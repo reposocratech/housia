@@ -551,9 +551,7 @@ export const Discover = () => {
 
     <Container fluid className='portafolio-container'>
          <h1>Descubre</h1>
-
-
-    <div className='discover'>
+        <div className='discover'>
         <div className='filters'>
         <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
         <Row>
@@ -703,8 +701,8 @@ export const Discover = () => {
         </Row> */}
 
        
-        <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
+        <Accordion>
+        <Accordion.Item eventKey="0">
         <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
