@@ -52,7 +52,7 @@ export const EditUser = () => {
   return (
     <div className='perfil-usuario'>
       <section className='perfil-datos'>
-      <h1>Editar Perfíl</h1>
+      <h1>Editar Perfil</h1>
       <img className='perfil-imagen' src={`../images/user/${user?.user_img}`} alt='foto_user' />
       </section>
 
@@ -90,7 +90,7 @@ export const EditUser = () => {
                 placeholder='telefono'
                 autoComplete='off'
                 required
-                value={editUser?.user_phone === 'null' ? '' : editUser?.user_phone}
+                value={!editUser?.user_phone ? '' : editUser?.user_phone}
                 onChange={handleChange}
                 name='user_phone'
             />
@@ -103,7 +103,7 @@ export const EditUser = () => {
                 placeholder='dni'
                 autoComplete='off'
                 required
-                value={editUser?.user_dni === 'null' ? '' : editUser?.user_dni}
+                value={!editUser?.user_dni ? '' : editUser?.user_dni}
                 onChange={handleChange}
                 name='user_dni'
             />

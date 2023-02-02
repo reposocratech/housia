@@ -50,17 +50,17 @@ export const ModalSalePropertyUser = ({showSalePropertyUser, setShowSaleProperty
     
   return (
     <Modal show={showSalePropertyUser} onHide={handleClose}>
-        <Modal.Body className='text-center'>{isSold === 1 ? 'Quieres Quitar la propiedad de la Venta?' : '¿Seguro de poner en venta la propiedad'}</Modal.Body>
-        <Modal.Footer className='d-flex justify-content-center'>
+        <Modal.Body className='text-center'>{isSold === 1 ? '¿Quieres quitar la propiedad de la venta?' : '¿Seguro de poner en venta la propiedad?'}</Modal.Body>
+        <Modal.Footer className='d-flex justify-content-evenly'>
             <Button 
                 style={{backgroundColor: 'rgb(61,62,77)', border: 'none'}} 
                 onClick={handleSubmit}
-                >Sí
+                >{isSold === 1 ? 'Si, quitar de la venta' : 'Si, poner en la venta'}
             </Button>
             <Button 
                 style={{backgroundColor: 'rgb(48,162,185)', border: 'none'}} 
                 onClick={handleClose}
-                >No
+                >No, volver
             </Button>
         </Modal.Footer>
     </Modal>

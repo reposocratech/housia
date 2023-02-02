@@ -122,7 +122,7 @@ class propertyController {
 
         let sql = `UPDATE property SET property_is_for_sale = 1 WHERE property_id = '${property_id}'`;
 
-        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE   property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC `;
+        let sql2 = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id JOIN image ON image.image_property_id = property.property_id WHERE property.property_is_admin_deleted = false AND image.image_is_main = true ORDER BY property.property_id DESC';
 
         connection.query(sql, (error, result) => {
 
@@ -141,7 +141,7 @@ class propertyController {
 
         let sql = `UPDATE property SET property_is_for_sale = 0 WHERE property_id = '${property_id}' `;
 
-        let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE  property_is_admin_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC  `;
+        let sql2 = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id JOIN image ON image.image_property_id = property.property_id WHERE property.property_is_admin_deleted = false AND image.image_is_main = true ORDER BY property.property_id DESC';
 
         connection.query(sql, (error, result) => {
           if (error){
@@ -237,8 +237,10 @@ class propertyController {
 
     //Trae todas las fotos de una propiedad
     //localhost:4000/property/getImagesProperty/:property_id
-    getImagesProperty = (req, res) => {
+      getImagesProperty = (req, res) => {
         let {property_id} = req.params;
+
+        console.log(property_id, "el id que buscamos");
   
         let sql = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
   
@@ -743,7 +745,7 @@ getAllPurchaseData = (req, res) => {
       discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
-        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
+        property.property_garage, property.property_built_year, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
         image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
         FROM property 
         LEFT JOIN purchase ON  purchase.purchase_property_id = property.property_id

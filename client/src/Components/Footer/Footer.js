@@ -15,9 +15,9 @@ export const Footer = () => {
         </Col>
 
         <Col className='redes'>
-            <a href='https://housia.es/about-page/'><img src='/images/icons/facebook.png'/></a>
-            <a href='https://twitter.com/Housiaes'><img src='/images/icons/twitter.png'/></a>
-            <a href='https://www.linkedin.com/company/housiaes'><img src='/images/icons/linkedin.png'/></a>
+            <a href='https://housia.es/about-page/'><img src='/images/icons/facebook.png' alt='logo_facebook'/></a>
+            <a href='https://twitter.com/Housiaes'><img src='/images/icons/twitter.png' alt='logo_twitter'/></a>
+            <a href='https://www.linkedin.com/company/housiaes'><img src='/images/icons/linkedin.png' alt='logo_linkedin'/></a>
         </Col>
         
     </Row>

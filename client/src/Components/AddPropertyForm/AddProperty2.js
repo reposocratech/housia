@@ -59,10 +59,14 @@ const navigate = useNavigate();
     <div className='tituloAdd2'>
     <h2>Añadir Propiedad</h2>
     </div>
+    
     <Container fluid>
         <div className='row rowAdd2'>
             <div className='col-12 col-lg-6  colAdd2'>
-                <div className='displayAdd2jose'>
+            <div className='displayAdd2jose'>
+        <div className='alturaCont2'>
+        <span>2/5</span>
+        </div>
     <h3>Características de la propiedad</h3>
     <p className='pAdd2'>Estos valores son de gran importancia para el analisis automatico de rendimiento de la inversión</p>
     <div className='displayAdd2'>

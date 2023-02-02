@@ -7,6 +7,7 @@ import 'material-icons/iconfont/material-icons.css';
 import './login.scss';
 import jwtDecode from 'jwt-decode';
 
+
 const initialState = {
     email: "",
     password:""
@@ -60,6 +61,8 @@ const initialState = {
       }
 
     return (
+      <>
+    
      <div className='login-container'>
       <div className='login-form-container'>
       <h1>HOUSIA LOGIN</h1>
@@ -98,6 +101,7 @@ const initialState = {
       </div>
        
      </div>
+     </>
     )
   }
   

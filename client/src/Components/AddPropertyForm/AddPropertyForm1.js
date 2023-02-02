@@ -1,13 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 import axios from 'axios';
 import { AppContext } from '../../Context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
-import jwtDecode from 'jwt-decode';
 import { Container} from 'react-bootstrap';
 import "./AddProperty1.scss";
-
 
 const initialValue = {
     property_name: "",
@@ -25,7 +21,7 @@ export const AddPropertyForm1 = () => {
 
     const [newPropertyData, setNewPropertyData] = useState(initialValue);
 
-    const { property, setProperty, user, typeId, setTypeId, subTypeId, setSubTypeId } = useContext(AppContext);
+    const { setProperty, user, typeId, setTypeId, subTypeId, setSubTypeId } = useContext(AppContext);
 
 
     const navigate = useNavigate();
@@ -100,30 +96,15 @@ const handleSubmit = (e) => {
         });
     }
 
-   /* const token = localStorageUser();
-    if(token) {
-        let user_id = jwtDecode(token).user.id;
-        
-        axios
-            .post(`http://localhost:4000/property/createProperty/${user_id}/${subTypeId}`,property )
-            .then((res) => {
-                
-                setProperty(res.data[0]);
-                
-                navigate("/addProperty2");
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
-  */
-
 }
   return (
 
-    <Container fluid className='fondoAdd1'>
+    <Container fluid className='fondoAdd1 pb-3'>
         <div className='row '>
-            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
+           <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
+                <div className='alturaCont'>
+        <span>1/5</span>
+        </div>
         <h2>¿Preparado para conocer el valor 
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
@@ -175,7 +156,7 @@ const handleSubmit = (e) => {
         <br/>
         </div>
         
-        <div className='col-6 padre2Add1'>
+        <div className='col-6 padre2Add1 '>
         
          <img src='./images/user/Captura2.png' alt="ForSale.png" />
          <br/>
@@ -183,8 +164,6 @@ const handleSubmit = (e) => {
             type='submit' 
             onClick={handleSubmit}
             >Añadir propiedad</button>
-        
-            
          </div>
          </div>
     </Container>

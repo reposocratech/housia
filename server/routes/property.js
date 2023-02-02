@@ -115,21 +115,7 @@ router.put('/unSetMainImage/:image_id/:property_id', propertyController.unSetMai
 //localhost:4000/property/addOneImage/:property_id
 router.put('/addOneImage/:property_id', multer("property"), propertyController.addOneImage)
 
-////rent
-//localhost:4000/property/createRent/:property_id
-// router.post("/createRent/:property_id", propertyController.createRent);
 
-//localhost:4000/property/editRent/:property_id
-// router.put("/editRent/:property_id", propertyController.editRent);
-
-//localhost:4000/property/createLoan/:property_id
-// router.post("/createLoan/:property_id", propertyController.createLoan);
-
-//localhost:4000/property/editLoan/:property_id
-// router.put("/editLoan/:property_id", propertyController.editLoan);
-
-// //localhost:4000/property/createPurchase/:property_id
-// router.post("/createPurchase/:property_id", propertyController.createPurchase);
 
 //localhost:4000/property/editPurchase/:property_id
 router.put("/editPurchase/:property_id", propertyController.editPurchase);
