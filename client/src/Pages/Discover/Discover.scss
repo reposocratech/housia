@@ -1,16 +1,20 @@
-// *{
-//     border: 1px solid tomato;
-// }
 .portafolio-container{
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    height: 100%;
+    min-height: 100vh;
     text-align: center;
-    padding: 7% 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 !important;
+    h1{
+        padding-top: 130px;
+        font-weight: bold;
+        font-size: 50px;
+        text-align: center;
+        color: rgba(3, 255, 247, 1);
+    }
     .discover {
         width: 100%;
         padding: 120px 0;

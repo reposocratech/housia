@@ -2,8 +2,11 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    width: 100%;
-    height: 110vh;  
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
         .padreAdd1{
             padding: 140px 10vw;
             .alturaCont{
@@ -22,9 +25,11 @@
                 color: white;
             }           
             h2{
-                font-size:50px;
+                padding-top: 130px;
                 font-weight: bold;
+                font-size: 50px;
                 text-align: center;
+                color: rgba(3, 255, 247, 1);
             }
             h3{
                 margin: 30px;

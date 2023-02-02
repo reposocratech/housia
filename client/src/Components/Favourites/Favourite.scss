@@ -2,33 +2,37 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    width: 100%;
-    height: 130vh; 
-    h2{
-        padding-top: 150px;
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 30px !important; 
+    padding-bottom: 50px !important;
+    h1{
+        padding-top: 130px;
         font-weight: bold;
         font-size: 50px;
         text-align: center;
         color: rgba(3, 255, 247, 1);
     }
     h6{
-        color: black;
+        color: white;
         font-size: 30px;
         font-weight: bold;
         margin: 0px;
         padding: 0px;
         margin-right: 1vw;
     }
-    p{
-        color: black;
-        font-size: 15px;
-        font-weight: bold;
-        margin: 0px;
-    }
     h3{
         color: #37A5B7;
         font-size: 30px;
         font-weight: bold;
+    }
+    p, span{
+        color: #37A5B7;
+        font-size: 15px;
+        margin: 0px;
     }
     img{
         width: 320px;
@@ -36,30 +40,36 @@
         object-fit: cover;
         object-position: center;
     }
+    .cardFavFondo{   
+        margin: 30px 10px;
+        padding: 0px; 
+        width: 330px;
+        .tarjeta-fav{
+            border: none;
+        } 
     .carBodyFav{
         padding:10px 10px 0px 10px;
-        background-color:  white;
-        width: 320px;
+        background-color: rgb(17, 24, 39);
     }
     .displayFav{
         display: flex;
         justify-content: space-between;
         background-color: none;
     }
-    .cardFavFondo{   
-        margin-top: 50px;
-     padding: 0px;
-        display: flex;
-        justify-content:space-around;    
+    
     }
     button{
-        font-weight: bold;
-        font-size: 15px;
-        background-color: rgba(244, 248, 0, 0.83);
-        margin-top: 10px;
-        padding: 5px;
-        border-radius: 5px;   
+        background-color: rgba(39, 40, 57, 0.788);
+        border:1px solid rgb(65, 193, 219);
+        margin: 5px 2px;
+        color: rgb(65, 193, 219);
+        width: 80%;
+        padding: 10px 0;
+        border-radius: 10px;
     }   
+    button:hover{
+        background-color: rgb(59, 60, 72);
+    } 
 }
 @media (max-width: 990px ){
     .padreFav{
@@ -79,13 +89,3 @@
     }
 }
 
-//TABLET
-@media (max-width: 391px ){
-    .padreFav{
-        height: 130vh; 
-        .cardFavFondo{   
-            padding-right: 30px!important;     
-        }
-       
-    }
-}

@@ -75,7 +75,8 @@ export const AppRoutes = () => {
 
             </Routes>
 
-            <Footer/>
+           <Footer/>
+            
 
         </BrowserRouter>
     </div>

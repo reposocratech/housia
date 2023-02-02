@@ -266,10 +266,14 @@ export const AdminCustomFeatures = () => {
         <h1>Edición de características</h1>
 
         <div className='botonera-opciones'>
-            <button onClick={()=>clickOption(3)}> Características</button>
-            <button onClick={()=>clickOption(2)}> Tipos</button>
-            <button onClick={()=>clickOption(4)}> Subtipos</button>
-            <button onClick={()=>clickOption(1)}> Cocina</button>
+            <button onClick={()=>clickOption(3)}
+                    className={showFeatures && "gray"}> Características</button>
+            <button onClick={()=>clickOption(2)}
+                    className={showHousesType && "gray"}> Tipos</button>
+            <button onClick={()=>clickOption(4)}
+                    className={showHousesSubtype && "gray"}> Subtipos</button>
+            <button onClick={()=>clickOption(1)}
+                    className={showKitchen && "gray"}> Cocina</button>
         </div>
 
 
@@ -333,9 +337,12 @@ export const AdminCustomFeatures = () => {
                 return(
                     <div className='container-mapeo' key={index}>
                         <span>{elem.type_name}</span>
-                        <span onClick={()=> deletePropertyType(elem.type_id)} class="material-symbols-outlined icono">
+                        {/* <span onClick={()=> deletePropertyType(elem.type_id)} class="material-symbols-outlined icono">
                         delete
-                        </span>
+                        </span> */}
+                        <span className={elem.type_id <=4 ? 'esconder material-symbols-outlined icono' : 'material-symbols-outlined icono'} onClick={()=> deletePropertyType(elem.type_id)}>
+                    delete
+                    </span> 
                     </div>
                 )
             })
