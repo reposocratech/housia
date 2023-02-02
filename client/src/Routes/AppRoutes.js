@@ -26,7 +26,6 @@ import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 import { Favourite } from '../Components/Favourites/Favourite'
 
-
 export const AppRoutes = () => {
   const {user, isLogged} = useContext(AppContext);
   

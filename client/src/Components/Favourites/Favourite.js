@@ -1,47 +1,50 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import jwtDecode from 'jwt-decode';
-import Card from 'react-bootstrap/Card';
-import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
-import { Container} from 'react-bootstrap';
+import jwtDecode from "jwt-decode";
+import Card from "react-bootstrap/Card";
+import { localStorageUser } from "../../Utils/localStorage/localStorageUser";
+import { Container } from "react-bootstrap";
 import "./Favourite.scss";
-import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../Context/AppContext';
-
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../Context/AppContext";
 
 export const Favourite = () => {
-    const [fav, setFav] = useState();
-    const {user} = useContext(AppContext);
+  const [fav, setFav] = useState();
+  const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+  const [reset, setReset] = useState(true);
+
+  useEffect(() => {
     const token = localStorageUser();
-    const navigate = useNavigate(); 
-    const [reset, setReset] = useState(1);
-
-    useEffect(() => {
-        const token = localStorageUser();
-        if(token){
-            let id = jwtDecode(token).user.id;
-        axios
-            .get(`http://localhost:4000/property/favUser/${id}`)
-            .then((res) => {
-                setFav(res.data)             
-            })
-            .catch((err) => {
-                console.log(err);
-            })};
-      }, [reset]);
-
-      const handleFav = (property_id) => {
-        setReset(reset + 1)
-        axios
-        .delete(`http://localhost:4000/property/unfav/${user.user_id}/${property_id}`)
+    if (token) {
+      let id = jwtDecode(token).user.id;
+      axios
+        .get(`http://localhost:4000/property/favUser/${id}`)
         .then((res) => {
-            console.log("Eliminado")
+          setFav(res.data);
         })
         .catch((err) => {
-            console.log(err);
+          console.log(err);
         });
-      } 
-      console.log(fav, "favoritos")
+    }
+  }, []);
+  
+  const handleFav = (property_id) => {
+    let arrProv = fav.filter(elem => elem.property !== property_id)
+
+    axios
+      .delete(
+        `http://localhost:4000/property/unfav/${user.user_id}/${property_id}`
+      )
+      .then((res) => {
+        console.log("Eliminado");
+        setFav(arrProv);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+    
     
   return (
     <div className='padreFav'>
@@ -76,19 +79,6 @@ export const Favourite = () => {
                 </Card.Title>
                 </Card.Body>
                 </Card>
-
         </div>
-
-
-
-
-            )
-        })}
-            
-        </div>
-    </Container>
-       
-
-    </div>
-  )
-}
+  );
+};

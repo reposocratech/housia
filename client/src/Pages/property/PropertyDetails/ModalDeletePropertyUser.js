@@ -26,18 +26,20 @@ export const ModalDeletePropertyUser = ({showDeleteModalUser, setShowDeleteModal
   return (
     <Modal show={showDeleteModalUser} onHide={handleClose}>
         <Modal.Body>¿Estás seguro de eliminar la propiedad?</Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer
+            className='d-flex justify-content-evenly'
+        >
             <Button 
                 style={{backgroundColor: 'rgb(61,62,77)', border: 'none'}} 
                 size='sm' 
                 onClick={delPropertyUser}
-                >Sí, eliminar la propiedad
+                >Sí, eliminar
             </Button>
             <Button 
                 style={{backgroundColor: 'rgb(48,162,185)', border: 'none'}} 
                 size='sm' 
                 onClick={handleClose}
-                >No, Volver a la propiedad
+                >No, volver atrás
             </Button>
         </Modal.Footer>
     </Modal>
