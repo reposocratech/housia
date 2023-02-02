@@ -3,7 +3,7 @@
     background-color: #272839;
     color: white;
     width: 100%;
-    height: 94vh;
+    height: 100vh;
 
     .colInfo{
         margin-bottom: 50px;
@@ -29,8 +29,8 @@
        }
        .tamInfo{
         font-weight: bold;
-        font-size: 50px;
-        width: 80%;
+        font-size: 53px;
+        width: 26vw;
        }
        .divInfo{
         display: flex;
@@ -56,29 +56,7 @@
             width: 460px;
         }
     }
-    .dos{
-        padding: 0px;
-        margin: 0px;
-    .footerInfo{
-        padding: 20px 70px;
-        img{
-            width: 150px;
-        }
-        border-top: 1px solid white;
-        background-color: #2F2F3D;
-        height: 200px;
-        
-        .enlaceInfo{
-            a{
-                font-size: 15px;
-                margin: 5px;
-            }
-            img{
-                width: 40px;
-            }
-        }
-    }
-    }
+    
 }
 
 
@@ -88,9 +66,11 @@
 //RESPONSIVE
 @media (max-width: 1400px ){
     .fondoHome{
-        height: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column; 
         .colInfo{    
-            padding:20vw 10vw 5vw 20vw ;         
+            padding:200px 10vw 8vw 30vw ;         
            .tamInfo{
             width: 90%;
            }  
@@ -113,7 +93,7 @@
     .fondoHome{
         height: 100%;
         .colInfo{
-           padding:170px 10vw 60px 23vw ;       
+           padding:170px 10vw 60px 17vw ;       
            .botInfo{
             padding: 10px 20px; 
            }
@@ -121,7 +101,8 @@
             padding: 10px 20px;
            }
            .tamInfo{
-            width: 90%;
+            width: 100%;
+            font-size: 8vw;
            }  
         }   
         .divcol6{
@@ -140,7 +121,7 @@
 @media (max-width: 391px ){
     .fondoHome{
         .colInfo{
-            padding:140px 0vw 0px 10vw ;    
+            padding:190px 0vw 50px 10vw ;    
            .botInfo{
             padding: 10px 10px; 
            }
@@ -158,11 +139,6 @@
             padding: 5px 40px;
            }
         }             
-    .dos{
-    .footerInfo{
-        padding: 10px 25px;   
-    }
-    } 
     }
 }
  
