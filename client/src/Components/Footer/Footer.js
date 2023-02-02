@@ -8,7 +8,7 @@ export const Footer = () => {
     <Row className='infoContainer'>
 
         <Col className='housia'>
-            <img src='../images/logo-blanco.png' alt='logo_blanco'/>
+            <img src='/images/logo-blanco.png' alt='logo_blanco'/>
             <p>Housia es una marca comercial debidamente registrada. Todos los derechos reservados. 2022</p>
             <a className='turquoise' href='mailto:info@housia.es'>info@housia.es</a>
             <a className='turquoise' href='tel:34656630911'>656 630911</a>

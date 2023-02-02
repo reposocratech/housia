@@ -4,6 +4,7 @@ import { Home } from '../Pages/UserDashboard/Home/Home'
 import { Login } from '../Pages/Auth/Login/Login'
 import { Register } from '../Pages/Auth/Register/Register'
 import { NavBarUser } from '../Components/NavbarUser/NavBarUser'
+import { Footer } from '../Components/Footer/Footer'
 import { Portafolio } from '../Pages/UserDashboard/Portafolio/Portafolio'
 import { Resumen } from '../Pages/UserDashboard/Resumen/Resumen'
 import { User } from '../Pages/UserDashboard/User/User'
@@ -77,6 +78,8 @@ export const AppRoutes = () => {
               </>}
 
             </Routes>
+
+            <Footer/>
 
         </BrowserRouter>
     </div>
