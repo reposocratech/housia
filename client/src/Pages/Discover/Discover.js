@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from "axios";
-
 import './Discover.scss';
 
+
 import { Col, Container, Form, InputGroup,  Modal, Row, Button, Accordion } from 'react-bootstrap';
+
 
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
@@ -32,7 +33,8 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
-    
+
+
 
     ///////////token para comprobar si el usuario es
     //estados de filtros
@@ -468,7 +470,7 @@ export const Discover = () => {
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
-    // console.log(discover, "esto es el arrays de casas originales");
+    console.log(discover, "esto es el arrays de casas originales");
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
@@ -1049,10 +1051,13 @@ export const Discover = () => {
                  <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
                     <br/>
                     Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+
+                    
                  </Modal.Body>
                  <Modal.Footer>
                    <Button variant="secondary" onClick={()=>setShow(false)}>
-                     Close
+                     Cerrar
+
                    </Button>
                  </Modal.Footer>
                </Modal>
