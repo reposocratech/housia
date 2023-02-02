@@ -503,12 +503,15 @@ export const Discover = () => {
   return (
 
     <Container fluid className='portafolio-container'>
-         <h1>Descubre</h1>
-        <div className='discover'>
+
+         <h1>DESCUBRE</h1>
+
+    <div className='discover'>
+
         <div className='filters'>
         <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png' alt='icon_filter'/></h4>
         <Row>
-        <Col className='row'>
+        <Col className='botonLimpiar' xs={12} md={8} lg={8}>
             <button className='col-12 mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
         </Col>
         </Row>
@@ -516,28 +519,31 @@ export const Discover = () => {
         <div>
             
 
-        <Accordion defaultActiveKey="0">
+       
 
-        <Accordion.Item eventKey="0">
+       
+        <Accordion className='estilosAcordeon'>
+      <Accordion.Item eventKey="0">
+
         <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
-        <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterBuiltMeters(0)}>Sin filtro</button>
+            </Col>
+            <Col className="metro" xs={6} md={6} lg={6}>
+            <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
             </Col>
         </Row>
 
         <Row className=' buttons'>                     
+         
 
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterBuiltMeters(1)}>30 - 100 m²</button>
-            </Col>
-
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterBuiltMeters(2)}>100 - 300 m²</button>
             </Col>
 
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
             </Col>
         
@@ -548,19 +554,20 @@ export const Discover = () => {
         <Accordion.Header>Metros totales minimos: {totalMetersFilterMin===0? "Sin filtro": totalMetersFilterMin}</Accordion.Header>
         <Accordion.Body>
         <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterTotalMeters(0)}>Sin filtro</button>
+            </Col>
+            <Col className="metro" xs={6} md={6} lg={6}>
+            <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
             </Col>
         </Row>
 
         <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterTotalMeters(1)}>100 - 300 m²</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+           
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterTotalMeters(2)}>300 - 1000 m²</button>
             </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterTotalMeters(3)}>+ 1000 m²</button>
             </Col>
         </Row>
@@ -571,19 +578,20 @@ export const Discover = () => {
         <Accordion.Header>Valor mínimo: {priceFilterMin===0? "Sin filtro": priceFilterMin}</Accordion.Header>
         <Accordion.Body>
         <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterPrice(0)}>Todas</button>
+            </Col>
+            <Col className="metro" xs={6} md={6} lg={6}>
+            <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
             </Col>
         </Row>
 
         <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleBothFilterPrice(1)}> 100k - 300k </button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+           
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterPrice(2)}> 300k - 500k </button>
             </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterPrice(3)}>+ 500k </button>
             </Col>
         </Row>
@@ -593,19 +601,20 @@ export const Discover = () => {
         <Accordion.Header>Nº de habitaciones: {filterRooms===0? "Sin filtro": filterRooms }</Accordion.Header>
         <Accordion.Body>
         <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfRooms(0)}> Sin filtro</button>
+            </Col>
+            <Col className="metro" xs={6} md={6} lg={6}>
+            <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
             </Col>
        </Row>
 
        <Row className=' buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfRooms(2)}> 2 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+           
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfRooms(3)}> 3 o más</button>
             </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfRooms(4)}> 4 o más</button>
             </Col>
         </Row>
@@ -615,19 +624,20 @@ export const Discover = () => {
         <Accordion.Header>Nº de baños: {filterBaths===0? "Sin filtro": filterBaths }</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfBath(0)}> Sin filtro</button>
+            </Col>
+            <Col className="metro" xs={6} md={6} lg={6}>
+            <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
             </Col>
         </Row>
 
         <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
-            <button onClick={()=>handleNumOfBath(2)}> 2 o más</button>
-            </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+           
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfBath(3)}> 3 o más</button>
             </Col>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfBath(4)}> 4 o más</button>
             </Col>
         </Row>
@@ -637,16 +647,16 @@ export const Discover = () => {
         <Accordion.Header>Plazas de aparcamiento : {filterGarage===0? "Sin filtro": filterGarage }</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfGarage(0)}> Sin filtro</button>
             </Col>
        </Row>
 
        <Row className='buttons'>
-            <Col className="metro" xs={12} md={5} lg={5}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfGarage(1)}> 1 o más</button>
             </Col>
-            <Col className="metro" xs={12} md={5} lg={5}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleNumOfGarage(2)}> 2 o más</button>
             </Col>
            
@@ -654,19 +664,19 @@ export const Discover = () => {
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="6">
-        <Accordion.Header>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Segunda mano": "Nuevo"}</Accordion.Header>
+        <Accordion.Header>Estado del Activo: {filterIsNew=== -1? "Sin filtro": filterIsNew ===0? "Usada": "Nuevo"}</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
-            <Col className="metro" xs={12} md={6} lg={3}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleIsNew(-1)}> Sin Filtro</button>
             </Col>
         </Row>
 
         <Row className='buttons'>
-            <Col className="metro" xs={12} md={5} lg={5}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleIsNew(1)}> Nueva</button>
             </Col>
-            <Col className="metro" xs={12} md={5} lg={5}>
+            <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleIsNew(0)}> Usada</button>
             </Col>
            
@@ -676,20 +686,28 @@ export const Discover = () => {
             
     </Accordion>
        
-       <Row>
-       <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar extras": "Ocultar extras"}</button>
+       <Row >
+        <Col className='botonExtras' xs={12} md={8} lg={8}>
+        <button className='featuresButton' onClick={openFeaturesDisplay}>{!showFeatures? "Mostrar extras": "Ocultar extras"}</button>
+        </Col>
+      
        
        </Row>
        
+
+       <Row>           
+
        {showFeatures &&
        <>
-       <h5>Extras del activo</h5>
+       
         {featuresInDB.map((feature, index)=>{
             return(
-                <div key={index} className='checkbox-container'>
+                <Col key={index} className='extras'xs={6} md={6} lg={6}>
                 <input 
                     type="checkbox" 
-                    className="checkbox" 
+
+                    classname="extra" 
+
                     id={`checkbox-${feature.feature_name}`} 
                     onClick={()=>handleFeaturesSelected(feature.feature_id)}
                      
@@ -699,16 +717,21 @@ export const Discover = () => {
                     for={`checkbox-${feature.feature_name}`} 
                     className="label">{feature.feature_name}
                 </label>
-            </div> 
+
+            </Col> 
+
             )
         })}
        </>
        } 
+
+       </Row> 
+
       
         <h5>Tipos de cocina</h5>
         <Row className='buttons'>
-            <Col className="cocina" xs={12} md={6} lg={6}>
-            <select className='clearButton' onChange={SelectKitchenFilter}>
+            <Col className="cocina" xs={12} md={8} lg={6}>
+            <select className='selectButton' onChange={SelectKitchenFilter}>
             <option value={-1}>Sin filtro</option>
             {kitchenInDB?.map((kitchen, index)=>{
                 return(
@@ -725,8 +748,8 @@ export const Discover = () => {
 
         <h5>Tipos de Activo</h5>
         <Row className='buttons'>
-            <Col className="" xs={12} md={6} lg={6}>
-            <select className='clearButton' onChange={selectTypeIdFilter}>
+            <Col className="" xs={12} md={8} lg={6}>
+            <select className='selectButton' onChange={selectTypeIdFilter}>
             <option value={-1}>Sin filtro</option>
             {typeInDB?.map((type, index)=>{
                 return(
@@ -740,20 +763,22 @@ export const Discover = () => {
             </select>
             </Col>
         
-            <Col className="" xs={12} md={6} lg={6}>
-            { showSubtype &&
-            <select className='clearButton' onChange={selectSubtypeIdFilter}>
-                <option value={-1}>Sin filtro</option>
-                {subTypeInDB?.map((subtype, index)=>{
-                    return(
-                        <option 
-                        key={index}
-                        value={subtype.subtype_id}
-                        >{subtype.subtype_name}
-                        </option>
-                    )
-                })}
-            </select>
+
+                <Col className="" xs={12} md={8} lg={6}>
+                { showSubtype &&
+                <select className='selectButton' onChange={selectSubtypeIdFilter}>
+                    <option value={-1}>Sin filtro</option>
+                    {subTypeInDB?.map((subtype, index)=>{
+                        return(
+                            <option 
+                            key={index}
+                            value={subtype.subtype_id}
+                            >{subtype.subtype_name}
+                            </option>
+                        )
+                    })}
+                </select>
+
 
             }
             </Col>
@@ -761,8 +786,8 @@ export const Discover = () => {
 
         <h5>Filtrar por provincia</h5>
         <Row className='buttons'>
-            <Col className="" xs={12} md={6} lg={6}>
-            <select className='clearButton' onChange={selectProvinceIdFilter}>
+            <Col className="" xs={12} md={8} lg={6}>
+            <select className='selectButton' onChange={selectProvinceIdFilter}>
             <option value={-1}>Sin filtro</option>
             {provinceInDb?.map((province, index)=>{
                 return(
@@ -774,9 +799,9 @@ export const Discover = () => {
             })}
         </select>
             </Col>
-            <Col className="" xs={12} md={6} lg={6}>
+            <Col className="" xs={12} md={8} lg={6}>
             { showCities &&
-                <select className='clearButton' onChange={selectCityFilter}>
+                <select className='selectButton' onChange={selectCityFilter}>
                     <option value={-1}>Sin filtro</option>
                     {cityInDb.map((city, index)=>{
                         return(
@@ -798,47 +823,68 @@ export const Discover = () => {
        
         {filterList?.map((property, i) => {
             return(
-                <Col className='card'xs={12} md={12} lg={6}>
-                <div className='cardProperty' key={i} style={{border:"2px solid red"}}>
 
-                 <div className='styleCard'>
-                 <div className='parteTransparente'>
-                    <p  className='perTrans'>12%</p> 
-                <div className='estrella'>
-                    <img src='/images/icons/favoritos.png' alt='image_favourites'/></div>
-                </div>
-                    <img src={`/images/property/${property?.image_title}`} alt="property_image"></img>
-                </div>   
+                <Col className='tarjeta'xs={12} md={6} lg={4}>
+                    <div className='cardProperty' key={i}>
+
+                        <div className='styleCard'>
+                            <div className='parteTransparente'>
+                                <p  className='perTrans'>INFO</p> 
+                                
+                                {favOption &&
+                        <div className='botonFavoritos'>
+                            <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
+                            {show && <>
+                            <Modal show={show} onHide={()=>setShow(false)}>
+                                <Modal.Header closeButton>
+                                <Modal.Title>Accion ya realizada</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
+                                    <br/>
+                                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+
+                    
+                                </Modal.Body>
+                                <Modal.Footer>
+                                <Button variant="secondary" onClick={()=>setShow(false)}>
+                                    Cerrar
+
+                                </Button>
+                                </Modal.Footer>
+                            </Modal>
+                            </>}
+                        </div>}
+                                
+                            </div>
+                    
+                            <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                   
+                    
+                        </div>   
                 
-                <div className='d-flex flex-column'>
-                <h5>{property?.property_name}</h5> 
-                <p>{property?.city_name} , {property?.province_name}</p>
-                </div>
-
-                <p>{Math.floor(property?.purchase_buy_price * 1.14)}</p>
+                    <Row className='m-0'>
+                        <Col className='datosPropiedad alinear'>
+                             <h5>{property?.property_name}</h5> 
+                             <div className='d-flex'>
+                             <img src='/images/icons/location.png' alt='localizacion'/>
+                             <p>{property?.city_name} , {property?.province_name}</p>
+                             </div>
+                             
+                        </Col>
+                        <Col className='datosPropiedad alineado'>
+                            <p>Precio</p>
+                            <p className='color'>{Math.floor(property?.purchase_buy_price * 1.14)} €</p>
+                        </Col>
+                    </Row>
+                                              
+                          
+                       
                 
-                {favOption &&
-                <div>
-                <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
-                {show && <>
-                <Modal show={show} onHide={()=>setShow(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Accion ya realizada</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
-                        <br/>
-                        Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
-                    </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={()=>setShow(false)}>
-                        Cerrar
+                       
+               
+                    </div>
+               
 
-                    </Button>
-                </Modal.Footer>
-               </Modal>
-                </>}
-                </div>}
-                </div>
                 </Col>
             )
         })}
