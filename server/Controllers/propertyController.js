@@ -257,7 +257,6 @@ class propertyController {
           }
 
           /* else if(field == 'type_id'){
-
           } */
 
           /* console.log('SQL DE ADDRESS', sql); */

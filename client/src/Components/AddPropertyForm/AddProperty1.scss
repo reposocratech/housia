@@ -32,6 +32,13 @@
                 color:  white;
                 border-radius: 10px;             
             }
+            ::placeholder{
+                color: white;
+            }
+            :focus{
+                outline: 1px solid #4cecf5;
+                border: 1px solid #4cecf5;
+            }
             select{
                 color: white;
                 width: 550px;
