@@ -86,7 +86,7 @@ export const SummaryInversionUser = () => {
     
   return (
     <Container fluid className='main' >
-        <h2 className='text-center'>RESUMEN INVERSIÓN</h2>
+        <h1 className='text-center'>Resumen Inversión</h1>
        
         <Row className='m-0'>
             

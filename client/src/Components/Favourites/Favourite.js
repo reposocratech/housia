@@ -45,27 +45,39 @@ export const Favourite = () => {
     
   return (
     <div className='padreFav'>
-        <h2>Mis Favoritos</h2>
+        <h1>Mis Favoritos</h1>
     <Container fluid>
-        <div className='row'>
+        <div className='d-flex flex-wrap justify-content-center'>
             
             {fav?.map((favorito, i)=>{
             return(
   
-          
-              <div key={i} className='col-12 col-lg-6 col-xl-6 col-xxl-4 cardFavFondo'>  
-      <Card   style={{ width: '18rem' }}>
-      <Card.Img variant="top" onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} src={`/images/property/${favorito?.image_title}`} />
+              <div key={i} className='col-md-5 col-lg-4 cardFavFondo'>  
+                <Card className='tarjeta-fav'>
+                <Card.Img variant="top" onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} src={`/images/property/${favorito?.image_title}`} />
       
-      <Card.Body className='carBodyFav'>
-      <Card.Title className='carTitleFav'><div className='displayFav'><h6>{favorito?.property_name}</h6> <h3>{favorito?.purchase_buy_price
-}€</h3></div>
-<p>{`${favorito?.province_name}   ${favorito?.city_name} (Spain)` } </p>
-<button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button></Card.Title>
-      
-      </Card.Body>
-    </Card>
-</div>
+                <Card.Body className='carBodyFav'>
+                <Card.Title className='carTitleFav'>
+                    <div className='displayFav'>
+                        <h6>{favorito?.property_name}</h6> 
+                        <h3>{favorito?.purchase_buy_price}€</h3>
+                    </div>
+                    <div className='d-flex align-items-center'>
+                        <span class="material-symbols-outlined">
+                            location_on
+                        </span>
+                        <p className='m-0'>{`${favorito?.province_name}   ${favorito?.city_name} (Spain)` } </p>
+                    </div>
+                    <div className='d-flex justify-content-center mt-2'>
+                        <button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button>
+                    </div>
+                    
+                
+                </Card.Title>
+                </Card.Body>
+                </Card>
+
+        </div>
 
 
 

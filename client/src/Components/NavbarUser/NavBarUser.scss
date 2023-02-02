@@ -56,8 +56,13 @@
     display: flex;
     justify-content: space-around;
     position: fixed;
-    top: 10px;
+    top: 0px;
     border-bottom: 1px solid white;
+    z-index: 100;
+    &.scrolled{
+        background-color: #272839 !important;
+        transition: 1s;
+    }
     a{
         margin: 10px 20px;
         text-decoration: none;
