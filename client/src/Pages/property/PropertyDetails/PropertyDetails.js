@@ -494,7 +494,7 @@ export const PropertyDetails = () => {
             </Modal>
 
             <Button className='check'
-                onClick={handleColor} variant={colorSold ? "success" : "danger"}>
+                onClick={handleColor} variant={colorSold ? "danger" : "success"}>
                     <img src='/images/icons/verified.png'/>
                     {colorSold ? "Marcar como vendido" : "Marcar como no vendido"}</Button>
         </div>

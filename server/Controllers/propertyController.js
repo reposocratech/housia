@@ -32,16 +32,13 @@ class propertyController {
     let {property_user_id, property_subtype_id} = req.params;
     let {property_name} = req.body;
 
-    /* console.log(property_subtype_id, 'SUBTYPEEEEEE'); */
 
     let sql = `INSERT INTO property (property_name, property_user_id, property_subtype_id) VALUES ('${property_name}', ${property_user_id}, ${property_subtype_id})`;
 
-    /* console.log('SQLLLL', sql); */
 
     connection.query(sql, (error, result) => {
       if (error){res.status(400).json(error)}
 
-      /* console.log(result, "RESULT DEL INSERTTTTTTTTTTTTT"); */
       
         let property_id = result.insertId;
 
@@ -348,9 +345,6 @@ class propertyController {
         if(req.files != undefined){
           img = req.files;
         }
-
-
-        /* console.log(img); */
 
         
         let mainImage = img[0].filename
@@ -808,3 +802,5 @@ getAllPurchaseData = (req, res) => {
 
 
 module.exports = new propertyController();
+
+

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from "axios";
 
 import './Discover.scss';
-import { Container } from 'react-bootstrap';
+import { Button, Container, Modal } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 
@@ -30,7 +30,7 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
-    const target = useRef(null);
+   
 
     ///////////token para comprobar si el usuario es
     //estados de filtros
@@ -466,7 +466,7 @@ export const Discover = () => {
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
-    // console.log(discover, "esto es el arrays de casas originales");
+    console.log(discover, "esto es el arrays de casas originales");
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
@@ -746,7 +746,23 @@ export const Discover = () => {
                 {favOption &&
                 <div>
                 <button onClick={()=>addToFavs(property?.property_id)}>Añadir a Favoritos</button>
-                {show && <span>Esta opcion ya esta en tus favoritos</span>}
+                {show && <>
+                 <Modal show={show} onHide={()=>setShow(false)}>
+                 <Modal.Header closeButton>
+                   <Modal.Title>Accion ya realizada</Modal.Title>
+                 </Modal.Header>
+                 <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
+                    <br/>
+                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
+                    
+                 </Modal.Body>
+                 <Modal.Footer>
+                   <Button variant="secondary" onClick={()=>setShow(false)}>
+                     Cerrar
+                   </Button>
+                 </Modal.Footer>
+               </Modal>
+                </>}
                 </div>}
                 <hr/>
                 <p>Año de construccion: {property?.property_built_year} </p>
