@@ -4,6 +4,7 @@ import './Discover.scss';
 import { Col, Container, Modal, Row, Button, Accordion } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
+import { ModalInfoDiscover } from '../../Components/ModalInfoDiscoverOneProperty/ModalInfoDiscover';
 
 export const Discover = () => {
 
@@ -25,6 +26,8 @@ export const Discover = () => {
     const [favInDB, setFavInDB] = useState([])
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
+    const [showModalInfoDiscover, setShowModalInfoDiscover] = useState(false)
+    const [infoOneProperty, setInfoOneProperty] = useState({})
 
     //estados de filtros
     //PRECIO
@@ -140,6 +143,11 @@ export const Discover = () => {
                 })
                 .catch((error)=>{
                 console.log(error)
+
+                let doll = {
+                    property_id: propertyId
+                }
+               setFavInDB([...favInDB, doll]);
                 })
 
                 let doll = {
@@ -390,6 +398,7 @@ export const Discover = () => {
         let restantes = [];
         for(let i = 0; i< propertiesWithFeatures.length; i++){
             
+
             for(let j = 0; j< featuresSelected.length; j++){
             
                 if(featuresSelected[j] === propertiesWithFeatures[i].feature_id){
@@ -423,6 +432,15 @@ export const Discover = () => {
            restantes = resultadoFinal;
             return restantes
         }
+
+
+        
+       const handleModalInfo = (propertyInfo) =>{
+
+        setInfoOneProperty(propertyInfo);
+        setShowModalInfoDiscover(true);
+       }
+
 
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
@@ -502,6 +520,7 @@ export const Discover = () => {
 
   return (
 
+    <>
     <Container fluid className='portafolio-container'>
 
          <h1>DESCUBRE</h1>
@@ -523,6 +542,7 @@ export const Discover = () => {
 
        
         <Accordion className='estilosAcordeon'>
+
       <Accordion.Item eventKey="0">
 
         <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
@@ -824,6 +844,8 @@ export const Discover = () => {
         {filterList?.map((property, i) => {
             return(
 
+
+
                 <Col className='tarjeta'xs={12} md={6} lg={4}>
                     <div className='cardProperty' key={i}>
 
@@ -858,6 +880,7 @@ export const Discover = () => {
                             </div>
                     
                             <img src={`/images/property/${property?.image_title}`} alt=""></img>
+
                    
                     
                         </div>   
@@ -892,5 +915,13 @@ export const Discover = () => {
         </Row>
     </div>
     </Container>
+    <ModalInfoDiscover
+    showModalInfoDiscover = {showModalInfoDiscover}
+    setShowModalInfoDiscover = {setShowModalInfoDiscover}
+    infoOneProperty = {infoOneProperty}
+    setInfoOneProperty= {setInfoOneProperty}
+    />
+    </>
+    
   )
 }

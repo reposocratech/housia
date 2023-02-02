@@ -239,6 +239,8 @@ class propertyController {
     //localhost:4000/property/getImagesProperty/:property_id
       getImagesProperty = (req, res) => {
         let {property_id} = req.params;
+
+        console.log(property_id, "el id que buscamos");
   
         let sql = `SELECT * FROM image WHERE image_property_id = ${property_id} AND image_is_deleted = 0`;
   
@@ -743,7 +745,7 @@ getAllPurchaseData = (req, res) => {
       discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
-        property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
+        property.property_garage, property.property_built_year, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
         image.image_title, province.province_id,city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
         FROM property 
         LEFT JOIN purchase ON  purchase.purchase_property_id = property.property_id

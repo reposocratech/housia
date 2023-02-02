@@ -7,8 +7,9 @@ import { Carousel, Container } from 'react-bootstrap';
 import './PropertyDetails.scss';
 import { ModalDeletePropertyUser } from './ModalDeletePropertyUser';
 import { ModalSalePropertyUser } from './ModalSalePropertyUser';
-import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
 import jwtDecode from 'jwt-decode';
+import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
+
 
 
 export const PropertyDetails = () => {
@@ -63,9 +64,9 @@ export const PropertyDetails = () => {
             .catch((err) => {
                 console.log(err);
             });
-        }
-        
+        }   
     }, [property_id, user?.user_id]);
+
 
     //Imagenes propiedad
     useEffect(() => {
