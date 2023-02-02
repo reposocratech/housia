@@ -146,7 +146,7 @@ export const AdminAllProperties = () => {
                         </div>
                         
                         <div className='info-inferior'>
-                            <h3>{elem?.property_name}</h3>
+                            <h5>{elem?.property_name}</h5>
                             <div className='direccion'>
                                 <span class="material-symbols-outlined">
                                 location_on

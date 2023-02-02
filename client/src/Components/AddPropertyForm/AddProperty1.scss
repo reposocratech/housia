@@ -2,7 +2,7 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -10,9 +10,9 @@
         .padreAdd1{
             padding: 140px 10vw;
             .alturaCont{
-                margin-bottom: 40px;
+                margin-right: 20vw;
                 span{
-                   background-color: white;
+                background-color: white;
                 color: black;
                 font-weight: bold;
                 padding: 10px 35px;
@@ -25,7 +25,7 @@
                 color: white;
             }           
             h2{
-                padding-top: 130px;
+                padding-top: 30px;
                 font-weight: bold;
                 font-size: 50px;
                 text-align: center;
@@ -96,9 +96,13 @@
 @media (max-width: 1400px ){
     
     .fondoAdd1{ 
-        height: 100vh; 
+        min-height: 100vh; 
         .padreAdd1{
             padding: 150px 100px 0px 100px;
+            .alturaCont{
+                margin-right: 60vw;
+                
+            }
             .displayresAdd1{
                 display: flex;
                 flex-direction: column;
@@ -134,6 +138,12 @@
             .padreAdd1{
                 
                 padding: 150px 12vw 0px 12vw;
+                .alturaCont{
+                    margin-right: 40vw;
+                    span{
+                        font-size: 15px;
+                    }
+                }
                 input{
                     width: 72vw;            
                 }
@@ -161,18 +171,10 @@
             .padreAdd1{
                 padding: 150px 10vw 0px 10vw;
                 .alturaCont{
-                    margin-bottom: 30px;
-                    span{
-                      
-                    font-weight: bold;
-                    padding: 10px 35px;
-                    border-radius: 10px;
-                    font-size: 15px;
-                    margin-bottom: 100px!important; 
-                    }
-                    
+                    margin-bottom: 30px;  
                 }
                 h2{
+                    padding-top: 10px!important;
                     font-size:40px;
 
                 }
@@ -194,7 +196,6 @@
                 button{
                    margin:0px 0px 30px 7vw;
                    padding: 10px 5px;
-
                     width:75vw;
                 }
             }   

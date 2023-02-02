@@ -92,11 +92,11 @@ export const Portafolio = () => {
       <Row className='container-prop'>
         {propertyDetails?.map((prop, index)=> {
             return(
-              <div className='col-12 col-sm-10 col-md-6 col-lg-4 properties' key={index}>
-              <div  className='property'>
+              <div className='col-12 col-sm-10 col-md-6 col-lg-4 properties_portafolio' key={index}>
+              <div  className='property_portafolio'>
                 <div 
                   onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
-                    <img src={`/images/property/${prop.image_title}`} alt='property_image'/>
+                    <img src={`/images/property/${prop.image_title}`}/>
                    
                     <div className='filtro-opaco'>
                     <div 
@@ -114,7 +114,7 @@ export const Portafolio = () => {
                       >
                     <h5>{prop?.property_name}</h5>
                         <div className='d-flex      align-items-center'>
-                        <img className='location' src='/images/property/location.png' alt='icon_location'/>
+                        <img className='location' src='/images/property/location.png'/>
                         <p className='address m-0'> {prop.address_street_name} {prop.address_street_number}</p>
                       </div>
                 </div>  

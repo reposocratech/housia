@@ -432,10 +432,8 @@ export const Discover = () => {
            restantes = resultadoFinal;
             return restantes
         }
-
-
         
-       const handleModalInfo = (propertyInfo) =>{
+        const handleModalInfo = (propertyInfo) =>{
 
         setInfoOneProperty(propertyInfo);
         setShowModalInfoDiscover(true);
@@ -843,17 +841,14 @@ export const Discover = () => {
        
         {filterList?.map((property, i) => {
             return(
-
-
-
                 <Col className='tarjeta'xs={12} md={6} lg={4}>
                     <div className='cardProperty' key={i}>
 
                         <div className='styleCard'>
                             <div className='parteTransparente'>
-                                <p  className='perTrans'>INFO</p> 
+                               <p onClick={() => handleModalInfo(property)} className='perTrans'>INFO</p>
                                 
-                                {favOption &&
+                        {favOption &&
                         <div className='botonFavoritos'>
                             <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
                             {show && <>
@@ -864,8 +859,6 @@ export const Discover = () => {
                                 <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
                                     <br/>
                                     Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
-
-                    
                                 </Modal.Body>
                                 <Modal.Footer>
                                 <Button variant="secondary" onClick={()=>setShow(false)}>
@@ -876,14 +869,9 @@ export const Discover = () => {
                             </Modal>
                             </>}
                         </div>}
-                                
-                            </div>
-                    
-                            <img src={`/images/property/${property?.image_title}`} alt=""></img>
-
-                   
-                    
-                        </div>   
+                        </div>
+                        <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                    </div>   
                 
                     <Row className='m-0'>
                         <Col className='datosPropiedad alinear'>
@@ -899,15 +887,7 @@ export const Discover = () => {
                             <p className='color'>{Math.floor(property?.purchase_buy_price * 1.14)} €</p>
                         </Col>
                     </Row>
-                                              
-                          
-                       
-                
-                       
-               
                     </div>
-               
-
                 </Col>
             )
         })}

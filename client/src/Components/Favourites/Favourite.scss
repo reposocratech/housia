@@ -18,7 +18,7 @@
     }
     h6{
         color: white;
-        font-size: 30px;
+        font-size: 1.2rem;
         font-weight: bold;
         margin: 0px;
         padding: 0px;
@@ -26,7 +26,7 @@
     }
     h3{
         color: #37A5B7;
-        font-size: 30px;
+        font-size: 1.5rem;
         font-weight: bold;
     }
     p, span{
@@ -35,9 +35,9 @@
         margin: 0px;
     }
     img{
-        width: 320px;
-        height: 300px;
-        object-fit: cover;
+        width: 100%;
+        height: 200px;
+        object-fit: conver;
         object-position: center;
     }
     .cardFavFondo{   
@@ -71,21 +71,13 @@
         background-color: rgb(59, 60, 72);
     } 
 }
-@media (max-width: 990px ){
-    .padreFav{
-        height: 300vh;
-        .cardFavFondo{   
-            margin-bottom: 50px;    
-        }
-    }
-}
+
 //TABLET
 @media (max-width: 769px ){
     .padreFav{
-        height: 200vh;
+        height: 100%; 
         .cardFavFondo{   
             margin-bottom: 50px;    
         }
     }
 }
-

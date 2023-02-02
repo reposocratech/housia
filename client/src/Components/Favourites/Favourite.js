@@ -9,13 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 export const Favourite = () => {
-  const [fav, setFav] = useState();
+  const [fav, setFav] = useState([]);
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
-  const [reset, setReset] = useState(true);
 
   useEffect(() => {
     const token = localStorageUser();
+
     if (token) {
       let id = jwtDecode(token).user.id;
       axios
@@ -30,7 +30,7 @@ export const Favourite = () => {
   }, []);
   
   const handleFav = (property_id) => {
-    let arrProv = fav.filter(elem => elem.property !== property_id)
+    let arrProv = fav.filter(elem => elem.property_id !== property_id)
 
     axios
       .delete(
@@ -79,6 +79,15 @@ export const Favourite = () => {
                 </Card.Title>
                 </Card.Body>
                 </Card>
+
         </div>
-  );
+            )
+        })}
+            
+        </div>
+    </Container>
+       
+
+    </div>
+  )
 };

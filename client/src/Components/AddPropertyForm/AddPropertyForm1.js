@@ -99,7 +99,7 @@ const handleSubmit = (e) => {
 }
   return (
 
-    <Container fluid className='fondoAdd1'>
+    <Container fluid className='fondoAdd1 pb-3'>
         <div className='row '>
            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
                 <div className='alturaCont'>
@@ -167,8 +167,5 @@ const handleSubmit = (e) => {
          </div>
          </div>
     </Container>
-   
-    
-    
   )
 }

@@ -84,8 +84,8 @@ export const AddPropertyImage = () => {
 
         {/* VIEW IMAGES */}
       <Row>
-        {images?.map((imagen) => (
-            <Col className="col-12 col-sm-6 col-lg-6 col-xl-4 col-xxl-3 colImage " key={imagen.index}>
+        {images?.map((imagen, index) => (
+            <Col className="col-12 col-sm-6 col-lg-6 col-xl-4 col-xxl-3 colImage " key={index}>
                 <div className="content_img">
                     <Image
                         alt='property image'

@@ -23,6 +23,7 @@ import { EditPropertyForm } from '../Components/EditPropertyForm/EditPropertyFor
 import { AppContext } from '../Context/AppContext'
 import { NavBarLogin } from '../Components/NavbarUser/NavBarLogin'
 import { Favourite } from '../Components/Favourites/Favourite'
+import {Footer} from '../Components/Footer/Footer'
 
 export const AppRoutes = () => {
   const {user, isLogged} = useContext(AppContext);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, Col, Container, Modal, Row } from 'react-bootstrap'
 import './styles.scss'
 
-export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscover, infoOneProperty, setInfoOneProperty}) => {
+export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscover, infoOneProperty}) => {
 
     const [photosThisProperty, setPhotosThisProperty] = useState([])
   
@@ -21,12 +21,9 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
         })
     },[infoOneProperty?.property_id])
 
-
     const handleClose =()=>{
         setShowModalInfoDiscover(false)
-        
     }
-
 
   return (
     <div> 
@@ -46,19 +43,16 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='main'>
-        <div className='ms-5'>
 
+        <div className='ms-5 mt-5 ps-5 w-100'>
             <div className='d-flex flex-row align-items-center my-2'>
                 <h5>  <span className='fs-2'> Dirección: </span><span>{infoOneProperty?.address_street_name}, {infoOneProperty?.address_street_number}</span><span>  ({infoOneProperty?.city_name}) </span></h5>
             </div>
-            
         
-        <h3>Descripción:</h3> 
-                
+            <h3>Descripción:</h3> 
         </div>
             
         <Container className='d-flex flex-column align-items-center'>
-       
         
         <Row className='fila_info'>
         <Col>    
@@ -70,7 +64,6 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
                      <span>Tipo </span>
                 <span>{infoOneProperty?.type_name}</span>
                 </div>
-               
                
             </div>
         </Col>
@@ -147,12 +140,12 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
             </Col>
        </Row>
         </Container>
-        <Row xs={1} md={2} lg={3}  className="g-3 m-4 justify-content-evenly">
+        <Row xs={1} md={2} lg={3} className="g-4 w-100 m-4 justify-content-evenly">
         {
         photosThisProperty.map((elem, index)=>{
             return(
                 <Col key={index}>
-                    <Card className="bg-dark text-white">
+                    <Card className="bg-dark text-white cartita">
                         <Card.Img src={`/images/property/${elem.image_title}`} alt="Imagen de la casa seleccionada" />   
                     </Card>
                 </Col>
