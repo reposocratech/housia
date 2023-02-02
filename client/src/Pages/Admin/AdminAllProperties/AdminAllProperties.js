@@ -148,7 +148,6 @@ export const AdminAllProperties = () => {
                                     >Eliminar Activo
                                 </button>
                             </div>
-                            
                         </div>
                     </div>
                 )
