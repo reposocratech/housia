@@ -45,7 +45,7 @@ export const AddProperty4 = () => {
         axios
         .post(`http://localhost:4000/property/addFeaturesToProperty/${property?.property_id}`, features)
         .then((res) => {
-            console.log(res)
+            /* console.log(res) */
             navigate('/addPropertyImage')
         })
         .catch((err) => {
@@ -60,6 +60,9 @@ export const AddProperty4 = () => {
     <div className='TituloAdd4'>
     <h2 className='text-center'>Añadir propiedad</h2>
     </div>
+    <div className='alturaCont4'>
+        <span>4/5</span>
+        </div>
   
     <h4>Seleccionar caracteristicas</h4>
 
@@ -70,7 +73,7 @@ export const AddProperty4 = () => {
                  <div key={i} className='checkbox-container'>
                     <input 
                         type="checkbox" 
-                        classname="checkbox" 
+                        className="checkbox" 
                         id={`checkbox-${feature.feature_name}`} 
                         onClick={handleAC} 
                         value={feature.feature_id} 

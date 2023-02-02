@@ -1,11 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, {useEffect,  useState } from 'react';
 import axios from "axios";
 import './Discover.scss';
-
-import { Col, Container, Form, InputGroup,  Modal, Row, Button, Accordion } from 'react-bootstrap';
-
-
-
+import { Col, Container, Modal, Row, Button, Accordion } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 
@@ -30,9 +26,6 @@ export const Discover = () => {
     const [userId, setUserId] = useState()
     const [show, setShow] = useState(false)
 
-
-
-    ///////////token para comprobar si el usuario es
     //estados de filtros
     //PRECIO
     const [priceFilterMin, setPriceFilterMin] = useState(0);
@@ -65,7 +58,6 @@ export const Discover = () => {
    
     useEffect(() => {
         
-        
         const token = localStorageUser();
         if(token){
 
@@ -75,9 +67,7 @@ export const Discover = () => {
             axios
             .get(`http://localhost:4000/users/getFavs/${userId}`)
             .then((res)=>{
-              
                 setFavInDB(res.data)
-                
             })
             .catch((error)=>{
                 console.log(error)
@@ -87,22 +77,12 @@ export const Discover = () => {
         } else {
             setFavOption(false)
         }
-
-
         
         //Activos en venta
         axios
         .get(`http://localhost:4000/property/discover`)
-
-
-        // .get(`http://localhost:4000/property/discover`) esta a acabar siendo la buena
-
-
         .then((res) => {
-
             setDiscover(res.data);
-            
-           
         })
         .catch((err) => {
             console.log(err);
@@ -113,7 +93,6 @@ export const Discover = () => {
         .get('http://localhost:4000/property/allTypes')
         .then((resType)=>{
             setTypeInDB(resType.data);
-            
         })
         .catch((error)=>{
             console.log(error)
@@ -148,11 +127,7 @@ export const Discover = () => {
         .catch((error)=>{
             console.log(error)
         })
-
-
     }, [])
-
-
 
         const addToFavs = (propertyId) =>{
            
@@ -166,6 +141,12 @@ export const Discover = () => {
                 .catch((error)=>{
                 console.log(error)
                 })
+
+                let doll = {
+                    property_id: propertyId
+                }
+                setFavInDB([...favInDB, doll]);
+                
             } else{
 
                 let flag = [];
@@ -174,7 +155,6 @@ export const Discover = () => {
                         flag.push(elem)
                     }
                 })
-
                  
                 if(flag.length !== favInDB.length){
                     setShow(!show)
@@ -184,7 +164,6 @@ export const Discover = () => {
                         property_id: propertyId
                     }
                    setFavInDB([...favInDB, doll]);
-
                    
                     axios
                     .post(`http://localhost:4000/users/postFav/${userId}/${propertyId}`)
@@ -195,11 +174,8 @@ export const Discover = () => {
                     console.log(error)
                     })
                  }
-
             }
-
         }
-
 
     const cleanFilters = () =>{
         handleBothFilterBuiltMeters(0);
@@ -230,13 +206,12 @@ export const Discover = () => {
 
     const handleNumOfGarage = (NumOfGarage)=>{
         setFilterGarage(NumOfGarage)
-
     }
 
     const handleNumOfRooms = (NumOfRooms)=>{
         setFilterRooms(NumOfRooms);
-        
     }
+
     const handleNumOfBath = (NumOfBaths)=>{
         setFilterBaths(NumOfBaths)
     }
@@ -259,7 +234,7 @@ export const Discover = () => {
                 setPriceFilterMin(500000);
                 setPriceFilterMax(999999999);
                 break;
-
+            default: break;
         }
     }
 
@@ -281,7 +256,7 @@ export const Discover = () => {
                 setTotalMetersFilterMin(1001);
                 setTotalMetersFilterMax(999999999);
                 break;
-
+            default: break;
         }
     }
 
@@ -376,7 +351,6 @@ export const Discover = () => {
         } else {
             setFilterCity(e.target.value)
         }
-
     }
 
     const openFeaturesDisplay =()=>{
@@ -410,27 +384,19 @@ export const Discover = () => {
             setPropertiesWithFeaturesSelect( bucleParaFiltrarPropiedadesKTienenLosFeatures(prueba, propertiesWithFeatures));
         }
     }
-
-
     
     const bucleParaFiltrarPropiedadesKTienenLosFeatures =(featuresSelected, propertiesWithFeatures)=>{
-
         
         let restantes = [];
         for(let i = 0; i< propertiesWithFeatures.length; i++){
             
-        if(i === propertiesWithFeatures.length){
-          
-        }
             for(let j = 0; j< featuresSelected.length; j++){
-                
             
                 if(featuresSelected[j] === propertiesWithFeatures[i].feature_id){
                      restantes = [...restantes, propertiesWithFeatures[i].property_id]
                     }
                 }  
-            }
-            
+        }
 
         let doll = -1;
         let resultadoFinal = []
@@ -442,14 +408,11 @@ export const Discover = () => {
             //usamos prueba para extraer el primer index del activo a comprobar
            let prueba = restantes.findIndex(elem => elem === doll)
             
-            
            //no quiero meter por duplicado entradas, cuando entra una vez se prohibe la entrada
             if(resultadoFinal.includes(doll) === false){
-                
                
                 // si la distancia entre las entradas es igual al numero de extras seleccionados, significa que los tiene todos. 
                 if((restantes.lastIndexOf(doll)+1) - prueba === featuresSelected.length){
-                    
                     
                     resultadoFinal = [...resultadoFinal, doll]
 
@@ -461,12 +424,9 @@ export const Discover = () => {
             return restantes
         }
 
-        
-    
-
     // console.log(typeInDB, "estos son los tipos");
     // console.log(subTypeInDB, "los subtipos al seleccionar tipos");
-    console.log(discover, "esto es el arrays de casas originales");
+    /* console.log(discover, "esto es el arrays de casas originales"); */
     // console.log(kitchenInDB, "estas son las cocinas de DB");
     // console.log(provinceInDb, "Estas son las provincias");
     // console.log(featuresInDB, "las features");
@@ -474,16 +434,12 @@ export const Discover = () => {
     // console.log(featuresSelected, "BOTONES PULSADOS");
     // console.log(propertiesWithFeaturesSelect, "COINCIDENCIAS");
 
-    
-
-
     //filtros aplicandose
     //filtros de precio del activo-------------------------------------
     let filterList = discover.filter(elem => elem.purchase_buy_price >= priceFilterMin && elem.purchase_buy_price <= priceFilterMax);
 
     //filtro de metros totales----------------------------------------
     filterList = filterList.filter(elem => elem.property_total_meters >= totalMetersFilterMin && elem.property_total_meters <= totalMetersFilterMax);
-
 
     //filtro de metros construidos--------------------------
     filterList = filterList.filter(elem => elem.property_built_meters >= builtMetersFilterMin && elem.property_built_meters <= builtMetersFilterMax)
@@ -500,7 +456,6 @@ export const Discover = () => {
     if(filterKitchen !== -1){
         filterList = filterList.filter(elem => elem.property_kitchen_id === Number(filterKitchen))
     }
-    
     
     // filtro de tipo de activo---------------------------------------------
     if(filterType !== -1){
@@ -535,7 +490,6 @@ export const Discover = () => {
        
         if(caja[0] !== undefined){
              contenedor = [...contenedor, caja[0]];
-        
         }
        
         return(
@@ -545,31 +499,32 @@ export const Discover = () => {
     })
     filterList = contenedor;
     } 
-       
 
   return (
 
     <Container fluid className='portafolio-container'>
+
          <h1>DESCUBRE</h1>
 
-
     <div className='discover'>
+
         <div className='filters'>
-        <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png'/></h4>
+        <h4 className='mb-3'>Filtrar <img className='filterImg' src='/images/icons/filter.png' alt='icon_filter'/></h4>
         <Row>
         <Col className='botonLimpiar' xs={12} md={8} lg={8}>
             <button className='col-12 mb-3 clearButton' onClick={cleanFilters}>Limpiar Filtros</button>
         </Col>
         </Row>
-        
 
         <div>
             
+
        
 
        
         <Accordion className='estilosAcordeon'>
       <Accordion.Item eventKey="0">
+
         <Accordion.Header>Metros construidos Min: {builtMetersFilterMin===0? "Sin filtro": builtMetersFilterMin}</Accordion.Header>
         <Accordion.Body>
         <Row className='buttons'>
@@ -591,7 +546,6 @@ export const Discover = () => {
             <Col className="metro" xs={6} md={6} lg={6}>
             <button onClick={()=>handleBothFilterBuiltMeters(3)}>+ 300 m²</button>
             </Col>
-                       
         
         </Row>
         </Accordion.Body>
@@ -731,12 +685,6 @@ export const Discover = () => {
       </Accordion.Item>
             
     </Accordion>
-
-
-
-
-
-        
        
        <Row >
         <Col className='botonExtras' xs={12} md={8} lg={8}>
@@ -746,8 +694,9 @@ export const Discover = () => {
        
        </Row>
        
-       <Row>
-              
+
+       <Row>           
+
        {showFeatures &&
        <>
        
@@ -756,7 +705,9 @@ export const Discover = () => {
                 <Col key={index} className='extras'xs={6} md={6} lg={6}>
                 <input 
                     type="checkbox" 
+
                     classname="extra" 
+
                     id={`checkbox-${feature.feature_name}`} 
                     onClick={()=>handleFeaturesSelected(feature.feature_id)}
                      
@@ -766,13 +717,16 @@ export const Discover = () => {
                     for={`checkbox-${feature.feature_name}`} 
                     className="label">{feature.feature_name}
                 </label>
+
             </Col> 
 
             )
         })}
        </>
        } 
+
        </Row> 
+
       
         <h5>Tipos de cocina</h5>
         <Row className='buttons'>
@@ -791,10 +745,6 @@ export const Discover = () => {
         </select>
             </Col>
         </Row>
-       
-
-        
-
 
         <h5>Tipos de Activo</h5>
         <Row className='buttons'>
@@ -813,6 +763,7 @@ export const Discover = () => {
             </select>
             </Col>
         
+
                 <Col className="" xs={12} md={8} lg={6}>
                 { showSubtype &&
                 <select className='selectButton' onChange={selectSubtypeIdFilter}>
@@ -828,8 +779,9 @@ export const Discover = () => {
                     })}
                 </select>
 
-                }
-                </Col>
+
+            }
+            </Col>
         </Row>
 
         <h5>Filtrar por provincia</h5>
@@ -860,7 +812,6 @@ export const Discover = () => {
                         )
                     }) }
                 </select>
-            
             }
             </Col>
         </Row>
@@ -872,6 +823,7 @@ export const Discover = () => {
        
         {filterList?.map((property, i) => {
             return(
+
                 <Col className='tarjeta'xs={12} md={6} lg={4}>
                     <div className='cardProperty' key={i}>
 
@@ -924,16 +876,16 @@ export const Discover = () => {
                             <p className='color'>{Math.floor(property?.purchase_buy_price * 1.14)} €</p>
                         </Col>
                     </Row>
-                                               
-                           
+                                              
+                          
                        
                 
                        
                
                     </div>
                
-                </Col>
 
+                </Col>
             )
         })}
         

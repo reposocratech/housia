@@ -1,18 +1,26 @@
 .features-container{
     background-color: #272839;
-    height: 100%;
+
+    min-height: 80vh;
+
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     h1{
-        padding-top: 120px;
+        padding-top: 130px;
+        font-weight: bold;
+        color: rgba(3, 255, 247, 1);
+        font-size: 50px;
     }
     .botonera-opciones{
         margin-top: 30px;
         width: 70%;
         display: flex;
         justify-content: space-between;
+        .gray{
+            background-color: gray;
+        }
         button{
             background-color: #26ADB5;
             padding: 10px;

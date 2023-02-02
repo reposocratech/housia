@@ -2,18 +2,34 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    width: 100%;
-    height: 110vh;  
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
         .padreAdd1{
-            padding: 170px 10vw;
-
+            padding: 140px 10vw;
+            .alturaCont{
+                margin-bottom: 40px;
+                span{
+                   background-color: white;
+                color: black;
+                font-weight: bold;
+                padding: 10px 35px;
+                border-radius: 10px;
+                font-size: 20px;
+                margin-bottom: 100px!important; 
+                }
+            }
             ::placeholder{
                 color: white;
             }           
             h2{
-                font-size:50px;
+                padding-top: 130px;
                 font-weight: bold;
+                font-size: 50px;
                 text-align: center;
+                color: rgba(3, 255, 247, 1);
             }
             h3{
                 margin: 30px;
@@ -59,7 +75,7 @@
                 padding: 0px 0px 0px 0px;
                 width:550px;
                 height: 550px;
-                margin: 160px 0px 20px 7vw;
+                margin: 220px 0px 20px 7vw;
             }
             button{
                 margin-left: 13vw;
@@ -116,6 +132,7 @@
     .fondoAdd1{ 
         height: 100%; 
             .padreAdd1{
+                
                 padding: 150px 12vw 0px 12vw;
                 input{
                     width: 72vw;            
@@ -143,7 +160,18 @@
         height: 100%; 
             .padreAdd1{
                 padding: 150px 10vw 0px 10vw;
+                .alturaCont{
+                    margin-bottom: 30px;
+                    span{
+                      
+                    font-weight: bold;
+                    padding: 10px 35px;
+                    border-radius: 10px;
+                    font-size: 15px;
+                    margin-bottom: 100px!important; 
+                    }
                     
+                }
                 h2{
                     font-size:40px;
 
