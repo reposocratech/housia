@@ -1,17 +1,14 @@
 .datos-propiedad-container{
     background-color: #272839;
     color: white;
-    height: 100%;
+    min-height: 100vh;
     h1{
-        padding-top:150px;
-        padding-bottom: 40px;
+        padding-top: 130px;
+        font-weight: bold;
+        font-size: 50px;
         text-align: center;
         color: rgba(3, 255, 247, 1);
-        font-weight: 700;
-        letter-spacing: 2px;
-        margin-bottom: 30px;
     }
-   
     
     input{
         background-color: rgba(255, 255, 255, 0.05);

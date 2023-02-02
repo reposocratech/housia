@@ -101,7 +101,7 @@ const handleSubmit = (e) => {
 
     <Container fluid className='fondoAdd1'>
         <div className='row '>
-            <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
+        <div className='col-12 col-lg-12 col-xl-12 col-xxl-6 padreAdd1'>
         <h2>¿Preparado para conocer el valor 
         de tu propiedad?</h2>
         <h3>Conoce el verdadero valor de tu vivienda
