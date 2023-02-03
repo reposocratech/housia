@@ -69,7 +69,7 @@ export const Favourite = () => {
                         <span class="material-symbols-outlined">
                             location_on
                         </span>
-                        <p className='m-0'>{`${favorito?.province_name}   ${favorito?.city_name} (Spain)` } </p>
+                        <p className='m-0'>{`${favorito?.province_name}, ${favorito?.city_name} (Spain)` } </p>
                     </div>
                     <div className='d-flex justify-content-center mt-2'>
                         <button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button>

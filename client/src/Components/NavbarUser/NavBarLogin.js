@@ -21,6 +21,8 @@ export const NavBarLogin = () => {
             <Nav>
               <Nav.Link as={Link} to='/'><img src='../images/logo-blanco.png' alt='logo_blanco'/></Nav.Link>
 
+
+              <Nav.Link as={Link} to='/discover'>Descubre</Nav.Link>
               <Nav.Link as={Link} to='/login'>LogIn</Nav.Link>
               <Nav.Link as={Link} to='/register'>Registro</Nav.Link>
 

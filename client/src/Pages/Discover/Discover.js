@@ -5,6 +5,7 @@ import { Col, Container, Modal, Row, Button, Accordion } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import { ModalInfoDiscover } from '../../Components/ModalInfoDiscoverOneProperty/ModalInfoDiscover';
+import { ModalFavRepeat } from './ModalFavRepeat';
 
 export const Discover = () => {
 
@@ -65,6 +66,7 @@ export const Discover = () => {
         if(token){
 
             let userId = jwtDecode(token).user.id;
+            let userType = jwtDecode(token).user.type;
 
             setUserId(userId)
             axios
@@ -76,7 +78,10 @@ export const Discover = () => {
                 console.log(error)
             })
 
-            setFavOption(true)
+            if(userType === 2){
+                setFavOption(true)
+            }
+            
         } else {
             setFavOption(false)
         }
@@ -780,9 +785,7 @@ export const Discover = () => {
             })}
             </select>
             </Col>
-        
-
-                <Col className="" xs={12} md={8} lg={6}>
+            <Col className="" xs={12} md={8} lg={6}>
                 { showSubtype &&
                 <select className='selectButton' onChange={selectSubtypeIdFilter}>
                     <option value={-1}>Sin filtro</option>
@@ -796,8 +799,6 @@ export const Discover = () => {
                         )
                     })}
                 </select>
-
-
             }
             </Col>
         </Row>
@@ -851,42 +852,25 @@ export const Discover = () => {
                         {favOption &&
                         <div className='botonFavoritos'>
                             <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
-                            {show && <>
-                            <Modal show={show} onHide={()=>setShow(false)}>
-                                <Modal.Header closeButton>
-                                <Modal.Title>Accion ya realizada</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
-                                    <br/>
-                                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
-                                </Modal.Body>
-                                <Modal.Footer>
-                                <Button variant="secondary" onClick={()=>setShow(false)}>
-                                    Cerrar
-
-                                </Button>
-                                </Modal.Footer>
-                            </Modal>
-                            </>}
+                            
                         </div>}
                         </div>
                         <img src={`/images/property/${property?.image_title}`} alt=""></img>
                     </div>   
                 
-                    <Row className='m-0'>
+                    {<Row className='m-0'>
                         <Col className='datosPropiedad alinear'>
-                             <h5>{property?.property_name}</h5> 
-                             <div className='d-flex'>
-                             <img src='/images/icons/location.png' alt='localizacion'/>
-                             <p>{property?.city_name} , {property?.province_name}</p>
-                             </div>
-                             
+                            <h5>{property?.property_name}</h5> 
+                            <div className='d-flex'>
+                                <img src='/images/icons/location.png' alt='localizacion'/>
+                                <p>{property?.city_name} , {property?.province_name}</p>
+                            </div>
                         </Col>
                         <Col className='datosPropiedad alineado'>
                             <p>Precio</p>
                             <p className='color'>{Math.floor(property?.purchase_buy_price * 1.14)} €</p>
                         </Col>
-                    </Row>
+                    </Row>}
                     </div>
                 </Col>
             )
@@ -896,12 +880,12 @@ export const Discover = () => {
     </div>
     </Container>
     <ModalInfoDiscover
-    showModalInfoDiscover = {showModalInfoDiscover}
-    setShowModalInfoDiscover = {setShowModalInfoDiscover}
-    infoOneProperty = {infoOneProperty}
-    setInfoOneProperty= {setInfoOneProperty}
+        showModalInfoDiscover = {showModalInfoDiscover}
+        setShowModalInfoDiscover = {setShowModalInfoDiscover}
+        infoOneProperty = {infoOneProperty}
+        setInfoOneProperty= {setInfoOneProperty}
     />
+    {show && <ModalFavRepeat show={show} setShow={setShow}/>}
     </>
-    
   )
 }

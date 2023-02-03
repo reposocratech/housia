@@ -8,11 +8,16 @@
     img{
         width: 120px;
     }
-    a{
+    a.nav-link{
         text-decoration: none;
         font-weight: 500;
         color: white;
-        --bs-navbar-active-color: #4cecf5;
+    }
+    a.nav-link.active{
+        color: #4cecf5;
+    }
+    a.dropdown-item{
+        color: white;
     }
     a:hover {
         color: rgb(48,162,185);
