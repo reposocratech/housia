@@ -5,6 +5,7 @@ import { Col, Container, Modal, Row, Button, Accordion } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import { ModalInfoDiscover } from '../../Components/ModalInfoDiscoverOneProperty/ModalInfoDiscover';
+import { ModalFavRepeat } from '../../Components/ModalFavRepeat/ModalFavRepeat';
 
 export const Discover = () => {
 
@@ -65,6 +66,7 @@ export const Discover = () => {
         if(token){
 
             let userId = jwtDecode(token).user.id;
+            let userType = jwtDecode(token).user.type
 
             setUserId(userId)
             axios
@@ -76,7 +78,12 @@ export const Discover = () => {
                 console.log(error)
             })
 
-            setFavOption(true)
+            setFavOption(false)
+            if(userType === 2){
+                setFavOption(true)
+            }
+
+            
         } else {
             setFavOption(false)
         }
@@ -492,7 +499,8 @@ export const Discover = () => {
 
     //filtro de la CIUDAD del activo-----------------------------
     if(filterCity !== -1){
-        filterList = filterList.filter(elem => elem.city_id === Number(filterCity))
+        filterList = filterList.filter(elem => elem.address_city_id
+            === Number(filterCity))
     }
     //filtro de si es nuevo o segunda mano
     if(filterIsNew !== -1){
@@ -856,25 +864,7 @@ export const Discover = () => {
                                 {favOption &&
                         <div className='botonFavoritos'>
                             <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
-                            {show && <>
-                            <Modal show={show} onHide={()=>setShow(false)}>
-                                <Modal.Header closeButton>
-                                <Modal.Title>Accion ya realizada</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Esta opcion ya esta en su lista de "Favoritos".
-                                    <br/>
-                                    Si desea revisar sus favoritos, haga click encima de su icono y en el desplegable "Favoritos"
-
-                    
-                                </Modal.Body>
-                                <Modal.Footer>
-                                <Button variant="secondary" onClick={()=>setShow(false)}>
-                                    Cerrar
-
-                                </Button>
-                                </Modal.Footer>
-                            </Modal>
-                            </>}
+                           
                         </div>}
                                 
                             </div>
@@ -921,6 +911,12 @@ export const Discover = () => {
     infoOneProperty = {infoOneProperty}
     setInfoOneProperty= {setInfoOneProperty}
     />
+     {show && <ModalFavRepeat
+                            
+                    show = {show}
+                    setShow = {setShow}
+                />
+                                }
     </>
     
   )
