@@ -499,7 +499,8 @@ export const Discover = () => {
 
     //filtro de la CIUDAD del activo-----------------------------
     if(filterCity !== -1){
-        filterList = filterList.filter(elem => elem.city_id === Number(filterCity))
+        filterList = filterList.filter(elem => elem.address_city_id
+            === Number(filterCity))
     }
     //filtro de si es nuevo o segunda mano
     if(filterIsNew !== -1){
