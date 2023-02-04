@@ -154,7 +154,7 @@ editOneUser =(req, res)=>{
 getAllProperty = (req, res) => {
     let {user_id} = req.params;
 
-    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC LIMIT 6`;
+    let sql2 = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property.property_is_user_deleted = 0 AND property.property_is_admin_deleted = 0 AND image.image_is_main = 1 ORDER BY property_id DESC LIMIT 6`;
     
         connection.query(sql2, (error2, resultProperty) => {
             if (error2) {
@@ -169,15 +169,14 @@ getAllProperty = (req, res) => {
     getProperties = (req, res) => {
         let {user_id} = req.params;
 
-        let sql = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property_is_user_deleted = false AND image.image_is_deleted = false AND image.image_is_main = true ORDER BY property_id DESC`;
+        let sql = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property.property_is_user_deleted = 0 AND property.property_is_admin_deleted = 0 AND image.image_is_main = 1 ORDER BY property_id DESC `;
 
 
     connection.query(sql, (error, result)=>{
         error ? res.status(400).json({error}) : res.status(200).json(result);
-        console.log(result, "todas las propiedades");
+        /* console.log(result, "todas las propiedades"); */
     });
 };
-
 
     //Borra de manera lógica una propiedad
       //localhost:4000/users/logicDeletedUserProperty/:property_id/:user_id
@@ -208,7 +207,7 @@ getAllProperty = (req, res) => {
       getRentedProperties = (req, res) =>{
         let {user_id} = req.params;
 
-        let sql = `SELECT * FROM property WHERE property_is_rented = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+        let sql = `SELECT * FROM property WHERE property_is_rented = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id} AND property_is_admin_deleted = false`;
 
         connection.query(sql, (error, result) => {
             if (error){
@@ -224,7 +223,7 @@ getAllProperty = (req, res) => {
       getSoldProperties = (req, res) =>{
         let {user_id} = req.params;
         /* console.log(user_id, "aaaaaaaaa") */
-        let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+        let sql = `SELECT * FROM property WHERE property_is_sold = 1 AND property_is_user_deleted = 0 AND property_user_id = ${user_id} AND property_is_user_deleted = 0`;
 
         connection.query(sql, (error, result) => {
             if (error){
@@ -240,8 +239,10 @@ getAllProperty = (req, res) => {
       //localhost:4000/users/getCountProperties/:user_id
       getCountProperties = (req, res) => {
         let {user_id} = req.params;
+        /* console.log('ID DEL USUARIO', user_id); */
+        
 
-        let sql = `SELECT * FROM property WHERE property_is_user_deleted = 0 AND property_user_id = ${user_id}`;
+        let sql = `SELECT COUNT(property.property_id) AS active_properties FROM property, image WHERE property.property_user_id = ${user_id} AND property.property_id = image.image_property_id AND property.property_is_admin_deleted = 0 AND property.property_is_user_deleted = 0 AND image.image_is_main = 1`;
 
         connection.query(sql, (error, result) => {
             if (error){
@@ -257,7 +258,7 @@ getAllProperty = (req, res) => {
       getTotalInv = (req, res) => {
         let {user_id} = req.params;
 
-        let sql = `SELECT purchase.purchase_buy_price FROM purchase JOIN property ON purchase.purchase_property_id = property.property_id WHERE property.property_user_id = ${user_id}`;
+        let sql = `SELECT purchase.purchase_buy_price FROM purchase, property, image WHERE purchase.purchase_property_id = property.property_id AND property.property_id = image.image_property_id AND property.property_user_id = ${user_id} AND property.property_is_user_deleted = 0 AND property.property_is_admin_deleted = 0 AND image.image_is_main = 1`
 
         connection.query(sql, (error, result) => {
             if (error){
@@ -273,7 +274,7 @@ getAllProperty = (req, res) => {
       getMonthlyIncome = (req, res) => {
         let {user_id} = req.params;
 
-        let sql = `SELECT rent.rent_renting_price FROM rent JOIN property ON rent.rent_property_id = property.property_id WHERE property.property_user_id = ${user_id} AND property.property_is_rented = true`;
+        let sql = `SELECT rent.rent_renting_price FROM rent JOIN property ON rent.rent_property_id = property.property_id WHERE property.property_user_id = ${user_id} AND property.property_is_rented = 1 AND property.property_is_user_deleted = false`;
 
         connection.query(sql, (error, result) => {
             if (error){

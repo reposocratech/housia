@@ -4,14 +4,9 @@ import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 /* import { useForm } from "react-hook-form"; */
 
 import { useNavigate, useParams } from "react-router-dom";
-
-
 import { AppContext } from "../../Context/AppContext";
-
 import './editPropertyForm.scss'
 import { ModalAddImage } from "./ModalAddImage";
-
-
 
 export const EditPropertyForm = () => {
 
@@ -306,7 +301,7 @@ export const EditPropertyForm = () => {
         axios
             .put(`${URL_PROP}/editPropertyAddress/${property?.property_id}/${property.address_province_id}/${property.address_city_id}`, property)
             .then((res) => {
-                console.log('RES DE EDIT PROPERTY', res);
+                /* console.log('RES DE EDIT PROPERTY', res); */
             })
             .catch((error) => {
                 console.log('ERROR del EDITADDRESS');

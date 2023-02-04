@@ -20,9 +20,8 @@ export const SummaryInversionUser = () => {
         axios 
         .get(`http://localhost:4000/users/getCountProperties/${user_id}`)
         .then((res) => {
-            /* console.log(res.data.result.length, "total propiedades"); */
-           setCountProperties(res.data.result.length);
-            
+            /* console.log(res.data.result[0].active_properties,  "RES total propiedades"); */
+           setCountProperties(res.data.result[0].active_properties);
         })
         .catch((error)=> {console.log(error);
         })

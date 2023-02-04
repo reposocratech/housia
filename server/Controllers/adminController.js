@@ -3,10 +3,7 @@ const connection = require("../config/db.js");
 
 class adminController {
 
-
     showAdminAllProperties = (req, res) =>{
-
-        // let sql = "";
 
         let sql = 'SELECT property.*, address.address_street_name, province.province_name, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id LEFT JOIN address ON property.property_id = address.address_property_id JOIN province ON address.address_province_id = province.province_id JOIN image ON image.image_property_id = property.property_id WHERE property.property_is_admin_deleted = false AND image.image_is_main = true ORDER BY property.property_id DESC';
 
@@ -14,11 +11,10 @@ class adminController {
             if(error){
                 res.status(400).json({error})
             }
-            console.log(res.data)
+            /* console.log(res.data) */
             res.status(200).json(result);
         })
     }
-
 
     // CRUD Property Type 
     //Trae los tipos de propiedades
@@ -27,10 +23,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     };
 
@@ -43,10 +38,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
 
@@ -60,10 +54,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
     
@@ -76,10 +69,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
     
@@ -95,10 +87,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
       
@@ -109,10 +100,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
         
@@ -125,10 +115,9 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
        }
        
@@ -140,14 +129,11 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
-        
-
 
  // CRUD Kitchen
 
@@ -157,13 +143,11 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     };
-
 
   //crea un tipo de cocina
     createKitchenType = (req, res) => {
@@ -174,8 +158,7 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                console.log(error, 'error de la consulta');
-                
+                /* console.log(error, 'error de la consulta'); */
             }
             res.status(200).json(result,);
         });
@@ -193,10 +176,9 @@ class adminController {
                 res.status(400).json({error});    
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
-    
     
     //borra un tipo de cocina
     deleteKitchenType = (req, res) => {
@@ -207,12 +189,10 @@ class adminController {
         connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});
-                
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
-
     }
 
 // CONSEGUIR LA INFO DE TODOS LOS FEATURES EXISTENTES
@@ -225,10 +205,9 @@ class adminController {
                 res.status(400).json({error});    
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
         }
-
 
 
 //CREAR UN NUEVO FEATURE NO EXISTENTE
@@ -243,7 +222,7 @@ class adminController {
                 res.status(400).json({error});    
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
   }
 
@@ -259,7 +238,7 @@ class adminController {
                 res.status(400).json({error});    
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     }
 
@@ -268,16 +247,16 @@ class adminController {
 
     deletePropertyFeature = (req, res) =>{
         let {feature_id} = req.params
-        console.log(req.params.feature_id);
+        /* console.log(req.params.feature_id); */
 
         let sql =`DELETE FROM feature where feature_id = ${feature_id}`;
-        console.log(sql);
+       /*  console.log(sql); */
           connection.query(sql, (error, result)=>{
             if (error){
                 res.status(400).json({error});    
             }
             res.status(200).json(result);
-            console.log(result);
+            /* console.log(result); */
         });
     };
 
@@ -293,7 +272,6 @@ class adminController {
             if(errorAD){
                 res.status(400).json({errorAD})
                 }
-
             res.status(200).json(result);
         })
 
@@ -304,7 +282,7 @@ class adminController {
     blockProperty =(req, res)=>{
         let {property_id} = req.params;
 
-        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = ${property_id}`;
+        let sql = `UPDATE property SET property_is_user_deleted = true WHERE property_id = ${property_id} AND property_is_admin_deleted = 0`;
 
         connection.query(sql, (errorBLOCK, result)=>{
             if(errorBLOCK){
@@ -325,13 +303,6 @@ class adminController {
             error? res.status(400).json({error}): res.status(200).json(result);
         })
     }
-   
-
 }
      
-
-
-
-
-
 module.exports = new adminController();
