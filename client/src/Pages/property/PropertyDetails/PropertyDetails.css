@@ -1,0 +1,120 @@
+.portafolio-container {
+  font-family: Barlow;
+  background-color: #272839;
+  color: white;
+  height: 100%;
+  text-align: center;
+  padding: 3% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.portafolio-container .title {
+  color: rgb(48, 162, 185);
+}
+.portafolio-container .infoAllProperty {
+  display: flex;
+  align-items: center;
+}
+.portafolio-container .infoAllProperty .carrusel {
+  width: 600px;
+  height: 280px;
+  margin-left: 25%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px black;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+.portafolio-container .infoAllProperty .carrusel .transparent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: absolute;
+  z-index: 2;
+  width: 55%;
+  height: 285px;
+  background-color: rgba(39, 40, 57, 0.788);
+}
+.portafolio-container .infoAllProperty .carrusel .transparent h2 {
+  margin-right: 3%;
+}
+.portafolio-container .infoAllProperty .carrusel .transparent .perTrans {
+  background-color: rgb(0, 192, 118);
+  margin-right: 3%;
+  width: 15%;
+  border-radius: 8px;
+}
+.portafolio-container .infoAllProperty .carrusel img {
+  width: 600px;
+  height: 280px;
+  border-radius: 10px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.portafolio-container .infoAllProperty .info .icono {
+  display: flex;
+  align-items: center;
+  margin: 5%;
+}
+.portafolio-container .infoAllProperty .info .icono img {
+  background-color: rgb(61, 62, 77);
+  border-radius: 10px;
+}
+.portafolio-container .infoAllProperty .info .icono p {
+  margin: 0;
+  margin-left: 15%;
+}
+.portafolio-container .direction {
+  display: flex;
+}
+.portafolio-container .direction img {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5%;
+  margin-left: 9%;
+}
+.portafolio-container .buttons {
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
+  margin: 3%;
+}
+.portafolio-container .buttons .button {
+  width: 40%;
+  background-color: rgb(61, 62, 77);
+  border: none;
+}
+.portafolio-container .buttons .button:hover {
+  background-color: rgb(48, 162, 185);
+}
+.portafolio-container .buttons .modal {
+  background-color: rgb(61, 62, 77) !important;
+  color: white;
+}
+.portafolio-container .infoGrafica {
+  display: flex;
+}
+.portafolio-container .infoGrafica .percenteges .percent {
+  border: 1px solid white;
+  border-radius: 10px;
+  margin: 5%;
+}
+.portafolio-container .infoGrafica .percenteges .percent p {
+  margin: 0;
+}
+.portafolio-container .limits {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+}
+.portafolio-container .limits .limit {
+  display: flex;
+}/*# sourceMappingURL=PropertyDetails.css.map */

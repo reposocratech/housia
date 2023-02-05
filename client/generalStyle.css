@@ -1,0 +1,28 @@
+.portafolio-container {
+  font-family: Barlow;
+  background-color: #272839;
+  color: white;
+  height: 100%;
+  text-align: center;
+  padding: 3% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.portafolio-container .turquoise {
+  color: rgb(48, 162, 185);
+}
+.portafolio-container .buttons {
+  width: 600px;
+  display: flex;
+  justify-content: space-around;
+  margin: 3%;
+}
+.portafolio-container .buttons .button {
+  width: 40%;
+  background-color: rgb(61, 62, 77);
+  border: none;
+}
+.portafolio-container .buttons .button:hover {
+  background-color: rgb(48, 162, 185);
+}/*# sourceMappingURL=generalStyle.css.map */
