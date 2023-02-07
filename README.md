@@ -15,11 +15,11 @@ _ _ _
 
 * Información general.
 
-* Tecnologias utilizadas.
+* [Tecnologias utilizadas](#tecnologias-utilizadas).
 
-* Caracteristicas.
+* [Caracteristicas](#caracteristicas)
 
-* Capturas[capturas](#capturas)
+* [Capturas](#capturas)
 
 * Instalacion y configuracion.
 
