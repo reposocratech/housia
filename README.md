@@ -13,7 +13,7 @@ Link video presentacion YT: (SocraTech HousIA)
 _ _ _ 
 
 
-* Información general.
+* [Informacion general](#informacion-general) 
 
 * [Tecnologias utilizadas](#tecnologias-utilizadas).
 
@@ -21,13 +21,13 @@ _ _ _
 
 * [Capturas](#capturas)
 
-* Instalacion y configuracion.
+* [Instalacion y configuracion](#instalacion y configuracion)
 
-* Agradecimientos.
+* [Agradecimientos](#agradecimientos)
 
-* Contacto.
+* [Contacto](#contacto)
 
-* Licencia.
+* [Licencia](#licencia)
 
 ## Información general
 
