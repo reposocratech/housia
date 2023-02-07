@@ -8,7 +8,7 @@ Este proyecto una aplicacion web realizada por un equipo de [equipo de desarroll
 
 Link video presentacion YT: (SocraTech HousIA)
 
-##Tabla de contenidos
+## Tabla de contenidos
 
 _ _ _ 
 
@@ -22,7 +22,7 @@ _ _ _
 *Contacto
 *Licencia
 
-##Información general
+## Información general
 
 _ _ _
 
@@ -30,7 +30,7 @@ _ _ _
 
 * El usuario puede registrarse, editar su perfil, crear y editar sus propiedades y ver un listado de las mismas (Portfolio) y ponerlas en venta; tambien puede ver un listado de todas la propiedades disponibles a la venta en la plataforma, pudiendo filtrar para mayor facilidad de busqueda  y agregarlas a su lista de favoritos. 
 
-##Tecnologias utilizadas
+## Tecnologias utilizadas
 _ _ _
 
 *FRONT-END
