@@ -48,13 +48,10 @@ _ _ _
 
 
 *BACK-END
-
-
 ![imagen:NODEJS](https://camo.githubusercontent.com/cec92673ea713fa89ba2ae2033daf5851f6f39393ff5b93231aa707d424638d9/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4e6f64656a732d626c61636b3f7374796c653d666c61742d737175617265266c6f676f3d4e6f64652e6a73)
 ![imagen:Express](https://camo.githubusercontent.com/8286a45a106e1a3c07489f83a38159981d888518a740b59c807ffc1b7b1e2f7b/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f657870726573732e6a732d2532333430346435392e7376673f7374796c653d666f722d7468652d6261646765266c6f676f3d65787072657373266c6f676f436f6c6f723d253233363144414642)
 
 *DATABASE
-
 ![imagen:MYSQL](https://camo.githubusercontent.com/1a085b81c0ac63ef70d22ee1a67560c1bdd5c42038ba20d129d89e7de5603953/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4d7953514c2d626c61636b3f7374796c653d666c61742d737175617265266c6f676f3d6d7973716c)
 
 Otras librerias: Multer | Bcrypt | Nodemon | SweetAlert | ReactHookForm | jwtDecode |
@@ -63,13 +60,10 @@ Otras librerias: Multer | Bcrypt | Nodemon | SweetAlert | ReactHookForm | jwtDec
 
 _ _ _
 
-*Contraseñas encriptadas
-
-*Diseño responsive
-
-*Navegacion dinamica en toda la web
-
-*Posibilidad de editar por completo los activos.
+* Contraseñas encriptadas
+* Diseño responsive
+* Navegacion dinamica en toda la web
+* Posibilidad de editar por completo los activos.
 
 ## Capturas
 
