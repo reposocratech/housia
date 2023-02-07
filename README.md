@@ -161,5 +161,5 @@ Este proyecto ha sido realizado por un equipo de cinco desarrolladores compuesto
 ## Licencia
 _ _ _
 
-* El codigo del proyecto aqui alojado se encuentra bajo licencia -----
+* El codigo del proyecto aqui alojado se encuentra bajo [Licencia Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 * El nombre HousIA, los logos y toda la informacion y contenido relacionado con la empresa es propiedad de HousIA© y no podran utilizarse sin su consentimiento expreso.
