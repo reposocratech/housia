@@ -19,7 +19,7 @@ _ _ _
 
 * Caracteristicas.
 
-* Capturas.
+* Capturas[capturas](#capturas)
 
 * Instalacion y configuracion.
 
