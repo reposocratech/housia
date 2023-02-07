@@ -2,7 +2,7 @@
 
 _ _ _
 
-Este proyecto una aplicacion web realizada por un equipo de [equipo de desarrolladores] (/readme.mddesarrolladores) para la empresa HousIA. 
+Este proyecto una aplicacion web realizada por un equipo de [equipo de desarrolladores](#contacto) para la empresa HousIA. 
 
  >"En HousIA nos encargamos de informate sobre el valor de tus propiedades y activos. Mediante el uso de la inteligencia artificial logramos disminuir el tiempo necesario para valorar tu inmueble permitiendote maximizar tus ganancias y mejorar el control sobre ellas."
 
