@@ -43,7 +43,7 @@ export const Register = () => {
       const createAlert = () => {
         Swal.fire({
           icon: 'success',
-          text: 'Account created successfully!',
+          text: 'Cuenta creada con éxito!',
         })
       }
 

@@ -7,9 +7,7 @@ import { Carousel, Container } from 'react-bootstrap';
 import './PropertyDetails.scss';
 import { ModalDeletePropertyUser } from './ModalDeletePropertyUser';
 import { ModalSalePropertyUser } from './ModalSalePropertyUser';
-import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../../Utils/localStorage/localStorageUser';
-
 
 
 export const PropertyDetails = () => {
@@ -54,7 +52,6 @@ export const PropertyDetails = () => {
 
         const token = localStorageUser();
         if(token){
-            let id = jwtDecode(token).user.id
             axios
             .get(`${URL_PROP}/propertyDetails/${user?.user_id}/${property_id}`)
             .then((res) => {
@@ -67,6 +64,7 @@ export const PropertyDetails = () => {
         }   
     }, [property_id, user?.user_id]);
 
+    console.log('PROPERTY DETAILS', propertyDetails);
 
     //Imagenes propiedad
     useEffect(() => {

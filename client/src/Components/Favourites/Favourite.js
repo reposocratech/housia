@@ -5,13 +5,13 @@ import Card from "react-bootstrap/Card";
 import { localStorageUser } from "../../Utils/localStorage/localStorageUser";
 import { Container } from "react-bootstrap";
 import "./Favourite.scss";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 import { AppContext } from "../../Context/AppContext";
 
 export const Favourite = () => {
   const [fav, setFav] = useState([]);
   const { user } = useContext(AppContext);
-  const navigate = useNavigate();
+ /*  const navigate = useNavigate(); */
 
   useEffect(() => {
     const token = localStorageUser();
@@ -56,7 +56,7 @@ export const Favourite = () => {
 
           <div key={i} className='col-md-5 col-lg-4 cardFavFondo'>  
             <Card className='tarjeta-fav'>
-            <Card.Img variant="top" onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} src={`/images/property/${favorito?.image_title}`} />
+            <Card.Img variant="top" /* onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} */ src={`/images/property/${favorito?.image_title}`} />
   
             <Card.Body className='carBodyFav'>
             <Card.Title className='carTitleFav'>
