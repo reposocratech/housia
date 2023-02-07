@@ -110,7 +110,7 @@ Desde el directorio /server $npm i (o $npm install), esto instalara las dependen
 
 Paso 4:
 
-Desde el directorio /client $npm i (0 $npm install), esto instalara las dependecias necesarias en el cliente.
+Desde el directorio /client $npm i (o $npm install), esto instalara las dependecias necesarias en el cliente.
 
 Paso 5: 
 
