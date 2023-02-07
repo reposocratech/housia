@@ -31,6 +31,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+
     </Container>
   );
 };

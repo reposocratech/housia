@@ -156,7 +156,7 @@ const handleSubmit = (e) => {
         <br/>
         </div>
         
-        <div className='col-6 padre2Add1'>
+        <div className='col-6 padre2Add1 '>
         
          <img src='./images/user/Captura2.png' alt="ForSale.png" />
          <br/>

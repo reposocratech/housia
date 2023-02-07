@@ -171,7 +171,6 @@ getAllProperty = (req, res) => {
 
         let sql = `SELECT property.*, address.*, purchase.purchase_buy_price, image.image_title FROM property LEFT JOIN address ON property.property_id = address.address_property_id LEFT JOIN purchase ON property.property_id = purchase.purchase_property_id JOIN image ON image.image_property_id = property.property_id   WHERE property.property_user_id = ${user_id} AND property.property_is_user_deleted = 0 AND property.property_is_admin_deleted = 0 AND image.image_is_main = 1 ORDER BY property_id DESC `;
 
-
     connection.query(sql, (error, result)=>{
         error ? res.status(400).json({error}) : res.status(200).json(result);
         /* console.log(result, "todas las propiedades"); */

@@ -94,6 +94,7 @@ export const Portafolio = () => {
             return(
               <div className='col-12 col-sm-10 col-md-6 col-lg-4 properties_portafolio' key={index}>
               <div  className='property_portafolio'>
+
                 <div 
                   onClick={()=>navigate(`/propertyDetails/${prop.property_id}`)} className='imageMain'>
                     <img src={`/images/property/${prop.image_title}`}/>

@@ -86,12 +86,12 @@ export const SummaryInversionUser = () => {
        
         <Row className='m-0 d-flex justify-content-center w-100'>
             
-            <Col className=' profit' xs={12} md={12} lg={4}>
+            <Col className='profit' xs={12}  lg={4}>
                 <h3 className='w-50 m-auto'>Beneficio</h3>
                 <p className='fs-1 w-50 m-auto'>{Math.floor(totalInv * 0.15)} €</p>
             </Col>
         
-            <Col className=' graphic ' xs={12} md={12} lg={8}>
+            <Col className=' graphic ' xs={12} lg={8}>
                 <img src='/images/property/grafica4.jpg' alt='valoracion_patrimonio'/>
             </Col>
         </Row >
@@ -145,12 +145,6 @@ export const SummaryInversionUser = () => {
             </Col>
             <Col className='m-4 record control' xs={12} md={6} lg={3}><h3>Récords de Inversión</h3></Col>
         </Row>
-
-
-
-
-
-
 
     </Container>
   )

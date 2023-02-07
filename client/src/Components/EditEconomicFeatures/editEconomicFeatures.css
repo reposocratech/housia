@@ -1,0 +1,77 @@
+.datos-economicos-container {
+  background-color: #272839;
+  color: white;
+  height: 100vh;
+}
+.datos-economicos-container h1 {
+  padding-top: 80px;
+  text-align: center;
+  color: rgb(3, 255, 247);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+.datos-economicos-container .datos-economicos-formulario {
+  display: flex;
+  flex-direction: column;
+}
+.datos-economicos-container .datos-economicos-formulario input {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 0;
+  color: white;
+  font-weight: lighter;
+  border: 1px solid white;
+  margin: 5px 0;
+}
+.datos-economicos-container .datos-economicos-formulario ::-moz-placeholder {
+  color: white;
+}
+.datos-economicos-container .datos-economicos-formulario :-ms-input-placeholder {
+  color: white;
+}
+.datos-economicos-container .datos-economicos-formulario ::placeholder {
+  color: white;
+}
+.datos-economicos-container .datos-economicos-formulario :focus {
+  outline: 1px solid #4cecf5;
+  border: 1px solid #4cecf5;
+}
+.datos-economicos-container .datos-economicos-formulario .accordion .accordion-item {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white;
+  border: 1px solid white;
+  border-radius: 12px 12px 0 0;
+  margin: 10px 0;
+}
+.datos-economicos-container .datos-economicos-formulario .accordion .accordion-item .accordion-header {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.datos-economicos-container .datos-economicos-formulario .accordion .accordion-item .accordion-header button {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: white;
+  border: 1px solid white;
+  border-radius: 12px 12px 0 0;
+}
+.datos-economicos-container .datos-economicos-formulario .accordion .accordion-item .accordion-header .accordion-button:after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+.datos-economicos-container .datos-economicos-formulario .accordion .accordion-item .accordion-header .accordion-button:focus {
+  box-shadow: none;
+  border-color: #4cecf5;
+}
+.datos-economicos-container .datos-economicos-formulario .boton-editar {
+  background-color: #26ADB5;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.datos-economicos-container .datos-economicos-formulario .boton-editar:hover {
+  background-color: rgba(38, 174, 181, 0.2470588235);
+  transition: 0.5s;
+}/*# sourceMappingURL=editEconomicFeatures.css.map */

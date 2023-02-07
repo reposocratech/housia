@@ -43,15 +43,16 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='main'>
-
-        <div className='ms-5 mt-5 ps-5 w-100'>
+        
+        <div className='mt-5 ps-5 ms-5 d-flex flex-column w-100 align-items-start'>
+        
             <div className='d-flex flex-row align-items-center my-2'>
                 <h5>  <span className='fs-2'> Dirección: </span><span>{infoOneProperty?.address_street_name}, {infoOneProperty?.address_street_number}</span><span>  ({infoOneProperty?.city_name}) </span></h5>
             </div>
         
             <h3>Descripción:</h3> 
         </div>
-            
+           
         <Container className='d-flex flex-column align-items-center'>
         
         <Row className='fila_info'>
@@ -98,7 +99,7 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
                 <span><img src='/images/property/habitaciones.png'/> </span>
             </div>
             <div className='d-flex flex-column flex-start ms-2'>
-<               span>Habitaciones: </span>
+                <span>Habitaciones: </span>
                 <span>{infoOneProperty?.property_rooms}</span>  
             </div>
             </div>
@@ -140,12 +141,13 @@ export const ModalInfoDiscover = ({showModalInfoDiscover, setShowModalInfoDiscov
             </Col>
        </Row>
         </Container>
-        <Row xs={1} md={2} lg={3} className="g-4 w-100 m-4 justify-content-evenly">
+
+        <Row xs={1} md={2} lg={3}  className="g-4 m-4 justify-content-evenly w-100">
         {
         photosThisProperty.map((elem, index)=>{
             return(
                 <Col key={index}>
-                    <Card className="bg-dark text-white cartita">
+                    <Card className="bg-dark text-white cartita" >
                         <Card.Img src={`/images/property/${elem.image_title}`} alt="Imagen de la casa seleccionada" />   
                     </Card>
                 </Col>

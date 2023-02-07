@@ -78,10 +78,12 @@ export const Discover = () => {
                 console.log(error)
             })
 
+            setFavOption(false)
             if(userType === 2){
                 setFavOption(true)
             }
-            
+
+           
         } else {
             setFavOption(false)
         }
@@ -495,7 +497,8 @@ export const Discover = () => {
 
     //filtro de la CIUDAD del activo-----------------------------
     if(filterCity !== -1){
-        filterList = filterList.filter(elem => elem.address_city_id === Number(filterCity))
+    filterList = filterList.filter(elem => elem.address_city_id
+            === Number(filterCity))
     }
     //filtro de si es nuevo o segunda mano
     if(filterIsNew !== -1){
@@ -539,11 +542,7 @@ export const Discover = () => {
         </Row>
 
         <div>
-            
-
-       
-
-       
+           
         <Accordion className='estilosAcordeon'>
 
       <Accordion.Item eventKey="0">
@@ -847,12 +846,13 @@ export const Discover = () => {
 
                         <div className='styleCard'>
                             <div className='parteTransparente'>
+
                                <p onClick={() => handleModalInfo(property)} className='perTrans'>INFO</p>
                                 
                         {favOption &&
                         <div className='botonFavoritos'>
                             <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
-                            
+
                         </div>}
                         </div>
                         <img src={`/images/property/${property?.image_title}`} alt=""></img>
@@ -885,7 +885,9 @@ export const Discover = () => {
         infoOneProperty = {infoOneProperty}
         setInfoOneProperty= {setInfoOneProperty}
     />
+
     {show && <ModalFavRepeat show={show} setShow={setShow}/>}
+
     </>
   )
 }

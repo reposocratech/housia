@@ -44,50 +44,49 @@ export const Favourite = () => {
         console.log(err);
       });
   };
-    
-    
+        
   return (
     <div className='padreFav'>
-        <h1>Mis Favoritos</h1>
-    <Container fluid>
-        <div className='d-flex flex-wrap justify-content-center'>
-            
-            {fav?.map((favorito, i)=>{
-            return(
-  
-              <div key={i} className='col-md-5 col-lg-4 cardFavFondo'>  
-                <Card className='tarjeta-fav'>
-                <Card.Img variant="top" onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} src={`/images/property/${favorito?.image_title}`} />
-      
-                <Card.Body className='carBodyFav'>
-                <Card.Title className='carTitleFav'>
-                    <div className='displayFav'>
-                        <h6>{favorito?.property_name}</h6> 
-                        <h3>{favorito?.purchase_buy_price}€</h3>
-                    </div>
-                    <div className='d-flex align-items-center'>
-                        <span class="material-symbols-outlined">
-                            location_on
-                        </span>
-                        <p className='m-0'>{`${favorito?.province_name}, ${favorito?.city_name} (Spain)` } </p>
-                    </div>
-                    <div className='d-flex justify-content-center mt-2'>
-                        <button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button>
-                    </div>
-                    
-                
-                </Card.Title>
-                </Card.Body>
-                </Card>
+    <h1>Mis Favoritos</h1>
+<Container fluid>
+    <div className='d-flex flex-wrap justify-content-center'>
+        
+        {fav?.map((favorito, i)=>{
+        return(
 
-        </div>
-            )
-        })}
-            
-        </div>
-    </Container>
-       
+          <div key={i} className='col-md-5 col-lg-4 cardFavFondo'>  
+            <Card className='tarjeta-fav'>
+            <Card.Img variant="top" onClick={()=>navigate(`/propertyDetails/${favorito?.property_id}`)} src={`/images/property/${favorito?.image_title}`} />
+  
+            <Card.Body className='carBodyFav'>
+            <Card.Title className='carTitleFav'>
+                <div className='displayFav'>
+                    <h6>{favorito?.property_name}</h6> 
+                    <h3>{favorito?.purchase_buy_price}€</h3>
+                </div>
+                <div className='d-flex align-items-center'>
+                    <span class="material-symbols-outlined">
+                        location_on
+                    </span>
+                    <p className='m-0'>{`${favorito?.province_name}   ${favorito?.city_name} (Spain)` } </p>
+                </div>
+                <div className='d-flex justify-content-center mt-2'>
+                    <button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button>
+                </div>
+                
+            </Card.Title>
+            </Card.Body>
+            </Card>
 
     </div>
-  )
+
+        )
+    })}
+        
+    </div>
+</Container>
+
+</div>
+  );
+
 };
