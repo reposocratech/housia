@@ -71,23 +71,23 @@ _ _ _
 ## Capturas
 
 _ _ _
-
+Vista Admin: 
 ![vista admin](https://github.com/reposocratech/housia/blob/master/screenshots/Admin.jpg)
 
 Añadir Propiedad:
-[añadir propiedad](/screenshots/AñadirPropiedad.jpg)
+![añadir propiedad](https://github.com/reposocratech/housia/blob/master/screenshots/A%C3%B1adirPropiedad.jpg)
 
 Vista Descubre:
-[vista descubre](/screenshots/Descubre.jpg)
+![vista descubre](https://github.com/reposocratech/housia/blob/master/screenshots/Descubre.jpg)
 
 Vista editar propiedad
-[vista edicion de propiedad](/screenshots/Editar.jpg)
+![vista edicion de propiedad](https://github.com/reposocratech/housia/blob/master/screenshots/Editar.jpg)
 
 Vista Portfolio
-[vista del portfolio](/screenshots/Portafolio.jpg)
+![vista del portfolio]([/screenshots/Portafolio.jpg](https://github.com/reposocratech/housia/blob/master/screenshots/Portafolio.jpg))
 
 Vista detalle de una propiedad
-[vista del detalle de propiedad](/screenshots/VistaUnaPropiedad.jpg)
+![vista del detalle de propiedad](https://github.com/reposocratech/housia/blob/master/screenshots/VistaUnaPropiedad.jpg)
 _ _ _
 
 
@@ -102,7 +102,7 @@ Crear la base de datos mediante el scrip Housia.sql, localizado en Housia/
 Paso 2:
 
 Crea el archivo .env (no disponible en este repositorio) en el directorio /server y completarlo de la siquiente forma:
-[vista del .env](/screenshots/.env-ejemplo.jpg)
+![vista del .env](https://github.com/reposocratech/housia/blob/master/screenshots/.env-ejemplo.jpg)
 
 Paso 3: 
 
