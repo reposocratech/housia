@@ -21,7 +21,7 @@ _ _ _
 
 * [Capturas](#capturas)
 
-* [Instalacion y configuracion](#instalacion y configuracion)
+* [Instalacion y configuracion](#instalacion-y-configuracion)
 
 * [Agradecimientos](#agradecimientos)
 
