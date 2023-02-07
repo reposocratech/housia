@@ -188,7 +188,7 @@ export const EditPropertyForm = () => {
                 otherFeature(res.data);
             })
             .catch((error) => {
-                console.log(error.message);
+                /* console.log(error.message); */
             })
     }, [property?.property_id])
 
@@ -200,7 +200,7 @@ export const EditPropertyForm = () => {
                 setImagesProperty(res.data);
             })
             .catch((error) => {
-                console.log(error.message);
+                /* console.log(error.message); */
             })
 
     }, [property?.property_id])
@@ -281,14 +281,13 @@ export const EditPropertyForm = () => {
     })
     setPrueba(prueba2)
 }
-    
 
     const saveFeaturesFromEdit = (id) => {
         if(featuresSelected){
             axios
             .post(`${URL_PROP}/editFeaturesProperty/${id}`, featuresSelected)
                 .then((res) => {
-                    console.log(res, 'RES DEL EDIT FEATURES SELECTED');
+                    /* console.log(res, 'RES DEL EDIT FEATURES SELECTED'); */
                     setResetFeatures(!resetFeatures);
                 })
                 .catch((error) => {

@@ -181,7 +181,7 @@ class propertyController {
        AND city.city_id = province.province_id
        AND property.property_id = purchase.purchase_property_id
        AND property.property_kitchen_id = kitchen.kitchen_id
-       AND  property.property_is_for_sale = true
+       AND property.property_is_for_sale = true
        AND property.property_is_admin_deleted = false
        AND property.property_is_user_deleted = false
        group by property.property_id;`
@@ -190,26 +190,29 @@ class propertyController {
             error ? res.status(400).json({error}) : res.status(200).json(result);
         })
     }
-
+    
 //METODO GET DESCUBRE QUE USAREMOS DE FORMA FINAL
     discover = (req, res) => {
   
-      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_is_for_sale, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, 
-      property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name
-      FROM property, address, city, province, purchase, image
+      let sql = `SELECT property.property_id, property.property_bathrooms, property.property_is_for_sale, property.property_rooms, property.property_built_meters, property.property_subtype_id, property.property_total_meters, property.property_built_year, property.property_garage, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new, image.image_title, city.city_name, province.province_name, type.*, subtype.subtype_id, subtype.subtype_name, kitchen.*
+      FROM property, address, city, province, purchase, image, subtype, type, kitchen
       where property.property_id = purchase.purchase_property_id 
       and property.property_id = address.address_property_id 
       and address.address_city_id = city.city_id	and  address.address_province_id  = city.city_province_id     
       and city.city_province_id = province.province_id
       and property.property_id = image.image_property_id 
-      AND  property.property_is_for_sale = true
+      AND property.property_subtype_id = subtype.subtype_id
+      AND property.property_kitchen_id = kitchen.kitchen_id
+      AND property.property_is_for_sale = true
       AND property.property_is_admin_deleted = false
       AND property.property_is_user_deleted = false
-            AND image.image_is_main = 1;`;
+      AND subtype.subtype_type_id = type.type_id
+      AND purchase.purchase_buy_price > 0
+      AND image.image_is_main = 1`;
 
       connection.query(sql, (error, result) => {
         error ? res.status(400).json({error}) : res.status(200).json(result);
-        console.log(result, "esto es el result de descubre")
+        /* console.log(result, "esto es el result de descubre") */
       })
     }
 
@@ -742,7 +745,7 @@ getAllPurchaseData = (req, res) => {
         })
       }
 
-      discover = (req, res) => {
+      /* discover = (req, res) => {
   
         let sql = `SELECT property.property_id, property.property_bathrooms, property.property_rooms, property.property_built_meters, property.property_total_meters, 
         property.property_garage, property.property_built_year, property.property_kitchen_id, address.*, purchase.purchase_buy_price, purchase.purchase_is_new,
@@ -765,7 +768,7 @@ getAllPurchaseData = (req, res) => {
         connection.query(sql, (error, result) => {
           error ? res.status(400).json({error}) : res.status(200).json(result);
         })
-      }
+      } */
       
       fav = (req, res) => {
         let {user_id, property_id} = req.params;
