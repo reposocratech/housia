@@ -130,8 +130,6 @@ La aplicacion web se ejecutara entonces en el navegador.
 
 
 **Ingreso del administrador:**
-Usuario: admin@admin.com
-Constraseña: housia1 
 
 Los usuarios registrados dentro de la aplicacion tiene la categoria de usuario estandar. Para conceder permisos de administrador a cualquiera de ellos,
 desde MySQL ingresar la sentencia **UPDATE user SET user_type = 1 WHERE user_id = (id del usuario elegido);**
