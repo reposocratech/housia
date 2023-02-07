@@ -102,6 +102,7 @@ Crear la base de datos mediante el scrip Housia.sql, localizado en Housia/
 Paso 2:
 
 Crea el archivo .env (no disponible en este repositorio) en el directorio /server y completarlo de la siquiente forma:
+[vista del .env](/screenshots/.env-ejemplo.jpg)
 
 Paso 3: 
 
