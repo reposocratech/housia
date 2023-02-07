@@ -2,12 +2,11 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form' 
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import '../Login/login.scss';
 
 import "./StyleRegister.scss";
-
-
 
 const initialState = {
     name: "",
@@ -32,12 +31,20 @@ export const Register = () => {
         .then((res) => {
           console.log(res.config.data, 'respuesta user');
           setRegisterUser(res.config.data)
+          createAlert();
           navigate('/login')
           })
           .catch((error) => {
               console.log('error_user', error);
               setMessageError(error.res.data);
           })
+      }
+
+      const createAlert = () => {
+        Swal.fire({
+          icon: 'success',
+          text: 'Account created successfully!',
+        })
       }
 
   return (
