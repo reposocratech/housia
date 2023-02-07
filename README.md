@@ -84,7 +84,7 @@ Vista editar propiedad
 ![vista edicion de propiedad](https://github.com/reposocratech/housia/blob/master/screenshots/Editar.jpg)
 
 Vista Portfolio
-![vista del portfolio]([/screenshots/Portafolio.jpg](https://github.com/reposocratech/housia/blob/master/screenshots/Portafolio.jpg))
+![vista del portafolio](https://github.com/reposocratech/housia/blob/master/screenshots/Portafolio.jpg)
 
 Vista detalle de una propiedad
 ![vista del detalle de propiedad](https://github.com/reposocratech/housia/blob/master/screenshots/VistaUnaPropiedad.jpg)
