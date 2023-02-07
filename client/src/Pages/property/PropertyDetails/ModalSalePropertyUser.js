@@ -55,7 +55,8 @@ export const ModalSalePropertyUser = ({showSalePropertyUser, setShowSaleProperty
             <Button 
                 style={{backgroundColor: 'rgb(61,62,77)', border: 'none'}} 
                 onClick={handleSubmit}
-                >{isSold === 1 ? 'Si, quitar de la venta' : 'Si, poner en la venta'}
+                >{isSold === 1 ? 'Si, quitar de la venta' : 'Si, poner en Venta'}
+
             </Button>
             <Button 
                 style={{backgroundColor: 'rgb(48,162,185)', border: 'none'}} 

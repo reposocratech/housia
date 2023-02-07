@@ -9,10 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
 
 export const Favourite = () => {
-  const [fav, setFav] = useState();
+  const [fav, setFav] = useState([]);
   const { user } = useContext(AppContext);
   const navigate = useNavigate();
-  // const [reset, setReset] = useState(true);
 
   useEffect(() => {
     const token = localStorageUser();
@@ -45,8 +44,7 @@ export const Favourite = () => {
         console.log(err);
       });
   };
-    
-    
+        
   return (
     <div className='padreFav'>
     <h1>Mis Favoritos</h1>
@@ -76,23 +74,19 @@ export const Favourite = () => {
                     <button onClick={()=>(handleFav(favorito?.property_id))}>Quitar de favoritos</button>
                 </div>
                 
-            
             </Card.Title>
             </Card.Body>
             </Card>
 
     </div>
 
-
-
-
         )
     })}
         
     </div>
 </Container>
-   
 
 </div>
   );
+
 };

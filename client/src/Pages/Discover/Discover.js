@@ -5,7 +5,7 @@ import { Col, Container, Modal, Row, Button, Accordion } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
 import { localStorageUser } from '../../Utils/localStorage/localStorageUser';
 import { ModalInfoDiscover } from '../../Components/ModalInfoDiscoverOneProperty/ModalInfoDiscover';
-import { ModalFavRepeat } from '../../Components/ModalFavRepeat/ModalFavRepeat';
+import { ModalFavRepeat } from './ModalFavRepeat';
 
 export const Discover = () => {
 
@@ -66,7 +66,7 @@ export const Discover = () => {
         if(token){
 
             let userId = jwtDecode(token).user.id;
-            let userType = jwtDecode(token).user.type
+            let userType = jwtDecode(token).user.type;
 
             setUserId(userId)
             axios
@@ -83,7 +83,7 @@ export const Discover = () => {
                 setFavOption(true)
             }
 
-            
+           
         } else {
             setFavOption(false)
         }
@@ -439,10 +439,8 @@ export const Discover = () => {
            restantes = resultadoFinal;
             return restantes
         }
-
-
         
-       const handleModalInfo = (propertyInfo) =>{
+        const handleModalInfo = (propertyInfo) =>{
 
         setInfoOneProperty(propertyInfo);
         setShowModalInfoDiscover(true);
@@ -499,7 +497,7 @@ export const Discover = () => {
 
     //filtro de la CIUDAD del activo-----------------------------
     if(filterCity !== -1){
-        filterList = filterList.filter(elem => elem.address_city_id
+    filterList = filterList.filter(elem => elem.address_city_id
             === Number(filterCity))
     }
     //filtro de si es nuevo o segunda mano
@@ -544,11 +542,7 @@ export const Discover = () => {
         </Row>
 
         <div>
-            
-
-       
-
-       
+           
         <Accordion className='estilosAcordeon'>
 
       <Accordion.Item eventKey="0">
@@ -790,9 +784,7 @@ export const Discover = () => {
             })}
             </select>
             </Col>
-        
-
-                <Col className="" xs={12} md={8} lg={6}>
+            <Col className="" xs={12} md={8} lg={6}>
                 { showSubtype &&
                 <select className='selectButton' onChange={selectSubtypeIdFilter}>
                     <option value={-1}>Sin filtro</option>
@@ -806,8 +798,6 @@ export const Discover = () => {
                         )
                     })}
                 </select>
-
-
             }
             </Col>
         </Row>
@@ -851,53 +841,37 @@ export const Discover = () => {
        
         {filterList?.map((property, i) => {
             return(
-
-
-
                 <Col className='tarjeta'xs={12} md={6} lg={4}>
                     <div className='cardProperty' key={i}>
 
                         <div className='styleCard'>
                             <div className='parteTransparente'>
-                                <p  className='perTrans' onClick={()=>handleModalInfo(property)}>INFO</p>
+
+                               <p onClick={() => handleModalInfo(property)} className='perTrans'>INFO</p>
                                 
-                                {favOption &&
+                        {favOption &&
                         <div className='botonFavoritos'>
                             <button className='estrella' onClick={()=>addToFavs(property?.property_id)}> <img src='/images/icons/favoritos.png'/></button>
-                           
-                        </div>}
-                                
-                            </div>
-                    
-                            <img src={`/images/property/${property?.image_title}`} alt=""></img>
 
-                   
-                    
-                        </div>   
+                        </div>}
+                        </div>
+                        <img src={`/images/property/${property?.image_title}`} alt=""></img>
+                    </div>   
                 
-                    <Row className='m-0'>
+                    {<Row className='m-0'>
                         <Col className='datosPropiedad alinear'>
-                             <h5>{property?.property_name}</h5> 
-                             <div className='d-flex'>
-                             <img src='/images/icons/location.png' alt='localizacion'/>
-                             <p>{property?.city_name} , {property?.province_name}</p>
-                             </div>
-                             
+                            <h5>{property?.property_name}</h5> 
+                            <div className='d-flex'>
+                                <img src='/images/icons/location.png' alt='localizacion'/>
+                                <p>{property?.city_name} , {property?.province_name}</p>
+                            </div>
                         </Col>
                         <Col className='datosPropiedad alineado'>
                             <p>Precio</p>
                             <p className='color'>{Math.floor(property?.purchase_buy_price * 1.14)} €</p>
                         </Col>
-                    </Row>
-                                              
-                          
-                       
-                
-                       
-               
+                    </Row>}
                     </div>
-               
-
                 </Col>
             )
         })}
@@ -906,18 +880,14 @@ export const Discover = () => {
     </div>
     </Container>
     <ModalInfoDiscover
-    showModalInfoDiscover = {showModalInfoDiscover}
-    setShowModalInfoDiscover = {setShowModalInfoDiscover}
-    infoOneProperty = {infoOneProperty}
-    setInfoOneProperty= {setInfoOneProperty}
+        showModalInfoDiscover = {showModalInfoDiscover}
+        setShowModalInfoDiscover = {setShowModalInfoDiscover}
+        infoOneProperty = {infoOneProperty}
+        setInfoOneProperty= {setInfoOneProperty}
     />
-     {show && <ModalFavRepeat
-                            
-                    show = {show}
-                    setShow = {setShow}
-                />
-                                }
+
+    {show && <ModalFavRepeat show={show} setShow={setShow}/>}
+
     </>
-    
   )
 }

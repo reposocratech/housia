@@ -24,7 +24,7 @@ export const AdminAllProperties = () => {
         axios
             .get("http://localhost:4000/admin/allProperties")
             .then((res)=>{
-                console.log(res, "esto es la respuesta del axios")
+                /* console.log(res, "esto es la respuesta del axios") */
                 setAllProperties(res.data)
             })
             .catch((error)=>{

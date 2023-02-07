@@ -2,7 +2,7 @@
     font-family: Barlow;
     background-color: #272839;
     color: white;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -12,7 +12,7 @@
             .alturaCont{
                 margin-right: 20vw;
                 span{
-                   background-color: white;
+                background-color: white;
                 color: black;
                 font-weight: bold;
                 padding: 10px 35px;
