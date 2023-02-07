@@ -143,9 +143,9 @@ desde MySQL ingresar la sentencia **UPDATE user SET user_type = 1 WHERE user_id 
 _ _ _
 
 
-*Agradecemos a los profersores Carlos Yáñez, Miriam Segura y Santiago Peña por su ayuda y dedicacion, por compartir sus conocimientos.
+* Agradecemos a los profersores Carlos Yáñez, Miriam Segura y Santiago Peña por su ayuda y dedicacion, por compartir sus conocimientos.
 
-*Agradecimentos a la empresa HousIA por confiar en nosotros para realizar el proyecto.
+* Agradecimentos a la empresa HousIA por confiar en nosotros para realizar el proyecto.
 
 
 
@@ -154,15 +154,15 @@ _ _ _
 
 Este proyecto ha sido realizado por un equipo de cinco desarrolladores compuesto por:
 
-*Juan Antonio Moreno Fernandez.
-*Marcos Benítez Rodríguez.
-*Carolina Escobar Rios.
-*Jose Antonio Castañeda Rios.
-*Marianela Serodino Runco.
+* Juan Antonio Moreno Fernandez.
+* Marcos Benítez Rodríguez.
+* Carolina Escobar Rios.
+* Jose Antonio Castañeda Rios.
+* Marianela Serodino Runco.
 
 
 ## Licencia
 _ _ _
 
 * El codigo del proyecto aqui alojado se encuentra bajo licencia -----
-*El nombre HousIA, los logos y toda la informacion y contenido relacionado con la empresa es propiedad de HousIA© y no podran utilizarse sin su consentimiento expreso.
+* El nombre HousIA, los logos y toda la informacion y contenido relacionado con la empresa es propiedad de HousIA© y no podran utilizarse sin su consentimiento expreso.
