@@ -71,8 +71,8 @@ _ _ _
 ## Capturas
 
 _ _ _
-Vista admin
-[vista admin](/screenshots/Admin.jpg)
+
+[vista admin](https://github.com/reposocratech/housia/blob/master/screenshots/Admin.jpg)
 
 Añadir Propiedad:
 [añadir propiedad](/screenshots/AñadirPropiedad.jpg)
@@ -84,7 +84,7 @@ Vista editar propiedad
 [vista edicion de propiedad](/screenshots/Editar.jpg)
 
 Vista Portfolio
-[vista del portfolio](/screenshots/Portfolio.jpg)
+[vista del portfolio](/screenshots/Portafolio.jpg)
 
 Vista detalle de una propiedad
 [vista del detalle de propiedad](/screenshots/VistaUnaPropiedad.jpg)
