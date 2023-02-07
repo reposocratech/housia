@@ -154,11 +154,11 @@ _ _ _
 
 Este proyecto ha sido realizado por un equipo de cinco desarrolladores compuesto por:
 
-* Juan Antonio Moreno Fernandez.
-* Marcos Benítez Rodríguez.
-* Carolina Escobar Rios.
-* Jose Antonio Castañeda Rios.
-* Marianela Serodino Runco.
+* [Juan Antonio Moreno Fernandez](https://www.linkedin.com/in/juan-antonio-moreno-fernandez/)
+* [Marcos Benítez Rodríguez](https://www.linkedin.com/in/marcos-benitez-rodriguez/)
+* [Carolina Escobar Rios](https://www.linkedin.com/in/carolina-escobar-r%C3%ADos/)
+* [Jose Antonio Castañeda Rios](https://www.linkedin.com/in/josea-casta%C3%B1eda-r%C3%ADos/)
+* [Marianela Serodino Runco](https://www.linkedin.com/in/marianela-serodino-runco/)
 
 
 ## Licencia
