@@ -72,7 +72,7 @@ _ _ _
 
 _ _ _
 
-[vista admin](https://github.com/reposocratech/housia/blob/master/screenshots/Admin.jpg)
+![vista admin](https://github.com/reposocratech/housia/blob/master/screenshots/Admin.jpg)
 
 Añadir Propiedad:
 [añadir propiedad](/screenshots/AñadirPropiedad.jpg)
