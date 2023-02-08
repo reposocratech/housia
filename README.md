@@ -99,32 +99,40 @@ Paso 1:
 
 Crear la base de datos mediante el scrip Housia.sql, localizado en Housia/
 
-Paso 2:
+Paso 2: 
+
+Si se tiene instalado NODEJS pasar al paso 3 en caso contrario 
+
+Instalar NODEJS para la creacion del servidor:
+* Descargando el instalador desde el [ENLACE OFICIAL](https://nodejs.org/es/)
+* O si se quiere instalar en el package manager:  $npm nodejs.install
+
+Paso 3:
 
 Crea el archivo .env (no disponible en este repositorio) en el directorio /server y completarlo de la siquiente forma:
 ![vista del .env](https://github.com/reposocratech/housia/blob/master/screenshots/.env-ejemplo.jpg)
 
-Paso 3: 
+Paso 4: 
 
 Desde el directorio /server $npm i (o $npm install), esto instalara las dependencias necesarias en el servidor.
 
-Paso 4:
+Paso 5:
 
 Desde el directorio /client $npm i (o $npm install), esto instalara las dependecias necesarias en el cliente.
 
-Paso 5: 
+Paso 6: 
 
 Desde el directorio /server lanzar el servidor mediante el comando $npm run dev
 
-Paso 6:
+Paso 7:
 
 Desde el directorio /client ejecutar el cliente mediante el comando $npm start
 
-Paso 7: 
+Paso 8: 
 
 En el navegador ir a la direccion localhost:3000.
 
-Paso 8:
+Paso 9:
 
 La aplicacion web se ejecutara entonces en el navegador.
 
