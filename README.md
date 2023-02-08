@@ -124,6 +124,8 @@ Paso 6:
 
 Desde el directorio /server lanzar el servidor mediante el comando $npm run dev
 
+* Si aparece un error de conexion con el servidor sql, introduzca la siguiente linea en el gestor de base de datos (ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';)
+
 Paso 7:
 
 Desde el directorio /client ejecutar el cliente mediante el comando $npm start
